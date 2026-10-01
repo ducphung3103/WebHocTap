@@ -1,0 +1,42 @@
+name: Online Judge Auto Tracker
+
+on:
+  schedule:
+    # Run every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+
+concurrency:
+  group: sync-progress
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync Student Progress
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Tracker Bot
+        env:
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          STUDENTS_SHEET_NAME: "Danh sách Học sinh"
+          PROGRESS_SHEET_NAME: "Theo dõi Bài tập"
+          REQUEST_DELAY_SECONDS: "1.0"
+          LOG_LEVEL: "INFO"
+        run: |
+          python main.py
