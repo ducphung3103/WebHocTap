@@ -19,7 +19,8 @@
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     },
     {
@@ -32,7 +33,8 @@
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     },
     {
@@ -45,7 +47,8 @@
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     },
     {
@@ -58,7 +61,8 @@
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     },
     {
@@ -70,7 +74,8 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     },
     {
@@ -82,7 +87,8 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     },
     {
@@ -95,7 +101,8 @@
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     },
     {
@@ -108,7 +115,8 @@
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     }
   ],
@@ -130,119 +138,119 @@
         "Tháng 10": false
       },
       "solved": [
-        "CLUE-ls_ts10_25_b",
-        "CF-2267A",
-        "CLUE-ls_ts10_26_a",
-        "CLUE-qngai_ts10_26_a",
-        "CLUE-dl_hsg9_26_d",
-        "CLUE-gl_ts10_26_b",
-        "CF-2167A",
-        "CLUE-th_ttts10_26_b",
-        "CLUE-hy_ts10_26_b",
-        "CF-2260B",
-        "CLUE-nb_hsg9_26_a",
-        "CLUE-ag_ts10_26_d",
-        "CLUE-dn_hsg9_26_a",
-        "CLUE-kh_ts10_26_b",
-        "CF-2269A",
-        "CLUE-nb_hsg9_26_e",
-        "CLUE-ls_ts10_25_c",
-        "CLUE-dt_ts10_25_c",
-        "CLUE-contest06_aa",
-        "CLUE-tg_ts10_25_a",
-        "CLUE-dnai_ts10_26_d",
-        "CF-295A",
-        "CLUE-gl_ts10_26_d",
-        "CLUE-ld_ts10_26_c",
-        "CLUE-tn_ts10_26_a",
-        "CLUE-dt_ts10_25_a",
-        "CLUE-nb_ts10_26_b",
-        "CLUE-ct_ts10_26_c",
-        "CLUE-tninh_ts10_26_c",
-        "CLUE-bl_ts10_25_a",
-        "CF-4C",
-        "CF-2267B",
-        "CLUE-hp_hsg9_26_a",
-        "CLUE-tninh_ts10_26_b",
-        "CLUE-lc_ts10_26_a",
-        "CLUE-kh_ts10_26_d",
-        "CLUE-ls_ts10_25_a",
-        "CLUE-pt_prets10_26_c",
-        "CF-313B",
-        "CLUE-ht_ts10_26_c",
-        "CF-236A",
-        "CF-466C",
-        "CF-2266B",
-        "CLUE-gl_ts10_26_a",
-        "CLUE-dt_ts10_26_b",
-        "CLUE-ld_ts10_26_b",
-        "CLUE-th_ttts10_26_a",
-        "CLUE-qngai_ts10_25_a",
-        "CLUE-dt_ts10_26_d",
-        "CLUE-dnai_ts10_26_b",
-        "CLUE-ag_ts10_26_b",
-        "CLUE-nb_ts10_26_d",
-        "CLUE-lc_ts10_26_b",
-        "CF-816B",
-        "CLUE-contest02_d",
-        "CLUE-dhv_ts10_26_a",
-        "CLUE-tninh_ts10_26_a",
-        "CLUE-nb_ts10_25_a",
-        "CLUE-tn_hsg9_26_b",
-        "CLUE-dt_ts10_25_d",
-        "CLUE-tn_ttts10_25_b",
-        "CLUE-na_ts10_26_b",
-        "CLUE-ct_ts10_26_b",
-        "CLUE-dn_hsg9_26_b",
-        "CLUE-ls_ts10_26_b",
-        "CLUE-db_ts10_26_a",
-        "CLUE-ag_ts10_26_a",
-        "CLUE-tq_ts10_26_b",
-        "CLUE-gl_ts10_26_c",
-        "CLUE-dt_ts10_25_b",
-        "CLUE-dhh_ts10_26_a",
-        "CLUE-gl_hsg9_26_a",
-        "CLUE-ct_hsg9_26_a",
-        "CLUE-dt_ts10_26_a",
-        "CLUE-qngai_ts10_26_b",
-        "CLUE-bg_ts10_25_a",
-        "CLUE-qnam_ts10_25_b",
-        "CLUE-pt_prets10_26_b",
-        "CLUE-dl_hsg9_26_a",
-        "CLUE-ct_hsg9_26_b",
-        "CF-443A",
-        "CLUE-pt_prets10_26_a",
         "CF-1398C",
-        "CLUE-hy_ts10_26_a",
-        "CLUE-qngai_ts10_26_d",
-        "CLUE-ls_ts10_26_c",
-        "CLUE-kh_ts10_26_c",
-        "CLUE-pt_ts10_26_b",
-        "CLUE-th_ts10_26_b",
-        "CLUE-ld_ts10_26_a",
-        "CLUE-dnai_ts10_26_c",
-        "CLUE-tg_ts10_25_b",
-        "CLUE-ct_ts10_26_a",
-        "CLUE-lc_ts10_26_c",
-        "CLUE-kh_ts10_26_e",
-        "CLUE-dhv_ts10_26_b",
-        "CLUE-qngai_ts10_25_c",
-        "CLUE-dl_hsg9_26_b",
-        "CLUE-kh_ts10_26_a",
-        "CLUE-qngai_ts10_26_c",
-        "CLUE-tq_ts10_26_a",
-        "CLUE-dhh_ts10_26_b",
-        "CLUE-nb_ts10_26_a",
-        "CLUE-dnai_ts10_26_e",
-        "CLUE-tg_ts10_25_c",
-        "CLUE-ht_ts10_26_a",
-        "CLUE-nb_hsg9_26_c",
+        "CF-2167A",
+        "CF-2260B",
         "CF-2266A",
-        "CLUE-qngai_ts10_25_b",
-        "CLUE-nb_ts10_26_c",
-        "CLUE-qt_hsg9_26_a",
+        "CF-2266B",
+        "CF-2267A",
+        "CF-2267B",
+        "CF-2269A",
+        "CF-236A",
+        "CF-295A",
+        "CF-313B",
+        "CF-443A",
+        "CF-466C",
+        "CF-4C",
+        "CF-816B",
+        "CLUE-ag_ts10_26_a",
+        "CLUE-ag_ts10_26_b",
+        "CLUE-ag_ts10_26_d",
+        "CLUE-bg_ts10_25_a",
+        "CLUE-bl_ts10_25_a",
+        "CLUE-contest02_d",
+        "CLUE-contest06_aa",
+        "CLUE-ct_hsg9_26_a",
+        "CLUE-ct_hsg9_26_b",
+        "CLUE-ct_hsg9_26_c",
+        "CLUE-ct_ts10_26_a",
+        "CLUE-ct_ts10_26_b",
+        "CLUE-ct_ts10_26_c",
+        "CLUE-db_ts10_26_a",
+        "CLUE-dhh_ts10_26_a",
+        "CLUE-dhh_ts10_26_b",
+        "CLUE-dhv_ts10_26_a",
+        "CLUE-dhv_ts10_26_b",
+        "CLUE-dl_hsg9_26_a",
+        "CLUE-dl_hsg9_26_b",
+        "CLUE-dl_hsg9_26_d",
+        "CLUE-dn_hsg9_26_a",
+        "CLUE-dn_hsg9_26_b",
+        "CLUE-dnai_ts10_26_b",
+        "CLUE-dnai_ts10_26_c",
+        "CLUE-dnai_ts10_26_d",
+        "CLUE-dnai_ts10_26_e",
+        "CLUE-dt_ts10_25_a",
+        "CLUE-dt_ts10_25_b",
+        "CLUE-dt_ts10_25_c",
+        "CLUE-dt_ts10_25_d",
+        "CLUE-dt_ts10_26_a",
+        "CLUE-dt_ts10_26_b",
+        "CLUE-dt_ts10_26_d",
+        "CLUE-gl_hsg9_26_a",
+        "CLUE-gl_ts10_26_a",
+        "CLUE-gl_ts10_26_b",
+        "CLUE-gl_ts10_26_c",
+        "CLUE-gl_ts10_26_d",
+        "CLUE-hp_hsg9_26_a",
+        "CLUE-ht_ts10_26_a",
+        "CLUE-ht_ts10_26_c",
+        "CLUE-hy_ts10_26_a",
+        "CLUE-hy_ts10_26_b",
+        "CLUE-kh_ts10_26_a",
+        "CLUE-kh_ts10_26_b",
+        "CLUE-kh_ts10_26_c",
+        "CLUE-kh_ts10_26_d",
+        "CLUE-kh_ts10_26_e",
+        "CLUE-lc_ts10_26_a",
+        "CLUE-lc_ts10_26_b",
+        "CLUE-lc_ts10_26_c",
+        "CLUE-ld_ts10_26_a",
+        "CLUE-ld_ts10_26_b",
+        "CLUE-ld_ts10_26_c",
+        "CLUE-ls_ts10_25_a",
+        "CLUE-ls_ts10_25_b",
+        "CLUE-ls_ts10_25_c",
+        "CLUE-ls_ts10_26_a",
+        "CLUE-ls_ts10_26_b",
+        "CLUE-ls_ts10_26_c",
+        "CLUE-na_ts10_26_b",
+        "CLUE-nb_hsg9_26_a",
         "CLUE-nb_hsg9_26_b",
-        "CLUE-ct_hsg9_26_c"
+        "CLUE-nb_hsg9_26_c",
+        "CLUE-nb_hsg9_26_e",
+        "CLUE-nb_ts10_25_a",
+        "CLUE-nb_ts10_26_a",
+        "CLUE-nb_ts10_26_b",
+        "CLUE-nb_ts10_26_c",
+        "CLUE-nb_ts10_26_d",
+        "CLUE-pt_prets10_26_a",
+        "CLUE-pt_prets10_26_b",
+        "CLUE-pt_prets10_26_c",
+        "CLUE-pt_ts10_26_b",
+        "CLUE-qnam_ts10_25_b",
+        "CLUE-qngai_ts10_25_a",
+        "CLUE-qngai_ts10_25_b",
+        "CLUE-qngai_ts10_25_c",
+        "CLUE-qngai_ts10_26_a",
+        "CLUE-qngai_ts10_26_b",
+        "CLUE-qngai_ts10_26_c",
+        "CLUE-qngai_ts10_26_d",
+        "CLUE-qt_hsg9_26_a",
+        "CLUE-tg_ts10_25_a",
+        "CLUE-tg_ts10_25_b",
+        "CLUE-tg_ts10_25_c",
+        "CLUE-th_ts10_26_b",
+        "CLUE-th_ttts10_26_a",
+        "CLUE-th_ttts10_26_b",
+        "CLUE-tn_hsg9_26_b",
+        "CLUE-tn_ts10_26_a",
+        "CLUE-tn_ttts10_25_b",
+        "CLUE-tninh_ts10_26_a",
+        "CLUE-tninh_ts10_26_b",
+        "CLUE-tninh_ts10_26_c",
+        "CLUE-tq_ts10_26_a",
+        "CLUE-tq_ts10_26_b"
       ],
       "target_solved": [],
       "target_solved_count": 0,
@@ -252,198 +260,198 @@
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 16,
-        "month": 28,
-        "year": 644,
+        "week": 4,
+        "month": 7,
+        "year": 113,
         "total": 113
       },
       "activity": {
         "2026-09-27": {
-          "total": 4,
-          "ac": 4
+          "total": 1,
+          "ac": 1
         },
         "2026-09-26": {
-          "total": 12,
-          "ac": 4
+          "total": 3,
+          "ac": 1
         },
         "2026-09-25": {
-          "total": 28,
-          "ac": 8
+          "total": 7,
+          "ac": 2
         },
         "2026-09-23": {
-          "total": 20,
-          "ac": 4
+          "total": 5,
+          "ac": 1
         },
         "2026-09-21": {
-          "total": 8,
-          "ac": 8
+          "total": 2,
+          "ac": 2
         },
         "2026-08-27": {
-          "total": 20,
-          "ac": 12
+          "total": 5,
+          "ac": 3
         },
         "2026-08-20": {
-          "total": 20,
-          "ac": 4
+          "total": 5,
+          "ac": 1
         },
         "2026-08-18": {
-          "total": 24,
-          "ac": 4
+          "total": 6,
+          "ac": 1
         },
         "2026-08-14": {
-          "total": 8,
+          "total": 2,
           "ac": 0
         },
         "2026-08-13": {
-          "total": 20,
+          "total": 5,
           "ac": 0
         },
         "2026-08-12": {
-          "total": 4,
-          "ac": 4
+          "total": 1,
+          "ac": 1
         },
         "2026-08-11": {
-          "total": 44,
-          "ac": 16
+          "total": 11,
+          "ac": 4
         },
         "2026-08-04": {
-          "total": 8,
+          "total": 2,
           "ac": 0
         },
         "2026-06-26": {
-          "total": 4,
-          "ac": 4
+          "total": 1,
+          "ac": 1
         },
         "2026-05-03": {
-          "total": 16,
+          "total": 4,
           "ac": 0
         },
         "2026-07-16": {
-          "total": 36,
-          "ac": 32
+          "total": 9,
+          "ac": 8
         },
         "2026-07-15": {
-          "total": 4,
+          "total": 1,
           "ac": 0
         },
         "2026-07-14": {
-          "total": 4,
+          "total": 1,
           "ac": 0
         },
         "2026-07-13": {
-          "total": 20,
-          "ac": 12
+          "total": 5,
+          "ac": 3
         },
         "2026-07-03": {
-          "total": 16,
-          "ac": 16
-        },
-        "2026-07-02": {
-          "total": 32,
-          "ac": 28
-        },
-        "2026-06-19": {
-          "total": 16,
-          "ac": 8
-        },
-        "2026-06-18": {
-          "total": 24,
-          "ac": 8
-        },
-        "2026-06-17": {
-          "total": 24,
-          "ac": 24
-        },
-        "2026-06-15": {
-          "total": 8,
-          "ac": 8
-        },
-        "2026-06-14": {
-          "total": 16,
-          "ac": 12
-        },
-        "2026-06-12": {
-          "total": 12,
-          "ac": 8
-        },
-        "2026-06-10": {
-          "total": 28,
-          "ac": 28
-        },
-        "2026-06-09": {
-          "total": 156,
-          "ac": 104
-        },
-        "2026-06-03": {
-          "total": 8,
-          "ac": 8
-        },
-        "2026-06-02": {
-          "total": 12,
-          "ac": 8
-        },
-        "2026-06-01": {
-          "total": 8,
-          "ac": 8
-        },
-        "2026-05-31": {
-          "total": 16,
-          "ac": 16
-        },
-        "2026-05-30": {
           "total": 4,
           "ac": 4
         },
+        "2026-07-02": {
+          "total": 8,
+          "ac": 7
+        },
+        "2026-06-19": {
+          "total": 4,
+          "ac": 2
+        },
+        "2026-06-18": {
+          "total": 6,
+          "ac": 2
+        },
+        "2026-06-17": {
+          "total": 6,
+          "ac": 6
+        },
+        "2026-06-15": {
+          "total": 2,
+          "ac": 2
+        },
+        "2026-06-14": {
+          "total": 4,
+          "ac": 3
+        },
+        "2026-06-12": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-06-10": {
+          "total": 7,
+          "ac": 7
+        },
+        "2026-06-09": {
+          "total": 39,
+          "ac": 26
+        },
+        "2026-06-03": {
+          "total": 2,
+          "ac": 2
+        },
+        "2026-06-02": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-06-01": {
+          "total": 2,
+          "ac": 2
+        },
+        "2026-05-31": {
+          "total": 4,
+          "ac": 4
+        },
+        "2026-05-30": {
+          "total": 1,
+          "ac": 1
+        },
         "2026-05-28": {
-          "total": 20,
-          "ac": 20
+          "total": 5,
+          "ac": 5
         },
         "2026-05-27": {
-          "total": 36,
-          "ac": 36
+          "total": 9,
+          "ac": 9
         },
         "2026-05-26": {
-          "total": 28,
-          "ac": 20
+          "total": 7,
+          "ac": 5
         },
         "2026-05-25": {
-          "total": 64,
-          "ac": 60
+          "total": 16,
+          "ac": 15
         },
         "2026-05-24": {
-          "total": 4,
+          "total": 1,
           "ac": 0
         },
         "2026-05-23": {
-          "total": 20,
-          "ac": 20
+          "total": 5,
+          "ac": 5
         },
         "2026-05-22": {
-          "total": 24,
-          "ac": 20
+          "total": 6,
+          "ac": 5
         },
         "2026-05-21": {
-          "total": 24,
-          "ac": 24
+          "total": 6,
+          "ac": 6
         },
         "2026-05-20": {
-          "total": 12,
-          "ac": 8
+          "total": 3,
+          "ac": 2
         },
         "2026-05-19": {
-          "total": 24,
-          "ac": 20
+          "total": 6,
+          "ac": 5
         },
         "2026-05-18": {
-          "total": 4,
-          "ac": 4
+          "total": 1,
+          "ac": 1
         },
         "2026-05-17": {
-          "total": 8,
-          "ac": 8
+          "total": 2,
+          "ac": 2
         },
         "2025-05-31": {
-          "total": 12,
+          "total": 3,
           "ac": 0
         }
       }
@@ -530,9 +538,12 @@
       },
       "solved": [
         "MARISA-11",
+        "MARISA-19",
         "MARISA-2",
         "MARISA-20",
+        "MARISA-23",
         "MARISA-3",
+        "MARISA-312",
         "MARISA-33",
         "MARISA-408",
         "MARISA-410",
@@ -554,15 +565,15 @@
       ],
       "target_solved_count": 3,
       "target_class_total": 6,
-      "total_solved_count": 17,
+      "total_solved_count": 20,
       "rating": 0,
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 3,
-        "month": 15,
-        "year": 17,
-        "total": 17
+        "week": 20,
+        "month": 20,
+        "year": 20,
+        "total": 20
       },
       "activity": {
         "2026-09-30": {
@@ -570,7 +581,7 @@
           "ac": 2
         },
         "2026-09-29": {
-          "total": 4,
+          "total": 8,
           "ac": 3
         },
         "2026-09-28": {
@@ -582,16 +593,28 @@
           "ac": 3
         },
         "2026-09-26": {
-          "total": 3,
+          "total": 7,
           "ac": 2
         },
         "2026-09-22": {
-          "total": 3,
+          "total": 9,
           "ac": 2
         },
         "2026-09-21": {
-          "total": 2,
+          "total": 4,
           "ac": 1
+        },
+        "2026-10-02": {
+          "total": 7,
+          "ac": 3
+        },
+        "2026-09-25": {
+          "total": 8,
+          "ac": 5
+        },
+        "2026-09-20": {
+          "total": 5,
+          "ac": 0
         }
       }
     },
@@ -632,8 +655,8 @@
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 3,
-        "month": 7,
+        "week": 7,
+        "month": 8,
         "year": 8,
         "total": 8
       },
@@ -661,6 +684,26 @@
         "2026-09-22": {
           "total": 2,
           "ac": 1
+        },
+        "2026-09-16": {
+          "total": 1,
+          "ac": 0
+        },
+        "2026-09-15": {
+          "total": 14,
+          "ac": 2
+        },
+        "2026-09-14": {
+          "total": 8,
+          "ac": 2
+        },
+        "2026-09-07": {
+          "total": 14,
+          "ac": 5
+        },
+        "2026-08-19": {
+          "total": 11,
+          "ac": 0
         }
       }
     },
@@ -681,16 +724,16 @@
         "Tháng 10": false
       },
       "solved": [
-        "MARISA-587",
-        "MARISA-13",
-        "MARISA-6",
-        "MARISA-535",
-        "MARISA-5",
         "MARISA-1",
-        "MARISA-9",
-        "MARISA-7",
+        "MARISA-12",
+        "MARISA-13",
+        "MARISA-5",
         "MARISA-534",
-        "MARISA-12"
+        "MARISA-535",
+        "MARISA-587",
+        "MARISA-6",
+        "MARISA-7",
+        "MARISA-9"
       ],
       "target_solved": [
         "MARISA-1"
@@ -725,16 +768,28 @@
           "ac": 2
         },
         "2026-09-26": {
-          "total": 2,
+          "total": 6,
           "ac": 1
         },
         "2026-09-22": {
-          "total": 2,
+          "total": 9,
           "ac": 1
         },
         "2026-09-21": {
-          "total": 2,
+          "total": 3,
           "ac": 1
+        },
+        "2026-09-24": {
+          "total": 5,
+          "ac": 1
+        },
+        "2026-09-23": {
+          "total": 3,
+          "ac": 1
+        },
+        "2026-09-20": {
+          "total": 22,
+          "ac": 8
         }
       }
     },
@@ -778,8 +833,8 @@
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 4,
-        "month": 8,
+        "week": 7,
+        "month": 9,
         "year": 9,
         "total": 9
       },
@@ -810,7 +865,11 @@
         },
         "2026-09-21": {
           "total": 2,
-          "ac": 1
+          "ac": 2
+        },
+        "2026-09-16": {
+          "total": 12,
+          "ac": 7
         }
       }
     },
@@ -888,16 +947,25 @@
         "MARISA-8",
         "MARISA-9"
       ],
-      "target_solved": [],
-      "target_solved_count": 0,
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-8",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-499",
+        "MARISA-314"
+      ],
+      "target_solved_count": 8,
       "target_class_total": 8,
       "total_solved_count": 24,
       "rating": 0,
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 8,
-        "month": 21,
+        "week": 22,
+        "month": 24,
         "year": 24,
         "total": 24
       },
@@ -925,6 +993,70 @@
         "2026-09-22": {
           "total": 3,
           "ac": 2
+        },
+        "2026-09-13": {
+          "total": 1,
+          "ac": 1
+        },
+        "2026-08-29": {
+          "total": 3,
+          "ac": 1
+        },
+        "2026-08-21": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-08-20": {
+          "total": 1,
+          "ac": 0
+        },
+        "2026-08-19": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-08-12": {
+          "total": 2,
+          "ac": 2
+        },
+        "2026-08-10": {
+          "total": 2,
+          "ac": 2
+        },
+        "2026-08-09": {
+          "total": 1,
+          "ac": 1
+        },
+        "2026-08-07": {
+          "total": 1,
+          "ac": 1
+        },
+        "2026-08-06": {
+          "total": 2,
+          "ac": 2
+        },
+        "2026-08-05": {
+          "total": 12,
+          "ac": 7
+        },
+        "2026-08-02": {
+          "total": 1,
+          "ac": 1
+        },
+        "2026-07-31": {
+          "total": 6,
+          "ac": 5
+        },
+        "2026-07-29": {
+          "total": 7,
+          "ac": 2
+        },
+        "2026-07-28": {
+          "total": 1,
+          "ac": 1
+        },
+        "2026-07-26": {
+          "total": 5,
+          "ac": 0
         }
       }
     },
@@ -945,27 +1077,38 @@
         "Tháng 10": false
       },
       "solved": [
-        "MARISA-397",
+        "MARISA-1",
+        "MARISA-15",
+        "MARISA-2",
+        "MARISA-3",
         "MARISA-314",
-        "MARISA-421",
-        "MARISA-499",
         "MARISA-396",
-        "MARISA-420",
+        "MARISA-397",
         "MARISA-4",
-        "MARISA-1"
+        "MARISA-420",
+        "MARISA-421",
+        "MARISA-499"
       ],
-      "target_solved": [],
-      "target_solved_count": 0,
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-499",
+        "MARISA-314"
+      ],
+      "target_solved_count": 7,
       "target_class_total": 8,
-      "total_solved_count": 8,
+      "total_solved_count": 11,
       "rating": 0,
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 7,
-        "month": 8,
-        "year": 8,
-        "total": 8
+        "week": 11,
+        "month": 11,
+        "year": 11,
+        "total": 11
       },
       "activity": {
         "2026-09-30": {
@@ -991,6 +1134,42 @@
         "2026-09-22": {
           "total": 2,
           "ac": 1
+        },
+        "2026-10-02": {
+          "total": 4,
+          "ac": 4
+        },
+        "2026-09-20": {
+          "total": 2,
+          "ac": 2
+        },
+        "2026-08-29": {
+          "total": 1,
+          "ac": 0
+        },
+        "2026-08-26": {
+          "total": 1,
+          "ac": 1
+        },
+        "2026-08-22": {
+          "total": 2,
+          "ac": 2
+        },
+        "2026-08-21": {
+          "total": 8,
+          "ac": 1
+        },
+        "2026-08-20": {
+          "total": 6,
+          "ac": 3
+        },
+        "2026-08-19": {
+          "total": 8,
+          "ac": 4
+        },
+        "2026-08-17": {
+          "total": 17,
+          "ac": 3
         }
       }
     },
@@ -1013,8 +1192,10 @@
       "solved": [
         "MARISA-1"
       ],
-      "target_solved": [],
-      "target_solved_count": 0,
+      "target_solved": [
+        "MARISA-1"
+      ],
+      "target_solved_count": 1,
       "target_class_total": 8,
       "total_solved_count": 1,
       "rating": 0,
@@ -1033,6 +1214,10 @@
         },
         "2026-09-29": {
           "total": 2,
+          "ac": 1
+        },
+        "2026-09-27": {
+          "total": 1,
           "ac": 1
         }
       }
@@ -1053,21 +1238,35 @@
         "Tháng 9": false,
         "Tháng 10": false
       },
-      "solved": [],
-      "target_solved": [],
-      "target_solved_count": 0,
+      "solved": [
+        "MARISA-1",
+        "MARISA-15",
+        "MARISA-2",
+        "MARISA-3"
+      ],
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3"
+      ],
+      "target_solved_count": 3,
       "target_class_total": 8,
-      "total_solved_count": 0,
+      "total_solved_count": 4,
       "rating": 0,
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 0,
-        "month": 0,
-        "year": 0,
-        "total": 0
+        "week": 4,
+        "month": 4,
+        "year": 4,
+        "total": 4
       },
-      "activity": {}
+      "activity": {
+        "2026-10-02": {
+          "total": 14,
+          "ac": 4
+        }
+      }
     },
     {
       "stt": 13,
@@ -1130,8 +1329,8 @@
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 8,
-        "month": 23,
+        "week": 24,
+        "month": 26,
         "year": 26,
         "total": 26
       },
@@ -1149,7 +1348,7 @@
           "ac": 6
         },
         "2026-09-27": {
-          "total": 6,
+          "total": 9,
           "ac": 5
         },
         "2026-09-26": {
@@ -1157,8 +1356,40 @@
           "ac": 4
         },
         "2026-09-22": {
-          "total": 3,
+          "total": 7,
+          "ac": 5
+        },
+        "2026-09-25": {
+          "total": 1,
+          "ac": 0
+        },
+        "2026-09-21": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-20": {
+          "total": 2,
           "ac": 2
+        },
+        "2026-09-19": {
+          "total": 6,
+          "ac": 1
+        },
+        "2026-09-18": {
+          "total": 1,
+          "ac": 1
+        },
+        "2026-09-17": {
+          "total": 1,
+          "ac": 0
+        },
+        "2026-09-01": {
+          "total": 2,
+          "ac": 2
+        },
+        "2026-08-23": {
+          "total": 12,
+          "ac": 12
         }
       }
     }
@@ -1492,8 +1723,17 @@
     "Python": {
       "name": "Lớp Python",
       "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-      "total_problems": 0,
-      "problem_ids": []
+      "total_problems": 8,
+      "problem_ids": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-8",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-499",
+        "MARISA-314"
+      ]
     },
     "Python 1-1": {
       "name": "Lớp Python 1-1",
@@ -1602,5 +1842,5 @@
     "Tháng 9",
     "Tháng 10"
   ],
-  "last_updated": "2026-10-02T12:01:04Z"
+  "last_updated": "2026-10-02T12:05:54Z"
 }
