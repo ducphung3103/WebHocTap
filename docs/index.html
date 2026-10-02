@@ -629,7 +629,7 @@
         if (btn) btn.innerHTML = `<span>📊</span> Ẩn Bảng Điểm ▲`;
       } else {
         el.classList.add('hidden');
-        if (btn) btn.innerHTML = `<span>📊</span> Xem Ai Đã AC Bài Nào ▼`;
+        if (btn) btn.innerHTML = `<span>📊</span> Xem Bảng Điểm ▼`;
       }
     }
 
@@ -747,7 +747,7 @@
             </a>
             ${c.standings ? `
               <button onclick="toggleStandings('${c.id}')" id="btn-standings-${c.id}" class="px-3 py-2 rounded-lg text-xs font-semibold bg-purple-600/20 text-purple-300 hover:bg-purple-600/30 border border-purple-500/30 transition flex items-center gap-1">
-                <span>📊</span> Xem Ai Đã AC Bài Nào ▼
+                <span>📊</span> Xem Bảng Điểm ▼
               </button>
             ` : ''}
           `;
@@ -755,7 +755,7 @@
           actions = `
             ${c.standings ? `
               <button onclick="toggleStandings('${c.id}')" id="btn-standings-${c.id}" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-indigo-600/30 text-indigo-300 hover:bg-indigo-600/40 border border-indigo-500/40 transition flex items-center gap-1.5">
-                <span>📊</span> Xem Ai Đã AC Bài Nào ▼
+                <span>📊</span> Xem Bảng Điểm ▼
               </button>
             ` : ''}
             <a href="${c.url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
