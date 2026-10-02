@@ -289,5 +289,41 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
     return True
 
 
+def git_push() -> bool:
+    import subprocess
+    print("\n📤 Đang commit và đẩy lên GitHub Pages...")
+    try:
+        subprocess.run(["git", "add", "docs/data.json"], check=True)
+        res = subprocess.run(["git", "diff", "--staged", "--quiet"])
+        if res.returncode != 0:
+            subprocess.run(["git", "commit", "-m", "update: sync students, problems and lectures from excel"], check=True)
+            subprocess.run(["git", "push", "origin", "master"], check=True)
+            print("✅ [HOÀN TẤT] Hệ thống đã được cập nhật trực tuyến trên GitHub Pages!\n")
+        else:
+            print("ℹ️ Dữ liệu đã mới nhất trên GitHub, không có thay đổi nào cần push.\n")
+        return True
+    except Exception as e:
+        print(f"❌ [LỖI PUSH GITHUB] {e}\n")
+        return False
+
+
 if __name__ == "__main__":
-    sync()
+    import argparse
+    parser = argparse.ArgumentParser(description="Sync Excel to Web")
+    parser.add_argument("--push", action="store_true", help="Auto push without prompting")
+    parser.add_argument("--no-push", action="store_true", help="Skip push without prompting")
+    args = parser.parse_args()
+
+    ok = sync()
+    if ok:
+        if args.push:
+            git_push()
+        elif not args.no_push:
+            try:
+                ans = input("\nBạn có muốn tự động PUSH lên GitHub Pages không? (Y/n): ").strip().lower()
+                if ans in ["", "y", "yes", "co", "c", "1"]:
+                    git_push()
+                else:
+                    print("ℹ️ [LƯU Ý] Dữ liệu đã lưu ở máy nội bộ (docs/data.json), chưa đẩy lên GitHub.\n")
+            except (KeyboardInterrupt, EOFError):
+                print("\n")

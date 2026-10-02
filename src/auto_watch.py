@@ -81,7 +81,7 @@ def watch_and_sync():
 
         except KeyboardInterrupt:
             print("\nĐã dừng chế độ tự động đồng bộ.")
-            break
+            sys.exit(0)
         except Exception as e:
             # Ignore transient read locks from Excel
             time.sleep(2)
