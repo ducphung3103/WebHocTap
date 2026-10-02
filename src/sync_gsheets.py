@@ -2,7 +2,7 @@ import os
 import sys
 import json
 import hashlib
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional
 
 # Ensure SSLKEYLOGFILE is safe
@@ -374,7 +374,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
     final_data["class_config"] = class_config
     final_data["auth_tokens"] = auth_tokens
     final_data["tuition_months"] = tuition_months
-    final_data["last_updated"] = datetime.now().isoformat()
+    final_data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(final_data, f, ensure_ascii=False, indent=2)

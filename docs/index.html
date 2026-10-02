@@ -823,7 +823,7 @@
   <!-- FOOTER -->
   <footer class="border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div>© 2026 Lớp Chuyên Tin & Thuật Toán • Tự động hóa với Python & GitHub Actions</div>
+      <div>© 2026 Lớp Chuyên Tin & Thuật Toán • Tự động hóa với Python & GitHub Actions <span id="sync-last-updated" class="ml-2 text-indigo-400 font-mono"></span></div>
       <div class="flex items-center gap-4 text-slate-400">
         <a href="https://codeforces.com" target="_blank" class="hover:text-indigo-400 transition">Codeforces</a>
         <a href="https://vjudge.net" target="_blank" class="hover:text-emerald-400 transition">VJudge</a>
@@ -847,19 +847,33 @@
             serverTokens = Object.assign({}, appData.auth_tokens);
           }
         }
-        // Load local overrides if any and newer than server data
+        // Load local overrides only if user explicitly edited locally and server is not newer
         const localSaved = localStorage.getItem('cp_app_data');
         if (localSaved) {
           try {
             const parsed = JSON.parse(localSaved);
             if (parsed && parsed.students) {
-              const localTime = parsed.last_updated ? new Date(parsed.last_updated).getTime() : 0;
-              const serverTime = (appData && appData.last_updated) ? new Date(appData.last_updated).getTime() : 0;
-              if (localTime > serverTime) {
+              let sStr = (appData && appData.last_updated) ? String(appData.last_updated) : "";
+              if (sStr && !sStr.endsWith('Z') && !sStr.includes('+')) sStr += 'Z';
+              const serverTime = sStr ? new Date(sStr).getTime() : 0;
+
+              let lStr = parsed.last_updated ? String(parsed.last_updated) : "";
+              if (lStr && !lStr.endsWith('Z') && !lStr.includes('+')) lStr += 'Z';
+              const localTime = lStr ? new Date(lStr).getTime() : 0;
+
+              const serverStudents = (appData && appData.students) ? appData.students.length : 0;
+              const localStudents = (parsed && parsed.students) ? parsed.students.length : 0;
+
+              // If server data is newer or has more students, discard stale localStorage cache
+              if (serverTime >= localTime || serverStudents > localStudents) {
+                localStorage.removeItem('cp_app_data');
+              } else if (localTime > serverTime && localStudents >= serverStudents) {
                 appData = parsed;
               }
             }
-          } catch(e) {}
+          } catch(e) {
+            localStorage.removeItem('cp_app_data');
+          }
         }
         // CRUCIAL: Server auth_tokens always authoritative for logins!
         if (appData && serverTokens) {
@@ -907,6 +921,18 @@
         if (statS && appData.students) statS.textContent = appData.students.length;
         const statP = document.getElementById('stat-problems');
         if (statP && appData.problems) statP.textContent = appData.problems.length;
+
+        if (appData.last_updated) {
+          try {
+            let sStr = String(appData.last_updated);
+            if (!sStr.endsWith('Z') && !sStr.includes('+')) sStr += 'Z';
+            const d = new Date(sStr);
+            const updateEl = document.getElementById('sync-last-updated');
+            if (updateEl && !isNaN(d.getTime())) {
+              updateEl.textContent = `• Cập nhật: ${d.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'})} ${d.toLocaleDateString('vi-VN')}`;
+            }
+          } catch(e) {}
+        }
       }
 
       renderMatrix();
