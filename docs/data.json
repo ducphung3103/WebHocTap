@@ -120,8 +120,10 @@
       "cf_handle": "ngtan11dona",
       "vjudge_handle": "ngiathienan",
       "marisa_handle": "za_pobeda",
-      "pin": "ngtan11dona",
-      "status": "thienan2012909",
+      "vnoi_handle": "ngtan11dona",
+      "clue_handle": "thienan2012909",
+      "pin": "nguyenan2026",
+      "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
         "Tháng 10": false
@@ -140,9 +142,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "vnoi_handle": "",
-      "clue_handle": ""
+      "activity": {}
     },
     {
       "stt": 2,
@@ -151,7 +151,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "ledung2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -171,9 +173,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "vnoi_handle": "",
-      "clue_handle": ""
+      "activity": {}
     },
     {
       "stt": 3,
@@ -182,7 +182,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "quocan2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -202,9 +204,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "vnoi_handle": "",
-      "clue_handle": ""
+      "activity": {}
     },
     {
       "stt": 4,
@@ -213,7 +213,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "dphatdzvl",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "dphat2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -284,9 +286,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "vnoi_handle": "",
-      "clue_handle": ""
+      }
     },
     {
       "stt": 5,
@@ -295,7 +295,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "satfswert",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "giahuy2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -352,9 +354,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "vnoi_handle": "",
-      "clue_handle": ""
+      }
     },
     {
       "stt": 6,
@@ -363,7 +363,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Kimkimkim",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "thienkim2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -425,9 +427,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "vnoi_handle": "",
-      "clue_handle": ""
+      }
     },
     {
       "stt": 7,
@@ -436,7 +436,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "thienann200212",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "thienan2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -500,9 +502,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "vnoi_handle": "",
-      "clue_handle": ""
+      }
     },
     {
       "stt": 8,
@@ -511,7 +511,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "hnhung2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -531,9 +533,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "vnoi_handle": "",
-      "clue_handle": ""
+      "activity": {}
     },
     {
       "stt": 9,
@@ -542,7 +542,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Nguyenducphat",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "ducphat2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -612,9 +614,7 @@
           "total": 3,
           "ac": 2
         }
-      },
-      "vnoi_handle": "",
-      "clue_handle": ""
+      }
     },
     {
       "stt": 10,
@@ -623,7 +623,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "khanhnam_15",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "khanhnam2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -677,9 +679,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "vnoi_handle": "",
-      "clue_handle": ""
+      }
     },
     {
       "stt": 11,
@@ -688,7 +688,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Gia_Hung_Tran",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "giahung2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -719,9 +721,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "vnoi_handle": "",
-      "clue_handle": ""
+      }
     },
     {
       "stt": 12,
@@ -730,7 +730,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "kimkim2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -750,9 +752,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "vnoi_handle": "",
-      "clue_handle": ""
+      "activity": {}
     },
     {
       "stt": 13,
@@ -761,7 +761,9 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Shinnn",
-      "pin": "",
+      "vnoi_handle": "",
+      "clue_handle": "",
+      "pin": "minhkhoi2026",
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
@@ -842,9 +844,7 @@
           "total": 3,
           "ac": 2
         }
-      },
-      "vnoi_handle": "",
-      "clue_handle": ""
+      }
     }
   ],
   "curriculum": [
@@ -1216,15 +1216,75 @@
       "name": "Lớp Python 1-1",
       "class": "Python 1-1"
     },
-    "9b488987d6e5bfc28bbf0522f0d073059d0dea70a91d8b19feb3dbcd9dc939f1": {
+    "55b8707037f16bc5a146d540e05fa609f62fc4727a7efcf4a2f47e9823c21a39": {
       "role": "student",
       "name": "Nguyễn Gia Thiên Ân",
       "class": "C++"
+    },
+    "60ac24424670f9e8c3559f67663274681f9792c86ababb4e3304e15d5823c1f4": {
+      "role": "student",
+      "name": "Lê Dũng",
+      "class": "C++"
+    },
+    "6edd718edb01e3b798fd2f788338b0a5585e0c24d5589786ee5b2aa2499cbbe1": {
+      "role": "student",
+      "name": "Phạm Quốc An",
+      "class": "C++"
+    },
+    "a441c5ff4aa7185514c5161ba3ba8320232d52dc56d9232b907acb57e19e5e57": {
+      "role": "student",
+      "name": "Nguyễn Đình Phát",
+      "class": "C++"
+    },
+    "b6760997462627133fdd6f6156ab8f304972162179d216f64ea9da196017e234": {
+      "role": "student",
+      "name": "Nguyễn Đắc Gia Huy",
+      "class": "C++"
+    },
+    "78f1ed977dd8b7959674831522139aecee2ce8814a8446dbf12fee02601ec216": {
+      "role": "student",
+      "name": "Mai Thiên Kim",
+      "class": "C++"
+    },
+    "e4d8f0abd426ddb01555299c0d0e14190e48da88d667ab8b518babc55e9fbd72": {
+      "role": "student",
+      "name": "Trần Thái Thiên Ân",
+      "class": "C++"
+    },
+    "321aaf06fed97532c4feb62cff61d1dd132a91f0a95ecb70be15783842eb6ab1": {
+      "role": "student",
+      "name": "Nguyễn Thị Hồng Nhung",
+      "class": "C++"
+    },
+    "06584d9aa6499f67008e7faa65149142ab5d7b76856e517843c8d580d79949e0": {
+      "role": "student",
+      "name": "Nguyễn Đức Phát",
+      "class": "Python"
+    },
+    "8eddeb429510b7ba493020e4f29b7f91cd6cbaaa588b00ec2c0ffb92282f1e77": {
+      "role": "student",
+      "name": "Lê Phan Khánh Nam",
+      "class": "Python"
+    },
+    "427e527d60b0605ccfa50e38daba8f856191a09a7a195981512a2211c7219ce1": {
+      "role": "student",
+      "name": "Trần Gia Hưng",
+      "class": "Python"
+    },
+    "e14c27bee07eb09dc7e3dfc97c24935e77a0df09afbe148ef316515a5f26d257": {
+      "role": "student",
+      "name": "Trần Thái Thiên Kim",
+      "class": "Python"
+    },
+    "3764895fbb3ae59753594634e3786ed605ec2ddda8d73819bad9ea03047cc45f": {
+      "role": "student",
+      "name": "Lê Minh Khôi",
+      "class": "Python 1-1"
     }
   },
   "tuition_months": [
     "Tháng 9",
     "Tháng 10"
   ],
-  "last_updated": "2026-10-02T10:35:00Z"
+  "last_updated": "2026-10-02T10:43:42Z"
 }
