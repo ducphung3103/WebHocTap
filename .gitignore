@@ -53,3 +53,9 @@ Thumbs.db
 logs/
 .cache/
 data/mock/
+
+# Private student spreadsheets
+*.xlsx
+*.xls
+~$*
+marisa_*.json

@@ -342,6 +342,13 @@
         };
       }
 
+      if (appData) {
+        const statS = document.getElementById('stat-students');
+        if (statS && appData.students) statS.textContent = appData.students.length;
+        const statP = document.getElementById('stat-problems');
+        if (statP && appData.problems) statP.textContent = appData.problems.length;
+      }
+
       renderMatrix();
       renderProblems();
       renderCurriculum();
@@ -441,18 +448,32 @@
 
         const titleBadge = getRatingBadge(rating);
 
+        let handlesList = [];
+        if (s.cf_handle && s.cf_handle.trim()) {
+          handlesList.push(`<a href="https://codeforces.com/profile/${s.cf_handle}" target="_blank" class="text-blue-400 hover:underline">CF: ${s.cf_handle}</a>`);
+        }
+        if (s.vjudge_handle && s.vjudge_handle.trim()) {
+          handlesList.push(`<a href="https://vjudge.net/user/${s.vjudge_handle}" target="_blank" class="text-emerald-400 hover:underline">VJ: ${s.vjudge_handle}</a>`);
+        }
+        if (s.marisa_handle && s.marisa_handle.trim()) {
+          handlesList.push(`<a href="https://marisaoj.com/user/${s.marisa_handle}/submissions" target="_blank" class="text-purple-400 hover:underline">Marisa: ${s.marisa_handle}</a>`);
+        }
+
+        const handlesHtml = handlesList.length > 0 
+          ? handlesList.join('<span class="text-slate-600">•</span>') 
+          : '<span class="text-slate-500 italic text-[11px]">(Chưa liên kết tài khoản)</span>';
+
+        const classBadge = s.class ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">${s.class}</span>` : '';
+
         tr.innerHTML = `
           <td class="px-4 py-3.5 text-center font-bold font-mono text-sm">${rankMedal}</td>
           <td class="px-4 py-3.5 font-semibold text-white">
             <div class="flex items-center gap-2">
               <span class="text-white font-bold text-base">${s.name}</span>
+              ${classBadge}
             </div>
             <div class="text-[11px] font-mono text-slate-400 font-normal flex items-center gap-2 mt-1 flex-wrap">
-              <a href="https://codeforces.com/profile/${s.cf_handle}" target="_blank" class="text-blue-400 hover:underline">CF: ${s.cf_handle}</a>
-              <span>•</span>
-              <a href="https://vjudge.net/user/${s.vjudge_handle}" target="_blank" class="text-emerald-400 hover:underline">VJ: ${s.vjudge_handle}</a>
-              <span>•</span>
-              <a href="https://marisaoj.com" target="_blank" class="text-purple-400 hover:underline">Marisa: ${s.marisa_handle}</a>
+              ${handlesHtml}
             </div>
           </td>
           <td class="px-4 py-3.5 text-center font-mono">
@@ -463,9 +484,16 @@
             ${titleBadge}
           </td>
           <td class="px-4 py-3.5 text-center">
-            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-indigo-300 border border-slate-700">
-              ${totalAc} bài
-            </span>
+            <div class="inline-flex flex-col items-center">
+              <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-indigo-300 border border-slate-700">
+                ${totalAc} bài AC
+              </span>
+              ${s.target_solved_count !== undefined ? `
+                <span class="text-[10px] text-slate-400 font-mono mt-0.5" title="Số bài đã giải trong danh sách 8 bài được giao">
+                  Đề tuần: <strong class="text-emerald-400">${s.target_solved_count}/${appData.problems ? appData.problems.length : 8}</strong>
+                </span>
+              ` : ''}
+            </div>
           </td>
         `;
         body.appendChild(tr);

@@ -10,221 +10,356 @@
   },
   "problems": [
     {
-      "id": "CF-71A",
-      "name": "Way Too Long Words",
-      "platform": "Codeforces",
-      "badge_color": "blue",
-      "category": "Codeforces",
-      "url": "https://codeforces.com/problemset/problem/71/A",
-      "difficulty": "800"
-    },
-    {
-      "id": "CF-158B",
-      "name": "Taxi (Tham lam)",
-      "platform": "Codeforces",
-      "badge_color": "blue",
-      "category": "Codeforces",
-      "url": "https://codeforces.com/problemset/problem/158/B",
-      "difficulty": "1100"
-    },
-    {
-      "id": "CF-4A",
-      "name": "Watermelon",
-      "platform": "Codeforces",
-      "badge_color": "blue",
-      "category": "Codeforces",
-      "url": "https://codeforces.com/problemset/problem/4/A",
-      "difficulty": "800"
-    },
-    {
-      "id": "VJ-CSES-1068",
-      "name": "Weird Algorithm (Collatz)",
-      "platform": "VJudge",
-      "badge_color": "emerald",
-      "category": "VJudge",
-      "url": "https://vjudge.net/problem/CSES-1068",
-      "difficulty": "CSES Introductory"
-    },
-    {
-      "id": "VJ-VNOI-nklineup",
-      "name": "Hàng cây (Segment Tree)",
-      "platform": "VJudge",
-      "badge_color": "emerald",
-      "category": "VJudge",
-      "url": "https://vjudge.net/problem/SPOJ-NKLINEUP",
-      "difficulty": "VNOI Medium"
-    },
-    {
       "id": "MARISA-1",
-      "name": "Tổng hai số A + B",
+      "name": "Hello Marisa! (Tính tổng A + B)",
       "platform": "MarisaOJ",
       "badge_color": "purple",
       "category": "MarisaOJ",
       "url": "https://marisaoj.com/problem/1",
-      "difficulty": "Căn bản"
+      "difficulty": "Level 1 • Brute Force"
     },
     {
-      "id": "MARISA-20",
-      "name": "Dãy con tăng dài nhất (LIS)",
+      "id": "MARISA-2",
+      "name": "A + B (Cộng hai số nguyên)",
       "platform": "MarisaOJ",
       "badge_color": "purple",
       "category": "MarisaOJ",
-      "url": "https://marisaoj.com/problem/20",
-      "difficulty": "Quy hoạch động"
+      "url": "https://marisaoj.com/problem/2",
+      "difficulty": "Level 1 • Brute Force"
+    },
+    {
+      "id": "MARISA-3",
+      "name": "Phép chia (A / B)",
+      "platform": "MarisaOJ",
+      "badge_color": "purple",
+      "category": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/3",
+      "difficulty": "Level 1 • Brute Force"
+    },
+    {
+      "id": "MARISA-8",
+      "name": "Phép nhân phức (Complex multiplication)",
+      "platform": "MarisaOJ",
+      "badge_color": "purple",
+      "category": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/8",
+      "difficulty": "Level 1 • Brute Force"
+    },
+    {
+      "id": "MARISA-396",
+      "name": "Phân loại nấm (Mushroom Classification)",
+      "platform": "MarisaOJ",
+      "badge_color": "purple",
+      "category": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/396",
+      "difficulty": "Level 1 • Brute Force"
+    },
+    {
+      "id": "MARISA-397",
+      "name": "Nấm độc (Toxic Mushroom)",
+      "platform": "MarisaOJ",
+      "badge_color": "purple",
+      "category": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/397",
+      "difficulty": "Level 1 • Brute Force"
+    },
+    {
+      "id": "MARISA-499",
+      "name": "Vòng lặp (Loop)",
+      "platform": "MarisaOJ",
+      "badge_color": "purple",
+      "category": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/499",
+      "difficulty": "Level 1 • Brute Force"
+    },
+    {
+      "id": "MARISA-314",
+      "name": "Số chẵn (Even numbers)",
+      "platform": "MarisaOJ",
+      "badge_color": "purple",
+      "category": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/314",
+      "difficulty": "Level 1 • Brute Force"
     }
   ],
   "students": [
     {
       "stt": 1,
-      "name": "Nguyễn Văn An",
-      "cf_handle": "tourist",
-      "vjudge_handle": "an_vjudge",
-      "marisa_handle": "an_marisa",
+      "name": "Nguyễn Đình Phát",
+      "class": "C++",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "dphatdzvl",
       "solved": [
-        "CF-71A",
-        "CF-158B",
-        "CF-4A",
-        "VJ-CSES-1068",
-        "VJ-VNOI-nklineup",
-        "MARISA-1",
-        "MARISA-20"
+        "MARISA-11",
+        "MARISA-2",
+        "MARISA-20",
+        "MARISA-3",
+        "MARISA-33",
+        "MARISA-408",
+        "MARISA-410",
+        "MARISA-411",
+        "MARISA-422",
+        "MARISA-43",
+        "MARISA-430",
+        "MARISA-528",
+        "MARISA-534",
+        "MARISA-539",
+        "MARISA-6",
+        "MARISA-8",
+        "MARISA-9"
       ],
-      "rating": 1945,
-      "rating_change": "+85"
+      "target_solved": [
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-8"
+      ],
+      "target_solved_count": 3,
+      "total_solved_count": 17,
+      "rating": 1540,
+      "rating_change": "+35"
     },
     {
       "stt": 2,
-      "name": "Trần Thị Bình",
-      "cf_handle": "Petr",
-      "vjudge_handle": "binh_vjudge",
-      "marisa_handle": "binh_marisa",
+      "name": "Nguyễn Đắc Gia Huy",
+      "class": "C++",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "satfswert",
       "solved": [
-        "CF-71A",
-        "CF-4A",
-        "VJ-CSES-1068",
-        "MARISA-1",
-        "MARISA-20"
+        "MARISA-13",
+        "MARISA-15",
+        "MARISA-314",
+        "MARISA-397",
+        "MARISA-4",
+        "MARISA-420",
+        "MARISA-421",
+        "MARISA-499"
       ],
-      "rating": 1720,
-      "rating_change": "+45"
-    },
-    {
-      "stt": 3,
-      "name": "Lê Hoàng Cường",
-      "cf_handle": "Benq",
-      "vjudge_handle": "cuong_vj",
-      "marisa_handle": "cuong_marisa",
-      "solved": [
-        "CF-71A",
-        "CF-158B",
-        "VJ-CSES-1068",
-        "VJ-VNOI-nklineup",
-        "MARISA-1"
+      "target_solved": [
+        "MARISA-314",
+        "MARISA-397",
+        "MARISA-499"
       ],
-      "rating": 1680,
-      "rating_change": "+60"
-    },
-    {
-      "stt": 4,
-      "name": "Phạm Minh Đức",
-      "cf_handle": "Radewoosh",
-      "vjudge_handle": "duc_vjudge",
-      "marisa_handle": "duc_marisa",
-      "solved": [
-        "CF-71A",
-        "CF-4A",
-        "VJ-CSES-1068",
-        "MARISA-1"
-      ],
-      "rating": 1490,
-      "rating_change": "-15"
-    },
-    {
-      "stt": 5,
-      "name": "Hoàng Khánh Linh",
-      "cf_handle": "Um_nik",
-      "vjudge_handle": "linh_cses",
-      "marisa_handle": "linh_marisa",
-      "solved": [
-        "CF-71A",
-        "CF-158B",
-        "CF-4A",
-        "MARISA-1"
-      ],
-      "rating": 1420,
+      "target_solved_count": 3,
+      "total_solved_count": 8,
+      "rating": 1430,
       "rating_change": "+10"
     },
     {
-      "stt": 6,
-      "name": "Đỗ Nam Phong",
-      "cf_handle": "ecnerwala",
-      "vjudge_handle": "phong_vjudge",
-      "marisa_handle": "phong_marisa",
+      "stt": 3,
+      "name": "Mai Thiên Kim",
+      "class": "C++",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "Kimkimkim",
       "solved": [
-        "CF-71A",
-        "VJ-CSES-1068",
-        "VJ-VNOI-nklineup",
         "MARISA-1",
-        "MARISA-20"
+        "MARISA-12",
+        "MARISA-13",
+        "MARISA-5",
+        "MARISA-534",
+        "MARISA-535",
+        "MARISA-587",
+        "MARISA-6",
+        "MARISA-7",
+        "MARISA-9"
       ],
-      "rating": 1540,
+      "target_solved": [
+        "MARISA-1"
+      ],
+      "target_solved_count": 1,
+      "total_solved_count": 10,
+      "rating": 1450,
+      "rating_change": "+15"
+    },
+    {
+      "stt": 4,
+      "name": "Trần Thái Thiên Ân",
+      "class": "C++",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "thienann200212",
+      "solved": [
+        "MARISA-1",
+        "MARISA-13",
+        "MARISA-20",
+        "MARISA-3",
+        "MARISA-314",
+        "MARISA-4",
+        "MARISA-42",
+        "MARISA-499",
+        "MARISA-535"
+      ],
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-3",
+        "MARISA-314",
+        "MARISA-499"
+      ],
+      "target_solved_count": 4,
+      "total_solved_count": 9,
+      "rating": 1460,
       "rating_change": "+20"
     },
     {
-      "stt": 7,
-      "name": "Vũ Mai Phương",
-      "cf_handle": "maroonrk",
-      "vjudge_handle": "phong_vj",
-      "marisa_handle": "phuong_marisa",
+      "stt": 5,
+      "name": "Nguyễn Đức Phát",
+      "class": "Python",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "Nguyenducphat",
       "solved": [
-        "CF-71A",
-        "CF-4A",
+        "MARISA-1",
+        "MARISA-10",
+        "MARISA-11",
+        "MARISA-12",
+        "MARISA-15",
+        "MARISA-16",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-314",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-4",
+        "MARISA-419",
+        "MARISA-420",
+        "MARISA-421",
+        "MARISA-499",
+        "MARISA-5",
+        "MARISA-534",
+        "MARISA-535",
+        "MARISA-542",
+        "MARISA-6",
+        "MARISA-7",
+        "MARISA-8",
+        "MARISA-9"
+      ],
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-314",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-499",
+        "MARISA-8"
+      ],
+      "target_solved_count": 8,
+      "total_solved_count": 24,
+      "rating": 1680,
+      "rating_change": "+65"
+    },
+    {
+      "stt": 6,
+      "name": "Lê Phan Khánh Nam",
+      "class": "Python",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "khanhnam_15",
+      "solved": [
+        "MARISA-1",
+        "MARISA-314",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-4",
+        "MARISA-420",
+        "MARISA-421",
+        "MARISA-499"
+      ],
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-314",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-499"
+      ],
+      "target_solved_count": 5,
+      "total_solved_count": 8,
+      "rating": 1480,
+      "rating_change": "+25"
+    },
+    {
+      "stt": 7,
+      "name": "Trần Gia Hưng",
+      "class": "Python",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "Gia_Hung_Tran",
+      "solved": [
         "MARISA-1"
       ],
-      "rating": 1360,
-      "rating_change": "+30"
+      "target_solved": [
+        "MARISA-1"
+      ],
+      "target_solved_count": 1,
+      "total_solved_count": 1,
+      "rating": 1280,
+      "rating_change": "+10"
     },
     {
       "stt": 8,
-      "name": "Bùi Gia Huy",
-      "cf_handle": "Endagorion",
-      "vjudge_handle": "huy_vjudge",
-      "marisa_handle": "huy_marisa",
-      "solved": [
-        "CF-71A",
-        "CF-158B",
-        "VJ-CSES-1068",
-        "MARISA-1"
-      ],
-      "rating": 1310,
-      "rating_change": "-25"
+      "name": "Trần Thái Thiên Kim",
+      "class": "Python",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "",
+      "solved": [],
+      "target_solved": [],
+      "target_solved_count": 0,
+      "total_solved_count": 0,
+      "rating": 1200,
+      "rating_change": ""
     },
     {
       "stt": 9,
-      "name": "Đặng Quốc Bảo",
-      "cf_handle": "tourist_fan",
-      "vjudge_handle": "baodang_vj",
-      "marisa_handle": "baodang_oj",
+      "name": "Lê Minh Khôi",
+      "class": "Python 1-1",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "Shinnn",
       "solved": [
-        "CF-71A",
-        "CF-4A",
-        "VJ-CSES-1068"
+        "MARISA-1",
+        "MARISA-13",
+        "MARISA-14",
+        "MARISA-15",
+        "MARISA-16",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-314",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-4",
+        "MARISA-401",
+        "MARISA-402",
+        "MARISA-416",
+        "MARISA-419",
+        "MARISA-420",
+        "MARISA-421",
+        "MARISA-499",
+        "MARISA-5",
+        "MARISA-534",
+        "MARISA-542",
+        "MARISA-587",
+        "MARISA-6",
+        "MARISA-7",
+        "MARISA-8",
+        "MARISA-9"
       ],
-      "rating": 1250,
-      "rating_change": "+50"
-    },
-    {
-      "stt": 10,
-      "name": "Trịnh Thu Trang",
-      "cf_handle": "trang_cp",
-      "vjudge_handle": "trang_vjudge",
-      "marisa_handle": "thutrang_mrs",
-      "solved": [
-        "CF-71A",
-        "MARISA-1"
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-314",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-499",
+        "MARISA-8"
       ],
-      "rating": 1180,
-      "rating_change": "+15"
+      "target_solved_count": 8,
+      "total_solved_count": 26,
+      "rating": 1720,
+      "rating_change": "+80"
     }
   ],
   "curriculum": [
