@@ -243,24 +243,41 @@
         </div>
       </div>
 
-      <!-- Class Filter Bar (Xếp theo lớp, mỗi lớp có số lượng bài tập khác nhau) -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0" id="class-filter-container">
+      <!-- Class Filter Bar & Sort Controls (Sắp xếp theo Rating Contest & Tổng số bài làm được) -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+        <!-- Class Filter Buttons -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0" id="class-filter-container">
           <button onclick="filterClass('all')" id="btn-class-all" class="class-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition whitespace-nowrap shadow-sm">
-            Tất cả các lớp (9 hs)
+            Tất cả các lớp
           </button>
           <button onclick="filterClass('C++')" id="btn-class-C++" class="class-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
-            🟦 Lớp C++ (4 hs • Đề: 6 bài)
+            🟦 Lớp C++
           </button>
           <button onclick="filterClass('Python')" id="btn-class-Python" class="class-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
-            🟩 Lớp Python (4 hs • Đề: 7 bài)
+            🟩 Lớp Python
           </button>
           <button onclick="filterClass('Python 1-1')" id="btn-class-Python-1-1" class="class-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
-            🟪 Lớp Python 1-1 (1 hs • Đề: 8 bài)
+            🟪 Lớp Python 1-1
           </button>
         </div>
-        <div class="text-[11px] text-slate-400 shrink-0 font-medium">
-          💡 Tiến độ được tính theo chỉ tiêu bài tập của từng lớp
+
+        <!-- Sort Control Buttons -->
+        <div class="flex items-center gap-1.5 bg-slate-800/80 p-1 rounded-xl border border-slate-700/80 text-xs shrink-0 flex-wrap">
+          <span class="text-slate-400 pl-2 font-medium flex items-center gap-1 select-none">
+            <span>↕️</span> Sắp xếp:
+          </span>
+          <button onclick="setLeaderboardSort('rating')" id="sort-btn-rating" class="sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo điểm thi đấu Contest Rating">
+            <span>⭐ Rating Contest</span>
+            <span id="sort-arrow-rating" class="text-[10px] hidden">↓</span>
+          </button>
+          <button onclick="setLeaderboardSort('total')" id="sort-btn-total" class="sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo Tổng số bài làm được (Tổng AC)">
+            <span>🏆 Số bài làm được (Tổng AC)</span>
+            <span id="sort-arrow-total" class="text-[10px] hidden">↓</span>
+          </button>
+          <button onclick="setLeaderboardSort('target')" id="sort-btn-target" class="sort-pill-btn px-2.5 py-1 rounded-lg font-bold bg-indigo-600 text-white shadow-sm transition flex items-center gap-1" title="Sắp xếp theo Tiến độ bài tập giao theo lớp">
+            <span>🎯 Bài tập lớp</span>
+            <span id="sort-arrow-target" class="text-[10px]">↓</span>
+          </button>
         </div>
       </div>
 
@@ -1055,8 +1072,89 @@
       }
     }
 
-    // 1. FILTER & RENDER MATRIX LEADERBOARD (XẾP THEO LỚP, RATING CONTEST = 0)
+    // 1. FILTER & RENDER MATRIX LEADERBOARD (XẾP THEO LỚP & TIÊU CHÍ SORT)
     let currentClassFilter = 'all';
+    let currentSortMetric = 'target'; // 'target' | 'total' | 'rating' | 'week' | 'month' | 'year'
+    let currentSortDir = 'desc';
+
+    function setLeaderboardSort(metric) {
+      if (currentSortMetric === metric) {
+        currentSortDir = currentSortDir === 'desc' ? 'asc' : 'desc';
+      } else {
+        currentSortMetric = metric;
+        currentSortDir = 'desc';
+      }
+      updateSortUI();
+      renderMatrix();
+    }
+
+    function updateSortUI() {
+      const metrics = ['rating', 'total', 'target'];
+      metrics.forEach(m => {
+        const btn = document.getElementById(`sort-btn-${m}`);
+        const arrow = document.getElementById(`sort-arrow-${m}`);
+        if (btn) {
+          if (m === currentSortMetric) {
+            btn.className = "sort-pill-btn px-2.5 py-1 rounded-lg font-bold bg-indigo-600 text-white shadow-sm transition flex items-center gap-1";
+            if (arrow) {
+              arrow.classList.remove('hidden');
+              arrow.textContent = currentSortDir === 'desc' ? '↓' : '↑';
+            }
+          } else {
+            btn.className = "sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1";
+            if (arrow) {
+              arrow.classList.add('hidden');
+            }
+          }
+        }
+      });
+    }
+
+    function sortStudentList(list) {
+      return list.slice().sort((a, b) => {
+        let valA = 0;
+        let valB = 0;
+
+        if (currentSortMetric === 'rating') {
+          valA = a.rating !== undefined ? a.rating : 0;
+          valB = b.rating !== undefined ? b.rating : 0;
+          if (valB !== valA) return currentSortDir === 'desc' ? valB - valA : valA - valB;
+          const tB = b.stats ? b.stats.total : (b.solved ? b.solved.length : 0);
+          const tA = a.stats ? a.stats.total : (a.solved ? a.solved.length : 0);
+          return tB - tA;
+        } else if (currentSortMetric === 'total') {
+          valA = a.stats ? a.stats.total : (a.solved ? a.solved.length : 0);
+          valB = b.stats ? b.stats.total : (b.solved ? b.solved.length : 0);
+          if (valB !== valA) return currentSortDir === 'desc' ? valB - valA : valA - valB;
+          const rB = b.rating !== undefined ? b.rating : 0;
+          const rA = a.rating !== undefined ? a.rating : 0;
+          return rB - rA;
+        } else if (currentSortMetric === 'week') {
+          valA = a.stats ? a.stats.week : 0;
+          valB = b.stats ? b.stats.week : 0;
+          if (valB !== valA) return currentSortDir === 'desc' ? valB - valA : valA - valB;
+        } else if (currentSortMetric === 'month') {
+          valA = a.stats ? a.stats.month : 0;
+          valB = b.stats ? b.stats.month : 0;
+          if (valB !== valA) return currentSortDir === 'desc' ? valB - valA : valA - valB;
+        } else if (currentSortMetric === 'year') {
+          valA = a.stats ? a.stats.year : 0;
+          valB = b.stats ? b.stats.year : 0;
+          if (valB !== valA) return currentSortDir === 'desc' ? valB - valA : valA - valB;
+        } else { // 'target'
+          valA = a.target_solved_count !== undefined ? a.target_solved_count : 0;
+          valB = b.target_solved_count !== undefined ? b.target_solved_count : 0;
+          if (valB !== valA) return currentSortDir === 'desc' ? valB - valA : valA - valB;
+          const tB = b.stats ? b.stats.total : (b.solved ? b.solved.length : 0);
+          const tA = a.stats ? a.stats.total : (a.solved ? a.solved.length : 0);
+          return tB - tA;
+        }
+
+        const tB = b.stats ? b.stats.total : (b.solved ? b.solved.length : 0);
+        const tA = a.stats ? a.stats.total : (a.solved ? a.solved.length : 0);
+        return tB - tA;
+      });
+    }
 
     function filterClass(cls) {
       currentClassFilter = cls;
@@ -1104,6 +1202,101 @@
       }
     }
 
+    function getThSort(metric, label, extraClass = "text-center") {
+      const isActive = currentSortMetric === metric;
+      const arrow = isActive ? (currentSortDir === 'desc' ? ' ↓' : ' ↑') : '';
+      const activeStyle = isActive 
+        ? 'text-indigo-400 font-bold bg-indigo-950/30' 
+        : 'text-slate-400 hover:text-white hover:bg-slate-800/60';
+      return `<th class="px-3 py-3.5 ${extraClass} cursor-pointer select-none transition ${activeStyle}" onclick="setLeaderboardSort('${metric}')" title="Bấm để sắp xếp theo ${label}">
+        <span class="inline-flex items-center gap-1">
+          <span>${label}</span>
+          <span class="text-xs font-mono font-bold">${arrow}</span>
+        </span>
+      </th>`;
+    }
+
+    function createStudentRow(s, rankIdx) {
+      const tr = document.createElement('tr');
+      tr.className = "hover:bg-slate-800/40 transition";
+      const totalAc = s.solved ? s.solved.length : 0;
+      const rankMedal = rankIdx === 0 ? '🥇 1' : rankIdx === 1 ? '🥈 2' : rankIdx === 2 ? '🥉 3' : `${rankIdx + 1}`;
+      
+      const rating = s.rating !== undefined ? s.rating : 0;
+      const titleBadge = getRatingBadge(rating, s.title || 'Newbie');
+
+      const cCfg = (appData.class_config && appData.class_config[s.class]) || {};
+      const cTotal = cCfg.total_problems || (s.class === 'C++' ? 6 : s.class === 'Python' ? 7 : 8);
+
+      const cBadge = s.class === 'C++' 
+        ? 'bg-blue-500/10 text-blue-300 border-blue-500/30' 
+        : s.class === 'Python' 
+          ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' 
+          : 'bg-purple-500/10 text-purple-300 border-purple-500/30';
+
+      const classBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold ${cBadge} border">${s.class}</span>`;
+
+      const stWeek = s.stats ? s.stats.week : (s.target_solved_count || 0);
+      const stMonth = s.stats ? s.stats.month : totalAc;
+      const stYear = s.stats ? s.stats.year : totalAc;
+      const stTotal = s.stats ? s.stats.total : totalAc;
+
+      const targetSolved = s.target_solved_count !== undefined ? s.target_solved_count : 0;
+      const pct = cTotal > 0 ? Math.min(100, Math.round((targetSolved / cTotal) * 100)) : 0;
+
+      tr.innerHTML = `
+        <td class="px-3 py-3.5 text-center font-bold font-mono text-sm">${rankMedal}</td>
+        <td class="px-4 py-3.5 font-semibold text-white">
+          <div class="flex items-center gap-2">
+            <a href="student.html?id=${s.stt}" class="text-white hover:text-indigo-400 font-bold text-base transition flex items-center gap-1 group">
+              <span>${s.name}</span>
+              <span class="text-xs text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+            </a>
+            ${classBadge}
+          </div>
+        </td>
+        <td class="px-3 py-3.5 text-center font-mono">
+          <span class="px-2.5 py-0.5 rounded-md font-mono font-bold text-white bg-slate-800/90 border border-slate-700/80 text-sm">
+            ${rating}
+          </span>
+        </td>
+        <td class="px-3 py-3.5 text-center">
+          ${titleBadge}
+        </td>
+        <td class="px-3 py-3.5 text-center">
+          <div class="inline-flex flex-col items-center gap-1 w-full max-w-[125px] mx-auto">
+            <div class="flex items-center justify-between w-full text-[11px] font-mono">
+              <span class="font-bold ${pct === 100 ? 'text-emerald-400' : 'text-slate-200'}">${targetSolved}/${cTotal} bài</span>
+              <span class="${pct === 100 ? 'text-emerald-400 font-bold' : 'text-slate-400'}">${pct}%</span>
+            </div>
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div class="h-1.5 rounded-full ${pct === 100 ? 'bg-emerald-400' : 'bg-indigo-500'}" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        </td>
+        <td class="px-3 py-3.5 text-center font-mono">
+          <span class="text-sm font-bold ${stWeek > 0 ? 'text-indigo-400' : 'text-slate-500'}">${stWeek}</span>
+        </td>
+        <td class="px-3 py-3.5 text-center font-mono">
+          <span class="text-sm font-bold ${stMonth > 0 ? 'text-purple-300' : 'text-slate-500'}">${stMonth}</span>
+        </td>
+        <td class="px-3 py-3.5 text-center font-mono">
+          <span class="text-sm font-bold ${stYear > 0 ? 'text-emerald-400' : 'text-slate-500'}">${stYear}</span>
+        </td>
+        <td class="px-3.5 py-3.5 text-center">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-rose-300 border border-slate-700">
+            ${stTotal} bài
+          </span>
+        </td>
+        <td class="px-3.5 py-3.5 text-center">
+          <a href="student.html?id=${s.stt}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 hover:border-indigo-500/60 transition whitespace-nowrap">
+            <span>👤</span> Xem Heatmap ↗
+          </a>
+        </td>
+      `;
+      return tr;
+    }
+
     function renderMatrix(filterText = '') {
       const head = document.getElementById('matrix-head');
       const body = document.getElementById('matrix-body');
@@ -1130,163 +1323,113 @@
       const searchInput = document.getElementById('leaderboard-search-input');
       const query = (filterText || (searchInput ? searchInput.value : '')).toLowerCase().trim();
 
-      // Header: Hạng, Coder, Rating Contest, Danh hiệu, Tiến độ bài tập, 1 Tuần, 1 Tháng, 1 Năm, Tổng AC, Hồ sơ
+      // Clickable Sortable Header
       head.innerHTML = `<tr>
         <th class="px-3 py-3.5 text-center w-14">Hạng</th>
         <th class="px-4 py-3.5">Coder & Lớp</th>
-        <th class="px-3 py-3.5 text-center">Rating Contest</th>
+        ${getThSort('rating', 'Rating Contest')}
         <th class="px-3 py-3.5 text-center">Danh hiệu</th>
-        <th class="px-3 py-3.5 text-center min-w-[130px]">Tiến độ bài tập</th>
-        <th class="px-3 py-3.5 text-center">1 Tuần</th>
-        <th class="px-3 py-3.5 text-center">1 Tháng</th>
-        <th class="px-3 py-3.5 text-center">1 Năm</th>
-        <th class="px-3.5 py-3.5 text-center">Tổng AC</th>
+        ${getThSort('target', 'Tiến độ bài tập', 'text-center min-w-[130px]')}
+        ${getThSort('week', '1 Tuần')}
+        ${getThSort('month', '1 Tháng')}
+        ${getThSort('year', '1 Năm')}
+        ${getThSort('total', 'Tổng AC')}
         <th class="px-3.5 py-3.5 text-center">Hồ sơ</th>
       </tr>`;
 
       body.innerHTML = '';
 
-      const allClasses = ['C++', 'Python', 'Python 1-1'];
-      const classesToProcess = currentClassFilter === 'all' 
-        ? allClasses 
-        : [currentClassFilter];
+      const filterStudentByQuery = (s) => {
+        if (!query) return true;
+        return s.name.toLowerCase().includes(query) || 
+          (s.cf_handle && s.cf_handle.toLowerCase().includes(query)) || 
+          (s.vjudge_handle && s.vjudge_handle.toLowerCase().includes(query)) || 
+          (s.marisa_handle && s.marisa_handle.toLowerCase().includes(query)) ||
+          (s.vnoi_handle && s.vnoi_handle.toLowerCase().includes(query)) ||
+          (s.clue_handle && s.clue_handle.toLowerCase().includes(query)) ||
+          (s.ctoj_handle && s.ctoj_handle.toLowerCase().includes(query));
+      };
 
       let anyStudentsFound = false;
 
-      classesToProcess.forEach(cls => {
-        const cCfg = (appData.class_config && appData.class_config[cls]) || {};
-        const cName = cCfg.name || `Lớp ${cls}`;
-        const cTotal = cCfg.total_problems || (cls === 'C++' ? 6 : cls === 'Python' ? 7 : 8);
-        const cIcon = cls === 'C++' ? '🟦' : cls === 'Python' ? '🟩' : '🟪';
-        const cBadge = cls === 'C++' 
-          ? 'bg-blue-500/10 text-blue-300 border-blue-500/30' 
-          : cls === 'Python' 
-            ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' 
-            : 'bg-purple-500/10 text-purple-300 border-purple-500/30';
+      // CASE A: Unified Ranking (Khi chọn "Tất cả các lớp" VÀ sắp xếp theo Rating hoặc Tổng AC hoặc thời gian)
+      if (currentClassFilter === 'all' && currentSortMetric !== 'target') {
+        let allStudents = (appData.students || []).filter(filterStudentByQuery);
+        if (allStudents.length > 0) {
+          anyStudentsFound = true;
+          const sortedList = sortStudentList(allStudents);
 
-        // Filter students of this class
-        let classStudents = (appData.students || []).filter(s => s.class === cls);
+          let metricTitle = currentSortMetric === 'rating' ? '⭐ Rating Contest' 
+            : currentSortMetric === 'total' ? '🏆 Tổng số bài làm được (Tổng AC)' 
+            : currentSortMetric === 'week' ? '📅 Số bài làm trong 1 Tuần' 
+            : currentSortMetric === 'month' ? '📅 Số bài làm trong 1 Tháng' 
+            : '📅 Số bài làm trong 1 Năm';
 
-        // Filter by search query
-        if (query) {
-          classStudents = classStudents.filter(s => 
-            s.name.toLowerCase().includes(query) || 
-            (s.cf_handle && s.cf_handle.toLowerCase().includes(query)) || 
-            (s.vjudge_handle && s.vjudge_handle.toLowerCase().includes(query)) || 
-            (s.marisa_handle && s.marisa_handle.toLowerCase().includes(query)) ||
-            (s.vnoi_handle && s.vnoi_handle.toLowerCase().includes(query)) ||
-            (s.clue_handle && s.clue_handle.toLowerCase().includes(query)) ||
-            (s.ctoj_handle && s.ctoj_handle.toLowerCase().includes(query))
-          );
-        }
-
-        if (classStudents.length === 0) return;
-        anyStudentsFound = true;
-
-        // Sort students within their class: Homework progress first, then Total AC
-        classStudents.sort((a, b) => {
-          const pB = a.target_solved_count !== undefined ? b.target_solved_count : (b.solved ? b.solved.length : 0);
-          const pA = a.target_solved_count !== undefined ? a.target_solved_count : (a.solved ? a.solved.length : 0);
-          if (pB !== pA) return pB - pA;
-          const tB = (b.stats ? b.stats.total : (b.solved ? b.solved.length : 0));
-          const tA = (a.stats ? a.stats.total : (a.solved ? a.solved.length : 0));
-          return tB - tA;
-        });
-
-        // Add class group divider row
-        const divider = document.createElement('tr');
-        divider.className = "bg-slate-900/90 border-y border-slate-700/80";
-        divider.innerHTML = `
-          <td colspan="10" class="px-4 py-2 font-bold text-xs uppercase tracking-wider text-slate-300">
-            <div class="flex items-center justify-between flex-wrap gap-2">
-              <span class="flex items-center gap-2">
-                <span>${cIcon}</span>
-                <strong class="text-white text-sm normal-case font-bold">${cName}</strong>
-                <span class="text-slate-400 font-mono text-[11px] normal-case">(${classStudents.length} học sinh)</span>
-              </span>
-              <span class="text-slate-400 font-mono text-[11px] normal-case bg-slate-800/80 px-2.5 py-0.5 rounded border border-slate-700">
-                Đề tuần giao: <strong class="text-emerald-400 font-bold">${cTotal} bài tập</strong>
-              </span>
-            </div>
-          </td>
-        `;
-        body.appendChild(divider);
-
-        // Render each student in this class
-        classStudents.forEach((s, idx) => {
-          const tr = document.createElement('tr');
-          tr.className = "hover:bg-slate-800/40 transition";
-          const totalAc = s.solved ? s.solved.length : 0;
-          const rankMedal = idx === 0 ? '🥇 1' : idx === 1 ? '🥈 2' : idx === 2 ? '🥉 3' : `${idx + 1}`;
-          
-          // Rating Contest: currently 0 for all
-          const rating = s.rating !== undefined ? s.rating : 0;
-          const titleBadge = getRatingBadge(rating, s.title || 'Newbie');
-
-          const classBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold ${cBadge} border">${s.class}</span>`;
-
-          const stWeek = s.stats ? s.stats.week : (s.target_solved_count || 0);
-          const stMonth = s.stats ? s.stats.month : totalAc;
-          const stYear = s.stats ? s.stats.year : totalAc;
-          const stTotal = s.stats ? s.stats.total : totalAc;
-
-          // Progress calculation for this class
-          const targetSolved = s.target_solved_count !== undefined ? s.target_solved_count : 0;
-          const pct = cTotal > 0 ? Math.round((targetSolved / cTotal) * 100) : 0;
-
-          tr.innerHTML = `
-            <td class="px-3 py-3.5 text-center font-bold font-mono text-sm">${rankMedal}</td>
-            <td class="px-4 py-3.5 font-semibold text-white">
-              <div class="flex items-center gap-2">
-                <a href="student.html?id=${s.stt}" class="text-white hover:text-indigo-400 font-bold text-base transition flex items-center gap-1 group">
-                  <span>${s.name}</span>
-                  <span class="text-xs text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                </a>
-                ${classBadge}
+          const banner = document.createElement('tr');
+          banner.className = "bg-slate-900/90 border-y border-slate-700/80";
+          banner.innerHTML = `
+            <td colspan="10" class="px-4 py-2 font-bold text-xs uppercase tracking-wider text-slate-300">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <span class="flex items-center gap-2">
+                  <span>🌐</span>
+                  <strong class="text-white text-sm normal-case font-bold">Bảng xếp hạng toàn trường (${sortedList.length} học sinh)</strong>
+                </span>
+                <span class="text-slate-400 font-mono text-[11px] normal-case bg-slate-800/80 px-2.5 py-0.5 rounded border border-slate-700">
+                  Xếp theo: <strong class="text-indigo-400 font-bold">${metricTitle} (${currentSortDir === 'desc' ? 'Cao → Thấp' : 'Thấp → Cao'})</strong>
+                </span>
               </div>
-            </td>
-            <td class="px-3 py-3.5 text-center font-mono">
-              <span class="px-2.5 py-0.5 rounded-md font-mono font-bold text-white bg-slate-800/90 border border-slate-700/80 text-sm">
-                ${rating}
-              </span>
-            </td>
-            <td class="px-3 py-3.5 text-center">
-              ${titleBadge}
-            </td>
-            <td class="px-3 py-3.5 text-center">
-              <div class="inline-flex flex-col items-center gap-1 w-full max-w-[125px] mx-auto">
-                <div class="flex items-center justify-between w-full text-[11px] font-mono">
-                  <span class="font-bold ${pct === 100 ? 'text-emerald-400' : 'text-slate-200'}">${targetSolved}/${cTotal} bài</span>
-                  <span class="${pct === 100 ? 'text-emerald-400 font-bold' : 'text-slate-400'}">${pct}%</span>
-                </div>
-                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                  <div class="h-1.5 rounded-full ${pct === 100 ? 'bg-emerald-400' : 'bg-indigo-500'}" style="width: ${pct}%"></div>
-                </div>
-              </div>
-            </td>
-            <td class="px-3 py-3.5 text-center font-mono">
-              <span class="text-sm font-bold ${stWeek > 0 ? 'text-indigo-400' : 'text-slate-500'}">${stWeek}</span>
-            </td>
-            <td class="px-3 py-3.5 text-center font-mono">
-              <span class="text-sm font-bold ${stMonth > 0 ? 'text-purple-300' : 'text-slate-500'}">${stMonth}</span>
-            </td>
-            <td class="px-3 py-3.5 text-center font-mono">
-              <span class="text-sm font-bold ${stYear > 0 ? 'text-emerald-400' : 'text-slate-500'}">${stYear}</span>
-            </td>
-            <td class="px-3.5 py-3.5 text-center">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-rose-300 border border-slate-700">
-                ${stTotal} bài
-              </span>
-            </td>
-            <td class="px-3.5 py-3.5 text-center">
-              <a href="student.html?id=${s.stt}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 hover:border-indigo-500/60 transition whitespace-nowrap">
-                <span>👤</span> Xem Heatmap ↗
-              </a>
             </td>
           `;
-          body.appendChild(tr);
+          body.appendChild(banner);
+
+          sortedList.forEach((s, idx) => {
+            body.appendChild(createStudentRow(s, idx));
+          });
+        }
+      } else {
+        // CASE B: Grouped by class (Khi xem theo tiến độ bài tập 'target' hoặc khi đã chọn 1 lớp cụ thể)
+        const allClasses = ['C++', 'Python', 'Python 1-1'];
+        const classesToProcess = currentClassFilter === 'all' 
+          ? allClasses 
+          : [currentClassFilter];
+
+        classesToProcess.forEach(cls => {
+          const cCfg = (appData.class_config && appData.class_config[cls]) || {};
+          const cName = cCfg.name || `Lớp ${cls}`;
+          const cTotal = cCfg.total_problems || (cls === 'C++' ? 6 : cls === 'Python' ? 7 : 8);
+          const cIcon = cls === 'C++' ? '🟦' : cls === 'Python' ? '🟩' : '🟪';
+
+          let classStudents = (appData.students || []).filter(s => s.class === cls && filterStudentByQuery(s));
+
+          if (classStudents.length === 0) return;
+          anyStudentsFound = true;
+
+          const sortedList = sortStudentList(classStudents);
+
+          // Add class group divider row
+          const divider = document.createElement('tr');
+          divider.className = "bg-slate-900/90 border-y border-slate-700/80";
+          divider.innerHTML = `
+            <td colspan="10" class="px-4 py-2 font-bold text-xs uppercase tracking-wider text-slate-300">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <span class="flex items-center gap-2">
+                  <span>${cIcon}</span>
+                  <strong class="text-white text-sm normal-case font-bold">${cName}</strong>
+                  <span class="text-slate-400 font-mono text-[11px] normal-case">(${sortedList.length} học sinh)</span>
+                </span>
+                <span class="text-slate-400 font-mono text-[11px] normal-case bg-slate-800/80 px-2.5 py-0.5 rounded border border-slate-700">
+                  Đề tuần giao: <strong class="text-emerald-400 font-bold">${cTotal} bài tập</strong>
+                </span>
+              </div>
+            </td>
+          `;
+          body.appendChild(divider);
+
+          sortedList.forEach((s, idx) => {
+            body.appendChild(createStudentRow(s, idx));
+          });
         });
-      });
+      }
 
       if (!anyStudentsFound) {
         body.innerHTML = `
