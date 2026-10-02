@@ -151,7 +151,7 @@
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
             🏆 Bảng Xếp Hạng Lớp Học
           </h2>
-          <p class="text-xs text-slate-400">Xếp hạng thi đua theo tổng số bài tập đã giải trên Codeforces, VJudge và MarisaOJ</p>
+          <p class="text-xs text-slate-400">Xếp hạng thi đấu dựa trên điểm Contest Rating và tổng số bài tập đã giải</p>
         </div>
 
         <!-- Search Bar on Leaderboard -->
@@ -365,22 +365,43 @@
       renderMatrix(q);
     }
 
+    function getRatingBadge(rating) {
+      if (rating >= 2100) {
+        return `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">Master 🔴</span>`;
+      } else if (rating >= 1900) {
+        return `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30">Candidate Master 🟣</span>`;
+      } else if (rating >= 1600) {
+        return `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-500/15 text-blue-300 border border-blue-500/30">Expert 🔵</span>`;
+      } else if (rating >= 1400) {
+        return `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Specialist 🔷</span>`;
+      } else if (rating >= 1200) {
+        return `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Pupil 🟢</span>`;
+      } else {
+        return `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-700/40 text-slate-400 border border-slate-700">Newbie ⚪</span>`;
+      }
+    }
+
     function renderMatrix(filterText = '') {
       const head = document.getElementById('matrix-head');
       const body = document.getElementById('matrix-body');
       if (!head || !body) return;
 
-      // Clean Header: Rank, Coder, Total Solved, Progress, Title
+      // Clean Header: Rank, Coder, Contest Rating, Contest Title, Total Solved
       head.innerHTML = `<tr>
         <th class="px-4 py-3.5 text-center w-16">Hạng</th>
         <th class="px-4 py-3.5">Coder & Tài khoản</th>
-        <th class="px-4 py-3.5 text-center">Tổng bài đã giải</th>
-        <th class="px-4 py-3.5 text-center w-48">Tiến độ</th>
-        <th class="px-4 py-3.5 text-center">Danh hiệu</th>
+        <th class="px-4 py-3.5 text-center">Contest Rating</th>
+        <th class="px-4 py-3.5 text-center">Danh hiệu Contest</th>
+        <th class="px-4 py-3.5 text-center">Tổng bài đã AC</th>
       </tr>`;
 
-      // Sort students by AC count
-      const sorted = [...(appData.students || [])].sort((a, b) => (b.solved?.length || 0) - (a.solved?.length || 0));
+      // Sort students by Contest Rating descending (fallback to AC count)
+      const sorted = [...(appData.students || [])].sort((a, b) => {
+        const rB = b.rating || 0;
+        const rA = a.rating || 0;
+        if (rB !== rA) return rB - rA;
+        return (b.solved?.length || 0) - (a.solved?.length || 0);
+      });
 
       const query = (filterText || '').toLowerCase().trim();
       const filtered = sorted.filter(s => 
@@ -392,23 +413,23 @@
       );
 
       body.innerHTML = '';
-      const totalProblems = (appData.problems && appData.problems.length) ? appData.problems.length : 7;
 
       filtered.forEach((s, idx) => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-800/40 transition";
         const totalAc = s.solved ? s.solved.length : 0;
         const rankMedal = idx === 0 ? '🥇 1' : idx === 1 ? '🥈 2' : idx === 2 ? '🥉 3' : `${idx + 1}`;
-        const percent = Math.min(100, Math.round((totalAc / totalProblems) * 100));
+        const rating = s.rating || 1200;
+        const ratingChange = s.rating_change || '';
 
-        let titleBadge = '';
-        if (percent >= 80) {
-          titleBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/20">Grandmaster 🏆</span>`;
-        } else if (percent >= 50) {
-          titleBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Master ⚡</span>`;
-        } else {
-          titleBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">Specialist 🎯</span>`;
+        let changeBadge = '';
+        if (ratingChange.startsWith('+')) {
+          changeBadge = `<span class="text-[11px] font-mono text-emerald-400 font-bold ml-1.5">${ratingChange}</span>`;
+        } else if (ratingChange.startsWith('-')) {
+          changeBadge = `<span class="text-[11px] font-mono text-rose-400 font-bold ml-1.5">${ratingChange}</span>`;
         }
+
+        const titleBadge = getRatingBadge(rating);
 
         tr.innerHTML = `
           <td class="px-4 py-3.5 text-center font-bold font-mono text-sm">${rankMedal}</td>
@@ -424,21 +445,17 @@
               <a href="https://marisaoj.com" target="_blank" class="text-purple-400 hover:underline">Marisa: ${s.marisa_handle}</a>
             </div>
           </td>
-          <td class="px-4 py-3.5 text-center">
-            <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-              ${totalAc} bài AC
-            </span>
-          </td>
-          <td class="px-4 py-3.5">
-            <div class="flex items-center gap-3">
-              <div class="flex-1 bg-slate-800 rounded-full h-2.5 overflow-hidden">
-                <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-2.5 rounded-full" style="width: ${percent}%"></div>
-              </div>
-              <span class="font-mono text-xs text-slate-400 w-10 text-right">${percent}%</span>
-            </div>
+          <td class="px-4 py-3.5 text-center font-mono">
+            <span class="text-base font-extrabold text-white">${rating}</span>
+            ${changeBadge}
           </td>
           <td class="px-4 py-3.5 text-center">
             ${titleBadge}
+          </td>
+          <td class="px-4 py-3.5 text-center">
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-indigo-300 border border-slate-700">
+              ${totalAc} bài
+            </span>
           </td>
         `;
         body.appendChild(tr);

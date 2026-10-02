@@ -88,7 +88,9 @@
         "VJ-VNOI-nklineup",
         "MARISA-1",
         "MARISA-20"
-      ]
+      ],
+      "rating": 1945,
+      "rating_change": "+85"
     },
     {
       "stt": 2,
@@ -102,7 +104,9 @@
         "VJ-CSES-1068",
         "MARISA-1",
         "MARISA-20"
-      ]
+      ],
+      "rating": 1720,
+      "rating_change": "+45"
     },
     {
       "stt": 3,
@@ -116,7 +120,9 @@
         "VJ-CSES-1068",
         "VJ-VNOI-nklineup",
         "MARISA-1"
-      ]
+      ],
+      "rating": 1680,
+      "rating_change": "+60"
     },
     {
       "stt": 4,
@@ -129,7 +135,9 @@
         "CF-4A",
         "VJ-CSES-1068",
         "MARISA-1"
-      ]
+      ],
+      "rating": 1490,
+      "rating_change": "-15"
     },
     {
       "stt": 5,
@@ -142,7 +150,9 @@
         "CF-158B",
         "CF-4A",
         "MARISA-1"
-      ]
+      ],
+      "rating": 1420,
+      "rating_change": "+10"
     },
     {
       "stt": 6,
@@ -156,7 +166,9 @@
         "VJ-VNOI-nklineup",
         "MARISA-1",
         "MARISA-20"
-      ]
+      ],
+      "rating": 1540,
+      "rating_change": "+20"
     },
     {
       "stt": 7,
@@ -168,7 +180,9 @@
         "CF-71A",
         "CF-4A",
         "MARISA-1"
-      ]
+      ],
+      "rating": 1360,
+      "rating_change": "+30"
     },
     {
       "stt": 8,
@@ -181,7 +195,9 @@
         "CF-158B",
         "VJ-CSES-1068",
         "MARISA-1"
-      ]
+      ],
+      "rating": 1310,
+      "rating_change": "-25"
     },
     {
       "stt": 9,
@@ -193,7 +209,9 @@
         "CF-71A",
         "CF-4A",
         "VJ-CSES-1068"
-      ]
+      ],
+      "rating": 1250,
+      "rating_change": "+50"
     },
     {
       "stt": 10,
@@ -204,7 +222,9 @@
       "solved": [
         "CF-71A",
         "MARISA-1"
-      ]
+      ],
+      "rating": 1180,
+      "rating_change": "+15"
     }
   ],
   "curriculum": [
