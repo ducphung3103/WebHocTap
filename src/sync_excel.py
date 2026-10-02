@@ -103,7 +103,7 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
 
             plat_str = str(platform).strip()
             plat_lower = plat_str.lower()
-            b_color = "purple" if "marisa" in plat_lower else ("amber" if "vnoi" in plat_lower else ("cyan" if "clue" in plat_lower else ("emerald" if "vjudge" in plat_lower else "blue")))
+            b_color = "purple" if "marisa" in plat_lower else ("amber" if "vnoi" in plat_lower else ("cyan" if "clue" in plat_lower else ("teal" if "chuyentin" in plat_lower or "ctoj" in plat_lower else ("emerald" if "vjudge" in plat_lower else "blue"))))
             prob_id = str(pid or f"PROB-{r}").strip()
             problems.append({
                 "id": prob_id,
@@ -202,6 +202,8 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
                 col_map["vnoi"] = col_idx
             elif any(k in col_name for k in ["clue", "clueoj"]) and "clue" not in col_map:
                 col_map["clue"] = col_idx
+            elif any(k in col_name for k in ["chuyentin", "chuyên tin", "ctoj", "chuyentinpro"]) and "ctoj" not in col_map:
+                col_map["ctoj"] = col_idx
             elif any(k in col_name for k in ["pin", "mật khẩu", "password", "pass"]) and "pin" not in col_map:
                 col_map["pin"] = col_idx
             elif any(k in col_name for k in ["trạng thái", "status"]) and "status" not in col_map:
@@ -228,8 +230,9 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
             vj_h = get_excel_cell(r, "vjudge", 6, "")
             vnoi_h = get_excel_cell(r, "vnoi", -1, "")
             clue_h = get_excel_cell(r, "clue", -1, "")
-            pin = get_excel_cell(r, "pin", 7 if "vnoi" not in col_map and "clue" not in col_map else -1, "")
-            status = get_excel_cell(r, "status", 8 if "vnoi" not in col_map and "clue" not in col_map else -1, "Đang học")
+            ctoj_h = get_excel_cell(r, "ctoj", -1, "")
+            pin = get_excel_cell(r, "pin", 7 if "vnoi" not in col_map and "clue" not in col_map and "ctoj" not in col_map else -1, "")
+            status = get_excel_cell(r, "status", 8 if "vnoi" not in col_map and "clue" not in col_map and "ctoj" not in col_map else -1, "Đang học")
 
             # Preserve crawled solved data from existing_data
             prev_st = existing_students_map.get(marisa_str) or existing_students_map.get(name_str) or {}
@@ -262,6 +265,7 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
                 "marisa_handle": marisa_str,
                 "vnoi_handle": vnoi_h,
                 "clue_handle": clue_h,
+                "ctoj_handle": ctoj_h,
                 "pin": pin,
                 "status": status,
                 "tuition": st_tuition,

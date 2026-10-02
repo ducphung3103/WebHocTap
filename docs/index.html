@@ -681,6 +681,11 @@
             </div>
           </div>
 
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Tài khoản Chuyên Tin Pro (CTOJ):</label>
+            <input type="text" id="form-student-ctoj" placeholder="Handle oj.chuyentin.pro" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+
           <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
             <button type="button" onclick="closeStudentModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition">Hủy</button>
             <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow">Lưu Thông Tin</button>
@@ -1112,7 +1117,8 @@
             (s.vjudge_handle && s.vjudge_handle.toLowerCase().includes(query)) || 
             (s.marisa_handle && s.marisa_handle.toLowerCase().includes(query)) ||
             (s.vnoi_handle && s.vnoi_handle.toLowerCase().includes(query)) ||
-            (s.clue_handle && s.clue_handle.toLowerCase().includes(query))
+            (s.clue_handle && s.clue_handle.toLowerCase().includes(query)) ||
+            (s.ctoj_handle && s.ctoj_handle.toLowerCase().includes(query))
           );
         }
 
@@ -1174,6 +1180,9 @@
           }
           if (s.clue_handle && s.clue_handle.trim()) {
             handlesList.push(`<a href="https://oj.clue.edu.vn/user/${s.clue_handle}" target="_blank" class="text-cyan-400 hover:underline">ClueOJ: ${s.clue_handle}</a>`);
+          }
+          if (s.ctoj_handle && s.ctoj_handle.trim()) {
+            handlesList.push(`<a href="https://oj.chuyentin.pro/user/${s.ctoj_handle}" target="_blank" class="text-teal-400 hover:underline">CTOJ: ${s.ctoj_handle}</a>`);
           }
 
           const handlesHtml = handlesList.length > 0 
@@ -1945,7 +1954,8 @@
           (s.cf_handle && s.cf_handle.toLowerCase().includes(search)) ||
           (s.vjudge_handle && s.vjudge_handle.toLowerCase().includes(search)) ||
           (s.vnoi_handle && s.vnoi_handle.toLowerCase().includes(search)) ||
-          (s.clue_handle && s.clue_handle.toLowerCase().includes(search))
+          (s.clue_handle && s.clue_handle.toLowerCase().includes(search)) ||
+          (s.ctoj_handle && s.ctoj_handle.toLowerCase().includes(search))
         );
       }
 
@@ -1980,6 +1990,7 @@
         if (s.vjudge_handle) handlesList.push(`<a href="https://vjudge.net/user/${s.vjudge_handle}" target="_blank" class="text-emerald-400 hover:underline">VJ: ${s.vjudge_handle}</a>`);
         if (s.vnoi_handle) handlesList.push(`<a href="https://oj.vnoi.info/user/${s.vnoi_handle}" target="_blank" class="text-amber-400 hover:underline">VNOI: ${s.vnoi_handle}</a>`);
         if (s.clue_handle) handlesList.push(`<a href="https://oj.clue.edu.vn/user/${s.clue_handle}" target="_blank" class="text-cyan-400 hover:underline">ClueOJ: ${s.clue_handle}</a>`);
+        if (s.ctoj_handle) handlesList.push(`<a href="https://oj.chuyentin.pro/user/${s.ctoj_handle}" target="_blank" class="text-teal-400 hover:underline">CTOJ: ${s.ctoj_handle}</a>`);
 
         const handlesHtml = handlesList.length > 0 ? handlesList.join(' • ') : '<span class="text-slate-500 italic">--</span>';
 
@@ -2108,6 +2119,7 @@
       document.getElementById('form-student-vj').value = '';
       document.getElementById('form-student-vnoi').value = '';
       document.getElementById('form-student-clue').value = '';
+      document.getElementById('form-student-ctoj').value = '';
       document.getElementById('modal-student').classList.remove('hidden');
     }
 
@@ -2126,6 +2138,7 @@
       document.getElementById('form-student-vj').value = student.vjudge_handle || '';
       document.getElementById('form-student-vnoi').value = student.vnoi_handle || '';
       document.getElementById('form-student-clue').value = student.clue_handle || '';
+      document.getElementById('form-student-ctoj').value = student.ctoj_handle || '';
       document.getElementById('modal-student').classList.remove('hidden');
     }
 
@@ -2145,6 +2158,7 @@
       const vj = document.getElementById('form-student-vj').value.trim();
       const vnoi = document.getElementById('form-student-vnoi').value.trim();
       const clue = document.getElementById('form-student-clue').value.trim();
+      const ctoj = document.getElementById('form-student-ctoj').value.trim();
 
       if (!name) return;
 
@@ -2161,6 +2175,7 @@
           student.vjudge_handle = vj;
           student.vnoi_handle = vnoi;
           student.clue_handle = clue;
+          student.ctoj_handle = ctoj;
         }
       } else {
         // Add new
@@ -2179,6 +2194,7 @@
           vjudge_handle: vj,
           vnoi_handle: vnoi,
           clue_handle: clue,
+          ctoj_handle: ctoj,
           rating: 0,
           title: "Newbie",
           rating_change: "",
@@ -2485,7 +2501,7 @@
       const wb = XLSX.utils.book_new();
 
       // Sheet 1: Học Sinh
-      const studentHeaders = ["STT", "Họ và tên", "Lớp", "Tài khoản Marisaoj", "Tài khoản Codeforces", "Tài khoản Vjudge", "Tài khoản VNOI", "ClueOJ", "Mã PIN cá nhân (Đăng nhập)", "Trạng thái", "Ghi chú"];
+      const studentHeaders = ["STT", "Họ và tên", "Lớp", "Tài khoản Marisaoj", "Tài khoản Codeforces", "Tài khoản Vjudge", "Tài khoản VNOI", "ClueOJ", "Tài khoản Chuyên Tin Pro", "Mã PIN cá nhân (Đăng nhập)", "Trạng thái", "Ghi chú"];
       const studentRows = [studentHeaders];
       (appData.students || []).forEach(s => {
         studentRows.push([
@@ -2497,6 +2513,7 @@
           s.vjudge_handle || '',
           s.vnoi_handle || '',
           s.clue_handle || '',
+          s.ctoj_handle || '',
           s.pin || '',
           s.status || 'Đang học',
           `Lớp ${s.class}`

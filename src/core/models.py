@@ -67,6 +67,8 @@ class Student:
     email: str
     cf_handle: str = ""
     vnoi_handle: str = ""
+    clue_handle: str = ""
+    ctoj_handle: str = ""
     lqdoj_handle: str = ""
     row_index: int = 0  # Row index in Sheet 2 (2-indexed or determined dynamically)
     status: str = "Active"

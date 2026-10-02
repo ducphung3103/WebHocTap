@@ -142,7 +142,8 @@
         "year": 0,
         "total": 0
       },
-      "activity": {}
+      "activity": {},
+      "ctoj_handle": ""
     },
     {
       "stt": 2,
@@ -173,7 +174,8 @@
         "year": 0,
         "total": 0
       },
-      "activity": {}
+      "activity": {},
+      "ctoj_handle": ""
     },
     {
       "stt": 3,
@@ -204,7 +206,8 @@
         "year": 0,
         "total": 0
       },
-      "activity": {}
+      "activity": {},
+      "ctoj_handle": ""
     },
     {
       "stt": 4,
@@ -286,7 +289,8 @@
           "total": 2,
           "ac": 1
         }
-      }
+      },
+      "ctoj_handle": ""
     },
     {
       "stt": 5,
@@ -354,7 +358,8 @@
           "total": 2,
           "ac": 1
         }
-      }
+      },
+      "ctoj_handle": ""
     },
     {
       "stt": 6,
@@ -427,7 +432,8 @@
           "total": 2,
           "ac": 1
         }
-      }
+      },
+      "ctoj_handle": ""
     },
     {
       "stt": 7,
@@ -502,7 +508,8 @@
           "total": 2,
           "ac": 1
         }
-      }
+      },
+      "ctoj_handle": ""
     },
     {
       "stt": 8,
@@ -533,7 +540,8 @@
         "year": 0,
         "total": 0
       },
-      "activity": {}
+      "activity": {},
+      "ctoj_handle": ""
     },
     {
       "stt": 9,
@@ -614,7 +622,8 @@
           "total": 3,
           "ac": 2
         }
-      }
+      },
+      "ctoj_handle": ""
     },
     {
       "stt": 10,
@@ -679,7 +688,8 @@
           "total": 2,
           "ac": 1
         }
-      }
+      },
+      "ctoj_handle": ""
     },
     {
       "stt": 11,
@@ -721,7 +731,8 @@
           "total": 2,
           "ac": 1
         }
-      }
+      },
+      "ctoj_handle": ""
     },
     {
       "stt": 12,
@@ -752,7 +763,8 @@
         "year": 0,
         "total": 0
       },
-      "activity": {}
+      "activity": {},
+      "ctoj_handle": ""
     },
     {
       "stt": 13,
@@ -844,7 +856,8 @@
           "total": 3,
           "ac": 2
         }
-      }
+      },
+      "ctoj_handle": ""
     }
   ],
   "curriculum": [

@@ -407,7 +407,8 @@
           s.cf_handle === targetHandle ||
           s.vjudge_handle === targetHandle ||
           s.vnoi_handle === targetHandle ||
-          s.clue_handle === targetHandle
+          s.clue_handle === targetHandle ||
+          s.ctoj_handle === targetHandle
         );
         if (found) targetId = found.stt;
       }
@@ -527,6 +528,14 @@
         handlesContainer.innerHTML += `
           <a href="https://oj.clue.edu.vn/user/${student.clue_handle}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/25 transition">
             <span>🔷</span> ClueOJ: <strong>${student.clue_handle}</strong> ↗
+          </a>
+        `;
+      }
+      if (student.ctoj_handle) {
+        handlesFound = true;
+        handlesContainer.innerHTML += `
+          <a href="https://oj.chuyentin.pro/user/${student.ctoj_handle}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-teal-500/15 text-teal-300 border border-teal-500/30 hover:bg-teal-500/25 transition">
+            <span>💻</span> CTOJ: <strong>${student.ctoj_handle}</strong> ↗
           </a>
         `;
       }

@@ -198,7 +198,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                         c_list.append("Python")
 
                 plat_lower = platform.lower()
-                b_color = "purple" if "marisa" in plat_lower else ("amber" if "vnoi" in plat_lower else ("cyan" if "clue" in plat_lower else ("emerald" if "vjudge" in plat_lower else "blue")))
+                b_color = "purple" if "marisa" in plat_lower else ("amber" if "vnoi" in plat_lower else ("cyan" if "clue" in plat_lower else ("teal" if "chuyentin" in plat_lower or "ctoj" in plat_lower else ("emerald" if "vjudge" in plat_lower else "blue"))))
                 problems.append({
                     "id": pid,
                     "name": name,
@@ -306,6 +306,8 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     col_map["vnoi"] = col_idx
                 elif any(k in col_name for k in ["clue", "clueoj"]) and "clue" not in col_map:
                     col_map["clue"] = col_idx
+                elif any(k in col_name for k in ["chuyentin", "chuyên tin", "ctoj", "chuyentinpro"]) and "ctoj" not in col_map:
+                    col_map["ctoj"] = col_idx
                 elif any(k in col_name for k in ["pin", "mật khẩu", "password", "pass"]) and "pin" not in col_map:
                     col_map["pin"] = col_idx
                 elif any(k in col_name for k in ["trạng thái", "status"]) and "status" not in col_map:
@@ -330,8 +332,9 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                 vj_h = get_cell(r, "vjudge", 5, "")
                 vnoi_h = get_cell(r, "vnoi", -1, "")
                 clue_h = get_cell(r, "clue", -1, "")
-                pin = get_cell(r, "pin", 6 if "vnoi" not in col_map and "clue" not in col_map else -1, "")
-                status = get_cell(r, "status", 7 if "vnoi" not in col_map and "clue" not in col_map else -1, "Đang học")
+                ctoj_h = get_cell(r, "ctoj", -1, "")
+                pin = get_cell(r, "pin", 6 if "vnoi" not in col_map and "clue" not in col_map and "ctoj" not in col_map else -1, "")
+                status = get_cell(r, "status", 7 if "vnoi" not in col_map and "clue" not in col_map and "ctoj" not in col_map else -1, "Đang học")
 
                 # Re-use existing solve cache if available
                 existing_st = existing_students.get(name_str, {})
@@ -358,6 +361,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     "marisa_handle": marisa_str,
                     "vnoi_handle": vnoi_h,
                     "clue_handle": clue_h,
+                    "ctoj_handle": ctoj_h,
                     "pin": pin,
                     "status": status,
                     "tuition": st_tuition,
