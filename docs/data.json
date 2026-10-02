@@ -1,6 +1,6 @@
 {
   "class_info": {
-    "title": "🚀 LỚP CHUYÊN TIN & THUẬT TOÁN - KHÓA 2026",
+    "title": "Deruck's Competitive Programming",
     "subtitle": "Hệ thống Quản lý Học tập & Theo dõi Tiến độ Lập trình Thi đấu",
     "schedule": "Tối Thứ 3 & Thứ 7 (19:30 - 21:30)",
     "target": "HSG Quốc Gia, HSG Tỉnh/TP & Olympic Tin học",
@@ -18,6 +18,7 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "Public",
         "C++",
         "Python 1-1",
         "Python"
@@ -32,6 +33,7 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "Public",
         "C++",
         "Python 1-1",
         "Python"
@@ -46,6 +48,7 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "Public",
         "C++",
         "Python 1-1",
         "Python"
@@ -60,6 +63,7 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "Public",
         "C++",
         "Python 1-1",
         "Python"
@@ -74,6 +78,7 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "Public",
         "Python 1-1",
         "Python"
       ]
@@ -87,6 +92,7 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "Public",
         "Python 1-1",
         "Python"
       ]
@@ -100,6 +106,7 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "Public",
         "C++",
         "Python 1-1",
         "Python"
@@ -114,6 +121,7 @@
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "Public",
         "C++",
         "Python 1-1",
         "Python"
@@ -2671,6 +2679,7 @@
       "chapter": "Tuần 1",
       "title": "Nhập xuất & Cấu trúc cơ bản C++",
       "classes": [
+        "Public",
         "C++"
       ],
       "url": "https://notion.so",
@@ -2681,6 +2690,7 @@
       "chapter": "Tuần 2",
       "title": "Cấu trúc rẽ nhánh & Vòng lặp",
       "classes": [
+        "Public",
         "C++"
       ],
       "url": "https://notion.so",
@@ -2691,6 +2701,7 @@
       "chapter": "Tuần 3",
       "title": "Mảng 1 chiều & Kỹ thuật đếm phân phối",
       "classes": [
+        "Public",
         "C++"
       ],
       "url": "https://notion.so",
@@ -2701,6 +2712,7 @@
       "chapter": "Tuần 1",
       "title": "Cơ bản về Python & Thao tác biến",
       "classes": [
+        "Public",
         "Python 1-1",
         "Python"
       ],
@@ -2712,6 +2724,7 @@
       "chapter": "Tuần 2",
       "title": "Vòng lặp & Cấu trúc rẽ nhánh trong Python",
       "classes": [
+        "Public",
         "Python 1-1",
         "Python"
       ],
@@ -2723,6 +2736,7 @@
       "chapter": "Tuần 3",
       "title": "Danh sách (List) & Chuỗi (String)",
       "classes": [
+        "Public",
         "Python 1-1",
         "Python"
       ],
@@ -2734,6 +2748,7 @@
       "chapter": "Chuyên đề",
       "title": "Kỹ thuật Duyệt nhánh cận & Tối ưu hóa",
       "classes": [
+        "Public",
         "Python 1-1",
         "Python"
       ],

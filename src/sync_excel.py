@@ -91,15 +91,23 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
 
             c_list = []
             c_str_clean = str(classes_str).strip()
+            if "Public" in c_str_clean or "Công khai" in c_str_clean or "public" in c_str_clean:
+                c_list.append("Public")
             if "Tất cả" in c_str_clean or "All" in c_str_clean:
-                c_list = ["C++", "Python", "Python 1-1"]
+                if "Public" not in c_list:
+                    c_list.append("Public")
+                for c in ["C++", "Python", "Python 1-1"]:
+                    if c not in c_list:
+                        c_list.append(c)
             else:
-                if "C++" in c_str_clean:
+                if "C++" in c_str_clean and "C++" not in c_list:
                     c_list.append("C++")
-                if "Python 1-1" in c_str_clean or "1-1" in c_str_clean:
+                if ("Python 1-1" in c_str_clean or "1-1" in c_str_clean) and "Python 1-1" not in c_list:
                     c_list.append("Python 1-1")
-                elif "Python" in c_str_clean:
+                elif "Python" in c_str_clean and "Python" not in c_list:
                     c_list.append("Python")
+            if not c_list:
+                c_list = ["Public"]
 
             plat_str = str(platform).strip()
             plat_lower = plat_str.lower()
@@ -137,15 +145,23 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
 
             c_list = []
             c_str_clean = str(classes_str).strip()
+            if "Public" in c_str_clean or "Công khai" in c_str_clean or "public" in c_str_clean:
+                c_list.append("Public")
             if "Tất cả" in c_str_clean or "All" in c_str_clean:
-                c_list = ["C++", "Python", "Python 1-1"]
+                if "Public" not in c_list:
+                    c_list.append("Public")
+                for c in ["C++", "Python", "Python 1-1"]:
+                    if c not in c_list:
+                        c_list.append(c)
             else:
-                if "C++" in c_str_clean:
+                if "C++" in c_str_clean and "C++" not in c_list:
                     c_list.append("C++")
-                if "Python 1-1" in c_str_clean or "1-1" in c_str_clean:
+                if ("Python 1-1" in c_str_clean or "1-1" in c_str_clean) and "Python 1-1" not in c_list:
                     c_list.append("Python 1-1")
-                elif "Python" in c_str_clean:
+                elif "Python" in c_str_clean and "Python" not in c_list:
                     c_list.append("Python")
+            if not c_list:
+                c_list = ["Public"]
 
             curriculum.append({
                 "id": str(lid or f"LEC-{r}").strip(),
@@ -316,6 +332,9 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
 
     # Build final appData
     final_data = existing_data if existing_data else {}
+    if "class_info" not in final_data:
+        final_data["class_info"] = {}
+    final_data["class_info"]["title"] = "Deruck's Competitive Programming"
     final_data["students"] = students
     final_data["problems"] = problems
     final_data["curriculum"] = curriculum

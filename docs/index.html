@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Lớp Chuyên Tin & Thuật Toán - LMS & Tiến Độ</title>
+  <title>Deruck's Competitive Programming - Cổng Học Tập & Thi Đấu</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,20 @@
     }
   </script>
   <style>
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     /* Custom scrollbar */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    /* Prevent text and table overflow */
+    table { border-collapse: separate; border-spacing: 0; }
+    .break-anywhere { overflow-wrap: anywhere; word-break: break-word; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -52,20 +59,25 @@
     <span id="live-toast-msg">⚡ Dữ liệu vừa được cập nhật trực tuyến!</span>
   </div>
 
-  <!-- SECURITY AUTHENTICATION MODAL (BẢO VỆ LỚP HỌC & PHÂN QUYỀN) -->
-  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl transition-all duration-300">
+  <!-- SECURITY AUTHENTICATION MODAL (PHÂN QUYỀN THEO ROLE & MÃ PIN HỌC SINH / ADMIN) -->
+  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl transition-all duration-300 hidden">
     <div class="relative w-full max-w-md bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6">
       
+      <!-- Close Button -->
+      <button onclick="hideAuthModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white text-lg p-1 transition" title="Đóng và xem chế độ Public">
+        ✕
+      </button>
+
       <!-- Modal Header -->
       <div class="text-center space-y-2">
         <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-2xl shadow-inner mb-1">
           🔐
         </div>
         <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-          Cổng Học Tập & Thi Đấu Nội Bộ
+          Deruck's Competitive Programming
         </h2>
         <p class="text-xs sm:text-sm text-slate-400">
-          Nhập <strong class="text-indigo-300">Mã PIN học sinh</strong> hoặc <strong class="text-indigo-300">Mã lớp học / Mật khẩu giáo viên</strong>
+          Nhập <strong class="text-indigo-300">Mã PIN cá nhân</strong> của học sinh hoặc <strong class="text-amber-300">Mật khẩu Giáo viên</strong>
         </p>
       </div>
 
@@ -73,13 +85,13 @@
       <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
         <div class="space-y-1.5">
           <label for="auth-input-code" class="block text-xs font-semibold text-slate-300">
-            Mã truy cập / Mật khẩu:
+            Mã PIN học sinh / Mật khẩu Giáo viên:
           </label>
           <div class="relative">
             <input 
               type="password" 
               id="auth-input-code" 
-              placeholder="Nhập mã PIN hoặc mã lớp..." 
+              placeholder="Nhập mã PIN học sinh hoặc mật khẩu Admin..." 
               autocomplete="off"
               required
               class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition pr-10 font-mono tracking-wider"
@@ -91,7 +103,7 @@
         </div>
 
         <div id="auth-error-msg" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 px-3 py-2 rounded-lg">
-          ❌ Mã truy cập không chính xác. Vui lòng kiểm tra lại hoặc liên hệ Giáo viên!
+          ❌ Mã truy cập không chính xác. Vui lòng kiểm tra lại hoặc liên hệ Thầy Đức!
         </div>
 
         <button 
@@ -99,15 +111,21 @@
           id="auth-submit-btn" 
           class="w-full py-3 px-4 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25 cursor-pointer"
         >
-          <span>Đăng Nhập Vào Lớp Học</span>
+          <span>Đăng Nhập Vào Hệ Thống</span>
           <span>→</span>
         </button>
       </form>
 
       <!-- Footer Info -->
-      <div class="pt-4 border-t border-slate-800 text-center text-xs text-slate-500 space-y-1">
-        <div>🔒 Trang web nội bộ dành riêng cho học sinh của lớp</div>
-        <div>Học sinh chưa có mã vui lòng liên hệ trực tiếp Giáo viên để nhận PIN</div>
+      <div class="pt-4 border-t border-slate-800 text-center text-xs text-slate-500 space-y-2">
+        <div class="flex items-center justify-center gap-1.5 text-slate-400">
+          <span>🍪</span> Hệ thống sẽ tự động lưu đăng nhập bằng <strong>Cookie</strong> (chỉ cần đăng nhập 1 lần)
+        </div>
+        <div>
+          <button onclick="hideAuthModal()" class="text-xs text-indigo-400 hover:underline">
+            Bỏ qua & Xem Bảng Xếp Hạng Public →
+          </button>
+        </div>
       </div>
 
     </div>
@@ -126,36 +144,38 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         
-        <!-- Brand Logo -->
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 ring-1 ring-white/20">
+        <!-- Brand Logo & Return Home Link -->
+        <a href="index.html" class="flex items-center gap-3 group hover:opacity-95 transition" title="Trở về Trang chủ">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 ring-1 ring-white/20 group-hover:scale-105 transition-transform">
             <span class="text-xl">🚀</span>
           </div>
           <div>
             <div class="font-bold text-white text-base leading-tight tracking-tight flex items-center gap-2">
-              Lớp Chuyên Tin 2026
-              <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Free LMS</span>
+              Deruck's Competitive Programming
+              <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LMS</span>
             </div>
-            <div class="text-xs text-slate-400">Competitive Programming LMS & Tracker</div>
+            <div class="text-xs text-slate-400">Cổng Học Tập & Thi Đấu Chuyên Tin Thuật Toán</div>
           </div>
-        </div>
+        </a>
 
         <!-- Navigation Tabs -->
         <nav class="hidden md:flex items-center space-x-1 font-medium text-sm" id="nav-tabs">
+          <button onclick="switchTab('leaderboard')" id="tab-btn-home" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            🏠 Trang Chủ
+          </button>
           <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition">
-            🏆 Bảng Xếp Hạng & Tiến Độ
+            🏆 Bảng Xếp Hạng
           </button>
           <button onclick="switchTab('contests')" id="tab-btn-contests" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
-            <span>⚔️</span> Contest Định Kỳ
-            <span class="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">MỚI</span>
+            <span>⚔️</span> Contest
           </button>
           <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
-            📝 Bài tập
+            📝 Bài Tập
           </button>
           <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
-            📚 Lý thuyết
+            📚 Bài Giảng
           </button>
-          <a href="student.html" class="px-3 py-2 rounded-lg text-indigo-300 hover:text-white hover:bg-indigo-600/20 border border-transparent hover:border-indigo-500/30 flex items-center gap-1.5 transition font-semibold">
+          <a href="student.html" id="tab-btn-student" class="tab-btn px-3 py-2 rounded-lg text-indigo-300 hover:text-white hover:bg-indigo-600/20 border border-transparent hover:border-indigo-500/30 flex items-center gap-1.5 transition font-semibold">
             <span>👤</span> Tiến Độ Cá Nhân
           </a>
           <button onclick="switchTab('admin')" id="tab-btn-admin" class="tab-btn hidden px-3 py-2 rounded-lg text-amber-300 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 flex items-center gap-1.5 transition font-semibold">
@@ -166,23 +186,23 @@
 
         <!-- User Session & Right Quick Actions -->
         <div class="flex items-center gap-2.5">
-          <div id="user-badge" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1.5">
+          <div id="user-badge" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1.5">
             <span>👤</span>
-            <span id="user-display-name">Chưa đăng nhập</span>
+            <span id="user-display-name">Khách (Public)</span>
           </div>
-          <button onclick="handleLogout()" id="btn-logout" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-rose-500/20 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-500/30 transition flex items-center gap-1" title="Đổi tài khoản hoặc đăng xuất">
-            <span>🔒</span>
-            <span class="hidden sm:inline">Đăng xuất</span>
+          <button id="btn-auth-action" onclick="showAuthModal()" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white border border-indigo-500/40 transition flex items-center gap-1 cursor-pointer" title="Đăng nhập hoặc đăng xuất">
+            <span>🔑</span>
+            <span class="hidden sm:inline">Đăng nhập</span>
           </button>
         </div>
       </div>
 
       <!-- Mobile Tab Bar -->
       <div class="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-slate-800 text-xs">
-        <button onclick="switchTab('leaderboard')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300">🏆 Xếp hạng</button>
+        <button onclick="switchTab('leaderboard')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300">🏠 Trang chủ / BXH</button>
         <button onclick="switchTab('contests')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
         <button onclick="switchTab('problems')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
-        <button onclick="switchTab('curriculum')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Lý thuyết</button>
+        <button onclick="switchTab('curriculum')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</button>
         <a href="student.html" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
         <button onclick="switchTab('admin')" id="tab-btn-admin-mobile" class="tab-btn hidden px-3 py-1.5 rounded-lg whitespace-nowrap text-amber-300 bg-amber-500/10">👑 Quản trị</button>
       </div>
@@ -193,31 +213,31 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
     <!-- HERO INTRO -->
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-900 border border-indigo-500/20 p-6 md:p-8">
-      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div class="space-y-2 max-w-2xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">
-            <span>🎯 Khóa Luyện Thi Chuyên Tin & HSG 2026</span>
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-900 border border-indigo-500/20 p-4 sm:p-5">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1.5 max-w-2xl">
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">
+            <span>🎯</span> Deruck's Competitive Programming
           </div>
-          <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-            Cổng Thông Tin Học Tập & Theo Dõi Tiến Độ
+          <h1 class="text-lg md:text-xl font-bold text-white tracking-tight">
+            Deruck's Competitive Programming - Cổng Học Tập & Thi Đấu
           </h1>
-          <p class="text-slate-400 text-sm md:text-base leading-relaxed">
-            Hệ thống hỗ trợ tự động chấm và theo dõi bài nộp của học sinh từ <strong>MarisaOJ</strong>, <strong>VJudge</strong> và <strong>Codeforces</strong>.
+          <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
+            Hệ thống quản lý bài tập, bài giảng và theo dõi tiến độ lập trình thi đấu.
           </p>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 shrink-0">
-          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 text-center">
-            <div class="text-xs text-slate-400">Thành viên</div>
-            <div class="text-2xl font-bold text-white font-mono" id="stat-students">10</div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 shrink-0">
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2.5 text-center min-w-[75px]">
+            <div class="text-[11px] text-slate-400">Thành viên</div>
+            <div class="text-base md:text-lg font-bold text-white font-mono" id="stat-students">10</div>
           </div>
-          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 text-center">
-            <div class="text-xs text-slate-400">Bài tập tuần</div>
-            <div class="text-2xl font-bold text-indigo-400 font-mono" id="stat-problems">7</div>
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2.5 text-center min-w-[75px]">
+            <div class="text-[11px] text-slate-400">Bài tập</div>
+            <div class="text-base md:text-lg font-bold text-indigo-400 font-mono" id="stat-problems">7</div>
           </div>
-          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 text-center col-span-2 sm:col-span-1">
-            <div class="text-xs text-slate-400">Tỉ lệ AC</div>
-            <div class="text-2xl font-bold text-emerald-400 font-mono">68%</div>
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2.5 text-center col-span-2 sm:col-span-1 min-w-[75px]">
+            <div class="text-[11px] text-slate-400">Tỉ lệ AC</div>
+            <div class="text-base md:text-lg font-bold text-emerald-400 font-mono">68%</div>
           </div>
         </div>
       </div>
@@ -230,9 +250,9 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            🏆 Bảng Xếp Hạng Lớp Học
+            🏆 Bảng Xếp Hạng Toàn Bộ Học Viên
           </h2>
-          <p class="text-xs text-slate-400">Xếp hạng thi đấu dựa trên điểm Contest Rating và tổng số bài tập đã giải</p>
+          <p class="text-xs text-slate-400">Bảng xếp hạng công khai tổng hợp theo Contest Rating và Tổng số bài đã giải thành công</p>
         </div>
 
         <!-- Search Bar on Leaderboard -->
@@ -243,12 +263,15 @@
         </div>
       </div>
 
+      <!-- PERSONAL PROGRESS WIDGET (CHỈ HIỆN TIẾN ĐỘ CỦA BẢN THÂN KHI ĐĂNG NHẬP) -->
+      <div id="student-personal-progress-card" class="hidden"></div>
+
       <!-- Class Filter Bar & Sort Controls (Sắp xếp theo Rating Contest & Tổng số bài làm được) -->
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
         <!-- Class Filter Buttons -->
         <div class="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0" id="class-filter-container">
           <button onclick="filterClass('all')" id="btn-class-all" class="class-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition whitespace-nowrap shadow-sm">
-            Tất cả các lớp
+            Tất cả học sinh (Public)
           </button>
           <button onclick="filterClass('C++')" id="btn-class-C++" class="class-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
             🟦 Lớp C++
@@ -266,17 +289,21 @@
           <span class="text-slate-400 pl-2 font-medium flex items-center gap-1 select-none">
             <span>↕️</span> Sắp xếp:
           </span>
-          <button onclick="setLeaderboardSort('rating')" id="sort-btn-rating" class="sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo điểm thi đấu Contest Rating">
+          <button onclick="setLeaderboardSort('rating')" id="sort-btn-rating" class="sort-pill-btn px-2.5 py-1 rounded-lg font-bold bg-indigo-600 text-white shadow-sm transition flex items-center gap-1" title="Sắp xếp theo điểm thi đấu Contest Rating">
             <span>⭐ Rating Contest</span>
-            <span id="sort-arrow-rating" class="text-[10px] hidden">↓</span>
+            <span id="sort-arrow-rating" class="text-[10px]">↓</span>
           </button>
           <button onclick="setLeaderboardSort('total')" id="sort-btn-total" class="sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo Tổng số bài làm được (Tổng AC)">
-            <span>🏆 Số bài làm được (Tổng AC)</span>
+            <span>🏆 Tổng số bài (Tổng AC)</span>
             <span id="sort-arrow-total" class="text-[10px] hidden">↓</span>
           </button>
-          <button onclick="setLeaderboardSort('target')" id="sort-btn-target" class="sort-pill-btn px-2.5 py-1 rounded-lg font-bold bg-indigo-600 text-white shadow-sm transition flex items-center gap-1" title="Sắp xếp theo Tiến độ bài tập giao theo lớp">
-            <span>🎯 Bài tập lớp</span>
-            <span id="sort-arrow-target" class="text-[10px]">↓</span>
+          <button onclick="setLeaderboardSort('week')" id="sort-btn-week" class="sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo số bài AC trong tuần qua">
+            <span>📅 1 Tuần</span>
+            <span id="sort-arrow-week" class="text-[10px] hidden">↓</span>
+          </button>
+          <button onclick="setLeaderboardSort('month')" id="sort-btn-month" class="sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo số bài AC trong tháng qua">
+            <span>📅 1 Tháng</span>
+            <span id="sort-arrow-month" class="text-[10px] hidden">↓</span>
           </button>
         </div>
       </div>
@@ -301,17 +328,36 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            📝 Kho Bài Tập & Đề Thi Phân Loại
+            <span>📝</span> Kho Bài Tập & Đề Thi Phân Lớp
           </h2>
-          <p class="text-xs text-slate-400">Bấm vào từng bài để trực tiếp chuyển đến trang nộp bài của nền tảng tương ứng</p>
+          <p class="text-xs text-slate-400">Bài tập phân theo từng lớp học. Bấm vào bài để chuyển trực tiếp đến trang nộp bài</p>
         </div>
 
-        <!-- Filter tabs: Tất cả, MarisaOJ, VJudge, Codeforces -->
-        <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
-          <button onclick="filterProblems('all')" id="prob-filter-all" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition">Tất cả</button>
-          <button onclick="filterProblems('MarisaOJ')" id="prob-filter-MarisaOJ" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🟣 MarisaOJ</button>
-          <button onclick="filterProblems('VJudge')" id="prob-filter-VJudge" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🟢 VJudge</button>
-          <button onclick="filterProblems('Codeforces')" id="prob-filter-Codeforces" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🔵 Codeforces</button>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="triggerAddProblem()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
+            <span>➕</span> Thêm Bài Tập Mới
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters: Class & Platform -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-3 rounded-2xl">
+        <!-- Class Filter -->
+        <div class="flex items-center gap-1.5 flex-wrap text-xs" id="prob-class-filter-container">
+          <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>👥</span> Xem bài tập:</span>
+          <button onclick="filterProblemClass('all')" id="prob-class-filter-all" class="prob-class-btn px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/40 transition">Tất cả bài tập</button>
+          <button onclick="filterProblemClass('Public')" id="prob-class-filter-Public" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🌐 Public</button>
+          <button onclick="filterProblemClass('C++')" id="prob-class-filter-cpp" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-blue-300 hover:bg-slate-800 transition">🟦 Lớp C++</button>
+          <button onclick="filterProblemClass('Python')" id="prob-class-filter-python" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🟩 Lớp Python</button>
+          <button onclick="filterProblemClass('Python 1-1')" id="prob-class-filter-python11" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-purple-300 hover:bg-slate-800 transition">🟪 Python 1-1</button>
+        </div>
+
+        <!-- Platform Filter -->
+        <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl text-xs border border-slate-800/80">
+          <button onclick="filterProblemPlatform('all')" id="prob-filter-all" class="px-2.5 py-1 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition">Tất cả sàn</button>
+          <button onclick="filterProblemPlatform('MarisaOJ')" id="prob-filter-MarisaOJ" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-purple-300 transition">🟣 Marisa</button>
+          <button onclick="filterProblemPlatform('VJudge')" id="prob-filter-VJudge" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-emerald-300 transition">🟢 VJudge</button>
+          <button onclick="filterProblemPlatform('Codeforces')" id="prob-filter-Codeforces" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-blue-300 transition">🔵 CF</button>
         </div>
       </div>
 
@@ -324,11 +370,31 @@
     <!-- TAB 4: BÀI GIẢNG & LÝ THUYẾT (LMS) -->
     <!-- ========================================== -->
     <section id="section-curriculum" class="space-y-6 hidden">
-      <div>
-        <h2 class="text-xl font-bold text-white flex items-center gap-2">
-          📚 Giáo Trình Chuyên Tin & Thuật Toán
-        </h2>
-        <p class="text-xs text-slate-400">Tài liệu, giáo trình chuẩn hóa thay thế không gian Notion, học sinh có thể ôn lại bất cứ lúc nào</p>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>📚</span> Trung Tâm Bài Giảng & Lý Thuyết (LMS)
+          </h2>
+          <p class="text-xs text-slate-400">Tài liệu, giáo trình chuẩn hóa phân theo từng lớp học, liên kết trực tiếp Notion</p>
+        </div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="triggerAddCurriculum()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
+            <span>➕</span> Thêm Bài Giảng Mới
+          </button>
+        </div>
+      </div>
+
+      <!-- Class Filter Bar for Curriculum -->
+      <div class="flex items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-3 rounded-2xl">
+        <div class="flex items-center gap-1.5 flex-wrap text-xs" id="curr-class-filter-container">
+          <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>👥</span> Xem bài giảng của:</span>
+          <button onclick="filterCurriculumClass('all')" id="curr-class-filter-all" class="curr-class-btn px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/40 transition">Tất cả bài giảng</button>
+          <button onclick="filterCurriculumClass('Public')" id="curr-class-filter-Public" class="curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🌐 Public</button>
+          <button onclick="filterCurriculumClass('C++')" id="curr-class-filter-cpp" class="curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-blue-300 hover:bg-slate-800 transition">🟦 Lớp C++</button>
+          <button onclick="filterCurriculumClass('Python')" id="curr-class-filter-python" class="curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🟩 Lớp Python</button>
+          <button onclick="filterCurriculumClass('Python 1-1')" id="curr-class-filter-python11" class="curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-purple-300 hover:bg-slate-800 transition">🟪 Python 1-1</button>
+        </div>
       </div>
 
       <div class="space-y-4" id="curriculum-list">
@@ -746,22 +812,40 @@
             <input type="text" id="form-curr-title" required placeholder="Ví dụ: Thuật toán Sắp xếp & Tìm kiếm Nhị phân" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
           </div>
 
-          <div class="space-y-1">
-            <label class="text-xs font-semibold text-slate-300">Lớp áp dụng (chọn các lớp):</label>
-            <div class="flex items-center gap-4 text-xs pt-1">
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" id="curr-class-cpp" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
-                <span>Lớp C++</span>
+          <div class="space-y-2 p-3 bg-slate-950/70 border border-slate-800 rounded-xl">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-semibold text-slate-300">Phân quyền xem bài giảng (*):</label>
+              <div class="flex items-center gap-1.5 text-[11px]">
+                <button type="button" onclick="setPublicCurriculum()" class="text-emerald-400 font-bold hover:underline">🌐 Public</button>
+                <span class="text-slate-600">•</span>
+                <button type="button" onclick="setAllCurriculumClasses(true)" class="text-indigo-400 hover:underline">Tất cả lớp</button>
+                <span class="text-slate-600">•</span>
+                <button type="button" onclick="setOnlyCurriculumClass('C++')" class="text-blue-400 hover:underline">Chỉ C++</button>
+                <span class="text-slate-600">•</span>
+                <button type="button" onclick="setOnlyCurriculumClass('Python')" class="text-emerald-400 hover:underline">Chỉ Python</button>
+                <span class="text-slate-600">•</span>
+                <button type="button" onclick="setOnlyCurriculumClass('Python 1-1')" class="text-purple-400 hover:underline">Chỉ 1-1</button>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-500/50 cursor-pointer">
+                <input type="checkbox" id="curr-class-public" class="rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-0">
+                <span class="text-emerald-300 font-bold">🌐 Public</span>
               </label>
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" id="curr-class-python" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
-                <span>Lớp Python</span>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 hover:border-blue-500/40 cursor-pointer">
+                <input type="checkbox" id="curr-class-cpp" class="rounded bg-slate-900 border-slate-700 text-blue-600 focus:ring-0">
+                <span class="text-blue-300 font-semibold">Lớp C++</span>
               </label>
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" id="curr-class-python11" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
-                <span>Python 1-1</span>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 hover:border-emerald-500/40 cursor-pointer">
+                <input type="checkbox" id="curr-class-python" class="rounded bg-slate-900 border-slate-700 text-emerald-600 focus:ring-0">
+                <span class="text-emerald-300 font-semibold">Lớp Python</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 hover:border-purple-500/40 cursor-pointer">
+                <input type="checkbox" id="curr-class-python11" class="rounded bg-slate-900 border-slate-700 text-purple-600 focus:ring-0">
+                <span class="text-purple-300 font-semibold">Python 1-1</span>
               </label>
             </div>
+            <p class="text-[11px] text-slate-400 italic">💡 Tích chọn <strong>🌐 Public</strong> để học sinh lớp nào (hoặc khách) xem cũng được. Tích chọn lớp riêng để chỉ học sinh lớp đó mới xem được.</p>
           </div>
 
           <div class="space-y-1">
@@ -820,22 +904,40 @@
             <input type="url" id="form-prob-url" required placeholder="https://marisaoj.com/problem/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
           </div>
 
-          <div class="space-y-1">
-            <label class="text-xs font-semibold text-slate-300">Lớp giao bài (chọn các lớp):</label>
-            <div class="flex items-center gap-4 text-xs pt-1">
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" id="prob-class-cpp" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
-                <span>Lớp C++</span>
+          <div class="space-y-2 p-3 bg-slate-950/70 border border-slate-800 rounded-xl">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-semibold text-slate-300">Phân quyền xem bài tập (*):</label>
+              <div class="flex items-center gap-1.5 text-[11px]">
+                <button type="button" onclick="setPublicProblem()" class="text-emerald-400 font-bold hover:underline">🌐 Public</button>
+                <span class="text-slate-600">•</span>
+                <button type="button" onclick="setAllProblemClasses(true)" class="text-indigo-400 hover:underline">Tất cả lớp</button>
+                <span class="text-slate-600">•</span>
+                <button type="button" onclick="setOnlyProblemClass('C++')" class="text-blue-400 hover:underline">Chỉ C++</button>
+                <span class="text-slate-600">•</span>
+                <button type="button" onclick="setOnlyProblemClass('Python')" class="text-emerald-400 hover:underline">Chỉ Python</button>
+                <span class="text-slate-600">•</span>
+                <button type="button" onclick="setOnlyProblemClass('Python 1-1')" class="text-purple-400 hover:underline">Chỉ 1-1</button>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-500/50 cursor-pointer">
+                <input type="checkbox" id="prob-class-public" class="rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-0">
+                <span class="text-emerald-300 font-bold">🌐 Public</span>
               </label>
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" id="prob-class-python" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
-                <span>Lớp Python</span>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 hover:border-blue-500/40 cursor-pointer">
+                <input type="checkbox" id="prob-class-cpp" class="rounded bg-slate-900 border-slate-700 text-blue-600 focus:ring-0">
+                <span class="text-blue-300 font-semibold">Lớp C++</span>
               </label>
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" id="prob-class-python11" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
-                <span>Python 1-1</span>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 hover:border-emerald-500/40 cursor-pointer">
+                <input type="checkbox" id="prob-class-python" class="rounded bg-slate-900 border-slate-700 text-emerald-600 focus:ring-0">
+                <span class="text-emerald-300 font-semibold">Lớp Python</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 hover:border-purple-500/40 cursor-pointer">
+                <input type="checkbox" id="prob-class-python11" class="rounded bg-slate-900 border-slate-700 text-purple-600 focus:ring-0">
+                <span class="text-purple-300 font-semibold">Python 1-1</span>
               </label>
             </div>
+            <p class="text-[11px] text-slate-400 italic">💡 Tích chọn <strong>🌐 Public</strong> để học sinh lớp nào (hoặc khách) xem cũng được. Tích chọn lớp riêng để chỉ học sinh lớp đó mới xem và tính tiến độ.</p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -862,7 +964,7 @@
   <!-- FOOTER -->
   <footer class="border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div>© 2026 Lớp Chuyên Tin & Thuật Toán • Tự động hóa với Python & GitHub Actions <span id="sync-last-updated" class="ml-2 text-indigo-400 font-mono"></span></div>
+      <div>© 2026 Deruck's Competitive Programming • Tự động hóa với Python & GitHub Actions <span id="sync-last-updated" class="ml-2 text-indigo-400 font-mono"></span></div>
       <div class="flex items-center gap-4 text-slate-400">
         <a href="https://codeforces.com" target="_blank" class="hover:text-indigo-400 transition">Codeforces</a>
         <a href="https://vjudge.net" target="_blank" class="hover:text-emerald-400 transition">VJudge</a>
@@ -980,8 +1082,16 @@
       renderContests();
       startCountdown();
 
-      // Check access authentication
+      // Check access authentication via Cookie
       checkAuthSession();
+
+      // Check hash tab routing
+      if (window.location.hash) {
+        const hashTab = window.location.hash.replace('#', '');
+        if (['leaderboard', 'contests', 'problems', 'curriculum', 'admin'].includes(hashTab)) {
+          switchTab(hashTab);
+        }
+      }
 
       // Start continuous background auto-refresh for newly submitted student problems
       startLiveAutoRefresh();
@@ -1036,12 +1146,15 @@
       }, 25000);
     }
 
-    // TAB SWITCHING (INCLUDES ADMIN TAB)
+    // TAB SWITCHING & HASH ROUTING (INCLUDES ADMIN TAB & RETURN HOME)
     function switchTab(tabName) {
       if (tabName === 'admin' && (!currentAuth || currentAuth.role !== 'admin')) {
-        alert('Chỉ tài khoản Giáo viên (ADMIN) mới có quyền truy cập bảng điều khiển này!');
+        alert('Chỉ tài khoản Giáo viên (ADMIN) mới có quyền truy cập bảng điều khiển này! Vui lòng đăng nhập.');
+        showAuthModal();
         return;
       }
+
+      window.location.hash = tabName;
 
       const sections = ['leaderboard', 'contests', 'problems', 'curriculum', 'admin'];
       sections.forEach(s => {
@@ -1052,10 +1165,10 @@
           if (el) el.classList.remove('hidden');
           if (btn) {
             btn.className = s === 'admin'
-              ? "tab-btn active px-3.5 py-2 rounded-lg text-amber-200 bg-amber-500/30 border border-amber-500/50 flex items-center gap-1.5 transition"
-              : "tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition";
+              ? "tab-btn active px-3.5 py-2 rounded-lg text-amber-200 bg-amber-500/30 border border-amber-500/50 flex items-center gap-1.5 transition font-semibold"
+              : "tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition font-semibold";
           }
-          if (mBtn) mBtn.className = "tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-amber-500/30 text-amber-200";
+          if (mBtn) mBtn.className = "tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold";
         } else {
           if (el) el.classList.add('hidden');
           if (btn) {
@@ -1067,14 +1180,24 @@
         }
       });
 
+      // Update home button state
+      const homeBtn = document.getElementById('tab-btn-home');
+      if (homeBtn) {
+        if (tabName === 'leaderboard') {
+          homeBtn.className = "tab-btn px-3 py-2 rounded-lg text-white bg-slate-800/80 flex items-center gap-1.5 transition";
+        } else {
+          homeBtn.className = "tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 flex items-center gap-1.5 transition";
+        }
+      }
+
       if (tabName === 'admin') {
         renderAdminDashboard();
       }
     }
 
-    // 1. FILTER & RENDER MATRIX LEADERBOARD (XẾP THEO LỚP & TIÊU CHÍ SORT)
+    // 1. FILTER & RENDER PUBLIC LEADERBOARD (KHÔNG CHIA THEO LỚP, HIỆN TẤT CẢ HỌC SINH, RATING & TỔNG AC)
     let currentClassFilter = 'all';
-    let currentSortMetric = 'target'; // 'target' | 'total' | 'rating' | 'week' | 'month' | 'year'
+    let currentSortMetric = 'rating'; // 'rating' | 'total' | 'week' | 'month' | 'year'
     let currentSortDir = 'desc';
 
     function setLeaderboardSort(metric) {
@@ -1089,7 +1212,7 @@
     }
 
     function updateSortUI() {
-      const metrics = ['rating', 'total', 'target'];
+      const metrics = ['rating', 'total', 'week', 'month'];
       metrics.forEach(m => {
         const btn = document.getElementById(`sort-btn-${m}`);
         const arrow = document.getElementById(`sort-arrow-${m}`);
@@ -1141,13 +1264,6 @@
           valA = a.stats ? a.stats.year : 0;
           valB = b.stats ? b.stats.year : 0;
           if (valB !== valA) return currentSortDir === 'desc' ? valB - valA : valA - valB;
-        } else { // 'target'
-          valA = a.target_solved_count !== undefined ? a.target_solved_count : 0;
-          valB = b.target_solved_count !== undefined ? b.target_solved_count : 0;
-          if (valB !== valA) return currentSortDir === 'desc' ? valB - valA : valA - valB;
-          const tB = b.stats ? b.stats.total : (b.solved ? b.solved.length : 0);
-          const tA = a.stats ? a.stats.total : (a.solved ? a.solved.length : 0);
-          return tB - tA;
         }
 
         const tB = b.stats ? b.stats.total : (b.solved ? b.solved.length : 0);
@@ -1216,17 +1332,99 @@
       </th>`;
     }
 
+    // STUDENT PERSONAL PROGRESS CARD (CHỈ HIỆN KHI HỌC SINH ĐĂNG NHẬP)
+    function renderPersonalProgressCard() {
+      const container = document.getElementById('student-personal-progress-card');
+      if (!container) return;
+
+      if (!currentAuth || currentAuth.role !== 'student') {
+        container.classList.add('hidden');
+        container.innerHTML = '';
+        return;
+      }
+
+      const student = (appData.students || []).find(s => s.stt === currentAuth.stt || s.name === currentAuth.name);
+      if (!student) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      const cCfg = (appData.class_config && appData.class_config[student.class]) || {};
+      const classProbIds = cCfg.problem_ids || [];
+      const cTotal = cCfg.total_problems || classProbIds.length || (student.class === 'C++' ? 6 : 8);
+
+      const solvedSet = new Set(student.solved || []);
+      const targetSolvedCount = classProbIds.filter(pid => solvedSet.has(pid)).length;
+      const pct = cTotal > 0 ? Math.min(100, Math.round((targetSolvedCount / cTotal) * 100)) : 0;
+
+      let probBadgesHtml = '';
+      if (classProbIds.length > 0) {
+        probBadgesHtml = `<div class="flex items-center gap-1.5 flex-wrap pt-2">
+          <span class="text-xs text-slate-400 font-semibold mr-1">Nhiệm vụ lớp ${student.class}:</span>
+          ${classProbIds.map(pid => {
+            const isSolved = solvedSet.has(pid);
+            if (isSolved) {
+              return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                <span>✓</span> ${pid}
+              </span>`;
+            } else {
+              return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-mono font-semibold bg-slate-800 text-slate-400 border border-slate-700">
+                <span>⏳</span> ${pid}
+              </span>`;
+            }
+          }).join('')}
+        </div>`;
+      }
+
+      container.className = "p-5 rounded-2xl bg-gradient-to-r from-indigo-950/80 via-slate-900 to-indigo-950/50 border border-indigo-500/30 shadow-xl space-y-4";
+      container.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              <span>🎯</span> Tiến Độ Mục Tiêu Cá Nhân Của Bạn
+            </div>
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+              <span>👤</span> ${student.name}
+              <span class="text-xs px-2 py-0.5 rounded bg-indigo-600/30 text-indigo-300 border border-indigo-500/40">Lớp ${student.class}</span>
+            </h3>
+            <p class="text-xs text-slate-400">Tiến độ và thông tin làm bài chi tiết được bảo mật riêng tư cho bạn.</p>
+          </div>
+          <div class="flex items-center gap-3 shrink-0">
+            <a href="student.html?id=${student.stt}" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-lg shadow-indigo-600/25 transition flex items-center gap-1.5">
+              <span>👤</span> Xem Hồ Sơ & Heatmap Của Tôi ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-300">Tiến độ bài tập lớp ${student.class}: <strong class="text-emerald-400">${targetSolvedCount} / ${cTotal} bài</strong></span>
+            <span class="font-bold ${pct === 100 ? 'text-emerald-400' : 'text-indigo-300'}">${pct}%</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+            <div class="h-2.5 rounded-full ${pct === 100 ? 'bg-emerald-400' : 'bg-gradient-to-r from-indigo-500 to-emerald-400'} transition-all duration-500" style="width: ${pct}%"></div>
+          </div>
+          ${probBadgesHtml}
+        </div>
+      `;
+      container.classList.remove('hidden');
+    }
+
     function createStudentRow(s, rankIdx) {
       const tr = document.createElement('tr');
-      tr.className = "hover:bg-slate-800/40 transition";
-      const totalAc = s.solved ? s.solved.length : 0;
+      const isCurrentStudent = currentAuth && currentAuth.role === 'student' && (currentAuth.stt === s.stt || currentAuth.name === s.name);
+      
+      if (isCurrentStudent) {
+        tr.className = "bg-indigo-950/40 hover:bg-indigo-950/60 border-l-4 border-indigo-500 transition";
+      } else {
+        tr.className = "hover:bg-slate-800/40 transition";
+      }
+
+      const totalAc = s.solved ? s.solved.length : (s.stats ? s.stats.total : 0);
       const rankMedal = rankIdx === 0 ? '🥇 1' : rankIdx === 1 ? '🥈 2' : rankIdx === 2 ? '🥉 3' : `${rankIdx + 1}`;
       
       const rating = s.rating !== undefined ? s.rating : 0;
       const titleBadge = getRatingBadge(rating, s.title || 'Newbie');
-
-      const cCfg = (appData.class_config && appData.class_config[s.class]) || {};
-      const cTotal = cCfg.total_problems || (s.class === 'C++' ? 6 : s.class === 'Python' ? 7 : 8);
 
       const cBadge = s.class === 'C++' 
         ? 'bg-blue-500/10 text-blue-300 border-blue-500/30' 
@@ -1236,62 +1434,65 @@
 
       const classBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold ${cBadge} border">${s.class}</span>`;
 
-      const stWeek = s.stats ? s.stats.week : (s.target_solved_count || 0);
+      const stWeek = s.stats ? s.stats.week : 0;
       const stMonth = s.stats ? s.stats.month : totalAc;
       const stYear = s.stats ? s.stats.year : totalAc;
       const stTotal = s.stats ? s.stats.total : totalAc;
 
-      const targetSolved = s.target_solved_count !== undefined ? s.target_solved_count : 0;
-      const pct = cTotal > 0 ? Math.min(100, Math.round((targetSolved / cTotal) * 100)) : 0;
-
-      tr.innerHTML = `
-        <td class="px-3 py-3.5 text-center font-bold font-mono text-sm">${rankMedal}</td>
-        <td class="px-4 py-3.5 font-semibold text-white">
-          <div class="flex items-center gap-2">
-            <a href="student.html?id=${s.stt}" class="text-white hover:text-indigo-400 font-bold text-base transition flex items-center gap-1 group">
-              <span>${s.name}</span>
-              <span class="text-xs text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-            </a>
-            ${classBadge}
-          </div>
-        </td>
-        <td class="px-3 py-3.5 text-center font-mono">
-          <span class="px-2.5 py-0.5 rounded-md font-mono font-bold text-white bg-slate-800/90 border border-slate-700/80 text-sm">
-            ${rating}
-          </span>
-        </td>
-        <td class="px-3 py-3.5 text-center">
-          ${titleBadge}
-        </td>
-        <td class="px-3 py-3.5 text-center">
-          <div class="inline-flex flex-col items-center gap-1 w-full max-w-[125px] mx-auto">
-            <div class="flex items-center justify-between w-full text-[11px] font-mono">
-              <span class="font-bold ${pct === 100 ? 'text-emerald-400' : 'text-slate-200'}">${targetSolved}/${cTotal} bài</span>
-              <span class="${pct === 100 ? 'text-emerald-400 font-bold' : 'text-slate-400'}">${pct}%</span>
-            </div>
-            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-              <div class="h-1.5 rounded-full ${pct === 100 ? 'bg-emerald-400' : 'bg-indigo-500'}" style="width: ${pct}%"></div>
-            </div>
-          </div>
-        </td>
-        <td class="px-3 py-3.5 text-center font-mono">
-          <span class="text-sm font-bold ${stWeek > 0 ? 'text-indigo-400' : 'text-slate-500'}">${stWeek}</span>
-        </td>
-        <td class="px-3 py-3.5 text-center font-mono">
-          <span class="text-sm font-bold ${stMonth > 0 ? 'text-purple-300' : 'text-slate-500'}">${stMonth}</span>
-        </td>
-        <td class="px-3 py-3.5 text-center font-mono">
-          <span class="text-sm font-bold ${stYear > 0 ? 'text-emerald-400' : 'text-slate-500'}">${stYear}</span>
-        </td>
-        <td class="px-3.5 py-3.5 text-center">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-rose-300 border border-slate-700">
-            ${stTotal} bài
-          </span>
-        </td>
-        <td class="px-3.5 py-3.5 text-center">
+      // Personal / Admin profile link permission check
+      let profileActionHtml = '';
+      if (currentAuth && currentAuth.role === 'admin') {
+        profileActionHtml = `
           <a href="student.html?id=${s.stt}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 hover:border-indigo-500/60 transition whitespace-nowrap">
             <span>👤</span> Xem Heatmap ↗
           </a>
+        `;
+      } else if (isCurrentStudent) {
+        profileActionHtml = `
+          <a href="student.html?id=${s.stt}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm transition whitespace-nowrap">
+            <span>👤</span> Heatmap của bạn ↗
+          </a>
+        `;
+      } else {
+        profileActionHtml = `
+          <span class="inline-flex items-center px-2 py-1 rounded text-xs text-slate-500 italic select-none">
+            🔒 Riêng tư
+          </span>
+        `;
+      }
+
+      const meBadge = isCurrentStudent ? `<span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-indigo-500/30 text-indigo-300 border border-indigo-500/50">Bạn</span>` : '';
+
+      tr.innerHTML = `
+        <td class="px-2.5 py-2.5 text-center font-bold font-mono text-xs text-slate-300">${rankMedal}</td>
+        <td class="px-3 py-2.5 font-semibold text-white">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="font-bold text-white text-xs sm:text-sm">${s.name}</span>
+            ${meBadge}
+            ${classBadge}
+          </div>
+        </td>
+        <td class="px-2.5 py-2.5 text-center font-mono">
+          <span class="px-2 py-0.5 rounded-md font-mono font-bold text-white bg-slate-800/90 border border-slate-700/80 text-xs">
+            ${rating}
+          </span>
+        </td>
+        <td class="px-2.5 py-2.5 text-center">
+          ${titleBadge}
+        </td>
+        <td class="px-2.5 py-2.5 text-center font-mono">
+          <span class="text-xs font-semibold ${stWeek > 0 ? 'text-indigo-400' : 'text-slate-500'}">${stWeek}</span>
+        </td>
+        <td class="px-2.5 py-2.5 text-center font-mono">
+          <span class="text-xs font-semibold ${stMonth > 0 ? 'text-purple-300' : 'text-slate-500'}">${stMonth}</span>
+        </td>
+        <td class="px-2.5 py-2.5 text-center font-mono">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-mono font-bold bg-slate-800 text-emerald-400 border border-slate-700">
+            ${stTotal} bài
+          </span>
+        </td>
+        <td class="px-2.5 py-2.5 text-center">
+          ${profileActionHtml}
         </td>
       `;
       return tr;
@@ -1302,39 +1503,19 @@
       const body = document.getElementById('matrix-body');
       if (!head || !body) return;
 
-      if (!currentAuth) {
-        body.innerHTML = `
-          <tr>
-            <td colspan="10" class="px-4 py-12 text-center text-slate-400">
-              <div class="text-3xl mb-2">🔒</div>
-              <div class="font-bold text-white text-base">Cổng thông tin học tập được bảo vệ nội bộ</div>
-              <div class="text-xs text-slate-500 mt-1">Vui lòng đăng nhập bằng Mã PIN học sinh hoặc Mã lớp để xem dữ liệu lớp học</div>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      // Enforce class isolation
-      if (currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
-        currentClassFilter = currentAuth.class;
-      }
-
       const searchInput = document.getElementById('leaderboard-search-input');
       const query = (filterText || (searchInput ? searchInput.value : '')).toLowerCase().trim();
 
-      // Clickable Sortable Header
-      head.innerHTML = `<tr>
-        <th class="px-3 py-3.5 text-center w-14">Hạng</th>
-        <th class="px-4 py-3.5">Coder & Lớp</th>
-        ${getThSort('rating', 'Rating Contest')}
-        <th class="px-3 py-3.5 text-center">Danh hiệu</th>
-        ${getThSort('target', 'Tiến độ bài tập', 'text-center min-w-[130px]')}
+      // Compact Sortable Header
+      head.innerHTML = `<tr class="text-[11px] uppercase font-semibold text-slate-400 border-b border-slate-700">
+        <th class="px-2.5 py-2.5 text-center w-12">Hạng</th>
+        <th class="px-3 py-2.5">Học viên & Lớp</th>
+        ${getThSort('rating', 'Rating')}
+        <th class="px-2.5 py-2.5 text-center">Danh hiệu</th>
         ${getThSort('week', '1 Tuần')}
         ${getThSort('month', '1 Tháng')}
-        ${getThSort('year', '1 Năm')}
         ${getThSort('total', 'Tổng AC')}
-        <th class="px-3.5 py-3.5 text-center">Hồ sơ</th>
+        <th class="px-2.5 py-2.5 text-center">Hồ sơ</th>
       </tr>`;
 
       body.innerHTML = '';
@@ -1350,102 +1531,72 @@
           (s.ctoj_handle && s.ctoj_handle.toLowerCase().includes(query));
       };
 
-      let anyStudentsFound = false;
-
-      // CASE A: Unified Ranking (Khi chọn "Tất cả các lớp" VÀ sắp xếp theo Rating hoặc Tổng AC hoặc thời gian)
-      if (currentClassFilter === 'all' && currentSortMetric !== 'target') {
-        let allStudents = (appData.students || []).filter(filterStudentByQuery);
-        if (allStudents.length > 0) {
-          anyStudentsFound = true;
-          const sortedList = sortStudentList(allStudents);
-
-          let metricTitle = currentSortMetric === 'rating' ? '⭐ Rating Contest' 
-            : currentSortMetric === 'total' ? '🏆 Tổng số bài làm được (Tổng AC)' 
-            : currentSortMetric === 'week' ? '📅 Số bài làm trong 1 Tuần' 
-            : currentSortMetric === 'month' ? '📅 Số bài làm trong 1 Tháng' 
-            : '📅 Số bài làm trong 1 Năm';
-
-          const banner = document.createElement('tr');
-          banner.className = "bg-slate-900/90 border-y border-slate-700/80";
-          banner.innerHTML = `
-            <td colspan="10" class="px-4 py-2 font-bold text-xs uppercase tracking-wider text-slate-300">
-              <div class="flex items-center justify-between flex-wrap gap-2">
-                <span class="flex items-center gap-2">
-                  <span>🌐</span>
-                  <strong class="text-white text-sm normal-case font-bold">Bảng xếp hạng toàn trường (${sortedList.length} học sinh)</strong>
-                </span>
-                <span class="text-slate-400 font-mono text-[11px] normal-case bg-slate-800/80 px-2.5 py-0.5 rounded border border-slate-700">
-                  Xếp theo: <strong class="text-indigo-400 font-bold">${metricTitle} (${currentSortDir === 'desc' ? 'Cao → Thấp' : 'Thấp → Cao'})</strong>
-                </span>
-              </div>
-            </td>
-          `;
-          body.appendChild(banner);
-
-          sortedList.forEach((s, idx) => {
-            body.appendChild(createStudentRow(s, idx));
-          });
-        }
-      } else {
-        // CASE B: Grouped by class (Khi xem theo tiến độ bài tập 'target' hoặc khi đã chọn 1 lớp cụ thể)
-        const allClasses = ['C++', 'Python', 'Python 1-1'];
-        const classesToProcess = currentClassFilter === 'all' 
-          ? allClasses 
-          : [currentClassFilter];
-
-        classesToProcess.forEach(cls => {
-          const cCfg = (appData.class_config && appData.class_config[cls]) || {};
-          const cName = cCfg.name || `Lớp ${cls}`;
-          const cTotal = cCfg.total_problems || (cls === 'C++' ? 6 : cls === 'Python' ? 7 : 8);
-          const cIcon = cls === 'C++' ? '🟦' : cls === 'Python' ? '🟩' : '🟪';
-
-          let classStudents = (appData.students || []).filter(s => s.class === cls && filterStudentByQuery(s));
-
-          if (classStudents.length === 0) return;
-          anyStudentsFound = true;
-
-          const sortedList = sortStudentList(classStudents);
-
-          // Add class group divider row
-          const divider = document.createElement('tr');
-          divider.className = "bg-slate-900/90 border-y border-slate-700/80";
-          divider.innerHTML = `
-            <td colspan="10" class="px-4 py-2 font-bold text-xs uppercase tracking-wider text-slate-300">
-              <div class="flex items-center justify-between flex-wrap gap-2">
-                <span class="flex items-center gap-2">
-                  <span>${cIcon}</span>
-                  <strong class="text-white text-sm normal-case font-bold">${cName}</strong>
-                  <span class="text-slate-400 font-mono text-[11px] normal-case">(${sortedList.length} học sinh)</span>
-                </span>
-                <span class="text-slate-400 font-mono text-[11px] normal-case bg-slate-800/80 px-2.5 py-0.5 rounded border border-slate-700">
-                  Đề tuần giao: <strong class="text-emerald-400 font-bold">${cTotal} bài tập</strong>
-                </span>
-              </div>
-            </td>
-          `;
-          body.appendChild(divider);
-
-          sortedList.forEach((s, idx) => {
-            body.appendChild(createStudentRow(s, idx));
-          });
-        });
+      // Filter by class if selected (default 'all' shows all students without class division)
+      let studentsToShow = (appData.students || []).filter(filterStudentByQuery);
+      if (currentClassFilter !== 'all') {
+        studentsToShow = studentsToShow.filter(s => s.class === currentClassFilter);
       }
 
-      if (!anyStudentsFound) {
+      if (studentsToShow.length === 0) {
         body.innerHTML = `
           <tr>
-            <td colspan="10" class="px-4 py-8 text-center text-slate-500 italic">
-              Không tìm thấy học sinh nào phù hợp với điều kiện tìm kiếm.
+            <td colspan="8" class="px-4 py-12 text-center text-slate-400">
+              <div class="text-3xl mb-2">🔍</div>
+              <div class="font-bold text-white text-base">Không tìm thấy học sinh nào</div>
+              <div class="text-xs text-slate-500 mt-1">Vui lòng thử tìm kiếm với từ khóa khác</div>
             </td>
           </tr>
         `;
+        return;
       }
+
+      const sortedList = sortStudentList(studentsToShow);
+
+      sortedList.forEach((s, idx) => {
+        body.appendChild(createStudentRow(s, idx));
+      });
     }
 
-    // 3. RENDER PROBLEMS
-    let currentProblemFilter = 'all';
+    // ROLE & PERMISSION CHECK FOR CONTENT (PROBLEMS & CURRICULUM)
+    function canViewItem(item) {
+      const classes = item.classes || [];
+      // Public / Tất cả / All or empty is visible to all classes and guests
+      if (classes.length === 0 || classes.includes('Public') || classes.includes('Tất cả') || classes.includes('All')) {
+        return true;
+      }
+      if (currentAuth && currentAuth.role === 'admin') return true;
+      if (currentAuth && currentAuth.role === 'student') {
+        return classes.includes('Public') || classes.includes(currentAuth.class);
+      }
+      // Guest: can view if public or multi-class
+      return classes.includes('Public') || classes.length >= 2;
+    }
 
-    function filterProblems(filter) {
+    // 2. RENDER PROBLEMS
+    let currentProblemFilter = 'all';
+    let currentProblemClassFilter = 'all';
+
+    function filterProblemClass(cls) {
+      currentProblemClassFilter = cls;
+      const classKeys = ['all', 'Public', 'C++', 'Python', 'Python 1-1'];
+      classKeys.forEach(k => {
+        const btn = document.getElementById(`prob-class-filter-${k === 'Python 1-1' ? 'python11' : k}`);
+        if (btn) {
+          if (k === cls) {
+            btn.className = "prob-class-btn px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/40 transition";
+          } else {
+            btn.className = "prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition";
+          }
+        }
+      });
+      renderProblems();
+    }
+
+    function filterProblemPlatform(plat) {
+      filterProblems(plat);
+    }
+
+    function filterProblems(filter = currentProblemFilter) {
       currentProblemFilter = filter;
       ['all', 'MarisaOJ', 'VJudge', 'Codeforces'].forEach(f => {
         const btn = document.getElementById(`prob-filter-${f}`);
@@ -1473,26 +1624,36 @@
       if (!grid || !appData || !appData.problems) return;
       grid.innerHTML = '';
 
-      if (!currentAuth) {
-        grid.innerHTML = `
-          <div class="col-span-full p-8 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-xl">
-            🔒 Vui lòng đăng nhập để xem danh sách bài tập của lớp bạn.
-          </div>
-        `;
-        return;
-      }
+      const totalStudents = (appData.students || []).length;
 
       const filteredList = appData.problems.filter(p => {
         const plat = getPlatformName(p.platform);
         const matchPlat = (filter === 'all' || plat === filter);
         if (!matchPlat) return false;
 
-        // Class isolation check
-        if (currentAuth && currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
-          return p.classes && p.classes.includes(currentAuth.class);
+        // Class / Public filter button
+        if (currentProblemClassFilter !== 'all') {
+          const pClasses = p.classes || [];
+          if (currentProblemClassFilter === 'Public') {
+            if (!pClasses.includes('Public') && !pClasses.includes('Tất cả') && pClasses.length > 0) return false;
+          } else {
+            if (!pClasses.includes(currentProblemClassFilter) && !pClasses.includes('Public') && !pClasses.includes('Tất cả')) return false;
+          }
         }
-        return true;
+
+        // Role-based permission
+        return canViewItem(p);
       });
+
+      if (filteredList.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full p-8 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
+            <div>Chưa có bài tập nào phù hợp với bộ lọc hiện tại.</div>
+            ${!currentAuth ? '<div class="text-xs text-indigo-400">💡 Hãy đăng nhập bằng Mã PIN học sinh để xem các bài tập riêng của lớp bạn.</div>' : ''}
+          </div>
+        `;
+        return;
+      }
 
       filteredList.forEach(p => {
         const card = document.createElement('div');
@@ -1508,35 +1669,50 @@
           platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-purple-500/10 text-purple-300 border border-purple-500/20">MarisaOJ</span>`;
         }
 
-        const classesHtml = (p.classes && p.classes.length > 0) 
-          ? `<div class="flex items-center gap-1.5 flex-wrap pt-1">
-              <span class="text-[10px] text-slate-500">Lớp:</span>
-              ${p.classes.map(c => {
-                const color = c === 'C++' 
-                  ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' 
-                  : c === 'Python' 
-                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' 
-                    : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
-                return `<span class="px-1.5 py-0.2 rounded text-[10px] font-semibold ${color} border">${c}</span>`;
-              }).join(' ')}
-            </div>`
-          : '';
+        const classesList = p.classes || ['Public'];
+        const isPublic = classesList.includes('Public') || classesList.includes('Tất cả') || classesList.length === 0;
+
+        const classesHtml = `<div class="flex items-center gap-1.5 flex-wrap pt-1">
+          <span class="text-[10px] text-slate-500">Phạm vi:</span>
+          ${isPublic ? '<span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">🌐 Public</span>' : ''}
+          ${classesList.filter(c => c !== 'Public' && c !== 'Tất cả').map(c => {
+            const color = c === 'C++' 
+              ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' 
+              : c === 'Python' 
+                ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' 
+                : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
+            return `<span class="px-1.5 py-0.2 rounded text-[10px] font-semibold ${color} border">${c}</span>`;
+          }).join(' ')}
+        </div>`;
+
+        const solvedCount = (appData.students || []).filter(s => s.solved && s.solved.includes(p.id)).length;
+
+        // Admin action buttons on card
+        const adminCardActions = (currentAuth && currentAuth.role === 'admin') ? `
+          <div class="flex items-center gap-1">
+            <button onclick="openEditProblemModal('${p.id}')" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition">✏️ Sửa</button>
+            <button onclick="deleteProblem('${p.id}')" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition">🗑️ Xóa</button>
+          </div>
+        ` : '';
 
         card.innerHTML = `
           <div class="space-y-2.5">
             <div class="flex items-center justify-between">
               <span class="font-mono text-xs font-bold text-slate-400">${p.id}</span>
-              ${platBadge}
+              <div class="flex items-center gap-2">
+                ${platBadge}
+                ${adminCardActions}
+              </div>
             </div>
             <h3 class="text-base font-bold text-white group-hover:text-indigo-300 transition">${p.name}</h3>
-            <div class="text-xs text-slate-400">Độ khó: <span class="text-slate-300 font-medium">${p.difficulty}</span></div>
+            <div class="text-xs text-slate-400">Độ khó: <span class="text-slate-300 font-medium">${p.difficulty || p.category || 'Mặc định'}</span></div>
             ${classesHtml}
           </div>
           <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
             <div class="text-xs text-slate-400 font-mono">
               Đã AC: <span class="text-emerald-400 font-bold">${solvedCount}/${totalStudents}</span>
             </div>
-            <a href="${p.url}" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1">
+            <a href="${p.url}" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1 shadow">
               Làm bài ↗
             </a>
           </div>
@@ -1545,78 +1721,165 @@
       });
     }
 
-    // 4. RENDER CURRICULUM
+    // 3. RENDER CURRICULUM & LECTURES
+    let currentCurriculumClassFilter = 'all';
+
+    function filterCurriculumClass(cls) {
+      currentCurriculumClassFilter = cls;
+      const classKeys = ['all', 'Public', 'C++', 'Python', 'Python 1-1'];
+      classKeys.forEach(k => {
+        const btn = document.getElementById(`curr-class-filter-${k === 'Python 1-1' ? 'python11' : k}`);
+        if (btn) {
+          if (k === cls) {
+            btn.className = "curr-class-btn px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/40 transition";
+          } else {
+            btn.className = "curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition";
+          }
+        }
+      });
+      renderCurriculum();
+    }
+
     function renderCurriculum() {
       const list = document.getElementById('curriculum-list');
       if (!list || !appData || !appData.curriculum) return;
       list.innerHTML = '';
 
-      if (!currentAuth) {
-        list.innerHTML = `
-          <div class="p-8 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-xl">
-            🔒 Vui lòng đăng nhập để mở tài liệu và bài giảng của lớp bạn.
-          </div>
-        `;
-        return;
-      }
-
-      let lectures = appData.curriculum;
-      if (currentAuth && currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
-        lectures = lectures.filter(l => !l.classes || l.classes.includes(currentAuth.class));
-      }
+      let lectures = appData.curriculum.filter(l => {
+        if (currentCurriculumClassFilter !== 'all') {
+          const lClasses = l.classes || [];
+          if (currentCurriculumClassFilter === 'Public') {
+            if (!lClasses.includes('Public') && !lClasses.includes('Tất cả') && lClasses.length > 0) return false;
+          } else {
+            if (!lClasses.includes(currentCurriculumClassFilter) && !lClasses.includes('Public') && !lClasses.includes('Tất cả')) return false;
+          }
+        }
+        return canViewItem(l);
+      });
 
       if (lectures.length === 0) {
-        list.innerHTML = `<div class="p-8 text-center text-slate-500 italic">Chưa có bài giảng nào được công bố cho lớp này.</div>`;
+        list.innerHTML = `
+          <div class="p-8 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
+            <div>Chưa có bài giảng nào được công bố cho bộ lọc này.</div>
+            ${!currentAuth ? '<div class="text-xs text-indigo-400">💡 Hãy đăng nhập bằng Mã PIN học sinh để xem các bài giảng riêng của lớp bạn.</div>' : ''}
+          </div>
+        `;
         return;
       }
 
       lectures.forEach((c, idx) => {
         const item = document.createElement('div');
-        item.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4 hover:border-slate-700 transition";
-        let lessonsHtml = '<ul class="space-y-2 text-sm text-slate-400 pl-4 list-disc">';
-        c.lessons.forEach(l => {
-          lessonsHtml += `<li class="hover:text-indigo-200 transition">${l}</li>`;
-        });
-        lessonsHtml += '</ul>';
+        item.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3 hover:border-slate-700 transition";
 
-        // Action buttons (Google Docs & Markdown lecture)
-        const docBtn = c.doc_url ? `
-          <a href="${c.doc_url}" target="_blank" 
-             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 border border-blue-500/30 transition">
-            <span>📄</span> Mở Giáo Án (Google Docs) ↗
-          </a>
-        ` : '';
+        const classesList = c.classes || ['Public'];
+        const isPublic = classesList.includes('Public') || classesList.includes('Tất cả') || classesList.length === 0;
 
-        const mdBtn = c.lecture_file ? `
-          <a href="https://github.com/ducphung3103/WebHocTap/blob/master/docs/${c.lecture_file}" target="_blank" 
-             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">
-            <span>✏️</span> Sửa Trực Tiếp Trên GitHub (.md) ↗
-          </a>
+        const classesBadges = classesList.filter(cls => cls !== 'Public' && cls !== 'Tất cả').map(cls => {
+          const col = cls === 'C++' ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' : cls === 'Python' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
+          return `<span class="px-2 py-0.5 rounded text-[10px] font-bold ${col} border">${cls}</span>`;
+        }).join(' ');
+
+        const publicBadge = isPublic ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">🌐 Public</span>` : '';
+
+        // Admin action buttons
+        const adminActions = (currentAuth && currentAuth.role === 'admin') ? `
+          <div class="flex items-center gap-1.5">
+            <button onclick="openEditCurriculumModal('${c.id}')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition cursor-pointer">✏️ Sửa</button>
+            <button onclick="deleteCurriculum('${c.id}')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer">🗑️ Xóa</button>
+          </div>
         ` : '';
 
         item.innerHTML = `
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
             <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-sm font-mono ring-1 ring-indigo-500/30">
-                0${idx + 1}
+              <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-sm font-mono ring-1 ring-indigo-500/30 shrink-0">
+                ${String(idx + 1).padStart(2, '0')}
               </div>
               <div>
-                <h3 class="text-base font-bold text-white">${c.module}</h3>
-                <div class="text-[11px] text-slate-400">Giáo trình chuẩn Tin học thi đấu</div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-mono text-xs font-bold text-indigo-400">${c.id} • ${c.chapter || 'Chuyên đề'}</span>
+                  ${publicBadge}
+                  ${classesBadges}
+                </div>
+                <h3 class="text-base font-bold text-white mt-0.5">${c.title}</h3>
               </div>
             </div>
-            <div class="flex items-center gap-2 flex-wrap">
-              ${docBtn}
-              ${mdBtn}
+            <div class="flex items-center gap-2 flex-wrap shrink-0">
+              <a href="${c.url || '#'}" target="_blank" 
+                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition">
+                <span>📄</span> Mở Bài Giảng (Notion) ↗
+              </a>
+              ${adminActions}
             </div>
           </div>
-          ${c.description ? `<p class="text-xs text-slate-400 leading-relaxed">${c.description}</p>` : ''}
-          <div class="pt-1">
-            ${lessonsHtml}
-          </div>
+          ${c.summary ? `<p class="text-xs text-slate-400 leading-relaxed">${c.summary}</p>` : ''}
         `;
         list.appendChild(item);
       });
+    }
+
+    // TRIGGER QUICK ADD PROBLEM & CURRICULUM
+    function triggerAddProblem() {
+      if (!currentAuth || currentAuth.role !== 'admin') {
+        alert('Chỉ tài khoản Giáo viên (ADMIN) mới có quyền tạo bài tập mới! Vui lòng đăng nhập.');
+        showAuthModal();
+        return;
+      }
+      openAddProblemModal();
+    }
+
+    function triggerAddCurriculum() {
+      if (!currentAuth || currentAuth.role !== 'admin') {
+        alert('Chỉ tài khoản Giáo viên (ADMIN) mới có quyền tạo bài giảng mới! Vui lòng đăng nhập.');
+        showAuthModal();
+        return;
+      }
+      openAddCurriculumModal();
+    }
+
+    // MODAL QUICK PERMISSION HELPERS
+    function setPublicProblem() {
+      const pPub = document.getElementById('prob-class-public');
+      if (pPub) pPub.checked = true;
+      document.getElementById('prob-class-cpp').checked = false;
+      document.getElementById('prob-class-python').checked = false;
+      document.getElementById('prob-class-python11').checked = false;
+    }
+
+    function setAllProblemClasses(val) {
+      document.getElementById('prob-class-public').checked = false;
+      document.getElementById('prob-class-cpp').checked = val;
+      document.getElementById('prob-class-python').checked = val;
+      document.getElementById('prob-class-python11').checked = val;
+    }
+
+    function setOnlyProblemClass(cls) {
+      document.getElementById('prob-class-public').checked = false;
+      document.getElementById('prob-class-cpp').checked = (cls === 'C++');
+      document.getElementById('prob-class-python').checked = (cls === 'Python');
+      document.getElementById('prob-class-python11').checked = (cls === 'Python 1-1');
+    }
+
+    function setPublicCurriculum() {
+      const cPub = document.getElementById('curr-class-public');
+      if (cPub) cPub.checked = true;
+      document.getElementById('curr-class-cpp').checked = false;
+      document.getElementById('curr-class-python').checked = false;
+      document.getElementById('curr-class-python11').checked = false;
+    }
+
+    function setAllCurriculumClasses(val) {
+      document.getElementById('curr-class-public').checked = false;
+      document.getElementById('curr-class-cpp').checked = val;
+      document.getElementById('curr-class-python').checked = val;
+      document.getElementById('curr-class-python11').checked = val;
+    }
+
+    function setOnlyCurriculumClass(cls) {
+      document.getElementById('curr-class-public').checked = false;
+      document.getElementById('curr-class-cpp').checked = (cls === 'C++');
+      document.getElementById('curr-class-python').checked = (cls === 'Python');
+      document.getElementById('curr-class-python11').checked = (cls === 'Python 1-1');
     }
 
     // 5. RENDER CONTESTS WITH WHO AC-ED WHAT
@@ -1872,7 +2135,8 @@
 
     // Initialize on load
         // ==========================================
-    // AUTHENTICATION & ACCESS CONTROL
+    // ==========================================
+    // AUTHENTICATION & ACCESS CONTROL (COOKIE PERSISTENCE)
     // ==========================================
     let currentAuth = null;
 
@@ -1884,19 +2148,63 @@
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    function checkAuthSession() {
-      const saved = sessionStorage.getItem('cp_auth_session');
-      if (saved) {
-        try {
-          currentAuth = JSON.parse(saved);
-          hideAuthModal();
-          applyAuthAccess();
-          return true;
-        } catch (e) {
-          sessionStorage.removeItem('cp_auth_session');
-        }
+    function setAuthCookie(authData) {
+      try {
+        const json = encodeURIComponent(JSON.stringify(authData));
+        // Persistent cookie for 365 days
+        document.cookie = `cp_auth_session=${json}; max-age=${365 * 24 * 60 * 60}; path=/; SameSite=Lax`;
+        localStorage.setItem('cp_auth_session', JSON.stringify(authData));
+      } catch (e) {
+        console.warn("Could not set cookie", e);
       }
-      showAuthModal();
+    }
+
+    function getAuthCookie() {
+      try {
+        const name = "cp_auth_session=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i].trim();
+          if (c.indexOf(name) === 0) {
+            const raw = c.substring(name.length, c.length);
+            return JSON.parse(raw);
+          }
+        }
+      } catch (e) {
+        console.warn("Could not read auth cookie", e);
+      }
+      try {
+        const local = localStorage.getItem('cp_auth_session');
+        if (local) return JSON.parse(local);
+      } catch (e) {}
+      return null;
+    }
+
+    function clearAuthCookie() {
+      try {
+        document.cookie = "cp_auth_session=; max-age=0; path=/; SameSite=Lax";
+        localStorage.removeItem('cp_auth_session');
+        sessionStorage.removeItem('cp_auth_session');
+      } catch (e) {
+        console.warn("Could not clear auth cookie", e);
+      }
+    }
+
+    function checkAuthSession() {
+      const saved = getAuthCookie();
+      if (saved) {
+        currentAuth = saved;
+        if (currentAuth.role === 'student' && !currentAuth.stt && appData && appData.students) {
+          const st = appData.students.find(s => s.name === currentAuth.name);
+          if (st) currentAuth.stt = st.stt;
+        }
+        hideAuthModal();
+        applyAuthAccess();
+        return true;
+      }
+      // Public guest mode: do NOT force login modal open, guests can browse public leaderboard/problems/curriculum!
+      applyAuthAccess();
       return false;
     }
 
@@ -1942,79 +2250,132 @@
       const match = tokens[codeHash];
 
       if (match) {
-        currentAuth = match;
-        sessionStorage.setItem('cp_auth_session', JSON.stringify(match));
+        currentAuth = Object.assign({}, match);
+        // Find stt for student role
+        if (currentAuth.role === 'student' && !currentAuth.stt && appData && appData.students) {
+          const st = appData.students.find(s => s.name === currentAuth.name);
+          if (st) currentAuth.stt = st.stt;
+        }
+        setAuthCookie(currentAuth);
         hideAuthModal();
         applyAuthAccess();
       } else {
         errorMsg.classList.remove('hidden');
         input.classList.add('border-rose-500');
         submitBtn.disabled = false;
-        submitBtn.innerHTML = `<span>Đăng Nhập Vào Lớp Học</span> <span>→</span>`;
+        submitBtn.innerHTML = `<span>Đăng Nhập Vào Hệ Thống</span> <span>→</span>`;
       }
     }
 
     function handleLogout() {
-      sessionStorage.removeItem('cp_auth_session');
+      clearAuthCookie();
       currentAuth = null;
       window.location.reload();
     }
 
     function applyAuthAccess() {
-      if (!currentAuth) return;
-
-      // Update user session badge in navbar
       const badge = document.getElementById('user-badge');
       const nameEl = document.getElementById('user-display-name');
+      const authBtn = document.getElementById('btn-auth-action');
       const adminBtn = document.getElementById('tab-btn-admin');
       const adminBtnMobile = document.getElementById('tab-btn-admin-mobile');
+      const studentTabBtn = document.getElementById('tab-btn-student');
 
-      if (currentAuth.role === 'admin') {
-        if (adminBtn) adminBtn.classList.remove('hidden');
-        if (adminBtnMobile) adminBtnMobile.classList.remove('hidden');
-      } else {
+      if (!currentAuth) {
+        // Guest mode
+        if (nameEl) nameEl.textContent = 'Khách (Public)';
+        if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1.5";
+        if (authBtn) {
+          authBtn.onclick = showAuthModal;
+          authBtn.innerHTML = `<span>🔑</span> <span class="hidden sm:inline">Đăng nhập</span>`;
+          authBtn.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white border border-indigo-500/40 transition flex items-center gap-1 cursor-pointer";
+        }
         if (adminBtn) adminBtn.classList.add('hidden');
         if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
-      }
-
-      if (nameEl) {
+        if (studentTabBtn) {
+          studentTabBtn.href = "javascript:void(0)";
+          studentTabBtn.onclick = () => { showAuthModal(); return false; };
+        }
+      } else {
+        // Logged in
         if (currentAuth.role === 'admin') {
-          nameEl.textContent = '👑 Giáo viên (Toàn quyền)';
+          if (nameEl) nameEl.textContent = '👑 Giáo viên (Admin)';
           if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5";
-        } else if (currentAuth.role === 'class') {
-          nameEl.textContent = `👥 ${currentAuth.name}`;
-          if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5";
-        } else {
-          nameEl.textContent = `👤 ${currentAuth.name} (${currentAuth.class})`;
+          if (adminBtn) adminBtn.classList.remove('hidden');
+          if (adminBtnMobile) adminBtnMobile.classList.remove('hidden');
+          if (studentTabBtn) {
+            studentTabBtn.href = "student.html?id=1";
+            studentTabBtn.onclick = null;
+          }
+        } else if (currentAuth.role === 'student') {
+          if (nameEl) nameEl.textContent = `👤 ${currentAuth.name} (${currentAuth.class})`;
           if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5";
+          if (adminBtn) adminBtn.classList.add('hidden');
+          if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+          if (studentTabBtn) {
+            studentTabBtn.href = `student.html?id=${currentAuth.stt || 1}`;
+            studentTabBtn.onclick = null;
+          }
+        } else {
+          if (nameEl) nameEl.textContent = `👥 ${currentAuth.name}`;
+          if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5";
+          if (adminBtn) adminBtn.classList.add('hidden');
+          if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+        }
+
+        if (authBtn) {
+          authBtn.onclick = handleLogout;
+          authBtn.innerHTML = `<span>🚪</span> <span class="hidden sm:inline">Đăng xuất</span>`;
+          authBtn.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 hover:text-white border border-rose-500/30 transition flex items-center gap-1 cursor-pointer";
         }
       }
 
-      // Restrict class visibility if not admin
-      if (currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
-        const userClass = currentAuth.class;
-        currentClassFilter = userClass;
-
-        // Hide other class buttons, keep only user's class
-        const classBtns = ['all', 'C++', 'Python', 'Python 1-1'];
-        classBtns.forEach(c => {
-          const btn = document.getElementById(`btn-class-${c === 'Python 1-1' ? 'Python-1-1' : c}`);
-          if (btn) {
-            if (c === userClass) {
-              btn.classList.remove('hidden');
-              btn.className = "class-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/40 text-indigo-200 border border-indigo-500/60 shadow-sm cursor-default";
-              btn.innerHTML = `Lớp của bạn: <strong>${c}</strong>`;
-            } else {
-              btn.classList.add('hidden');
-            }
-          }
-        });
-      }
+      // Render personal progress card for student
+      renderPersonalProgressCard();
 
       // Re-render components with auth filtering
       renderMatrix();
       renderProblems();
       renderCurriculum();
+    }
+
+    // Modal quick permission helpers
+    function setPublicCurriculum() {
+      document.getElementById('curr-class-public').checked = true;
+      document.getElementById('curr-class-cpp').checked = false;
+      document.getElementById('curr-class-python').checked = false;
+      document.getElementById('curr-class-python11').checked = false;
+    }
+    function setAllCurriculumClasses(val) {
+      document.getElementById('curr-class-public').checked = false;
+      document.getElementById('curr-class-cpp').checked = val;
+      document.getElementById('curr-class-python').checked = val;
+      document.getElementById('curr-class-python11').checked = val;
+    }
+    function setOnlyCurriculumClass(cls) {
+      document.getElementById('curr-class-public').checked = false;
+      document.getElementById('curr-class-cpp').checked = (cls === 'C++');
+      document.getElementById('curr-class-python').checked = (cls === 'Python');
+      document.getElementById('curr-class-python11').checked = (cls === 'Python 1-1');
+    }
+
+    function setPublicProblem() {
+      document.getElementById('prob-class-public').checked = true;
+      document.getElementById('prob-class-cpp').checked = false;
+      document.getElementById('prob-class-python').checked = false;
+      document.getElementById('prob-class-python11').checked = false;
+    }
+    function setAllProblemClasses(val) {
+      document.getElementById('prob-class-public').checked = false;
+      document.getElementById('prob-class-cpp').checked = val;
+      document.getElementById('prob-class-python').checked = val;
+      document.getElementById('prob-class-python11').checked = val;
+    }
+    function setOnlyProblemClass(cls) {
+      document.getElementById('prob-class-public').checked = false;
+      document.getElementById('prob-class-cpp').checked = (cls === 'C++');
+      document.getElementById('prob-class-python').checked = (cls === 'Python');
+      document.getElementById('prob-class-python11').checked = (cls === 'Python 1-1');
     }
 
     window.addEventListener('DOMContentLoaded', initApp);
@@ -2460,9 +2821,10 @@
       document.getElementById('form-curr-title').value = '';
       document.getElementById('form-curr-url').value = 'https://notion.so';
       document.getElementById('form-curr-summary').value = '';
-      document.getElementById('curr-class-cpp').checked = true;
-      document.getElementById('curr-class-python').checked = true;
-      document.getElementById('curr-class-python11').checked = true;
+      document.getElementById('curr-class-public').checked = true;
+      document.getElementById('curr-class-cpp').checked = false;
+      document.getElementById('curr-class-python').checked = false;
+      document.getElementById('curr-class-python11').checked = false;
       document.getElementById('modal-curriculum').classList.remove('hidden');
     }
 
@@ -2479,6 +2841,7 @@
       document.getElementById('form-curr-summary').value = lec.summary || '';
       
       const cList = lec.classes || [];
+      document.getElementById('curr-class-public').checked = cList.includes('Public') || cList.includes('Tất cả') || cList.length === 0;
       document.getElementById('curr-class-cpp').checked = cList.includes('C++');
       document.getElementById('curr-class-python').checked = cList.includes('Python');
       document.getElementById('curr-class-python11').checked = cList.includes('Python 1-1');
@@ -2500,9 +2863,11 @@
       const summary = document.getElementById('form-curr-summary').value.trim();
 
       const classes = [];
+      if (document.getElementById('curr-class-public').checked) classes.push('Public');
       if (document.getElementById('curr-class-cpp').checked) classes.push('C++');
       if (document.getElementById('curr-class-python').checked) classes.push('Python');
       if (document.getElementById('curr-class-python11').checked) classes.push('Python 1-1');
+      if (classes.length === 0) classes.push('Public');
 
       if (!id || !title) return;
       if (!appData.curriculum) appData.curriculum = [];
@@ -2550,7 +2915,7 @@
         tr.className = "hover:bg-slate-800/40 transition";
 
         const classesBadges = (p.classes || []).map(cls => {
-          const col = cls === 'C++' ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' : cls === 'Python' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
+          const col = cls === 'Public' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : cls === 'C++' ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' : cls === 'Python' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
           return `<span class="px-2 py-0.5 rounded text-[10px] font-bold ${col} border">${cls}</span>`;
         }).join(' ');
 
@@ -2583,9 +2948,10 @@
       document.getElementById('form-prob-url').value = '';
       document.getElementById('form-prob-diff').value = 'Level 1 • Brute Force';
       document.getElementById('form-prob-cat').value = 'Brute Force';
-      document.getElementById('prob-class-cpp').checked = true;
-      document.getElementById('prob-class-python').checked = true;
-      document.getElementById('prob-class-python11').checked = true;
+      document.getElementById('prob-class-public').checked = true;
+      document.getElementById('prob-class-cpp').checked = false;
+      document.getElementById('prob-class-python').checked = false;
+      document.getElementById('prob-class-python11').checked = false;
       document.getElementById('modal-problem').classList.remove('hidden');
     }
 
@@ -2603,6 +2969,7 @@
       document.getElementById('form-prob-cat').value = prob.category || '';
       
       const cList = prob.classes || [];
+      document.getElementById('prob-class-public').checked = cList.includes('Public') || cList.includes('Tất cả') || cList.length === 0;
       document.getElementById('prob-class-cpp').checked = cList.includes('C++');
       document.getElementById('prob-class-python').checked = cList.includes('Python');
       document.getElementById('prob-class-python11').checked = cList.includes('Python 1-1');
@@ -2625,9 +2992,11 @@
       const cat = document.getElementById('form-prob-cat').value.trim();
 
       const classes = [];
+      if (document.getElementById('prob-class-public').checked) classes.push('Public');
       if (document.getElementById('prob-class-cpp').checked) classes.push('C++');
       if (document.getElementById('prob-class-python').checked) classes.push('Python');
       if (document.getElementById('prob-class-python11').checked) classes.push('Python 1-1');
+      if (classes.length === 0) classes.push('Public');
 
       if (!id || !name || !url) return;
       if (!appData.problems) appData.problems = [];

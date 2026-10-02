@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hồ Sơ Coder & Tiến Độ Cá Nhân | Lớp Chuyên Tin 2026</title>
+  <title>Deruck's Competitive Programming - Tiến Độ & Hồ Sơ Cá Nhân</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -29,6 +29,10 @@
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     
@@ -59,19 +63,22 @@
   </div>
 
   <!-- SECURITY AUTHENTICATION MODAL (BẢO VỆ LỚP HỌC & PHÂN QUYỀN) -->
-  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl transition-all duration-300">
+  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl transition-all duration-300 hidden">
     <div class="relative w-full max-w-md bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6">
       
+      <!-- Close button / back to home -->
+      <button onclick="hideAuthModal(); window.location.href='index.html';" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">✕</button>
+
       <!-- Modal Header -->
       <div class="text-center space-y-2">
         <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-2xl shadow-inner mb-1">
           🔐
         </div>
         <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-          Cổng Học Tập & Thi Đấu Nội Bộ
+          Hồ Sơ Riêng Tư • Đăng Nhập
         </h2>
         <p class="text-xs sm:text-sm text-slate-400">
-          Nhập <strong class="text-indigo-300">Mã PIN học sinh</strong> hoặc <strong class="text-indigo-300">Mã lớp học / Mật khẩu giáo viên</strong>
+          Nhập <strong class="text-indigo-300">Mã PIN cá nhân</strong> của bạn để xem tiến độ làm bài và thông tin hồ sơ.
         </p>
       </div>
 
@@ -79,13 +86,13 @@
       <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
         <div class="space-y-1.5">
           <label for="auth-input-code" class="block text-xs font-semibold text-slate-300">
-            Mã truy cập / Mật khẩu:
+            Mã PIN cá nhân / Mật khẩu Giáo viên:
           </label>
           <div class="relative">
             <input 
               type="password" 
               id="auth-input-code" 
-              placeholder="Nhập mã PIN hoặc mã lớp..." 
+              placeholder="Nhập mã PIN cá nhân..." 
               autocomplete="off"
               required
               class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition pr-10 font-mono tracking-wider"
@@ -97,7 +104,7 @@
         </div>
 
         <div id="auth-error-msg" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 px-3 py-2 rounded-lg">
-          ❌ Mã truy cập không chính xác. Vui lòng kiểm tra lại hoặc liên hệ Giáo viên!
+          ❌ Mã truy cập không chính xác. Vui lòng kiểm tra lại hoặc liên hệ Thầy Đức!
         </div>
 
         <button 
@@ -105,53 +112,110 @@
           id="auth-submit-btn" 
           class="w-full py-3 px-4 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25 cursor-pointer"
         >
-          <span>Đăng Nhập Vào Lớp Học</span>
+          <span>Đăng Nhập Vào Hồ Sơ</span>
           <span>→</span>
         </button>
       </form>
 
       <!-- Footer Info -->
-      <div class="pt-4 border-t border-slate-800 text-center text-xs text-slate-500 space-y-1">
-        <div>🔒 Trang web nội bộ dành riêng cho học sinh của lớp</div>
-        <div>Học sinh chưa có mã vui lòng liên hệ trực tiếp Giáo viên để nhận PIN</div>
+      <div class="pt-4 border-t border-slate-800 text-center text-xs text-slate-500 space-y-2">
+        <div class="flex items-center justify-center gap-1.5 text-slate-400">
+          <span>🍪</span> Tự động lưu phiên bằng <strong>Cookie</strong> (chỉ cần đăng nhập 1 lần)
+        </div>
+        <div>
+          <a href="index.html" class="text-xs text-indigo-400 hover:underline">
+            ← Trở về Trang Chủ & Bảng Xếp Hạng Public
+          </a>
+        </div>
       </div>
 
     </div>
   </div>
 
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-gradient-to-r from-indigo-900/60 via-purple-900/60 to-slate-900/60 border-b border-indigo-500/20 px-4 py-2 text-xs md:text-sm text-center text-indigo-200 flex items-center justify-center gap-3">
+    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/30 text-indigo-300 border border-indigo-400/30 animate-pulse">LIVE</span>
+    <span>Hệ thống Tự động Đồng bộ Tiến độ Giải bài trên <strong>Codeforces</strong>, <strong>VJudge</strong> & <strong>MarisaOJ</strong></span>
+    <span class="hidden md:inline text-slate-400">• Lịch học: Tối T3 & T7 (19:30 - 21:30)</span>
+  </div>
 
-  <!-- TOP NAVBAR -->
-  <header class="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      
-      <!-- Back to Leaderboard button -->
-      <a href="index.html" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-semibold transition">
-        <span>←</span> Bảng Xếp Hạng
-      </a>
+  <!-- UNIFIED TOP NAVBAR -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Brand Logo & Return Home Link -->
+        <a href="index.html" class="flex items-center gap-3 group hover:opacity-95 transition" title="Trở về Trang chủ">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 ring-1 ring-white/20 group-hover:scale-105 transition-transform">
+            <span class="text-xl">🚀</span>
+          </div>
+          <div>
+            <div class="font-bold text-white text-base leading-tight tracking-tight flex items-center gap-2">
+              Deruck's Competitive Programming
+              <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LMS</span>
+            </div>
+            <div class="text-xs text-slate-400">Cổng Học Tập & Thi Đấu Chuyên Tin Thuật Toán</div>
+          </div>
+        </a>
 
-      <!-- Class brand -->
-      <div class="flex items-center gap-2.5">
-        <span class="text-xl">🚀</span>
-        <span class="font-bold text-sm sm:text-base text-white tracking-tight hidden sm:inline">Hồ Sơ Coder • Lớp Chuyên Tin</span>
+        <!-- Navigation Tabs (Identical to index.html) -->
+        <nav class="hidden md:flex items-center space-x-1 font-medium text-sm">
+          <a href="index.html" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            🏠 Trang Chủ
+          </a>
+          <a href="index.html#leaderboard" class="px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            🏆 Bảng Xếp Hạng
+          </a>
+          <a href="index.html#contests" class="px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            <span>⚔️</span> Contest
+          </a>
+          <a href="index.html#problems" class="px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            📝 Bài Tập
+          </a>
+          <a href="index.html#curriculum" class="px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            📚 Bài Giảng
+          </a>
+          <a href="student.html" class="px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition font-semibold">
+            <span>👤</span> Tiến Độ Cá Nhân
+          </a>
+          <a href="index.html#admin" id="tab-btn-admin" class="hidden px-3 py-2 rounded-lg text-amber-300 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 flex items-center gap-1.5 transition font-semibold">
+            <span>👑</span> Quản Trị Hệ Thống
+            <span class="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">ADMIN</span>
+          </a>
+        </nav>
+
+        <!-- User Session & Switcher & Auth Action -->
+        <div class="flex items-center gap-2.5">
+          <!-- Admin Switcher (Hidden for students) -->
+          <div class="hidden items-center gap-1.5" id="switcher-container">
+            <label for="student-selector" class="text-xs text-slate-400 hidden lg:inline">Chọn học sinh:</label>
+            <select id="student-selector" onchange="switchStudent(this.value)" class="bg-slate-900 border border-slate-800 text-slate-200 text-xs rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-indigo-500">
+              <!-- Populated dynamically for Admin -->
+            </select>
+          </div>
+
+          <div id="user-badge" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1.5">
+            <span>👤</span>
+            <span id="user-display-name">--</span>
+          </div>
+
+          <button id="btn-auth-action" onclick="showAuthModal()" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white border border-indigo-500/40 transition flex items-center gap-1 cursor-pointer" title="Đăng nhập hoặc đăng xuất">
+            <span>🔑</span>
+            <span class="hidden sm:inline">Đăng nhập</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Quick Student Switcher & User Auth -->
-      <div class="flex items-center gap-2.5">
-        <div id="user-badge" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hidden sm:flex items-center gap-1.5">
-          <span>👤</span>
-          <span id="user-display-name">--</span>
-        </div>
-        <div class="flex items-center gap-1.5" id="switcher-container">
-          <label for="student-selector" class="text-xs text-slate-400 hidden md:inline">Đổi học sinh:</label>
-          <select id="student-selector" onchange="switchStudent(this.value)" class="bg-slate-900 border border-slate-800 text-slate-200 text-xs rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-indigo-500">
-            <!-- Populated dynamically -->
-          </select>
-        </div>
-        <button onclick="handleLogout()" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-rose-500/20 text-slate-300 hover:text-rose-300 border border-slate-700 transition" title="Đăng xuất">
-          <span>🔒</span>
-        </button>
+      <!-- Mobile Tab Bar -->
+      <div class="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-slate-800 text-xs">
+        <a href="index.html" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">🏠 Trang chủ</a>
+        <a href="index.html#leaderboard" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">🏆 BXH</a>
+        <a href="index.html#contests" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</a>
+        <a href="index.html#problems" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</a>
+        <a href="index.html#curriculum" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</a>
+        <a href="student.html" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold">👤 Cá nhân</a>
+        <a href="index.html#admin" id="tab-btn-admin-mobile" class="tab-btn hidden px-3 py-1.5 rounded-lg whitespace-nowrap text-amber-300 bg-amber-500/10">👑 Quản trị</a>
       </div>
-
     </div>
   </header>
 
@@ -168,39 +232,39 @@
     <div id="profile-container" class="space-y-8 hidden">
       
       <!-- HERO CARD -->
-      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950/70 via-slate-900 to-slate-900 border border-indigo-500/30 p-6 md:p-8">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950/70 via-slate-900 to-slate-900 border border-indigo-500/30 p-4 sm:p-5 md:p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           
-          <div class="flex items-center gap-5">
+          <div class="flex items-center gap-4">
             <!-- Avatar Initials -->
-            <div id="student-avatar" class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-extrabold text-2xl md:text-3xl shadow-lg shadow-indigo-500/25 shrink-0 border border-indigo-400/30">
+            <div id="student-avatar" class="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-extrabold text-lg md:text-2xl shadow-lg shadow-indigo-500/25 shrink-0 border border-indigo-400/30">
               --
             </div>
 
             <!-- Name & Info -->
-            <div class="space-y-1.5">
-              <div class="flex items-center gap-2.5 flex-wrap">
-                <h1 id="student-name" class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">--</h1>
-                <span id="student-class" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">--</span>
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-700/40 text-slate-400 border border-slate-700">Newbie ⚪</span>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <h1 id="student-name" class="text-lg md:text-2xl font-bold text-white tracking-tight">--</h1>
+                <span id="student-class" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">--</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-700/40 text-slate-400 border border-slate-700">Newbie ⚪</span>
               </div>
-              <div class="flex items-center gap-3 text-xs text-slate-400 font-mono flex-wrap" id="handles-container">
+              <div class="flex items-center gap-2 text-xs text-slate-400 font-mono flex-wrap" id="handles-container">
                 <!-- Handles inserted dynamically -->
               </div>
             </div>
           </div>
 
           <!-- Rating & Standing summary -->
-          <div class="flex items-center gap-3 bg-slate-900/90 border border-slate-800 p-3.5 rounded-xl shrink-0 self-start md:self-auto">
-            <div class="text-center px-3 border-r border-slate-800">
-              <div class="text-[11px] text-slate-400">Contest Rating</div>
-              <div class="text-xl font-extrabold text-white font-mono" id="student-rating">0</div>
-              <div class="text-[10px] text-slate-500">Khởi điểm</div>
+          <div class="flex items-center gap-2 bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl shrink-0 self-start md:self-auto">
+            <div class="text-center px-2.5 border-r border-slate-800">
+              <div class="text-[10px] text-slate-400">Contest Rating</div>
+              <div class="text-base md:text-lg font-bold text-white font-mono" id="student-rating">0</div>
+              <div class="text-[9px] text-slate-500">Khởi điểm</div>
             </div>
-            <div class="text-center px-3">
-              <div class="text-[11px] text-slate-400">Hạng Lớp</div>
-              <div id="student-rank" class="text-xl font-extrabold text-indigo-400 font-mono">#--</div>
-              <div class="text-[10px] text-slate-500" id="student-rank-desc">Theo lớp</div>
+            <div class="text-center px-2.5">
+              <div class="text-[10px] text-slate-400">Hạng Lớp</div>
+              <div id="student-rank" class="text-base md:text-lg font-bold text-indigo-400 font-mono">#--</div>
+              <div class="text-[9px] text-slate-500" id="student-rank-desc">Theo lớp</div>
             </div>
           </div>
 
@@ -208,46 +272,46 @@
       </div>
 
       <!-- 4 BIG STAT CARDS (Theo dõi số bài làm được) -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
         
         <!-- 1 TUẦN -->
-        <div class="bg-slate-900 border border-slate-800 hover:border-indigo-500/40 rounded-xl p-5 space-y-1.5 transition">
+        <div class="bg-slate-900 border border-slate-800 hover:border-indigo-500/40 rounded-xl p-3.5 space-y-1 transition">
           <div class="flex items-center justify-between text-xs text-slate-400">
             <span>⚡ 1 Tuần Qua</span>
-            <span class="text-indigo-400 font-bold">7 ngày</span>
+            <span class="text-indigo-400 font-bold text-[11px]">7 ngày</span>
           </div>
-          <div class="text-3xl font-extrabold text-white font-mono" id="stat-week">0</div>
-          <div class="text-xs text-slate-400">bài tập đã AC</div>
+          <div class="text-xl md:text-2xl font-bold text-white font-mono" id="stat-week">0</div>
+          <div class="text-[11px] text-slate-400">bài tập đã AC</div>
         </div>
 
         <!-- 1 THÁNG -->
-        <div class="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-xl p-5 space-y-1.5 transition">
+        <div class="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-xl p-3.5 space-y-1 transition">
           <div class="flex items-center justify-between text-xs text-slate-400">
             <span>🗓️ 1 Tháng Qua</span>
-            <span class="text-purple-400 font-bold">30 ngày</span>
+            <span class="text-purple-400 font-bold text-[11px]">30 ngày</span>
           </div>
-          <div class="text-3xl font-extrabold text-white font-mono" id="stat-month">0</div>
-          <div class="text-xs text-slate-400">bài tập đã AC</div>
+          <div class="text-xl md:text-2xl font-bold text-white font-mono" id="stat-month">0</div>
+          <div class="text-[11px] text-slate-400">bài tập đã AC</div>
         </div>
 
         <!-- 1 NĂM -->
-        <div class="bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-5 space-y-1.5 transition">
+        <div class="bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-3.5 space-y-1 transition">
           <div class="flex items-center justify-between text-xs text-slate-400">
             <span>📈 1 Năm (2026)</span>
-            <span class="text-emerald-400 font-bold">365 ngày</span>
+            <span class="text-emerald-400 font-bold text-[11px]">365 ngày</span>
           </div>
-          <div class="text-3xl font-extrabold text-white font-mono" id="stat-year">0</div>
-          <div class="text-xs text-slate-400">bài tập đã AC</div>
+          <div class="text-xl md:text-2xl font-bold text-white font-mono" id="stat-year">0</div>
+          <div class="text-[11px] text-slate-400">bài tập đã AC</div>
         </div>
 
         <!-- TỔNG CỘNG -->
-        <div class="bg-slate-900 border border-slate-800 hover:border-rose-500/40 rounded-xl p-5 space-y-1.5 transition">
+        <div class="bg-slate-900 border border-slate-800 hover:border-rose-500/40 rounded-xl p-3.5 space-y-1 transition">
           <div class="flex items-center justify-between text-xs text-slate-400">
             <span>🏆 Tổng Số Bài</span>
-            <span class="text-rose-400 font-bold">Tất cả</span>
+            <span class="text-rose-400 font-bold text-[11px]">Tất cả</span>
           </div>
-          <div class="text-3xl font-extrabold text-rose-400 font-mono" id="stat-total">0</div>
-          <div class="text-xs text-slate-400">tổng số bài giải thành công</div>
+          <div class="text-xl md:text-2xl font-bold text-rose-400 font-mono" id="stat-total">0</div>
+          <div class="text-[11px] text-slate-400">tổng số bài giải thành công</div>
         </div>
 
       </div>
@@ -367,12 +431,15 @@
   </main>
 
   <!-- FOOTER -->
+  <!-- FOOTER -->
   <footer class="border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500 mt-12">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div>© 2026 Lớp Chuyên Tin & Thuật Toán • Tự động hóa với Python & GitHub Actions</div>
+      <div>© 2026 Deruck's Competitive Programming • Cổng Học Tập & Thi Đấu Chuyên Tin Thuật Toán</div>
       <div class="flex items-center gap-4 text-slate-400">
-        <a href="index.html" class="hover:text-indigo-400 transition">Bảng Xếp Hạng</a>
-        <a href="https://marisaoj.com" target="_blank" class="hover:text-purple-400 transition">MarisaOJ</a>
+        <a href="index.html" class="hover:text-indigo-400 transition">Trang Chủ & BXH</a>
+        <a href="index.html#problems" class="hover:text-indigo-400 transition">Kho Bài Tập</a>
+        <a href="index.html#curriculum" class="hover:text-indigo-400 transition">Bài Giảng</a>
+        <a href="https://marisaoj.com" target="_blank" class="hover:text-purple-400 transition">MarisaOJ ↗</a>
       </div>
     </div>
   </footer>
@@ -399,79 +466,72 @@
         return;
       }
 
-      // Populate student switcher dropdown
-      const selector = document.getElementById('student-selector');
-      selector.innerHTML = '';
-      appData.students.forEach(s => {
-        const opt = document.createElement('option');
-        opt.value = s.stt;
-        opt.textContent = `${s.stt}. ${s.name} (${s.class || 'Lớp'})`;
-        selector.appendChild(opt);
-      });
+      // Check security auth session from Cookie
+      const isAuthed = checkAuthSession();
+      if (!isAuthed) {
+        document.getElementById('loading-state').innerHTML = `
+          <div class="p-8 text-center bg-slate-900 border border-slate-800 rounded-2xl space-y-4 max-w-lg mx-auto shadow-2xl">
+            <div class="text-4xl">🔒</div>
+            <h2 class="text-lg font-bold text-white">Nội Dung Riêng Tư Học Viên</h2>
+            <p class="text-xs text-slate-400">Hệ thống bảo vệ quyền riêng tư: mỗi học sinh chỉ xem được tiến độ và thông tin của bản thân. Vui lòng đăng nhập bằng Mã PIN cá nhân.</p>
+            <div class="flex items-center justify-center gap-3 pt-2">
+              <button onclick="showAuthModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/25">
+                Đăng Nhập Bằng Mã PIN →
+              </button>
+              <a href="index.html" class="px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+                Về Bảng Xếp Hạng Public
+              </a>
+            </div>
+          </div>
+        `;
+        document.getElementById('loading-state').classList.remove('hidden');
+        document.getElementById('profile-container').classList.add('hidden');
+        showAuthModal();
+        return;
+      }
 
-      // Get student id from URL query: ?id=1 or ?handle=...
+      // Determine target student ID
       const params = new URLSearchParams(window.location.search);
       let targetId = parseInt(params.get('id'));
-      const targetHandle = params.get('handle');
 
-      if (!targetId && targetHandle) {
-        const found = appData.students.find(s => 
-          s.marisa_handle === targetHandle || 
-          s.cf_handle === targetHandle ||
-          s.vjudge_handle === targetHandle ||
-          s.vnoi_handle === targetHandle ||
-          s.clue_handle === targetHandle ||
-          s.ctoj_handle === targetHandle
-        );
-        if (found) targetId = found.stt;
+      // PRIVACY ENFORCEMENT: Students can ONLY view their own ID!
+      if (currentAuth.role === 'student') {
+        targetId = currentAuth.stt;
+      } else if (!targetId || targetId < 1 || targetId > appData.students.length) {
+        targetId = 1; // Default for admin
       }
 
-      if (!targetId || targetId < 1 || targetId > appData.students.length) {
-        targetId = 1; // Default to first student
-      }
+      // Update selector if admin
+      const selector = document.getElementById('student-selector');
+      if (selector) selector.value = targetId;
 
-      selector.value = targetId;
-
-      // Check security auth
-      if (checkAuthSession()) {
-        if (currentAuth && currentAuth.role === 'student' && currentAuth.stt) {
-          targetId = currentAuth.stt;
-          selector.value = targetId;
-        }
-        loadStudentProfile(targetId);
-      }
+      loadStudentProfile(targetId);
 
       // Start continuous background auto-refresh for newly submitted student problems
       startLiveAutoRefresh();
     }
 
     function switchStudent(id) {
+      if (currentAuth && currentAuth.role === 'student') {
+        id = currentAuth.stt; // Cannot switch to another student
+      }
       window.history.pushState({}, '', `student.html?id=${id}`);
       loadStudentProfile(parseInt(id));
     }
 
     function loadStudentProfile(id) {
+      if (!currentAuth) {
+        showAuthModal();
+        return;
+      }
+
+      // Privacy check: student can only view own profile
+      if (currentAuth.role === 'student' && currentAuth.stt) {
+        id = currentAuth.stt;
+      }
+
       const student = appData.students.find(s => s.stt === id);
       if (!student) return;
-
-      // Class Permission Barrier
-      if (currentAuth && currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
-        if (student.class !== currentAuth.class) {
-          document.getElementById('loading-state').innerHTML = `
-            <div class="p-8 text-center bg-rose-500/10 border border-rose-500/30 rounded-2xl space-y-4 max-w-lg mx-auto">
-              <div class="text-4xl">⛔</div>
-              <h2 class="text-lg font-bold text-rose-300">Không Có Quyền Truy Cập Lớp Khác</h2>
-              <p class="text-xs text-slate-400">Bạn đang đăng nhập vào <strong>Lớp ${currentAuth.class}</strong>, không thể xem thông tin học sinh thuộc lớp khác.</p>
-              <button onclick="window.location.href='index.html'" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-white transition">
-                ← Quay lại Bảng Xếp Hạng lớp ${currentAuth.class}
-              </button>
-            </div>
-          `;
-          document.getElementById('loading-state').classList.remove('hidden');
-          document.getElementById('profile-container').classList.add('hidden');
-          return;
-        }
-      }
 
       currentStudent = student;
 
@@ -1008,7 +1068,7 @@
     }
 
         // ==========================================
-    // AUTHENTICATION & CLASS ACCESS CONTROL
+    // AUTHENTICATION & ACCESS CONTROL (COOKIE PERSISTENCE)
     // ==========================================
     let currentAuth = null;
 
@@ -1020,19 +1080,62 @@
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    function checkAuthSession() {
-      const saved = sessionStorage.getItem('cp_auth_session');
-      if (saved) {
-        try {
-          currentAuth = JSON.parse(saved);
-          hideAuthModal();
-          applyAuthAccess();
-          return true;
-        } catch (e) {
-          sessionStorage.removeItem('cp_auth_session');
-        }
+    function setAuthCookie(authData) {
+      try {
+        const json = encodeURIComponent(JSON.stringify(authData));
+        // Persistent cookie for 365 days
+        document.cookie = `cp_auth_session=${json}; max-age=${365 * 24 * 60 * 60}; path=/; SameSite=Lax`;
+        localStorage.setItem('cp_auth_session', JSON.stringify(authData));
+      } catch (e) {
+        console.warn("Could not set cookie", e);
       }
-      showAuthModal();
+    }
+
+    function getAuthCookie() {
+      try {
+        const name = "cp_auth_session=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i].trim();
+          if (c.indexOf(name) === 0) {
+            const raw = c.substring(name.length, c.length);
+            return JSON.parse(raw);
+          }
+        }
+      } catch (e) {
+        console.warn("Could not read auth cookie", e);
+      }
+      try {
+        const local = localStorage.getItem('cp_auth_session');
+        if (local) return JSON.parse(local);
+      } catch (e) {}
+      return null;
+    }
+
+    function clearAuthCookie() {
+      try {
+        document.cookie = "cp_auth_session=; max-age=0; path=/; SameSite=Lax";
+        localStorage.removeItem('cp_auth_session');
+        sessionStorage.removeItem('cp_auth_session');
+      } catch (e) {
+        console.warn("Could not clear auth cookie", e);
+      }
+    }
+
+    function checkAuthSession() {
+      const saved = getAuthCookie();
+      if (saved) {
+        currentAuth = saved;
+        if (currentAuth.role === 'student' && !currentAuth.stt && appData && appData.students) {
+          const st = appData.students.find(s => s.name === currentAuth.name);
+          if (st) currentAuth.stt = st.stt;
+        }
+        hideAuthModal();
+        applyAuthAccess();
+        return true;
+      }
+      applyAuthAccess();
       return false;
     }
 
@@ -1078,47 +1181,87 @@
       const match = tokens[codeHash];
 
       if (match) {
-        currentAuth = match;
-        sessionStorage.setItem('cp_auth_session', JSON.stringify(match));
+        currentAuth = Object.assign({}, match);
+        if (currentAuth.role === 'student' && !currentAuth.stt && appData && appData.students) {
+          const st = appData.students.find(s => s.name === currentAuth.name);
+          if (st) currentAuth.stt = st.stt;
+        }
+        setAuthCookie(currentAuth);
         hideAuthModal();
         applyAuthAccess();
+
         // Route to student profile
-        if (match.role === 'student' && match.stt) {
-          switchStudent(match.stt);
+        if (currentAuth.role === 'student' && currentAuth.stt) {
+          switchStudent(currentAuth.stt);
         } else {
-          populateStudentSelector();
-          const firstAllowed = appData.students.find(s => match.class === 'ALL' || s.class === match.class);
-          if (firstAllowed) switchStudent(firstAllowed.stt);
+          loadStudentProfile(1);
         }
       } else {
         errorMsg.classList.remove('hidden');
         input.classList.add('border-rose-500');
         submitBtn.disabled = false;
-        submitBtn.innerHTML = `<span>Đăng Nhập Vào Lớp Học</span> <span>→</span>`;
+        submitBtn.innerHTML = `<span>Đăng Nhập Vào Hồ Sơ</span> <span>→</span>`;
       }
     }
 
     function handleLogout() {
-      sessionStorage.removeItem('cp_auth_session');
+      clearAuthCookie();
       currentAuth = null;
       window.location.reload();
     }
 
     function applyAuthAccess() {
-      if (!currentAuth) return;
-
       const nameEl = document.getElementById('user-display-name');
-      if (nameEl) {
-        if (currentAuth.role === 'admin') {
-          nameEl.textContent = '👑 Giáo viên';
-        } else if (currentAuth.role === 'class') {
-          nameEl.textContent = `👥 ${currentAuth.name}`;
-        } else {
-          nameEl.textContent = `👤 ${currentAuth.name}`;
+      const badge = document.getElementById('user-badge');
+      const authBtn = document.getElementById('btn-auth-action');
+      const switcher = document.getElementById('switcher-container');
+      const adminBtn = document.getElementById('tab-btn-admin');
+      const adminBtnMobile = document.getElementById('tab-btn-admin-mobile');
+
+      if (!currentAuth) {
+        if (nameEl) nameEl.textContent = 'Khách (Chưa đăng nhập)';
+        if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1.5";
+        if (authBtn) {
+          authBtn.onclick = showAuthModal;
+          authBtn.innerHTML = `<span>🔑</span> <span class="hidden sm:inline">Đăng nhập</span>`;
+          authBtn.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white border border-indigo-500/40 transition flex items-center gap-1 cursor-pointer";
         }
+        if (switcher) switcher.classList.add('hidden');
+        if (adminBtn) adminBtn.classList.add('hidden');
+        if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+        return;
       }
 
-      populateStudentSelector();
+      if (currentAuth.role === 'admin') {
+        if (nameEl) nameEl.textContent = '👑 Giáo viên (Admin)';
+        if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5";
+        if (switcher) {
+          switcher.classList.remove('hidden');
+          switcher.classList.add('flex');
+          populateStudentSelector();
+        }
+        if (adminBtn) adminBtn.classList.remove('hidden');
+        if (adminBtnMobile) adminBtnMobile.classList.remove('hidden');
+      } else if (currentAuth.role === 'student') {
+        if (nameEl) nameEl.textContent = `👤 ${currentAuth.name} (${currentAuth.class})`;
+        if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5";
+        // CRITICAL PRIVACY: Students CANNOT see the switcher!
+        if (switcher) switcher.classList.add('hidden');
+        if (adminBtn) adminBtn.classList.add('hidden');
+        if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+      } else {
+        if (nameEl) nameEl.textContent = `👥 ${currentAuth.name}`;
+        if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5";
+        if (switcher) switcher.classList.add('hidden');
+        if (adminBtn) adminBtn.classList.add('hidden');
+        if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+      }
+
+      if (authBtn) {
+        authBtn.onclick = handleLogout;
+        authBtn.innerHTML = `<span>🚪</span> <span class="hidden sm:inline">Đăng xuất</span>`;
+        authBtn.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 hover:text-white border border-rose-500/30 transition flex items-center gap-1 cursor-pointer";
+      }
     }
 
     function populateStudentSelector() {
@@ -1126,20 +1269,15 @@
       if (!selector || !appData || !appData.students) return;
       selector.innerHTML = '';
 
-      let allowedStudents = appData.students;
-      if (currentAuth && currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
-        allowedStudents = appData.students.filter(s => s.class === currentAuth.class);
-      }
-
-      allowedStudents.forEach(s => {
+      appData.students.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s.stt;
         opt.textContent = `${s.stt}. ${s.name} (${s.class})`;
         selector.appendChild(opt);
       });
 
-      if (currentAuth && currentAuth.role === 'student') {
-        selector.value = currentAuth.stt;
+      if (currentStudent) {
+        selector.value = currentStudent.stt;
       }
     }
 
