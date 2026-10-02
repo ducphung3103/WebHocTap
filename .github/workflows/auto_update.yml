@@ -11,7 +11,6 @@ jobs:
   sync:
     name: Sync Student Progress
     runs-on: ubuntu-latest
-    if: "${{ secrets.SPREADSHEET_ID != '' && secrets.GCP_SA_KEY != '' }}"
 
     steps:
       - name: Checkout Code
@@ -37,4 +36,8 @@ jobs:
           REQUEST_DELAY_SECONDS: "1.0"
           LOG_LEVEL: "INFO"
         run: |
+          if [ -z "$SPREADSHEET_ID" ] || [ -z "$GCP_SA_KEY" ]; then
+            echo "::warning ::Chưa cấu hình Google Sheets Secrets. Bỏ qua."
+            exit 0
+          fi
           python main.py

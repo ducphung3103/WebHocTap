@@ -18,7 +18,6 @@ jobs:
   sync:
     name: Sync Google Sheets to Web
     runs-on: ubuntu-latest
-    if: "${{ secrets.SPREADSHEET_ID != '' && secrets.GCP_SA_KEY != '' }}"
 
     permissions:
       contents: write
@@ -43,6 +42,10 @@ jobs:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
         run: |
+          if [ -z "$SPREADSHEET_ID" ] || [ -z "$GCP_SA_KEY" ]; then
+            echo "::warning ::SPREADSHEET_ID hoặc GCP_SA_KEY chưa được cấu hình. Bỏ qua bước đồng bộ."
+            exit 0
+          fi
           python -m src.sync_gsheets --no-push
 
       - name: Commit and Push Changes
