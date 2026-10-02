@@ -32,30 +32,32 @@
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     
-    /* Heatmap square tooltips */
+    /* Heatmap square tooltips & Stacking Context */
+    .heatmap-column {
+      position: relative;
+    }
+    .heatmap-column:hover {
+      z-index: 50;
+    }
     .heatmap-cell {
       position: relative;
     }
-    .heatmap-cell:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #0f172a;
-      color: #f8fafc;
-      padding: 4px 8px;
-      font-size: 11px;
-      white-space: nowrap;
-      border-radius: 6px;
-      border: 1px solid #334155;
-      pointer-events: none;
-      z-index: 50;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+    .heatmap-cell:hover {
+      z-index: 100;
     }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+  <!-- FLOATING TOOLTIP FOR HEATMAP (ĐÈ LÊN TOÀN BỘ CÁC Ô, KHÔNG BỊ CHE KHUẤT) -->
+  <div id="heatmap-floating-tooltip" class="fixed pointer-events-none hidden px-3 py-2 rounded-xl bg-slate-900/98 text-white text-xs font-mono shadow-2xl border border-slate-700/80 backdrop-blur-md z-[999999] transition-opacity duration-150 transform -translate-x-1/2 -translate-y-full mb-2">
+  </div>
+
+  <!-- LIVE TOAST NOTIFICATION -->
+  <div id="live-toast" class="fixed bottom-5 right-5 z-[99999] hidden bg-gradient-to-r from-emerald-950/90 to-indigo-950/90 border border-emerald-500/50 text-white px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-md text-xs font-semibold flex items-center gap-3 transform transition-all duration-300">
+    <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+    <span id="live-toast-msg">⚡ Dữ liệu bài nộp vừa được cập nhật trực tuyến!</span>
+  </div>
+
   <!-- SECURITY AUTHENTICATION MODAL (BẢO VỆ LỚP HỌC & PHÂN QUYỀN) -->
   <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl transition-all duration-300">
     <div class="relative w-full max-w-md bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6">
@@ -438,6 +440,9 @@
         }
         loadStudentProfile(targetId);
       }
+
+      // Start continuous background auto-refresh for newly submitted student problems
+      startLiveAutoRefresh();
     }
 
     function switchStudent(id) {
@@ -834,7 +839,7 @@
       `;
 
       weeks.forEach(w => {
-        html += '<div class="flex flex-col gap-1.5">';
+        html += '<div class="flex flex-col gap-1.5 heatmap-column">';
         w.forEach(d => {
           if (!d.isInRange) {
             html += '<div class="w-3.5 h-3.5 opacity-0 pointer-events-none"></div>';
@@ -860,6 +865,29 @@
 
       html += '</div>';
       container.innerHTML = html;
+
+      // Attach floating tooltip event listeners to guarantee overlay on top of all cells
+      const tipEl = document.getElementById('heatmap-floating-tooltip');
+      container.querySelectorAll('.heatmap-cell').forEach(cell => {
+        cell.addEventListener('mouseenter', (e) => {
+          const raw = cell.getAttribute('data-tooltip');
+          if (!raw || !tipEl) return;
+          const parts = raw.split(': ');
+          const dStr = parts[0];
+          const detail = parts.slice(1).join(': ');
+          tipEl.innerHTML = `
+            <div class="text-[11px] font-bold text-slate-300">📅 ${dStr}</div>
+            <div class="text-xs font-semibold text-emerald-400 mt-0.5">${detail || ''}</div>
+          `;
+          tipEl.classList.remove('hidden');
+          const rect = cell.getBoundingClientRect();
+          tipEl.style.left = `${rect.left + rect.width / 2}px`;
+          tipEl.style.top = `${rect.top - 6}px`;
+        });
+        cell.addEventListener('mouseleave', () => {
+          if (tipEl) tipEl.classList.add('hidden');
+        });
+      });
     }
 
     function renderSolvedArchive(student) {
@@ -1113,6 +1141,45 @@
       if (currentAuth && currentAuth.role === 'student') {
         selector.value = currentAuth.stt;
       }
+    }
+
+    function showLiveToast(msg) {
+      const toast = document.getElementById('live-toast');
+      const msgEl = document.getElementById('live-toast-msg');
+      if (!toast || !msgEl) return;
+      msgEl.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4500);
+    }
+
+    let lastKnownUpdateTime = null;
+    function startLiveAutoRefresh() {
+      // Poll every 25 seconds for newly submitted problems
+      setInterval(async () => {
+        try {
+          const res = await fetch('data.json?v=' + Date.now());
+          if (!res.ok) return;
+          const freshData = await res.json();
+          if (!freshData || !freshData.last_updated) return;
+
+          if (lastKnownUpdateTime && freshData.last_updated !== lastKnownUpdateTime) {
+            console.log('⚡ Phát hiện dữ liệu mới:', freshData.last_updated);
+            appData = freshData;
+            lastKnownUpdateTime = freshData.last_updated;
+
+            const selector = document.getElementById('student-selector');
+            const curId = selector ? parseInt(selector.value) : 1;
+            loadStudentProfile(curId);
+            showLiveToast('⚡ Dữ liệu bài nộp vừa được cập nhật tự động!');
+          } else if (!lastKnownUpdateTime) {
+            lastKnownUpdateTime = freshData.last_updated;
+          }
+        } catch (e) {
+          // ignore transient poll errors
+        }
+      }, 25000);
     }
 
     window.addEventListener('DOMContentLoaded', initStudentPage);

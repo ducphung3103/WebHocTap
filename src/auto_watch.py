@@ -1,91 +1,346 @@
 import os
 import sys
 import time
+import json
+import argparse
 import subprocess
-from datetime import datetime
-from src.sync_excel import sync
+import urllib.request
+import urllib.parse
+from datetime import datetime, timezone
+from typing import Dict, List, Set, Any, Tuple
+
+# Fix Windows console encoding
+sys.stdout.reconfigure(encoding='utf-8')
+
+# Ensure project root is in sys.path
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
+
 from src.utils.logger import get_logger
+from src.crawlers.marisaoj import MarisaOJCrawler
 
 logger = get_logger("auto.watch")
 
-EXCEL_FILE = "Quản lý học sinh.xlsx"
-POLL_INTERVAL = 2  # check every 2 seconds
 
-
-def run_cmd(cmd: list) -> bool:
+def run_git_cmd(args: List[str]) -> Tuple[bool, str]:
+    """Runs a git command in project root."""
     try:
-        res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
-        if res.returncode != 0:
-            if "nothing to commit" in res.stdout or "nothing to commit" in res.stderr:
-                return True
-            logger.warning(f"Cmd warning ({' '.join(cmd)}): {res.stderr.strip() or res.stdout.strip()}")
-            return False
+        res = subprocess.run(
+            ["git"] + args,
+            cwd=_PROJECT_ROOT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8"
+        )
+        out = (res.stdout or "") + (res.stderr or "")
+        return res.returncode == 0, out.strip()
+    except Exception as exc:
+        return False, str(exc)
+
+
+def fetch_cf_recent(handle: str) -> Tuple[Set[str], Dict[str, Dict[str, int]]]:
+    """Fetches recent submissions from Codeforces API."""
+    handle = handle.strip()
+    if not handle:
+        return set(), {}
+
+    solved: Set[str] = set()
+    activity: Dict[str, Dict[str, int]] = {}
+
+    try:
+        url = f"https://codeforces.com/api/user.status?handle={urllib.parse.quote(handle)}&from=1&count=40"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            if data.get("status") == "OK":
+                for sub in data.get("result", []):
+                    c_id = sub.get("contestId")
+                    p_idx = sub.get("problem", {}).get("index")
+                    cr_time = sub.get("creationTimeSeconds")
+                    if not (c_id and p_idx and cr_time):
+                        continue
+
+                    d_str = datetime.fromtimestamp(cr_time).strftime("%Y-%m-%d")
+                    if d_str not in activity:
+                        activity[d_str] = {"total": 0, "ac": 0}
+                    activity[d_str]["total"] += 1
+
+                    if sub.get("verdict") == "OK":
+                        activity[d_str]["ac"] += 1
+                        solved.add(f"CF-{c_id}{p_idx}")
+    except Exception:
+        pass
+
+    return solved, activity
+
+
+def fetch_clue_recent(handle: str) -> Tuple[Set[str], Dict[str, Dict[str, int]]]:
+    """Fetches recent submissions from ClueOJ API."""
+    handle = handle.strip()
+    if not handle:
+        return set(), {}
+
+    solved: Set[str] = set()
+    activity: Dict[str, Dict[str, int]] = {}
+
+    try:
+        url = f"https://oj.clue.vn/api/submissions?user={urllib.parse.quote(handle)}&page=1"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            objects = data.get("data", {}).get("objects", [])
+            for sub in objects:
+                p_code = sub.get("problem")
+                created = sub.get("date")
+                if not (p_code and created):
+                    continue
+
+                d_str = created.split("T")[0]
+                if d_str not in activity:
+                    activity[d_str] = {"total": 0, "ac": 0}
+                activity[d_str]["total"] += 1
+
+                score = str(sub.get("score", ""))
+                status = str(sub.get("result", "") or sub.get("status", ""))
+                if "100" in score or "AC" in status or "Chấp nhận" in status:
+                    activity[d_str]["ac"] += 1
+                    solved.add(f"CLUE-{p_code}")
+    except Exception:
+        pass
+
+    return solved, activity
+
+
+def check_and_sync_all(driver=None, marisa_crawler=None) -> bool:
+    """
+    Scans all students for new submissions.
+    If new submissions or ACs are found, updates docs/data.json and pushes to GitHub.
+    Returns True if new submissions were found and updated.
+    """
+    json_path = os.path.join(_PROJECT_ROOT, "docs", "data.json")
+    if not os.path.exists(json_path):
+        return False
+
+    with open(json_path, "r", encoding="utf-8") as f:
+        app_data = json.load(f)
+
+    students = app_data.get("students", [])
+    if not students:
+        return False
+
+    now = datetime.now()
+    now_str = now.strftime("%H:%M:%S")
+
+    changes_detected = []
+    own_driver = False
+
+    try:
+        # Check MarisaOJ handles
+        marisa_students = [s for s in students if s.get("marisa_handle", "").strip()]
+        if marisa_students:
+            if marisa_crawler is None:
+                marisa_crawler = MarisaOJCrawler(delay_seconds=2.0, headless=False)
+            if driver is None:
+                driver = marisa_crawler._create_driver()
+                own_driver = True
+
+            for s in marisa_students:
+                m_handle = s["marisa_handle"].strip()
+                prev_solved = set(s.get("solved", []))
+                new_solved, page_act = marisa_crawler.crawl_user(m_handle, driver=driver)
+
+                # Merge solved
+                fresh_solved = prev_solved | new_solved
+                added_count = len(fresh_solved) - len(prev_solved)
+
+                # Merge activity
+                act_map = dict(s.get("activity", {}))
+                for d_str, v in page_act.items():
+                    if d_str not in act_map:
+                        act_map[d_str] = v
+                    else:
+                        act_map[d_str]["total"] = max(act_map[d_str].get("total", 0), v.get("total", 0))
+                        act_map[d_str]["ac"] = max(act_map[d_str].get("ac", 0), v.get("ac", 0))
+
+                s["solved"] = sorted(list(fresh_solved))
+                s["activity"] = act_map
+
+                if added_count > 0:
+                    changes_detected.append(f"{s['name']} (MarisaOJ: +{added_count} AC mới)")
+
+        # Check Codeforces & ClueOJ handles (fast HTTP, no browser needed)
+        for s in students:
+            cf_h = s.get("cf_handle", "").strip()
+            clue_h = s.get("clue_handle", "").strip()
+
+            if cf_h:
+                cf_solved, cf_act = fetch_cf_recent(cf_h)
+                prev_solved = set(s.get("solved", []))
+                fresh_solved = prev_solved | cf_solved
+                added = len(fresh_solved) - len(prev_solved)
+                if added > 0:
+                    changes_detected.append(f"{s['name']} (Codeforces: +{added} AC mới)")
+                s["solved"] = sorted(list(fresh_solved))
+
+                # Merge activity
+                act_map = dict(s.get("activity", {}))
+                for d_str, v in cf_act.items():
+                    if d_str not in act_map:
+                        act_map[d_str] = v
+                    else:
+                        act_map[d_str]["total"] = max(act_map[d_str].get("total", 0), v.get("total", 0))
+                        act_map[d_str]["ac"] = max(act_map[d_str].get("ac", 0), v.get("ac", 0))
+                s["activity"] = act_map
+
+            if clue_h:
+                clue_solved, clue_act = fetch_clue_recent(clue_h)
+                prev_solved = set(s.get("solved", []))
+                fresh_solved = prev_solved | clue_solved
+                added = len(fresh_solved) - len(prev_solved)
+                if added > 0:
+                    changes_detected.append(f"{s['name']} (ClueOJ: +{added} AC mới)")
+                s["solved"] = sorted(list(fresh_solved))
+
+                # Merge activity
+                act_map = dict(s.get("activity", {}))
+                for d_str, v in clue_act.items():
+                    if d_str not in act_map:
+                        act_map[d_str] = v
+                    else:
+                        act_map[d_str]["total"] = max(act_map[d_str].get("total", 0), v.get("total", 0))
+                        act_map[d_str]["ac"] = max(act_map[d_str].get("ac", 0), v.get("ac", 0))
+                s["activity"] = act_map
+
+    finally:
+        if own_driver and driver:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+
+    # Recalculate stats and target homework for all students
+    class_config = app_data.get("class_config", {})
+    for s in students:
+        solved_set = set(s.get("solved", []))
+        total_ac = len(solved_set)
+        s["total_solved_count"] = total_ac
+
+        # Activity & stats calculation
+        act_map = s.get("activity", {})
+        ac_week = 0
+        ac_month = 0
+        ac_year = 0
+        for d_str, v in act_map.items():
+            try:
+                d_obj = datetime.strptime(d_str, "%Y-%m-%d")
+                diff = (now - d_obj).days
+                ac_cnt = v.get("ac", 0)
+                if diff <= 7:
+                    ac_week += ac_cnt
+                if diff <= 30:
+                    ac_month += ac_cnt
+                if d_obj.year == now.year:
+                    ac_year += ac_cnt
+            except Exception:
+                pass
+
+        stats_year = min(ac_year, total_ac)
+        stats_month = min(ac_month, stats_year)
+        stats_week = min(ac_week, stats_month)
+        s["stats"] = {
+            "week": stats_week,
+            "month": stats_month,
+            "year": stats_year,
+            "total": total_ac
+        }
+
+        # Homework targets
+        s_cls = s.get("class", "C++")
+        cls_prob_ids = class_config.get(s_cls, {}).get("problem_ids", [])
+        target_solved = [pid for pid in cls_prob_ids if pid in solved_set]
+        s["target_solved"] = target_solved
+        s["target_solved_count"] = len(target_solved)
+        s["target_class_total"] = len(cls_prob_ids) if cls_prob_ids else 8
+
+    # If any new submissions detected, save and git push
+    if changes_detected:
+        print()
+        print(f"[{now_str}] 🔔 PHÁT HIỆN BÀI NỘP MỚI TỪ HỌC SINH:")
+        for ch in changes_detected:
+            print(f"   ✨ {ch}")
+
+        app_data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(app_data, f, ensure_ascii=False, indent=2)
+
+        print(f"[{now_str}] 📤 Đang tự động commit và đẩy lên GitHub Pages...")
+        run_git_cmd(["add", "docs/data.json"])
+        c_msg = f"auto: update new submissions at {now_str}"
+        run_git_cmd(["commit", "-m", c_msg])
+        push_ok, p_out = run_git_cmd(["push", "origin", "master"])
+        if not push_ok:
+            run_git_cmd(["pull", "--rebase", "origin", "master"])
+            push_ok, p_out = run_git_cmd(["push", "origin", "master"])
+
+        if push_ok:
+            print(f"[{now_str}] ✅ [HOÀN TẤT] Website đã được cập nhật trực tuyến thành công!")
+        else:
+            print(f"[{now_str}] ⚠️ Đã lưu cục bộ nhưng chưa thể đẩy lên GitHub: {p_out}")
+
         return True
-    except Exception as e:
-        logger.error(f"Error running cmd {' '.join(cmd)}: {e}")
+    else:
+        print(f"[{now_str}] ⏳ Đã kiểm tra {len(students)} học sinh. Chưa có bài nộp mới.")
         return False
 
 
-def watch_and_sync():
-    print("=" * 60)
-    print("  🚀 CHẾ ĐỘ TỰ ĐỘNG ĐỒNG BỘ EXCEL SANG WEB ĐANG CHẠY")
-    print("=" * 60)
-    print(f"📁 Tệp theo dõi: {EXCEL_FILE}")
-    print("💡 Thao tác: Bất cứ khi nào bạn nhấn Ctrl + S trong Excel,")
-    print("   hệ thống sẽ TỰ ĐỘNG đồng bộ và đẩy lên GitHub Pages.")
-    print("👉 Bạn có thể THU NHỎ cửa sổ này và làm việc bình thường.")
-    print("=" * 60)
+def main_watch_loop(interval_seconds: int = 120):
+    """Continuous auto-watch loop."""
+    print("=" * 65)
+    print("  🚀 HỆ THỐNG TỰ ĐỘNG CẬP NHẬT BÀI NỘP HỌC SINH LIÊN TỤC")
+    print("=" * 65)
+    print(f"⏱️ Chu kỳ kiểm tra: Mỗi {interval_seconds} giây ({round(interval_seconds / 60, 1)} phút)")
+    print("🌐 Các nền tảng theo dõi: MarisaOJ, Codeforces, ClueOJ")
+    print("💡 Bất cứ khi nào học sinh nộp bài AC mới, hệ thống sẽ:")
+    print("   1. Tự động cộng bài vào hồ sơ cá nhân và bảng xếp hạng.")
+    print("   2. Tự động commit và đẩy lên GitHub Pages.")
+    print("   3. Web của học sinh/phụ huynh tự động cập nhật ngay lập tức.")
+    print("👉 Bạn có thể THU NHỎ cửa sổ này và để máy tính làm việc.")
+    print("=" * 65)
     print()
 
-    if not os.path.exists(EXCEL_FILE):
-        logger.error(f"Không tìm thấy file: {EXCEL_FILE}")
-        return
+    marisa_crawler = MarisaOJCrawler(delay_seconds=2.0, headless=False)
+    driver = None
 
-    last_mtime = os.path.getmtime(EXCEL_FILE)
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Đang lắng nghe thay đổi từ {EXCEL_FILE}...")
+    try:
+        driver = marisa_crawler._create_driver()
 
-    while True:
-        try:
-            time.sleep(POLL_INTERVAL)
-            if not os.path.exists(EXCEL_FILE):
-                continue
+        while True:
+            try:
+                check_and_sync_all(driver=driver, marisa_crawler=marisa_crawler)
+            except Exception as e:
+                logger.warning(f"Lỗi kiểm tra chu kỳ: {e}")
 
-            current_mtime = os.path.getmtime(EXCEL_FILE)
-            if current_mtime > last_mtime:
-                # File modified! Wait 1.5s for Excel to release lock
-                time.sleep(1.5)
-                last_mtime = os.path.getmtime(EXCEL_FILE)
+            time.sleep(interval_seconds)
 
-                now_str = datetime.now().strftime('%H:%M:%S')
-                print()
-                print(f"[{now_str}] 🔔 Phát hiện thay đổi trong '{EXCEL_FILE}'! Đang xử lý...")
-
-                # 1. Sync Excel to docs/data.json
-                ok = sync(EXCEL_FILE, "docs/data.json")
-                if not ok:
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] ❌ Lỗi khi đọc file Excel. Sẽ thử lại lần sau.")
-                    continue
-
-                # 2. Git add, commit, push
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] 📤 Đang tự động đẩy lên GitHub Pages...")
-                run_cmd(["git", "add", "docs/data.json"])
-                commit_ok = run_cmd(["git", "commit", "-m", f"auto-sync: update from excel at {now_str}"])
-                push_ok = run_cmd(["git", "push", "origin", "master"])
-
-                if push_ok:
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] ✅ [HOÀN TẤT] Website đã được cập nhật thành công lên GitHub Pages!")
-                else:
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] ⚠️ Đã lưu vào docs/data.json nhưng chưa thể đẩy lên GitHub. Vui lòng kiểm tra mạng.")
-
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] ⏳ Tiếp tục theo dõi thay đổi...")
-
-        except KeyboardInterrupt:
-            print("\nĐã dừng chế độ tự động đồng bộ.")
-            sys.exit(0)
-        except Exception as e:
-            # Ignore transient read locks from Excel
-            time.sleep(2)
+    except KeyboardInterrupt:
+        print("\n👋 Đã dừng chế độ tự động cập nhật liên tục.")
+    finally:
+        if driver:
+            try:
+                driver.quit()
+            except Exception:
+                pass
 
 
 if __name__ == "__main__":
-    watch_and_sync()
+    parser = argparse.ArgumentParser(description="Tự động kiểm tra bài nộp học sinh liên tục")
+    parser.add_argument("--interval", type=int, default=120, help="Chu kỳ kiểm tra tính bằng giây (mặc định: 120s)")
+    parser.add_argument("--once", action="store_true", help="Chỉ kiểm tra một lần rồi thoát")
+    args = parser.parse_args()
+
+    if args.once:
+        check_and_sync_all()
+    else:
+        main_watch_loop(interval_seconds=args.interval)

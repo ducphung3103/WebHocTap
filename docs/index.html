@@ -46,6 +46,12 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+  <!-- LIVE TOAST NOTIFICATION -->
+  <div id="live-toast" class="fixed bottom-5 right-5 z-[99999] hidden bg-gradient-to-r from-emerald-950/90 to-indigo-950/90 border border-emerald-500/50 text-white px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-md text-xs font-semibold flex items-center gap-3 transform transition-all duration-300">
+    <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+    <span id="live-toast-msg">⚡ Dữ liệu vừa được cập nhật trực tuyến!</span>
+  </div>
+
   <!-- SECURITY AUTHENTICATION MODAL (BẢO VỆ LỚP HỌC & PHÂN QUYỀN) -->
   <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl transition-all duration-300">
     <div class="relative w-full max-w-md bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6">
@@ -959,6 +965,58 @@
 
       // Check access authentication
       checkAuthSession();
+
+      // Start continuous background auto-refresh for newly submitted student problems
+      startLiveAutoRefresh();
+    }
+
+    function showLiveToast(msg) {
+      const toast = document.getElementById('live-toast');
+      const msgEl = document.getElementById('live-toast-msg');
+      if (!toast || !msgEl) return;
+      msgEl.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4500);
+    }
+
+    let lastKnownUpdateTime = null;
+    function startLiveAutoRefresh() {
+      // Poll every 25s for new student submissions
+      setInterval(async () => {
+        try {
+          const res = await fetch('data.json?v=' + Date.now());
+          if (!res.ok) return;
+          const freshData = await res.json();
+          if (!freshData || !freshData.last_updated) return;
+
+          if (lastKnownUpdateTime && freshData.last_updated !== lastKnownUpdateTime) {
+            console.log('⚡ Phát hiện bài nộp mới từ học sinh:', freshData.last_updated);
+            appData = freshData;
+            lastKnownUpdateTime = freshData.last_updated;
+
+            if (appData.last_updated) {
+              try {
+                let sStr = String(appData.last_updated);
+                if (!sStr.endsWith('Z') && !sStr.includes('+')) sStr += 'Z';
+                const d = new Date(sStr);
+                const updateEl = document.getElementById('sync-last-updated');
+                if (updateEl && !isNaN(d.getTime())) {
+                  updateEl.textContent = `• Cập nhật: ${d.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'})} ${d.toLocaleDateString('vi-VN')}`;
+                }
+              } catch(e) {}
+            }
+
+            renderMatrix();
+            renderProblems();
+            renderCurriculum();
+            showLiveToast('⚡ Bảng xếp hạng vừa tự động cập nhật bài nộp mới!');
+          } else if (!lastKnownUpdateTime) {
+            lastKnownUpdateTime = freshData.last_updated;
+          }
+        } catch(e) {}
+      }, 25000);
     }
 
     // TAB SWITCHING (INCLUDES ADMIN TAB)
