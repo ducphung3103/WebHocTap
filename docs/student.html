@@ -122,13 +122,13 @@
           <div class="flex items-center gap-3 bg-slate-900/90 border border-slate-800 p-3.5 rounded-xl shrink-0 self-start md:self-auto">
             <div class="text-center px-3 border-r border-slate-800">
               <div class="text-[11px] text-slate-400">Contest Rating</div>
-              <div class="text-xl font-extrabold text-white font-mono">1200</div>
+              <div class="text-xl font-extrabold text-white font-mono" id="student-rating">0</div>
               <div class="text-[10px] text-slate-500">Khởi điểm</div>
             </div>
             <div class="text-center px-3">
               <div class="text-[11px] text-slate-400">Hạng Lớp</div>
               <div id="student-rank" class="text-xl font-extrabold text-indigo-400 font-mono">#--</div>
-              <div class="text-[10px] text-slate-500">Toàn lớp</div>
+              <div class="text-[10px] text-slate-500" id="student-rank-desc">Theo lớp</div>
             </div>
           </div>
 
@@ -184,10 +184,10 @@
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2" id="homework-title">
               <span>🎯</span> Tiến Độ Bài Tập Giao Tuần Này
             </h2>
-            <p class="text-xs text-slate-400">Kiểm tra mức độ hoàn thành đối với 8 bài tập bắt buộc trong tuần</p>
+            <p class="text-xs text-slate-400" id="homework-desc">Kiểm tra mức độ hoàn thành bài tập giao trong tuần</p>
           </div>
           <div class="text-sm font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg self-start sm:self-auto" id="target-stat-badge">
             0 / 8 bài (0%)
@@ -367,7 +367,19 @@
       // Basic Info
       document.getElementById('student-name').textContent = student.name;
       document.getElementById('student-class').textContent = student.class || 'Tin học';
-      document.getElementById('student-rank').textContent = `#${student.stt}`;
+
+      // Compute rank within their class
+      const sameClassStudents = (appData.students || []).filter(s => s.class === student.class);
+      sameClassStudents.sort((a, b) => {
+        const totalB = (b.stats ? b.stats.total : (b.solved ? b.solved.length : 0));
+        const totalA = (a.stats ? a.stats.total : (a.solved ? a.solved.length : 0));
+        if (totalB !== totalA) return totalB - totalA;
+        return (b.target_solved_count || 0) - (a.target_solved_count || 0);
+      });
+      const classRank = sameClassStudents.findIndex(s => s.stt === student.stt) + 1;
+      document.getElementById('student-rank').textContent = `#${classRank > 0 ? classRank : student.stt}`;
+      document.getElementById('student-rank-desc').textContent = `Lớp ${student.class || ''} (${sameClassStudents.length} hs)`;
+      document.getElementById('student-rating').textContent = student.rating !== undefined ? student.rating : 0;
 
       // Handles row
       const handlesContainer = document.getElementById('handles-container');
@@ -415,7 +427,7 @@
       document.getElementById('stat-year').textContent = stats.year;
       document.getElementById('stat-total').textContent = stats.total;
 
-      // Homework Progress (8 target problems)
+      // Homework Progress specific to student's class
       renderHomeworkChecklist(student);
 
       // Activity Heatmap
@@ -432,11 +444,28 @@
       if (!container || !appData.problems) return;
 
       container.innerHTML = '';
-      const totalProblems = appData.problems.length;
+      
+      const sClass = student.class || 'C++';
+      const classCfg = (appData.class_config && appData.class_config[sClass]) ? appData.class_config[sClass] : null;
+      let classProblems = [];
+      if (classCfg && classCfg.problem_ids) {
+        classProblems = (appData.problems || []).filter(p => classCfg.problem_ids.includes(p.id));
+      } else {
+        classProblems = (appData.problems || []).filter(p => !p.classes || p.classes.includes(sClass));
+      }
+      if (classProblems.length === 0) classProblems = appData.problems || [];
+
+      const totalProblems = classProblems.length;
       const solvedList = student.solved || [];
       let count = 0;
 
-      appData.problems.forEach(p => {
+      // Update section header
+      const titleEl = document.getElementById('homework-title');
+      const descEl = document.getElementById('homework-desc');
+      if (titleEl) titleEl.innerHTML = `<span>🎯</span> Tiến Độ Bài Tập Giao Tuần Này • <span class="text-indigo-400">Lớp ${sClass}</span>`;
+      if (descEl) descEl.textContent = `Mức độ hoàn thành đối với ${totalProblems} bài tập giao riêng cho lớp ${sClass}`;
+
+      classProblems.forEach(p => {
         const isSolved = solvedList.includes(p.id) || (student.target_solved && student.target_solved.includes(p.id));
         if (isSolved) count++;
 

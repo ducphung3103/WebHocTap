@@ -94,10 +94,9 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
         all_solved = [f"MARISA-{pid}" for pid in sorted(list(ac_ids))]
         target_solved = [f"MARISA-{pid}" for pid in sorted(list(ac_ids.intersection(target_pids)))]
 
-        # Base rating calculation: 1200 base + 20 points per target AC + 10 points per extra AC
-        extra_count = max(0, len(all_solved) - len(target_solved))
-        rating = 1200 + (len(target_solved) * 50) + (extra_count * 10)
-        rating_change = f"+{len(target_solved) * 10}" if target_solved else ""
+        # Rating Contest: all currently set to 0, title Newbie
+        rating = 0
+        rating_change = ""
 
         students.append({
             "stt": s["stt"],
@@ -111,6 +110,7 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
             "target_solved_count": len(target_solved),
             "total_solved_count": len(all_solved),
             "rating": rating,
+            "title": "Newbie",
             "rating_change": rating_change
         })
 
