@@ -55,23 +55,44 @@ class Settings:
         """
         # 1. Try raw JSON or Base64 in environment variable
         if self.sa_raw_json:
-            # Check if it's base64 encoded
             raw = self.sa_raw_json.strip()
+            # Strip accidental surrounding quotes or backticks
+            if (raw.startswith("'") and raw.endswith("'")) or (raw.startswith("`") and raw.endswith("`")):
+                raw = raw[1:-1].strip()
+
+            # Self-heal missing brackets (e.g. if user missed opening { when copying)
+            if not raw.startswith("{") and "type" in raw:
+                idx = raw.find('"type"')
+                if idx != -1:
+                    raw = "{" + raw[idx:]
+                else:
+                    t_idx = raw.find("type")
+                    raw = '{"' + raw[t_idx:]
+            if not raw.endswith("}"):
+                r_idx = raw.rfind("}")
+                if r_idx != -1:
+                    raw = raw[:r_idx + 1]
+                else:
+                    raw = raw + "}"
+
             if raw.startswith("{") and raw.endswith("}"):
                 try:
                     return json.loads(raw)
-                except json.JSONDecodeError as exc:
-                    raise ValueError(f"Invalid JSON in GOOGLE_SERVICE_ACCOUNT_JSON: {exc}") from exc
-            else:
-                try:
-                    decoded = base64.b64decode(raw).decode("utf-8")
-                    return json.loads(decoded)
                 except Exception:
-                    # If base64 decode fails, try json directly
-                    try:
-                        return json.loads(raw)
-                    except json.JSONDecodeError as exc:
-                        raise ValueError("GOOGLE_SERVICE_ACCOUNT_JSON is neither valid JSON nor valid base64-encoded JSON") from exc
+                    pass
+
+            # Try base64 decoding as fallback
+            try:
+                decoded = base64.b64decode(raw).decode("utf-8")
+                return json.loads(decoded)
+            except Exception:
+                pass
+
+            # Final direct json load attempt
+            try:
+                return json.loads(raw)
+            except json.JSONDecodeError as exc:
+                raise ValueError("GCP_SA_KEY / GOOGLE_SERVICE_ACCOUNT_JSON không đúng định dạng JSON chuẩn. Vui lòng kiểm tra lại nội dung khóa trên GitHub Secrets!") from exc
 
         # 2. Try file path
         candidate_paths = [
