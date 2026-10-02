@@ -2,8 +2,10 @@ import os
 import sys
 import json
 import hashlib
+import urllib.request
+import re
 from datetime import datetime, timezone
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 
 # Ensure SSLKEYLOGFILE is safe
 _sslkeylogfile = os.environ.get("SSLKEYLOGFILE")
@@ -38,6 +40,95 @@ def get_worksheet_by_title(spreadsheet: gspread.Spreadsheet, target_names: List[
     except Exception:
         pass
     return None
+
+
+def fetch_online_submissions(cf_handle: str = "", clue_handle: str = "", existing_solved: Optional[List[str]] = None, existing_activity: Optional[Dict[str, Any]] = None) -> Tuple[List[str], Dict[str, Any], Dict[str, int]]:
+    """Crawls Codeforces and ClueOJ submissions to compute solved problems, heatmap activity, and stats."""
+    solved_set = set(existing_solved or [])
+    activity_map = dict(existing_activity or {})
+
+    # Codeforces
+    if cf_handle and cf_handle.strip():
+        try:
+            url = f"https://codeforces.com/api/user.status?handle={cf_handle.strip()}&from=1&count=5000"
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+            with urllib.request.urlopen(req, timeout=6) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                if data.get("status") == "OK":
+                    for sub in data.get("result", []):
+                        t = sub.get("creationTimeSeconds")
+                        if not t:
+                            continue
+                        dt = datetime.fromtimestamp(t).strftime("%Y-%m-%d")
+                        if dt not in activity_map:
+                            activity_map[dt] = {"total": 0, "ac": 0}
+                        activity_map[dt]["total"] += 1
+                        if sub.get("verdict") == "OK":
+                            activity_map[dt]["ac"] += 1
+                            p = sub.get("problem", {})
+                            cid = p.get("contestId")
+                            idx = p.get("index")
+                            if cid and idx:
+                                solved_set.add(f"CF-{cid}{idx}")
+        except Exception as e:
+            logger.warning(f"Could not fetch CF submissions for {cf_handle}: {e}")
+
+    # ClueOJ
+    if clue_handle and clue_handle.strip():
+        for page in range(1, 10):
+            try:
+                url = f"https://oj.clue.edu.vn/submissions/user/{clue_handle.strip()}/?page={page}"
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+                with urllib.request.urlopen(req, timeout=6) as resp:
+                    html = resp.read().decode("utf-8")
+                    probs = re.findall(r'href="/problem/([^"/]+)"', html)
+                    dates = re.findall(r'data-iso="(\d{4}-\d{2}-\d{2})', html)
+                    verdicts = re.findall(r'class="status">([^<]+)</span>', html)
+                    scores = re.findall(r'class="score">([^<]+)</div>', html)
+                    if not probs:
+                        break
+                    for i in range(min(len(probs), len(dates))):
+                        p_code = probs[i]
+                        d_str = dates[i]
+                        score_str = scores[i] if i < len(scores) else ""
+                        verdict_str = verdicts[i] if i < len(verdicts) else ""
+                        is_ac = ("100" in score_str or "AC" in verdict_str or "Chấp nhận" in verdict_str)
+                        if d_str not in activity_map:
+                            activity_map[d_str] = {"total": 0, "ac": 0}
+                        activity_map[d_str]["total"] += 1
+                        if is_ac:
+                            activity_map[d_str]["ac"] += 1
+                            solved_set.add(f"CLUE-{p_code}")
+            except Exception as e:
+                break
+
+    # Stats calculation
+    now = datetime.now()
+    ac_week = 0
+    ac_month = 0
+    ac_year = 0
+    for d_str, v in activity_map.items():
+        try:
+            d_obj = datetime.strptime(d_str, "%Y-%m-%d")
+            diff = (now - d_obj).days
+            ac_cnt = v.get("ac", 0)
+            if diff <= 7:
+                ac_week += ac_cnt
+            if diff <= 30:
+                ac_month += ac_cnt
+            if d_obj.year == now.year:
+                ac_year += ac_cnt
+        except Exception:
+            pass
+
+    stats = {
+        "week": ac_week,
+        "month": ac_month,
+        "year": ac_year,
+        "total": len(solved_set)
+    }
+
+    return list(solved_set), activity_map, stats
 
 
 def git_push() -> bool:
@@ -339,6 +430,18 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                 # Re-use existing solve cache if available
                 existing_st = existing_students.get(name_str, {})
                 all_solved = existing_st.get("solved", [])
+                st_activity = existing_st.get("activity", {})
+                st_stats = existing_st.get("stats", {"week": 0, "month": 0, "year": 0, "total": len(all_solved)})
+
+                # Auto-crawl online submissions for platforms with direct API access (CF, ClueOJ)
+                if cf_h or clue_h:
+                    all_solved, st_activity, st_stats = fetch_online_submissions(
+                        cf_handle=cf_h,
+                        clue_handle=clue_h,
+                        existing_solved=all_solved,
+                        existing_activity=st_activity
+                    )
+
                 class_prob_ids = class_problems_map.get(cls_str, [])
                 target_solved = [pid for pid in class_prob_ids if pid in set(all_solved)]
 
@@ -373,8 +476,8 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     "rating": existing_st.get("rating", 0),
                     "title": existing_st.get("title", "Newbie"),
                     "rating_change": existing_st.get("rating_change", ""),
-                    "stats": existing_st.get("stats", {"week": 0, "month": 0, "year": 0, "total": len(all_solved)}),
-                    "activity": existing_st.get("activity", {})
+                    "stats": st_stats,
+                    "activity": st_activity
                 })
 
                 # Add personal PIN token

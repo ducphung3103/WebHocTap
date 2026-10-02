@@ -742,7 +742,78 @@
       if (!tbody) return;
       tbody.innerHTML = '';
 
-      const detailList = student.solved_problems_detail || [];
+      let detailList = student.solved_problems_detail;
+      if (!detailList || detailList.length === 0) {
+        detailList = (student.solved || []).map(pid => {
+          const matched = (appData.problems || []).find(p => p.id === pid);
+          if (matched) {
+            let platColor = "text-purple-400";
+            const platLower = (matched.platform || '').toLowerCase();
+            if (platLower.includes('cf') || platLower.includes('codeforces')) platColor = "text-blue-400";
+            else if (platLower.includes('clue')) platColor = "text-cyan-400";
+            else if (platLower.includes('vnoi')) platColor = "text-amber-400";
+            else if (platLower.includes('chuyentin') || platLower.includes('ctoj')) platColor = "text-teal-400";
+            else if (platLower.includes('vjudge')) platColor = "text-emerald-400";
+
+            return {
+              id: matched.id,
+              name: matched.name,
+              platform: matched.platform || 'MarisaOJ',
+              platform_color: platColor,
+              url: matched.url,
+              is_target: (student.target_solved || []).includes(pid)
+            };
+          }
+
+          let plat = 'MarisaOJ';
+          let platColor = 'text-purple-400';
+          let url = '#';
+          let name = pid;
+
+          if (pid.startsWith('MARISA-')) {
+            const num = pid.replace('MARISA-', '');
+            plat = 'MarisaOJ';
+            platColor = 'text-purple-400';
+            url = `https://marisaoj.com/problem/${num}`;
+            name = `Bài tập Marisa #${num}`;
+          } else if (pid.startsWith('CF-')) {
+            const code = pid.replace('CF-', '');
+            const m = code.match(/^(\d+)([A-Za-z0-9]+)$/);
+            plat = 'Codeforces';
+            platColor = 'text-blue-400';
+            url = m ? `https://codeforces.com/problemset/problem/${m[1]}/${m[2]}` : `https://codeforces.com/problemset`;
+            name = `Codeforces ${code}`;
+          } else if (pid.startsWith('CLUE-')) {
+            const code = pid.replace('CLUE-', '');
+            plat = 'ClueOJ';
+            platColor = 'text-cyan-400';
+            url = `https://oj.clue.edu.vn/problem/${code}`;
+            name = `ClueOJ ${code}`;
+          } else if (pid.startsWith('VNOI-')) {
+            const code = pid.replace('VNOI-', '');
+            plat = 'VNOI';
+            platColor = 'text-amber-400';
+            url = `https://oj.vnoi.info/problem/${code}`;
+            name = `VNOI ${code}`;
+          } else if (pid.startsWith('CTOJ-')) {
+            const code = pid.replace('CTOJ-', '');
+            plat = 'CTOJ';
+            platColor = 'text-teal-400';
+            url = `https://oj.chuyentin.pro/problem/${code}`;
+            name = `CTOJ ${code}`;
+          }
+
+          return {
+            id: pid,
+            name: name,
+            platform: plat,
+            platform_color: platColor,
+            url: url,
+            is_target: (student.target_solved || []).includes(pid)
+          };
+        });
+      }
+
       counter.textContent = `Tổng: ${detailList.length} bài`;
 
       if (detailList.length === 0) {
@@ -761,19 +832,19 @@
         tr.className = "hover:bg-slate-800/40 transition";
         tr.innerHTML = `
           <td class="px-4 py-3 text-center text-slate-400 font-bold">${idx + 1}</td>
-          <td class="px-4 py-3 font-bold text-indigo-300">${p.id}</td>
+          <td class="px-4 py-3 font-bold text-indigo-300 font-mono text-xs">${p.id}</td>
           <td class="px-4 py-3 font-semibold text-white">
             ${p.name}
             ${p.is_target ? '<span class="ml-2 px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">Đề Tuần</span>' : ''}
           </td>
-          <td class="px-4 py-3 text-center text-purple-400 font-medium">MarisaOJ</td>
+          <td class="px-4 py-3 text-center ${p.platform_color || 'text-purple-400'} font-medium">${p.platform || 'Online Judge'}</td>
           <td class="px-4 py-3 text-center">
             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
               Accepted (100đ)
             </span>
           </td>
           <td class="px-4 py-3 text-center">
-            <a href="${p.url}" target="_blank" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition">
+            <a href="${p.url}" target="_blank" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-xs">
               Xem đề ↗
             </a>
           </td>
