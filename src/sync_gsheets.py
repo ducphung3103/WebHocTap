@@ -197,12 +197,14 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     elif "Python" in classes_str:
                         c_list.append("Python")
 
+                plat_lower = platform.lower()
+                b_color = "purple" if "marisa" in plat_lower else ("amber" if "vnoi" in plat_lower else ("cyan" if "clue" in plat_lower else ("emerald" if "vjudge" in plat_lower else "blue")))
                 problems.append({
                     "id": pid,
                     "name": name,
                     "platform": platform,
                     "url": link,
-                    "badge_color": "purple" if "marisa" in platform.lower() else "blue",
+                    "badge_color": b_color,
                     "category": tag,
                     "difficulty": f"Level {level} • {tag}",
                     "classes": c_list
@@ -282,63 +284,102 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
     ws_stu = get_worksheet_by_title(sh, ["Học Sinh", "Hoc Sinh", "Danh sách Học sinh", "Danh sach Hoc sinh", "Students"])
     if ws_stu:
         stu_rows = ws_stu.get_all_values()
-        for idx, r in enumerate(stu_rows[1:], 1):
-            if not r or len(r) < 2 or not r[1].strip():
-                continue
-            stt = r[0].strip() if r[0].strip() else str(idx)
-            name_str = r[1].strip()
-            cls_str = r[2].strip() if len(r) > 2 and r[2].strip() else "C++"
-            marisa_str = r[3].strip() if len(r) > 3 else ""
-            cf_h = r[4].strip() if len(r) > 4 else ""
-            vj_h = r[5].strip() if len(r) > 5 else ""
-            pin = r[6].strip() if len(r) > 6 else ""
-            status = r[7].strip() if len(r) > 7 and r[7].strip() else "Đang học"
+        if stu_rows:
+            header_row = [str(c).strip().lower() for c in stu_rows[0]]
+            col_map = {}
+            for col_idx, col_name in enumerate(header_row):
+                if not col_name:
+                    continue
+                if any(k in col_name for k in ["stt", "số thứ tự", "thứ tự", "id"]) and "stt" not in col_map:
+                    col_map["stt"] = col_idx
+                elif any(k in col_name for k in ["họ và tên", "họ tên", "tên học sinh", "tên", "name"]) and "name" not in col_map:
+                    col_map["name"] = col_idx
+                elif any(k in col_name for k in ["lớp", "class"]) and "class" not in col_map:
+                    col_map["class"] = col_idx
+                elif any(k in col_name for k in ["marisa", "moj"]) and "marisa" not in col_map:
+                    col_map["marisa"] = col_idx
+                elif any(k in col_name for k in ["codeforces", "cf"]) and "cf" not in col_map:
+                    col_map["cf"] = col_idx
+                elif any(k in col_name for k in ["vjudge", "vj"]) and "vjudge" not in col_map:
+                    col_map["vjudge"] = col_idx
+                elif any(k in col_name for k in ["vnoi", "vnoj"]) and "vnoi" not in col_map:
+                    col_map["vnoi"] = col_idx
+                elif any(k in col_name for k in ["clue", "clueoj"]) and "clue" not in col_map:
+                    col_map["clue"] = col_idx
+                elif any(k in col_name for k in ["pin", "mật khẩu", "password", "pass"]) and "pin" not in col_map:
+                    col_map["pin"] = col_idx
+                elif any(k in col_name for k in ["trạng thái", "status"]) and "status" not in col_map:
+                    col_map["status"] = col_idx
 
-            # Re-use existing solve cache if available
-            existing_st = existing_students.get(name_str, {})
-            all_solved = existing_st.get("solved", [])
-            class_prob_ids = class_problems_map.get(cls_str, [])
-            target_solved = [pid for pid in class_prob_ids if pid in set(all_solved)]
+            def get_cell(row, key, default_idx=-1, default=""):
+                idx = col_map.get(key, default_idx)
+                if 0 <= idx < len(row):
+                    val = str(row[idx]).strip()
+                    if val and val != "None":
+                        return val
+                return default
 
-            # Tuition matching
-            st_tuition = {}
-            for fn, fmap in tuition_data.items():
-                if fn.lower() in name_str.lower() or name_str.lower() in fn.lower():
-                    st_tuition = fmap
-                    break
-            if not st_tuition:
-                st_tuition = {m: False for m in tuition_months}
+            for idx, r in enumerate(stu_rows[1:], 1):
+                name_str = get_cell(r, "name", 1, "")
+                if not name_str:
+                    continue
+                stt = get_cell(r, "stt", 0, str(idx))
+                cls_str = get_cell(r, "class", 2, "C++")
+                marisa_str = get_cell(r, "marisa", 3, "")
+                cf_h = get_cell(r, "cf", 4, "")
+                vj_h = get_cell(r, "vjudge", 5, "")
+                vnoi_h = get_cell(r, "vnoi", -1, "")
+                clue_h = get_cell(r, "clue", -1, "")
+                pin = get_cell(r, "pin", 6 if "vnoi" not in col_map and "clue" not in col_map else -1, "")
+                status = get_cell(r, "status", 7 if "vnoi" not in col_map and "clue" not in col_map else -1, "Đang học")
 
-            st_idx = int(stt) if stt.isdigit() else idx
-            students.append({
-                "stt": st_idx,
-                "name": name_str,
-                "class": cls_str,
-                "cf_handle": cf_h,
-                "vjudge_handle": vj_h,
-                "marisa_handle": marisa_str,
-                "pin": pin,
-                "status": status,
-                "tuition": st_tuition,
-                "solved": all_solved,
-                "target_solved": target_solved,
-                "target_solved_count": len(target_solved),
-                "target_class_total": len(class_prob_ids) if class_prob_ids else 8,
-                "total_solved_count": len(all_solved),
-                "rating": existing_st.get("rating", 0),
-                "title": existing_st.get("title", "Newbie"),
-                "rating_change": existing_st.get("rating_change", ""),
-                "stats": existing_st.get("stats", {"week": 0, "month": 0, "year": 0, "total": len(all_solved)}),
-                "activity": existing_st.get("activity", {})
-            })
+                # Re-use existing solve cache if available
+                existing_st = existing_students.get(name_str, {})
+                all_solved = existing_st.get("solved", [])
+                class_prob_ids = class_problems_map.get(cls_str, [])
+                target_solved = [pid for pid in class_prob_ids if pid in set(all_solved)]
 
-            # Add personal PIN token
-            if pin:
-                auth_tokens[hash_str(pin)] = {
-                    "role": "student",
+                # Tuition matching
+                st_tuition = {}
+                for fn, fmap in tuition_data.items():
+                    if fn.lower() in name_str.lower() or name_str.lower() in fn.lower():
+                        st_tuition = fmap
+                        break
+                if not st_tuition:
+                    st_tuition = {m: False for m in tuition_months}
+
+                st_idx = int(stt) if stt.isdigit() else idx
+                students.append({
+                    "stt": st_idx,
                     "name": name_str,
-                    "class": cls_str
-                }
+                    "class": cls_str,
+                    "cf_handle": cf_h,
+                    "vjudge_handle": vj_h,
+                    "marisa_handle": marisa_str,
+                    "vnoi_handle": vnoi_h,
+                    "clue_handle": clue_h,
+                    "pin": pin,
+                    "status": status,
+                    "tuition": st_tuition,
+                    "solved": all_solved,
+                    "target_solved": target_solved,
+                    "target_solved_count": len(target_solved),
+                    "target_class_total": len(class_prob_ids) if class_prob_ids else 8,
+                    "total_solved_count": len(all_solved),
+                    "rating": existing_st.get("rating", 0),
+                    "title": existing_st.get("title", "Newbie"),
+                    "rating_change": existing_st.get("rating_change", ""),
+                    "stats": existing_st.get("stats", {"week": 0, "month": 0, "year": 0, "total": len(all_solved)}),
+                    "activity": existing_st.get("activity", {})
+                })
+
+                # Add personal PIN token
+                if pin:
+                    auth_tokens[hash_str(pin)] = {
+                        "role": "student",
+                        "name": name_str,
+                        "class": cls_str
+                    }
 
     # SAFETY GUARD: Never wipe out existing student list
     if not students:

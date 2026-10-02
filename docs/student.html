@@ -402,7 +402,13 @@
       const targetHandle = params.get('handle');
 
       if (!targetId && targetHandle) {
-        const found = appData.students.find(s => s.marisa_handle === targetHandle || s.cf_handle === targetHandle);
+        const found = appData.students.find(s => 
+          s.marisa_handle === targetHandle || 
+          s.cf_handle === targetHandle ||
+          s.vjudge_handle === targetHandle ||
+          s.vnoi_handle === targetHandle ||
+          s.clue_handle === targetHandle
+        );
         if (found) targetId = found.stt;
       }
 
@@ -505,6 +511,22 @@
         handlesContainer.innerHTML += `
           <a href="https://vjudge.net/user/${student.vjudge_handle}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 transition">
             <span>🟢</span> VJ: <strong>${student.vjudge_handle}</strong> ↗
+          </a>
+        `;
+      }
+      if (student.vnoi_handle) {
+        handlesFound = true;
+        handlesContainer.innerHTML += `
+          <a href="https://oj.vnoi.info/user/${student.vnoi_handle}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition">
+            <span>🟠</span> VNOI: <strong>${student.vnoi_handle}</strong> ↗
+          </a>
+        `;
+      }
+      if (student.clue_handle) {
+        handlesFound = true;
+        handlesContainer.innerHTML += `
+          <a href="https://oj.clue.edu.vn/user/${student.clue_handle}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/25 transition">
+            <span>🔷</span> ClueOJ: <strong>${student.clue_handle}</strong> ↗
           </a>
         `;
       }

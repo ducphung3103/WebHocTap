@@ -101,13 +101,16 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
                 elif "Python" in c_str_clean:
                     c_list.append("Python")
 
+            plat_str = str(platform).strip()
+            plat_lower = plat_str.lower()
+            b_color = "purple" if "marisa" in plat_lower else ("amber" if "vnoi" in plat_lower else ("cyan" if "clue" in plat_lower else ("emerald" if "vjudge" in plat_lower else "blue")))
             prob_id = str(pid or f"PROB-{r}").strip()
             problems.append({
                 "id": prob_id,
                 "name": str(pname or f"Bài tập #{r}").strip(),
                 "url": str(url).strip(),
-                "platform": str(platform).strip(),
-                "badge_color": "purple" if "marisa" in str(platform).lower() else "blue",
+                "platform": plat_str,
+                "badge_color": b_color,
                 "category": str(tag).strip(),
                 "difficulty": f"Level {level} • {tag}",
                 "classes": c_list
@@ -178,22 +181,55 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
     students = []
     if "Học Sinh" in wb.sheetnames:
         ws_stu = wb["Học Sinh"]
-        for r in range(2, ws_stu.max_row + 1):
-            stt = ws_stu.cell(r, 1).value
-            name = ws_stu.cell(r, 2).value
-            cls = ws_stu.cell(r, 3).value
-            marisa_h = ws_stu.cell(r, 4).value or ""
-            cf_h = ws_stu.cell(r, 5).value or ""
-            vj_h = ws_stu.cell(r, 6).value or ""
-            pin = ws_stu.cell(r, 7).value or ""
-            status = ws_stu.cell(r, 8).value or "Đang học"
+        header_row = [str(ws_stu.cell(1, c).value or "").strip().lower() for c in range(1, ws_stu.max_column + 1)]
+        col_map = {}
+        for col_idx, col_name in enumerate(header_row, 1):
+            if not col_name:
+                continue
+            if any(k in col_name for k in ["stt", "số thứ tự", "thứ tự", "id"]) and "stt" not in col_map:
+                col_map["stt"] = col_idx
+            elif any(k in col_name for k in ["họ và tên", "họ tên", "tên học sinh", "tên", "name"]) and "name" not in col_map:
+                col_map["name"] = col_idx
+            elif any(k in col_name for k in ["lớp", "class"]) and "class" not in col_map:
+                col_map["class"] = col_idx
+            elif any(k in col_name for k in ["marisa", "moj"]) and "marisa" not in col_map:
+                col_map["marisa"] = col_idx
+            elif any(k in col_name for k in ["codeforces", "cf"]) and "cf" not in col_map:
+                col_map["cf"] = col_idx
+            elif any(k in col_name for k in ["vjudge", "vj"]) and "vjudge" not in col_map:
+                col_map["vjudge"] = col_idx
+            elif any(k in col_name for k in ["vnoi", "vnoj"]) and "vnoi" not in col_map:
+                col_map["vnoi"] = col_idx
+            elif any(k in col_name for k in ["clue", "clueoj"]) and "clue" not in col_map:
+                col_map["clue"] = col_idx
+            elif any(k in col_name for k in ["pin", "mật khẩu", "password", "pass"]) and "pin" not in col_map:
+                col_map["pin"] = col_idx
+            elif any(k in col_name for k in ["trạng thái", "status"]) and "status" not in col_map:
+                col_map["status"] = col_idx
 
-            if not name:
+        def get_excel_cell(r, key, default_col=-1, default=""):
+            col = col_map.get(key, default_col)
+            if 1 <= col <= ws_stu.max_column:
+                val = ws_stu.cell(r, col).value
+                if val is not None and str(val).strip() != "" and str(val).strip() != "None":
+                    return str(val).strip()
+            return default
+
+        for r in range(2, ws_stu.max_row + 1):
+            name_val = get_excel_cell(r, "name", 2, "")
+            if not name_val:
                 continue
 
-            name_str = str(name).strip()
-            cls_str = str(cls).strip()
-            marisa_str = str(marisa_h).strip()
+            stt = get_excel_cell(r, "stt", 1, str(r - 1))
+            name_str = name_val
+            cls_str = get_excel_cell(r, "class", 3, "C++")
+            marisa_str = get_excel_cell(r, "marisa", 4, "")
+            cf_h = get_excel_cell(r, "cf", 5, "")
+            vj_h = get_excel_cell(r, "vjudge", 6, "")
+            vnoi_h = get_excel_cell(r, "vnoi", -1, "")
+            clue_h = get_excel_cell(r, "clue", -1, "")
+            pin = get_excel_cell(r, "pin", 7 if "vnoi" not in col_map and "clue" not in col_map else -1, "")
+            status = get_excel_cell(r, "status", 8 if "vnoi" not in col_map and "clue" not in col_map else -1, "Đang học")
 
             # Preserve crawled solved data from existing_data
             prev_st = existing_students_map.get(marisa_str) or existing_students_map.get(name_str) or {}
@@ -216,16 +252,18 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
             if not st_tuition:
                 st_tuition = {m: False for m in tuition_months}
 
-            st_idx = int(stt) if stt else len(students) + 1
+            st_idx = int(stt) if stt.isdigit() else len(students) + 1
             students.append({
                 "stt": st_idx,
                 "name": name_str,
                 "class": cls_str,
-                "cf_handle": str(cf_h).strip(),
-                "vjudge_handle": str(vj_h).strip(),
+                "cf_handle": cf_h,
+                "vjudge_handle": vj_h,
                 "marisa_handle": marisa_str,
-                "pin": str(pin).strip() if pin else "",
-                "status": str(status or "Đang học").strip(),
+                "vnoi_handle": vnoi_h,
+                "clue_handle": clue_h,
+                "pin": pin,
+                "status": status,
                 "tuition": st_tuition,
                 "solved": all_solved,
                 "target_solved": target_solved,
@@ -242,7 +280,7 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
 
             # Auth PIN for student
             if pin:
-                pin_h = hash_str(str(pin).strip())
+                pin_h = hash_str(pin)
                 auth_tokens[pin_h] = {
                     "role": "student",
                     "stt": st_idx,
