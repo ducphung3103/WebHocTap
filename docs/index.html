@@ -149,9 +149,9 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            🏆 Bảng Vàng & Ma Trận Tiến Độ Bài Tập
+            🏆 Bảng Xếp Hạng Lớp Học
           </h2>
-          <p class="text-xs text-slate-400">Theo dõi thứ hạng và trạng thái AC từng bài tập (Codeforces, VJudge, MarisaOJ) của học sinh</p>
+          <p class="text-xs text-slate-400">Xếp hạng thi đua theo tổng số bài tập đã giải trên Codeforces, VJudge và MarisaOJ</p>
         </div>
 
         <!-- Search Bar on Leaderboard -->
@@ -368,24 +368,19 @@
     function renderMatrix(filterText = '') {
       const head = document.getElementById('matrix-head');
       const body = document.getElementById('matrix-body');
-      if (!head || !body || !appData.problems) return;
+      if (!head || !body) return;
 
-      // Head
-      let headHtml = `<tr>
-        <th class="px-4 py-3.5 text-center w-14">Hạng</th>
-        <th class="px-4 py-3.5">Coder & Handles</th>
-        <th class="px-4 py-3.5 text-center">Tổng AC</th>
-      `;
-      appData.problems.forEach(p => {
-        headHtml += `<th class="px-3 py-3.5 text-center text-xs font-mono whitespace-nowrap" title="${p.name} (${p.platform})">
-          <a href="${p.url}" target="_blank" class="hover:text-indigo-300">${p.id}</a>
-        </th>`;
-      });
-      headHtml += `</tr>`;
-      head.innerHTML = headHtml;
+      // Clean Header: Rank, Coder, Total Solved, Progress, Title
+      head.innerHTML = `<tr>
+        <th class="px-4 py-3.5 text-center w-16">Hạng</th>
+        <th class="px-4 py-3.5">Coder & Tài khoản</th>
+        <th class="px-4 py-3.5 text-center">Tổng bài đã giải</th>
+        <th class="px-4 py-3.5 text-center w-48">Tiến độ</th>
+        <th class="px-4 py-3.5 text-center">Danh hiệu</th>
+      </tr>`;
 
       // Sort students by AC count
-      const sorted = [...appData.students].sort((a, b) => (b.solved?.length || 0) - (a.solved?.length || 0));
+      const sorted = [...(appData.students || [])].sort((a, b) => (b.solved?.length || 0) - (a.solved?.length || 0));
 
       const query = (filterText || '').toLowerCase().trim();
       const filtered = sorted.filter(s => 
@@ -397,19 +392,31 @@
       );
 
       body.innerHTML = '';
+      const totalProblems = (appData.problems && appData.problems.length) ? appData.problems.length : 7;
+
       filtered.forEach((s, idx) => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-800/40 transition";
         const totalAc = s.solved ? s.solved.length : 0;
-        const rankMedal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `${idx + 1}`;
+        const rankMedal = idx === 0 ? '🥇 1' : idx === 1 ? '🥈 2' : idx === 2 ? '🥉 3' : `${idx + 1}`;
+        const percent = Math.min(100, Math.round((totalAc / totalProblems) * 100));
 
-        let rowHtml = `
-          <td class="px-4 py-3 text-center font-bold font-mono text-sm">${rankMedal}</td>
-          <td class="px-4 py-3 font-semibold text-white">
+        let titleBadge = '';
+        if (percent >= 80) {
+          titleBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/20">Grandmaster 🏆</span>`;
+        } else if (percent >= 50) {
+          titleBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Master ⚡</span>`;
+        } else {
+          titleBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">Specialist 🎯</span>`;
+        }
+
+        tr.innerHTML = `
+          <td class="px-4 py-3.5 text-center font-bold font-mono text-sm">${rankMedal}</td>
+          <td class="px-4 py-3.5 font-semibold text-white">
             <div class="flex items-center gap-2">
-              <span class="text-white font-bold">${s.name}</span>
+              <span class="text-white font-bold text-base">${s.name}</span>
             </div>
-            <div class="text-[11px] font-mono text-slate-400 font-normal flex items-center gap-2 mt-0.5 flex-wrap">
+            <div class="text-[11px] font-mono text-slate-400 font-normal flex items-center gap-2 mt-1 flex-wrap">
               <a href="https://codeforces.com/profile/${s.cf_handle}" target="_blank" class="text-blue-400 hover:underline">CF: ${s.cf_handle}</a>
               <span>•</span>
               <a href="https://vjudge.net/user/${s.vjudge_handle}" target="_blank" class="text-emerald-400 hover:underline">VJ: ${s.vjudge_handle}</a>
@@ -417,23 +424,23 @@
               <a href="https://marisaoj.com" target="_blank" class="text-purple-400 hover:underline">Marisa: ${s.marisa_handle}</a>
             </div>
           </td>
-          <td class="px-4 py-3 text-center">
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-              ${totalAc}/${appData.problems.length}
+          <td class="px-4 py-3.5 text-center">
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              ${totalAc} bài AC
             </span>
           </td>
+          <td class="px-4 py-3.5">
+            <div class="flex items-center gap-3">
+              <div class="flex-1 bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-2.5 rounded-full" style="width: ${percent}%"></div>
+              </div>
+              <span class="font-mono text-xs text-slate-400 w-10 text-right">${percent}%</span>
+            </div>
+          </td>
+          <td class="px-4 py-3.5 text-center">
+            ${titleBadge}
+          </td>
         `;
-
-        appData.problems.forEach(p => {
-          const isSolved = s.solved && s.solved.includes(p.id);
-          rowHtml += `<td class="px-3 py-3 text-center font-mono text-xs">
-            ${isSolved 
-              ? `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">AC</span>` 
-              : `<span class="text-slate-600">-</span>`}
-          </td>`;
-        });
-
-        tr.innerHTML = rowHtml;
         body.appendChild(tr);
       });
     }
@@ -535,7 +542,7 @@
       });
     }
 
-    // 5. RENDER CONTESTS
+    // 5. RENDER CONTESTS WITH WHO AC-ED WHAT
     let currentContestFilter = 'all';
 
     function filterContests(filter) {
@@ -551,6 +558,19 @@
         }
       });
       renderContests(filter);
+    }
+
+    function toggleStandings(contestId) {
+      const el = document.getElementById(`standings-${contestId}`);
+      const btn = document.getElementById(`btn-standings-${contestId}`);
+      if (!el) return;
+      if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
+        if (btn) btn.innerHTML = `<span>📊</span> Ẩn Bảng Điểm ▲`;
+      } else {
+        el.classList.add('hidden');
+        if (btn) btn.innerHTML = `<span>📊</span> Xem Ai Đã AC Bài Nào ▼`;
+      }
     }
 
     function renderContests(filter = currentContestFilter) {
@@ -593,6 +613,71 @@
           problemsPills += `</div>`;
         }
 
+        // Contest Standings Table (Who solved which problem)
+        let standingsSection = '';
+        if (c.standings && c.standings.length > 0) {
+          let problemHeaders = '';
+          c.problems.forEach(p => {
+            problemHeaders += `<th class="px-2.5 py-2 text-center text-xs font-mono text-purple-300">Bài ${p.code}</th>`;
+          });
+
+          let standingsRows = '';
+          c.standings.forEach(row => {
+            let rowCells = '';
+            c.problems.forEach(p => {
+              const res = row.problems ? row.problems[p.code] : null;
+              if (res && res.status === 'AC') {
+                rowCells += `<td class="px-2.5 py-2 text-center">
+                  <span class="inline-flex flex-col items-center px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-mono font-bold leading-tight" title="AC lúc ${res.time}">
+                    <span>AC</span>
+                    <span class="text-[8px] text-emerald-400 font-normal">${res.time}</span>
+                  </span>
+                </td>`;
+              } else {
+                rowCells += `<td class="px-2.5 py-2 text-center text-slate-600 font-mono text-xs">-</td>`;
+              }
+            });
+
+            standingsRows += `
+              <tr class="border-b border-slate-800/60 hover:bg-slate-800/30 transition">
+                <td class="px-2.5 py-2 text-center font-bold font-mono text-xs text-slate-300">${row.rank}</td>
+                <td class="px-2.5 py-2 font-medium text-xs text-white">
+                  <div>${row.name}</div>
+                  <div class="text-[10px] text-slate-500 font-mono">${row.handle}</div>
+                </td>
+                <td class="px-2.5 py-2 text-center">
+                  <span class="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono font-bold text-xs">${row.solved}/${c.problems.length}</span>
+                </td>
+                <td class="px-2.5 py-2 text-center font-mono text-xs text-slate-400">${row.penalty}'</td>
+                ${rowCells}
+              </tr>
+            `;
+          });
+
+          standingsSection = `
+            <div id="standings-${c.id}" class="hidden mt-3 overflow-x-auto border border-purple-500/30 rounded-xl bg-slate-950/80 p-3 shadow-inner">
+              <div class="text-xs font-bold text-purple-300 mb-2 flex items-center justify-between">
+                <span>📊 Bảng Điểm Contest: Ai Đã AC Bài Nào</span>
+                <span class="text-[10px] text-slate-400 font-normal">Xếp hạng theo luật ICPC</span>
+              </div>
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-800/80 text-[11px] uppercase font-semibold text-slate-400 border-b border-slate-700">
+                  <tr>
+                    <th class="px-2.5 py-2 text-center w-10">Hạng</th>
+                    <th class="px-2.5 py-2">Thí sinh</th>
+                    <th class="px-2.5 py-2 text-center">AC</th>
+                    <th class="px-2.5 py-2 text-center">Phút</th>
+                    ${problemHeaders}
+                  </tr>
+                </thead>
+                <tbody>
+                  ${standingsRows}
+                </tbody>
+              </table>
+            </div>
+          `;
+        }
+
         // Action buttons
         let actions = ``;
         if (c.status === 'UPCOMING' || c.status === 'LIVE') {
@@ -600,17 +685,19 @@
             <a href="${c.url}" target="_blank" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 flex items-center gap-1.5 transition">
               <span>⚔️</span> Vào Phòng Thi Ngay ↗
             </a>
-            ${c.editorial_url ? `
-              <a href="${c.editorial_url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
-                Lời giải (Editorial)
-              </a>
+            ${c.standings ? `
+              <button onclick="toggleStandings('${c.id}')" id="btn-standings-${c.id}" class="px-3 py-2 rounded-lg text-xs font-semibold bg-purple-600/20 text-purple-300 hover:bg-purple-600/30 border border-purple-500/30 transition flex items-center gap-1">
+                <span>📊</span> Xem Ai Đã AC Bài Nào ▼
+              </button>
             ` : ''}
           `;
         } else {
           actions = `
-            <a href="${c.standings_url || c.url}" target="_blank" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 flex items-center gap-1.5 transition">
-              <span>📊</span> Bảng Điểm (Ranklist) ↗
-            </a>
+            ${c.standings ? `
+              <button onclick="toggleStandings('${c.id}')" id="btn-standings-${c.id}" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-indigo-600/30 text-indigo-300 hover:bg-indigo-600/40 border border-indigo-500/40 transition flex items-center gap-1.5">
+                <span>📊</span> Xem Ai Đã AC Bài Nào ▼
+              </button>
+            ` : ''}
             <a href="${c.url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
               Làm lại (Upsolve) ↗
             </a>
@@ -650,6 +737,9 @@
                 <span>👑</span> <strong>Quán quân:</strong> ${c.winner}
               </div>
             ` : ''}
+
+            <!-- Standings Table Container -->
+            ${standingsSection}
           </div>
 
           <div class="pt-3 border-t border-slate-800 flex items-center justify-between flex-wrap gap-2">

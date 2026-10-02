@@ -80,7 +80,15 @@
       "cf_handle": "tourist",
       "vjudge_handle": "an_vjudge",
       "marisa_handle": "an_marisa",
-      "solved": ["CF-71A", "CF-158B", "CF-4A", "VJ-CSES-1068", "VJ-VNOI-nklineup", "MARISA-1", "MARISA-20"]
+      "solved": [
+        "CF-71A",
+        "CF-158B",
+        "CF-4A",
+        "VJ-CSES-1068",
+        "VJ-VNOI-nklineup",
+        "MARISA-1",
+        "MARISA-20"
+      ]
     },
     {
       "stt": 2,
@@ -88,7 +96,13 @@
       "cf_handle": "Petr",
       "vjudge_handle": "binh_vjudge",
       "marisa_handle": "binh_marisa",
-      "solved": ["CF-71A", "CF-4A", "VJ-CSES-1068", "MARISA-1", "MARISA-20"]
+      "solved": [
+        "CF-71A",
+        "CF-4A",
+        "VJ-CSES-1068",
+        "MARISA-1",
+        "MARISA-20"
+      ]
     },
     {
       "stt": 3,
@@ -96,7 +110,13 @@
       "cf_handle": "Benq",
       "vjudge_handle": "cuong_vj",
       "marisa_handle": "cuong_marisa",
-      "solved": ["CF-71A", "CF-158B", "VJ-CSES-1068", "VJ-VNOI-nklineup", "MARISA-1"]
+      "solved": [
+        "CF-71A",
+        "CF-158B",
+        "VJ-CSES-1068",
+        "VJ-VNOI-nklineup",
+        "MARISA-1"
+      ]
     },
     {
       "stt": 4,
@@ -104,7 +124,12 @@
       "cf_handle": "Radewoosh",
       "vjudge_handle": "duc_vjudge",
       "marisa_handle": "duc_marisa",
-      "solved": ["CF-71A", "CF-4A", "VJ-CSES-1068", "MARISA-1"]
+      "solved": [
+        "CF-71A",
+        "CF-4A",
+        "VJ-CSES-1068",
+        "MARISA-1"
+      ]
     },
     {
       "stt": 5,
@@ -112,7 +137,12 @@
       "cf_handle": "Um_nik",
       "vjudge_handle": "linh_cses",
       "marisa_handle": "linh_marisa",
-      "solved": ["CF-71A", "CF-158B", "CF-4A", "MARISA-1"]
+      "solved": [
+        "CF-71A",
+        "CF-158B",
+        "CF-4A",
+        "MARISA-1"
+      ]
     },
     {
       "stt": 6,
@@ -120,7 +150,13 @@
       "cf_handle": "ecnerwala",
       "vjudge_handle": "phong_vjudge",
       "marisa_handle": "phong_marisa",
-      "solved": ["CF-71A", "VJ-CSES-1068", "VJ-VNOI-nklineup", "MARISA-1", "MARISA-20"]
+      "solved": [
+        "CF-71A",
+        "VJ-CSES-1068",
+        "VJ-VNOI-nklineup",
+        "MARISA-1",
+        "MARISA-20"
+      ]
     },
     {
       "stt": 7,
@@ -128,7 +164,11 @@
       "cf_handle": "maroonrk",
       "vjudge_handle": "phong_vj",
       "marisa_handle": "phuong_marisa",
-      "solved": ["CF-71A", "CF-4A", "MARISA-1"]
+      "solved": [
+        "CF-71A",
+        "CF-4A",
+        "MARISA-1"
+      ]
     },
     {
       "stt": 8,
@@ -136,7 +176,12 @@
       "cf_handle": "Endagorion",
       "vjudge_handle": "huy_vjudge",
       "marisa_handle": "huy_marisa",
-      "solved": ["CF-71A", "CF-158B", "VJ-CSES-1068", "MARISA-1"]
+      "solved": [
+        "CF-71A",
+        "CF-158B",
+        "VJ-CSES-1068",
+        "MARISA-1"
+      ]
     },
     {
       "stt": 9,
@@ -144,7 +189,11 @@
       "cf_handle": "tourist_fan",
       "vjudge_handle": "baodang_vj",
       "marisa_handle": "baodang_oj",
-      "solved": ["CF-71A", "CF-4A", "VJ-CSES-1068"]
+      "solved": [
+        "CF-71A",
+        "CF-4A",
+        "VJ-CSES-1068"
+      ]
     },
     {
       "stt": 10,
@@ -152,7 +201,10 @@
       "cf_handle": "trang_cp",
       "vjudge_handle": "trang_vjudge",
       "marisa_handle": "thutrang_mrs",
-      "solved": ["CF-71A", "MARISA-1"]
+      "solved": [
+        "CF-71A",
+        "MARISA-1"
+      ]
     }
   ],
   "curriculum": [
@@ -218,11 +270,36 @@
       "problems_count": 5,
       "description": "Kỳ thi định kỳ kiểm tra năng lực tư duy tối ưu giải thuật, áp dụng mảng cộng dồn 2D và các bài toán quy hoạch động kinh điển.",
       "problems": [
-        { "code": "A", "name": "Tổng hình chữ nhật con", "points": 100, "oj": "CSES" },
-        { "code": "B", "name": "Đếm bước nhảy tối ưu", "points": 100, "oj": "Codeforces" },
-        { "code": "C", "name": "Cái túi 0/1 giới hạn lớn", "points": 100, "oj": "VNOI" },
-        { "code": "D", "name": "Dãy con chung dài nhất", "points": 100, "oj": "MarisaOJ" },
-        { "code": "E", "name": "Chia kẹo may mắn", "points": 100, "oj": "CSES" }
+        {
+          "code": "A",
+          "name": "Tổng hình chữ nhật con",
+          "points": 100,
+          "oj": "CSES"
+        },
+        {
+          "code": "B",
+          "name": "Đếm bước nhảy tối ưu",
+          "points": 100,
+          "oj": "Codeforces"
+        },
+        {
+          "code": "C",
+          "name": "Cái túi 0/1 giới hạn lớn",
+          "points": 100,
+          "oj": "VNOI"
+        },
+        {
+          "code": "D",
+          "name": "Dãy con chung dài nhất",
+          "points": 100,
+          "oj": "MarisaOJ"
+        },
+        {
+          "code": "E",
+          "name": "Chia kẹo may mắn",
+          "points": 100,
+          "oj": "CSES"
+        }
       ]
     },
     {
@@ -240,10 +317,182 @@
       "description": "Contest khởi động rèn luyện kỹ năng cài đặt nhanh với STL vector, map, set và tránh lỗi tràn số.",
       "winner": "Nguyễn Văn An (tourist) - 4/4 AC",
       "problems": [
-        { "code": "A", "name": "Way Too Long Words", "points": 100, "oj": "Codeforces" },
-        { "code": "B", "name": "Weird Algorithm", "points": 100, "oj": "CSES" },
-        { "code": "C", "name": "Taxi", "points": 100, "oj": "Codeforces" },
-        { "code": "D", "name": "Tổng hai số A + B", "points": 100, "oj": "MarisaOJ" }
+        {
+          "code": "A",
+          "name": "Way Too Long Words",
+          "points": 100,
+          "oj": "Codeforces"
+        },
+        {
+          "code": "B",
+          "name": "Weird Algorithm",
+          "points": 100,
+          "oj": "CSES"
+        },
+        {
+          "code": "C",
+          "name": "Taxi",
+          "points": 100,
+          "oj": "Codeforces"
+        },
+        {
+          "code": "D",
+          "name": "Tổng hai số A + B",
+          "points": 100,
+          "oj": "MarisaOJ"
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Nguyễn Văn An",
+          "handle": "tourist",
+          "solved": 4,
+          "penalty": 182,
+          "problems": {
+            "A": {
+              "status": "AC",
+              "time": "00:12"
+            },
+            "B": {
+              "status": "AC",
+              "time": "00:25"
+            },
+            "C": {
+              "status": "AC",
+              "time": "00:45"
+            },
+            "D": {
+              "status": "AC",
+              "time": "01:00"
+            }
+          }
+        },
+        {
+          "rank": 2,
+          "name": "Trần Thị Bình",
+          "handle": "Petr",
+          "solved": 3,
+          "penalty": 150,
+          "problems": {
+            "A": {
+              "status": "AC",
+              "time": "00:15"
+            },
+            "B": {
+              "status": "AC",
+              "time": "00:30"
+            },
+            "C": {
+              "status": "-",
+              "time": ""
+            },
+            "D": {
+              "status": "AC",
+              "time": "01:05"
+            }
+          }
+        },
+        {
+          "rank": 3,
+          "name": "Lê Hoàng Cường",
+          "handle": "cuong_vj",
+          "solved": 3,
+          "penalty": 195,
+          "problems": {
+            "A": {
+              "status": "AC",
+              "time": "00:20"
+            },
+            "B": {
+              "status": "AC",
+              "time": "00:45"
+            },
+            "C": {
+              "status": "AC",
+              "time": "01:30"
+            },
+            "D": {
+              "status": "-",
+              "time": ""
+            }
+          }
+        },
+        {
+          "rank": 4,
+          "name": "Đỗ Nam Phong",
+          "handle": "phong_vjudge",
+          "solved": 2,
+          "penalty": 95,
+          "problems": {
+            "A": {
+              "status": "AC",
+              "time": "00:18"
+            },
+            "B": {
+              "status": "AC",
+              "time": "00:37"
+            },
+            "C": {
+              "status": "-",
+              "time": ""
+            },
+            "D": {
+              "status": "-",
+              "time": ""
+            }
+          }
+        },
+        {
+          "rank": 5,
+          "name": "Phạm Minh Đức",
+          "handle": "duc_vjudge",
+          "solved": 2,
+          "penalty": 120,
+          "problems": {
+            "A": {
+              "status": "AC",
+              "time": "00:30"
+            },
+            "B": {
+              "status": "-",
+              "time": ""
+            },
+            "C": {
+              "status": "-",
+              "time": ""
+            },
+            "D": {
+              "status": "AC",
+              "time": "01:30"
+            }
+          }
+        },
+        {
+          "rank": 6,
+          "name": "Hoàng Khánh Linh",
+          "handle": "linh_cses",
+          "solved": 2,
+          "penalty": 135,
+          "problems": {
+            "A": {
+              "status": "AC",
+              "time": "00:25"
+            },
+            "B": {
+              "status": "AC",
+              "time": "01:10"
+            },
+            "C": {
+              "status": "-",
+              "time": ""
+            },
+            "D": {
+              "status": "-",
+              "time": ""
+            }
+          }
+        }
       ]
     }
   ]
