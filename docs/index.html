@@ -516,22 +516,46 @@
 
       appData.curriculum.forEach((c, idx) => {
         const item = document.createElement('div');
-        item.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3";
-        let lessonsHtml = '<ul class="space-y-1.5 text-sm text-slate-400 pl-4 list-disc">';
+        item.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4 hover:border-slate-700 transition";
+        let lessonsHtml = '<ul class="space-y-2 text-sm text-slate-400 pl-4 list-disc">';
         c.lessons.forEach(l => {
           lessonsHtml += `<li class="hover:text-indigo-200 transition">${l}</li>`;
         });
         lessonsHtml += '</ul>';
 
+        // Action buttons (Google Docs & Markdown lecture)
+        const docBtn = c.doc_url ? `
+          <a href="${c.doc_url}" target="_blank" 
+             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 border border-blue-500/30 transition">
+            <span>📄</span> Mở Giáo Án (Google Docs) ↗
+          </a>
+        ` : '';
+
+        const mdBtn = c.lecture_file ? `
+          <a href="https://github.com/ducphung3103/WebHocTap/blob/master/docs/${c.lecture_file}" target="_blank" 
+             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">
+            <span>✏️</span> Sửa Trực Tiếp Trên GitHub (.md) ↗
+          </a>
+        ` : '';
+
         item.innerHTML = `
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-sm font-mono">
-              0${idx + 1}
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-sm font-mono ring-1 ring-indigo-500/30">
+                0${idx + 1}
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-white">${c.module}</h3>
+                <div class="text-[11px] text-slate-400">Giáo trình chuẩn Tin học thi đấu</div>
+              </div>
             </div>
-            <h3 class="text-base font-bold text-white">${c.module}</h3>
+            <div class="flex items-center gap-2 flex-wrap">
+              ${docBtn}
+              ${mdBtn}
+            </div>
           </div>
-          ${c.description ? `<p class="text-xs text-slate-400">${c.description}</p>` : ''}
-          <div class="pt-2">
+          ${c.description ? `<p class="text-xs text-slate-400 leading-relaxed">${c.description}</p>` : ''}
+          <div class="pt-1">
             ${lessonsHtml}
           </div>
         `;

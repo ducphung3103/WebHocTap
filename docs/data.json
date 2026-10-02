@@ -209,6 +209,8 @@
     {
       "module": "Chuyên đề 01: C++ Căn bản & Kỹ thuật Tối ưu I/O",
       "description": "Cấu trúc chương trình C++, các kiểu dữ liệu số nguyên lớn 64-bit, ép kiểu, Fast I/O và kiểm soát độ phức tạp thời gian O(N).",
+      "doc_url": "https://docs.google.com/document/d/1sample_cpp_basics/edit?usp=sharing",
+      "lecture_file": "lectures/01_cpp_can_ban.md",
       "lessons": [
         "1.1 Khởi tạo Template thi đấu C++ chuẩn & Kỹ thuật Fast I/O (cin.tie, sync_with_stdio)",
         "1.2 Xử lý số học: Overflow, __int128, lũy thừa nhanh chia để trị (Binary Exponentiation)",
@@ -218,6 +220,8 @@
     {
       "module": "Chuyên đề 02: STL & Cấu trúc Dữ liệu Nền tảng",
       "description": "Làm chủ các container quan trọng của thư viện C++ STL trong giải thuật: vector, pair, set, map, priority_queue, deque.",
+      "doc_url": "https://docs.google.com/document/d/1sample_stl_dsa/edit?usp=sharing",
+      "lecture_file": "lectures/01_cpp_can_ban.md",
       "lessons": [
         "2.1 Vector, Sort đa tiêu chí với hàm Comparator, Binary Search & Chặt nhị phân kết quả",
         "2.2 Set, Multiset, Unordered_set: Tìm kiếm và duy trì tập hợp trong O(log N)",
@@ -228,6 +232,8 @@
     {
       "module": "Chuyên đề 03: Quy hoạch Động Kinh điển (Dynamic Programming)",
       "description": "Tư duy tối ưu hóa bài toán con trùng lặp, xây dựng công thức truy hồi và bảng phương án.",
+      "doc_url": "https://docs.google.com/document/d/1sample_dp/edit?usp=sharing",
+      "lecture_file": "lectures/01_cpp_can_ban.md",
       "lessons": [
         "3.1 Quy hoạch động 1 chiều: Bài toán Bậc thang, Dãy con có tổng lớn nhất (Kadane)",
         "3.2 Dãy con tăng dài nhất (LIS O(N log N)) & Xâu con chung dài nhất (LCS)",
@@ -238,6 +244,8 @@
     {
       "module": "Chuyên đề 04: Thuật toán Đồ thị (Graph Algorithms)",
       "description": "Mô hình hóa bài toán đồ thị, biểu diễn danh sách kề và các thuật toán duyệt đồ thị cơ bản đến nâng cao.",
+      "doc_url": "https://docs.google.com/document/d/1sample_graph/edit?usp=sharing",
+      "lecture_file": "lectures/01_cpp_can_ban.md",
       "lessons": [
         "4.1 Biểu diễn đồ thị, Duyệt theo chiều sâu (DFS) & Duyệt theo chiều rộng (BFS)",
         "4.2 Cây khung nhỏ nhất (Kruskal & Thuật toán Disjoint Set Union - DSU)",
