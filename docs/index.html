@@ -45,6 +45,67 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+  <!-- SECURITY AUTHENTICATION MODAL (BẢO VỆ LỚP HỌC & PHÂN QUYỀN) -->
+  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl transition-all duration-300">
+    <div class="relative w-full max-w-md bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6">
+      
+      <!-- Modal Header -->
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-2xl shadow-inner mb-1">
+          🔐
+        </div>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+          Cổng Học Tập & Thi Đấu Nội Bộ
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400">
+          Nhập <strong class="text-indigo-300">Mã PIN học sinh</strong> hoặc <strong class="text-indigo-300">Mã lớp học / Mật khẩu giáo viên</strong>
+        </p>
+      </div>
+
+      <!-- Auth Form -->
+      <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <div class="space-y-1.5">
+          <label for="auth-input-code" class="block text-xs font-semibold text-slate-300">
+            Mã truy cập / Mật khẩu:
+          </label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="auth-input-code" 
+              placeholder="Nhập mã PIN hoặc mã lớp..." 
+              autocomplete="off"
+              required
+              class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition pr-10 font-mono tracking-wider"
+            />
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3 text-slate-400 hover:text-slate-200 text-sm">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <div id="auth-error-msg" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 px-3 py-2 rounded-lg">
+          ❌ Mã truy cập không chính xác. Vui lòng kiểm tra lại hoặc liên hệ Giáo viên!
+        </div>
+
+        <button 
+          type="submit" 
+          id="auth-submit-btn" 
+          class="w-full py-3 px-4 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25 cursor-pointer"
+        >
+          <span>Đăng Nhập Vào Lớp Học</span>
+          <span>→</span>
+        </button>
+      </form>
+
+      <!-- Footer Info -->
+      <div class="pt-4 border-t border-slate-800 text-center text-xs text-slate-500 space-y-1">
+        <div>🔒 Trang web nội bộ dành riêng cho học sinh của lớp</div>
+        <div>Học sinh chưa có mã vui lòng liên hệ trực tiếp Giáo viên để nhận PIN</div>
+      </div>
+
+    </div>
+  </div>
+
 
   <!-- TOP ANNOUNCEMENT BAR -->
   <div class="bg-gradient-to-r from-indigo-900/60 via-purple-900/60 to-slate-900/60 border-b border-indigo-500/20 px-4 py-2 text-xs md:text-sm text-center text-indigo-200 flex items-center justify-center gap-3">
@@ -92,12 +153,16 @@
           </a>
         </nav>
 
-        <!-- Right Quick Actions -->
-        <div class="flex items-center gap-3">
-          <a href="https://github.com/ducphung3103/WebHocTap" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition">
-            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            GitHub Repo
-          </a>
+        <!-- User Session & Right Quick Actions -->
+        <div class="flex items-center gap-2.5">
+          <div id="user-badge" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1.5">
+            <span>👤</span>
+            <span id="user-display-name">Chưa đăng nhập</span>
+          </div>
+          <button onclick="handleLogout()" id="btn-logout" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-rose-500/20 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-500/30 transition flex items-center gap-1" title="Đổi tài khoản hoặc đăng xuất">
+            <span>🔒</span>
+            <span class="hidden sm:inline">Đăng xuất</span>
+          </button>
         </div>
       </div>
 
@@ -379,6 +444,9 @@
       renderCurriculum();
       renderContests();
       startCountdown();
+
+      // Check access authentication
+      checkAuthSession();
     }
 
     // TAB SWITCHING
@@ -454,6 +522,24 @@
       const head = document.getElementById('matrix-head');
       const body = document.getElementById('matrix-body');
       if (!head || !body) return;
+
+      if (!currentAuth) {
+        body.innerHTML = `
+          <tr>
+            <td colspan="10" class="px-4 py-12 text-center text-slate-400">
+              <div class="text-3xl mb-2">🔒</div>
+              <div class="font-bold text-white text-base">Cổng thông tin học tập được bảo vệ nội bộ</div>
+              <div class="text-xs text-slate-500 mt-1">Vui lòng đăng nhập bằng Mã PIN học sinh hoặc Mã lớp để xem dữ liệu lớp học</div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      // Enforce class isolation
+      if (currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
+        currentClassFilter = currentAuth.class;
+      }
 
       const searchInput = document.getElementById('leaderboard-search-input');
       const query = (filterText || (searchInput ? searchInput.value : '')).toLowerCase().trim();
@@ -673,9 +759,25 @@
       if (!grid || !appData || !appData.problems) return;
       grid.innerHTML = '';
 
+      if (!currentAuth) {
+        grid.innerHTML = `
+          <div class="col-span-full p-8 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-xl">
+            🔒 Vui lòng đăng nhập để xem danh sách bài tập của lớp bạn.
+          </div>
+        `;
+        return;
+      }
+
       const filteredList = appData.problems.filter(p => {
         const plat = getPlatformName(p.platform);
-        return filter === 'all' || plat === filter;
+        const matchPlat = (filter === 'all' || plat === filter);
+        if (!matchPlat) return false;
+
+        // Class isolation check
+        if (currentAuth && currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
+          return p.classes && p.classes.includes(currentAuth.class);
+        }
+        return true;
       });
 
       filteredList.forEach(p => {
@@ -732,9 +834,29 @@
     // 4. RENDER CURRICULUM
     function renderCurriculum() {
       const list = document.getElementById('curriculum-list');
+      if (!list || !appData || !appData.curriculum) return;
       list.innerHTML = '';
 
-      appData.curriculum.forEach((c, idx) => {
+      if (!currentAuth) {
+        list.innerHTML = `
+          <div class="p-8 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-xl">
+            🔒 Vui lòng đăng nhập để mở tài liệu và bài giảng của lớp bạn.
+          </div>
+        `;
+        return;
+      }
+
+      let lectures = appData.curriculum;
+      if (currentAuth && currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
+        lectures = lectures.filter(l => !l.classes || l.classes.includes(currentAuth.class));
+      }
+
+      if (lectures.length === 0) {
+        list.innerHTML = `<div class="p-8 text-center text-slate-500 italic">Chưa có bài giảng nào được công bố cho lớp này.</div>`;
+        return;
+      }
+
+      lectures.forEach((c, idx) => {
         const item = document.createElement('div');
         item.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4 hover:border-slate-700 transition";
         let lessonsHtml = '<ul class="space-y-2 text-sm text-slate-400 pl-4 list-disc">';
@@ -1035,6 +1157,141 @@
     }
 
     // Initialize on load
+        // ==========================================
+    // AUTHENTICATION & ACCESS CONTROL
+    // ==========================================
+    let currentAuth = null;
+
+    async function hashSHA256(str) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(str.trim());
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function checkAuthSession() {
+      const saved = sessionStorage.getItem('cp_auth_session');
+      if (saved) {
+        try {
+          currentAuth = JSON.parse(saved);
+          hideAuthModal();
+          applyAuthAccess();
+          return true;
+        } catch (e) {
+          sessionStorage.removeItem('cp_auth_session');
+        }
+      }
+      showAuthModal();
+      return false;
+    }
+
+    function showAuthModal() {
+      const modal = document.getElementById('auth-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+        setTimeout(() => document.getElementById('auth-input-code')?.focus(), 150);
+      }
+    }
+
+    function hideAuthModal() {
+      const modal = document.getElementById('auth-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('auth-input-code');
+      if (input) {
+        input.type = input.type === 'password' ? 'text' : 'password';
+      }
+    }
+
+    async function handleAuthSubmit(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('auth-input-code');
+      const errorMsg = document.getElementById('auth-error-msg');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      if (!input || !input.value.trim()) return;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Đang xác thực...</span>`;
+      errorMsg.classList.add('hidden');
+
+      const code = input.value.trim();
+      const codeHash = await hashSHA256(code);
+
+      const tokens = (appData && appData.auth_tokens) ? appData.auth_tokens : {};
+      const match = tokens[codeHash];
+
+      if (match) {
+        currentAuth = match;
+        sessionStorage.setItem('cp_auth_session', JSON.stringify(match));
+        hideAuthModal();
+        applyAuthAccess();
+      } else {
+        errorMsg.classList.remove('hidden');
+        input.classList.add('border-rose-500');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Đăng Nhập Vào Lớp Học</span> <span>→</span>`;
+      }
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('cp_auth_session');
+      currentAuth = null;
+      window.location.reload();
+    }
+
+    function applyAuthAccess() {
+      if (!currentAuth) return;
+
+      // Update user session badge in navbar
+      const badge = document.getElementById('user-badge');
+      const nameEl = document.getElementById('user-display-name');
+      if (nameEl) {
+        if (currentAuth.role === 'admin') {
+          nameEl.textContent = '👑 Giáo viên (Toàn quyền)';
+          if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5";
+        } else if (currentAuth.role === 'class') {
+          nameEl.textContent = `👥 ${currentAuth.name}`;
+          if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5";
+        } else {
+          nameEl.textContent = `👤 ${currentAuth.name} (${currentAuth.class})`;
+          if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5";
+        }
+      }
+
+      // Restrict class visibility if not admin
+      if (currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
+        const userClass = currentAuth.class;
+        currentClassFilter = userClass;
+
+        // Hide other class buttons, keep only user's class
+        const classBtns = ['all', 'C++', 'Python', 'Python 1-1'];
+        classBtns.forEach(c => {
+          const btn = document.getElementById(`btn-class-${c === 'Python 1-1' ? 'Python-1-1' : c}`);
+          if (btn) {
+            if (c === userClass) {
+              btn.classList.remove('hidden');
+              btn.className = "class-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/40 text-indigo-200 border border-indigo-500/60 shadow-sm cursor-default";
+              btn.innerHTML = `Lớp của bạn: <strong>${c}</strong>`;
+            } else {
+              btn.classList.add('hidden');
+            }
+          }
+        });
+      }
+
+      // Re-render components with auth filtering
+      renderMatrix();
+      renderProblems();
+      renderCurriculum();
+    }
+
     window.addEventListener('DOMContentLoaded', initApp);
   </script>
 </body>

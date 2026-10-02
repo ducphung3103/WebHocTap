@@ -11,53 +11,50 @@
   "problems": [
     {
       "id": "MARISA-1",
-      "name": "Hello Marisa! (Tính tổng A + B)",
+      "name": "A + B",
+      "url": "https://marisaoj.com/problem/1",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "MarisaOJ",
-      "url": "https://marisaoj.com/problem/1",
+      "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python",
         "Python 1-1"
       ]
     },
     {
       "id": "MARISA-2",
-      "name": "A + B (Cộng hai số nguyên)",
+      "name": "Chu vi và diện tích hình chữ nhật",
+      "url": "https://marisaoj.com/problem/2",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "MarisaOJ",
-      "url": "https://marisaoj.com/problem/2",
+      "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python",
         "Python 1-1"
       ]
     },
     {
       "id": "MARISA-3",
-      "name": "Phép chia (A / B)",
+      "name": "Phép chia",
+      "url": "https://marisaoj.com/problem/3",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "MarisaOJ",
-      "url": "https://marisaoj.com/problem/3",
+      "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python",
         "Python 1-1"
       ]
     },
     {
       "id": "MARISA-8",
-      "name": "Phép nhân phức (Complex multiplication)",
+      "name": "Tổng các chữ số",
+      "url": "https://marisaoj.com/problem/8",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "MarisaOJ",
-      "url": "https://marisaoj.com/problem/8",
+      "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
@@ -66,55 +63,51 @@
     },
     {
       "id": "MARISA-396",
-      "name": "Phân loại nấm (Mushroom Classification)",
+      "name": "Số chính phương",
+      "url": "https://marisaoj.com/problem/396",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "MarisaOJ",
-      "url": "https://marisaoj.com/problem/396",
+      "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
-        "Python",
         "Python 1-1"
       ]
     },
     {
       "id": "MARISA-397",
-      "name": "Nấm độc (Toxic Mushroom)",
+      "name": "Số nguyên tố",
+      "url": "https://marisaoj.com/problem/397",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "MarisaOJ",
-      "url": "https://marisaoj.com/problem/397",
+      "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
-        "Python",
         "Python 1-1"
       ]
     },
     {
       "id": "MARISA-499",
-      "name": "Vòng lặp (Loop)",
+      "name": "Tổng ước số",
+      "url": "https://marisaoj.com/problem/499",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "MarisaOJ",
-      "url": "https://marisaoj.com/problem/499",
+      "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python",
         "Python 1-1"
       ]
     },
     {
       "id": "MARISA-314",
-      "name": "Số chẵn (Even numbers)",
+      "name": "Chữ số lớn nhất",
+      "url": "https://marisaoj.com/problem/314",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "MarisaOJ",
-      "url": "https://marisaoj.com/problem/314",
+      "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
         "C++",
-        "Python",
         "Python 1-1"
       ]
     }
@@ -122,6 +115,1013 @@
   "students": [
     {
       "stt": 1,
+      "name": "Nguyễn Đình Phát",
+      "class": "C++",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "dphatdzvl",
+      "solved": [
+        "MARISA-11",
+        "MARISA-2",
+        "MARISA-20",
+        "MARISA-3",
+        "MARISA-33",
+        "MARISA-408",
+        "MARISA-410",
+        "MARISA-411",
+        "MARISA-422",
+        "MARISA-43",
+        "MARISA-430",
+        "MARISA-528",
+        "MARISA-534",
+        "MARISA-539",
+        "MARISA-6",
+        "MARISA-8",
+        "MARISA-9"
+      ],
+      "target_solved": [
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-8"
+      ],
+      "target_solved_count": 3,
+      "target_class_total": 6,
+      "total_solved_count": 17,
+      "rating": 0,
+      "title": "Newbie",
+      "rating_change": "",
+      "stats": {
+        "week": 3,
+        "month": 15,
+        "year": 17,
+        "total": 17
+      },
+      "activity": {
+        "2026-09-30": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-29": {
+          "total": 4,
+          "ac": 3
+        },
+        "2026-09-28": {
+          "total": 5,
+          "ac": 4
+        },
+        "2026-09-27": {
+          "total": 4,
+          "ac": 3
+        },
+        "2026-09-26": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-22": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-21": {
+          "total": 2,
+          "ac": 1
+        }
+      },
+      "solved_problems_detail": [
+        {
+          "id": "MARISA-11",
+          "name": "Số chính phương",
+          "url": "https://marisaoj.com/problem/11",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-2",
+          "name": "A + B (Cộng hai số nguyên)",
+          "url": "https://marisaoj.com/problem/2",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-20",
+          "name": "Dãy Fibonacci",
+          "url": "https://marisaoj.com/problem/20",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-3",
+          "name": "Phép chia (A / B)",
+          "url": "https://marisaoj.com/problem/3",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-33",
+          "name": "Bài tập #33",
+          "url": "https://marisaoj.com/problem/33",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-408",
+          "name": "Bài tập #408",
+          "url": "https://marisaoj.com/problem/408",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-410",
+          "name": "Bài tập #410",
+          "url": "https://marisaoj.com/problem/410",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-411",
+          "name": "Bài tập #411",
+          "url": "https://marisaoj.com/problem/411",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-422",
+          "name": "Chỉnh hợp",
+          "url": "https://marisaoj.com/problem/422",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-43",
+          "name": "Giai thừa kép",
+          "url": "https://marisaoj.com/problem/43",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-430",
+          "name": "Bài tập #430",
+          "url": "https://marisaoj.com/problem/430",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-528",
+          "name": "Bài tập #528",
+          "url": "https://marisaoj.com/problem/528",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-534",
+          "name": "Tam giác vuông",
+          "url": "https://marisaoj.com/problem/534",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-539",
+          "name": "Bài tập #539",
+          "url": "https://marisaoj.com/problem/539",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-6",
+          "name": "Dãy số tăng",
+          "url": "https://marisaoj.com/problem/6",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-8",
+          "name": "Phép nhân phức (Complex multiplication)",
+          "url": "https://marisaoj.com/problem/8",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-9",
+          "name": "Ước số chung lớn nhất",
+          "url": "https://marisaoj.com/problem/9",
+          "is_target": false,
+          "status": "AC"
+        }
+      ]
+    },
+    {
+      "stt": 2,
+      "name": "Nguyễn Đắc Gia Huy",
+      "class": "C++",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "satfswert",
+      "solved": [
+        "MARISA-13",
+        "MARISA-15",
+        "MARISA-314",
+        "MARISA-397",
+        "MARISA-4",
+        "MARISA-420",
+        "MARISA-421",
+        "MARISA-499"
+      ],
+      "target_solved": [
+        "MARISA-499",
+        "MARISA-314"
+      ],
+      "target_solved_count": 2,
+      "target_class_total": 6,
+      "total_solved_count": 8,
+      "rating": 0,
+      "title": "Newbie",
+      "rating_change": "",
+      "stats": {
+        "week": 3,
+        "month": 7,
+        "year": 8,
+        "total": 8
+      },
+      "activity": {
+        "2026-09-30": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-29": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-28": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-27": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-26": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-22": {
+          "total": 2,
+          "ac": 1
+        }
+      },
+      "solved_problems_detail": [
+        {
+          "id": "MARISA-13",
+          "name": "Chữ hoa chữ thường",
+          "url": "https://marisaoj.com/problem/13",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-15",
+          "name": "Đảo ngược xâu",
+          "url": "https://marisaoj.com/problem/15",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-314",
+          "name": "Số chẵn (Even numbers)",
+          "url": "https://marisaoj.com/problem/314",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-397",
+          "name": "Nấm độc (Toxic Mushroom)",
+          "url": "https://marisaoj.com/problem/397",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-4",
+          "name": "Hình chữ nhật",
+          "url": "https://marisaoj.com/problem/4",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-420",
+          "name": "Tập hợp con",
+          "url": "https://marisaoj.com/problem/420",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-421",
+          "name": "Hoán vị",
+          "url": "https://marisaoj.com/problem/421",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-499",
+          "name": "Vòng lặp (Loop)",
+          "url": "https://marisaoj.com/problem/499",
+          "is_target": true,
+          "status": "AC"
+        }
+      ]
+    },
+    {
+      "stt": 3,
+      "name": "Mai Thiên Kim",
+      "class": "C++",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "Kimkimkim",
+      "solved": [
+        "MARISA-1",
+        "MARISA-12",
+        "MARISA-13",
+        "MARISA-5",
+        "MARISA-534",
+        "MARISA-535",
+        "MARISA-587",
+        "MARISA-6",
+        "MARISA-7",
+        "MARISA-9"
+      ],
+      "target_solved": [
+        "MARISA-1"
+      ],
+      "target_solved_count": 1,
+      "target_class_total": 6,
+      "total_solved_count": 10,
+      "rating": 0,
+      "title": "Newbie",
+      "rating_change": "",
+      "stats": {
+        "week": 1,
+        "month": 9,
+        "year": 10,
+        "total": 10
+      },
+      "activity": {
+        "2026-09-30": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-29": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-28": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-27": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-26": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-22": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-21": {
+          "total": 2,
+          "ac": 1
+        }
+      },
+      "solved_problems_detail": [
+        {
+          "id": "MARISA-1",
+          "name": "Hello Marisa! (Tính tổng A + B)",
+          "url": "https://marisaoj.com/problem/1",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-12",
+          "name": "Đếm số chính phương",
+          "url": "https://marisaoj.com/problem/12",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-13",
+          "name": "Chữ hoa chữ thường",
+          "url": "https://marisaoj.com/problem/13",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-5",
+          "name": "Phép cộng phân số",
+          "url": "https://marisaoj.com/problem/5",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-534",
+          "name": "Tam giác vuông",
+          "url": "https://marisaoj.com/problem/534",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-535",
+          "name": "Hình tròn",
+          "url": "https://marisaoj.com/problem/535",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-587",
+          "name": "Hóa đơn tiền điện",
+          "url": "https://marisaoj.com/problem/587",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-6",
+          "name": "Dãy số tăng",
+          "url": "https://marisaoj.com/problem/6",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-7",
+          "name": "Số nguyên tố",
+          "url": "https://marisaoj.com/problem/7",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-9",
+          "name": "Ước số chung lớn nhất",
+          "url": "https://marisaoj.com/problem/9",
+          "is_target": false,
+          "status": "AC"
+        }
+      ]
+    },
+    {
+      "stt": 4,
+      "name": "Trần Thái Thiên Ân",
+      "class": "C++",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "thienann200212",
+      "solved": [
+        "MARISA-1",
+        "MARISA-13",
+        "MARISA-20",
+        "MARISA-3",
+        "MARISA-314",
+        "MARISA-4",
+        "MARISA-42",
+        "MARISA-499",
+        "MARISA-535"
+      ],
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-3",
+        "MARISA-499",
+        "MARISA-314"
+      ],
+      "target_solved_count": 4,
+      "target_class_total": 6,
+      "total_solved_count": 9,
+      "rating": 0,
+      "title": "Newbie",
+      "rating_change": "",
+      "stats": {
+        "week": 4,
+        "month": 8,
+        "year": 9,
+        "total": 9
+      },
+      "activity": {
+        "2026-09-30": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-29": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-28": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-27": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-26": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-22": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-21": {
+          "total": 2,
+          "ac": 1
+        }
+      },
+      "solved_problems_detail": [
+        {
+          "id": "MARISA-1",
+          "name": "Hello Marisa! (Tính tổng A + B)",
+          "url": "https://marisaoj.com/problem/1",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-13",
+          "name": "Chữ hoa chữ thường",
+          "url": "https://marisaoj.com/problem/13",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-20",
+          "name": "Dãy Fibonacci",
+          "url": "https://marisaoj.com/problem/20",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-3",
+          "name": "Phép chia (A / B)",
+          "url": "https://marisaoj.com/problem/3",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-314",
+          "name": "Số chẵn (Even numbers)",
+          "url": "https://marisaoj.com/problem/314",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-4",
+          "name": "Hình chữ nhật",
+          "url": "https://marisaoj.com/problem/4",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-42",
+          "name": "Chữ số 0 tận cùng",
+          "url": "https://marisaoj.com/problem/42",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-499",
+          "name": "Vòng lặp (Loop)",
+          "url": "https://marisaoj.com/problem/499",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-535",
+          "name": "Hình tròn",
+          "url": "https://marisaoj.com/problem/535",
+          "is_target": false,
+          "status": "AC"
+        }
+      ]
+    },
+    {
+      "stt": 5,
+      "name": "Nguyễn Đức Phát",
+      "class": "Python",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "Nguyenducphat",
+      "solved": [
+        "MARISA-1",
+        "MARISA-10",
+        "MARISA-11",
+        "MARISA-12",
+        "MARISA-15",
+        "MARISA-16",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-314",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-4",
+        "MARISA-419",
+        "MARISA-420",
+        "MARISA-421",
+        "MARISA-499",
+        "MARISA-5",
+        "MARISA-534",
+        "MARISA-535",
+        "MARISA-542",
+        "MARISA-6",
+        "MARISA-7",
+        "MARISA-8",
+        "MARISA-9"
+      ],
+      "target_solved": [],
+      "target_solved_count": 0,
+      "target_class_total": 0,
+      "total_solved_count": 24,
+      "rating": 0,
+      "title": "Newbie",
+      "rating_change": "",
+      "stats": {
+        "week": 8,
+        "month": 21,
+        "year": 24,
+        "total": 24
+      },
+      "activity": {
+        "2026-09-30": {
+          "total": 5,
+          "ac": 4
+        },
+        "2026-09-29": {
+          "total": 5,
+          "ac": 4
+        },
+        "2026-09-28": {
+          "total": 7,
+          "ac": 6
+        },
+        "2026-09-27": {
+          "total": 5,
+          "ac": 4
+        },
+        "2026-09-26": {
+          "total": 5,
+          "ac": 4
+        },
+        "2026-09-22": {
+          "total": 3,
+          "ac": 2
+        }
+      },
+      "solved_problems_detail": [
+        {
+          "id": "MARISA-1",
+          "name": "Hello Marisa! (Tính tổng A + B)",
+          "url": "https://marisaoj.com/problem/1",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-10",
+          "name": "Bội chung nhỏ nhất",
+          "url": "https://marisaoj.com/problem/10",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-11",
+          "name": "Số chính phương",
+          "url": "https://marisaoj.com/problem/11",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-12",
+          "name": "Đếm số chính phương",
+          "url": "https://marisaoj.com/problem/12",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-15",
+          "name": "Đảo ngược xâu",
+          "url": "https://marisaoj.com/problem/15",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-16",
+          "name": "Xâu đối xứng",
+          "url": "https://marisaoj.com/problem/16",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-2",
+          "name": "A + B (Cộng hai số nguyên)",
+          "url": "https://marisaoj.com/problem/2",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-3",
+          "name": "Phép chia (A / B)",
+          "url": "https://marisaoj.com/problem/3",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-314",
+          "name": "Số chẵn (Even numbers)",
+          "url": "https://marisaoj.com/problem/314",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-396",
+          "name": "Phân loại nấm (Mushroom Classification)",
+          "url": "https://marisaoj.com/problem/396",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-397",
+          "name": "Nấm độc (Toxic Mushroom)",
+          "url": "https://marisaoj.com/problem/397",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-4",
+          "name": "Hình chữ nhật",
+          "url": "https://marisaoj.com/problem/4",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-419",
+          "name": "Đoạn thẳng trùng nhau",
+          "url": "https://marisaoj.com/problem/419",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-420",
+          "name": "Tập hợp con",
+          "url": "https://marisaoj.com/problem/420",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-421",
+          "name": "Hoán vị",
+          "url": "https://marisaoj.com/problem/421",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-499",
+          "name": "Vòng lặp (Loop)",
+          "url": "https://marisaoj.com/problem/499",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-5",
+          "name": "Phép cộng phân số",
+          "url": "https://marisaoj.com/problem/5",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-534",
+          "name": "Tam giác vuông",
+          "url": "https://marisaoj.com/problem/534",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-535",
+          "name": "Hình tròn",
+          "url": "https://marisaoj.com/problem/535",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-542",
+          "name": "Ma trận xoắn ốc",
+          "url": "https://marisaoj.com/problem/542",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-6",
+          "name": "Dãy số tăng",
+          "url": "https://marisaoj.com/problem/6",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-7",
+          "name": "Số nguyên tố",
+          "url": "https://marisaoj.com/problem/7",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-8",
+          "name": "Phép nhân phức (Complex multiplication)",
+          "url": "https://marisaoj.com/problem/8",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-9",
+          "name": "Ước số chung lớn nhất",
+          "url": "https://marisaoj.com/problem/9",
+          "is_target": false,
+          "status": "AC"
+        }
+      ]
+    },
+    {
+      "stt": 6,
+      "name": "Lê Phan Khánh Nam",
+      "class": "Python",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "khanhnam_15",
+      "solved": [
+        "MARISA-1",
+        "MARISA-314",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-4",
+        "MARISA-420",
+        "MARISA-421",
+        "MARISA-499"
+      ],
+      "target_solved": [],
+      "target_solved_count": 0,
+      "target_class_total": 0,
+      "total_solved_count": 8,
+      "rating": 0,
+      "title": "Newbie",
+      "rating_change": "",
+      "stats": {
+        "week": 5,
+        "month": 7,
+        "year": 8,
+        "total": 8
+      },
+      "activity": {
+        "2026-09-30": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-29": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-28": {
+          "total": 3,
+          "ac": 2
+        },
+        "2026-09-27": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-26": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-22": {
+          "total": 2,
+          "ac": 1
+        }
+      },
+      "solved_problems_detail": [
+        {
+          "id": "MARISA-1",
+          "name": "Hello Marisa! (Tính tổng A + B)",
+          "url": "https://marisaoj.com/problem/1",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-314",
+          "name": "Số chẵn (Even numbers)",
+          "url": "https://marisaoj.com/problem/314",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-396",
+          "name": "Phân loại nấm (Mushroom Classification)",
+          "url": "https://marisaoj.com/problem/396",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-397",
+          "name": "Nấm độc (Toxic Mushroom)",
+          "url": "https://marisaoj.com/problem/397",
+          "is_target": true,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-4",
+          "name": "Hình chữ nhật",
+          "url": "https://marisaoj.com/problem/4",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-420",
+          "name": "Tập hợp con",
+          "url": "https://marisaoj.com/problem/420",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-421",
+          "name": "Hoán vị",
+          "url": "https://marisaoj.com/problem/421",
+          "is_target": false,
+          "status": "AC"
+        },
+        {
+          "id": "MARISA-499",
+          "name": "Vòng lặp (Loop)",
+          "url": "https://marisaoj.com/problem/499",
+          "is_target": true,
+          "status": "AC"
+        }
+      ]
+    },
+    {
+      "stt": 7,
+      "name": "Trần Gia Hưng",
+      "class": "Python",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "Gia_Hung_Tran",
+      "solved": [
+        "MARISA-1"
+      ],
+      "target_solved": [],
+      "target_solved_count": 0,
+      "target_class_total": 0,
+      "total_solved_count": 1,
+      "rating": 0,
+      "title": "Newbie",
+      "rating_change": "",
+      "stats": {
+        "week": 1,
+        "month": 1,
+        "year": 1,
+        "total": 1
+      },
+      "activity": {
+        "2026-09-30": {
+          "total": 2,
+          "ac": 1
+        },
+        "2026-09-29": {
+          "total": 2,
+          "ac": 1
+        }
+      },
+      "solved_problems_detail": [
+        {
+          "id": "MARISA-1",
+          "name": "Hello Marisa! (Tính tổng A + B)",
+          "url": "https://marisaoj.com/problem/1",
+          "is_target": true,
+          "status": "AC"
+        }
+      ]
+    },
+    {
+      "stt": 8,
+      "name": "Trần Thái Thiên Kim",
+      "class": "Python",
+      "cf_handle": "",
+      "vjudge_handle": "",
+      "marisa_handle": "",
+      "solved": [],
+      "target_solved": [],
+      "target_solved_count": 0,
+      "target_class_total": 0,
+      "total_solved_count": 0,
+      "rating": 0,
+      "title": "Newbie",
+      "rating_change": "",
+      "stats": {
+        "week": 0,
+        "month": 0,
+        "year": 0,
+        "total": 0
+      },
+      "activity": {},
+      "solved_problems_detail": []
+    },
+    {
+      "stt": 9,
       "name": "Lê Minh Khôi",
       "class": "Python 1-1",
       "cf_handle": "",
@@ -160,16 +1160,17 @@
         "MARISA-2",
         "MARISA-3",
         "MARISA-8",
-        "MARISA-314",
         "MARISA-396",
         "MARISA-397",
-        "MARISA-499"
+        "MARISA-499",
+        "MARISA-314"
       ],
       "target_solved_count": 8,
+      "target_class_total": 8,
       "total_solved_count": 26,
       "rating": 0,
-      "rating_change": "",
       "title": "Newbie",
+      "rating_change": "",
       "stats": {
         "week": 8,
         "month": 23,
@@ -385,1080 +1386,79 @@
           "is_target": false,
           "status": "AC"
         }
-      ],
-      "target_class_total": 8
-    },
-    {
-      "stt": 2,
-      "name": "Nguyễn Đức Phát",
-      "class": "Python",
-      "cf_handle": "",
-      "vjudge_handle": "",
-      "marisa_handle": "Nguyenducphat",
-      "solved": [
-        "MARISA-1",
-        "MARISA-10",
-        "MARISA-11",
-        "MARISA-12",
-        "MARISA-15",
-        "MARISA-16",
-        "MARISA-2",
-        "MARISA-3",
-        "MARISA-314",
-        "MARISA-396",
-        "MARISA-397",
-        "MARISA-4",
-        "MARISA-419",
-        "MARISA-420",
-        "MARISA-421",
-        "MARISA-499",
-        "MARISA-5",
-        "MARISA-534",
-        "MARISA-535",
-        "MARISA-542",
-        "MARISA-6",
-        "MARISA-7",
-        "MARISA-8",
-        "MARISA-9"
-      ],
-      "target_solved": [
-        "MARISA-1",
-        "MARISA-2",
-        "MARISA-3",
-        "MARISA-314",
-        "MARISA-396",
-        "MARISA-397",
-        "MARISA-499"
-      ],
-      "target_solved_count": 7,
-      "total_solved_count": 24,
-      "rating": 0,
-      "rating_change": "",
-      "title": "Newbie",
-      "stats": {
-        "week": 8,
-        "month": 21,
-        "year": 24,
-        "total": 24
-      },
-      "activity": {
-        "2026-09-30": {
-          "total": 5,
-          "ac": 4
-        },
-        "2026-09-29": {
-          "total": 5,
-          "ac": 4
-        },
-        "2026-09-28": {
-          "total": 7,
-          "ac": 6
-        },
-        "2026-09-27": {
-          "total": 5,
-          "ac": 4
-        },
-        "2026-09-26": {
-          "total": 5,
-          "ac": 4
-        },
-        "2026-09-22": {
-          "total": 3,
-          "ac": 2
-        }
-      },
-      "solved_problems_detail": [
-        {
-          "id": "MARISA-1",
-          "name": "Hello Marisa! (Tính tổng A + B)",
-          "url": "https://marisaoj.com/problem/1",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-10",
-          "name": "Bội chung nhỏ nhất",
-          "url": "https://marisaoj.com/problem/10",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-11",
-          "name": "Số chính phương",
-          "url": "https://marisaoj.com/problem/11",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-12",
-          "name": "Đếm số chính phương",
-          "url": "https://marisaoj.com/problem/12",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-15",
-          "name": "Đảo ngược xâu",
-          "url": "https://marisaoj.com/problem/15",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-16",
-          "name": "Xâu đối xứng",
-          "url": "https://marisaoj.com/problem/16",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-2",
-          "name": "A + B (Cộng hai số nguyên)",
-          "url": "https://marisaoj.com/problem/2",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-3",
-          "name": "Phép chia (A / B)",
-          "url": "https://marisaoj.com/problem/3",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-314",
-          "name": "Số chẵn (Even numbers)",
-          "url": "https://marisaoj.com/problem/314",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-396",
-          "name": "Phân loại nấm (Mushroom Classification)",
-          "url": "https://marisaoj.com/problem/396",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-397",
-          "name": "Nấm độc (Toxic Mushroom)",
-          "url": "https://marisaoj.com/problem/397",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-4",
-          "name": "Hình chữ nhật",
-          "url": "https://marisaoj.com/problem/4",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-419",
-          "name": "Đoạn thẳng trùng nhau",
-          "url": "https://marisaoj.com/problem/419",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-420",
-          "name": "Tập hợp con",
-          "url": "https://marisaoj.com/problem/420",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-421",
-          "name": "Hoán vị",
-          "url": "https://marisaoj.com/problem/421",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-499",
-          "name": "Vòng lặp (Loop)",
-          "url": "https://marisaoj.com/problem/499",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-5",
-          "name": "Phép cộng phân số",
-          "url": "https://marisaoj.com/problem/5",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-534",
-          "name": "Tam giác vuông",
-          "url": "https://marisaoj.com/problem/534",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-535",
-          "name": "Hình tròn",
-          "url": "https://marisaoj.com/problem/535",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-542",
-          "name": "Ma trận xoắn ốc",
-          "url": "https://marisaoj.com/problem/542",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-6",
-          "name": "Dãy số tăng",
-          "url": "https://marisaoj.com/problem/6",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-7",
-          "name": "Số nguyên tố",
-          "url": "https://marisaoj.com/problem/7",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-8",
-          "name": "Phép nhân phức (Complex multiplication)",
-          "url": "https://marisaoj.com/problem/8",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-9",
-          "name": "Ước số chung lớn nhất",
-          "url": "https://marisaoj.com/problem/9",
-          "is_target": false,
-          "status": "AC"
-        }
-      ],
-      "target_class_total": 7
-    },
-    {
-      "stt": 3,
-      "name": "Nguyễn Đình Phát",
-      "class": "C++",
-      "cf_handle": "",
-      "vjudge_handle": "",
-      "marisa_handle": "dphatdzvl",
-      "solved": [
-        "MARISA-11",
-        "MARISA-2",
-        "MARISA-20",
-        "MARISA-3",
-        "MARISA-33",
-        "MARISA-408",
-        "MARISA-410",
-        "MARISA-411",
-        "MARISA-422",
-        "MARISA-43",
-        "MARISA-430",
-        "MARISA-528",
-        "MARISA-534",
-        "MARISA-539",
-        "MARISA-6",
-        "MARISA-8",
-        "MARISA-9"
-      ],
-      "target_solved": [
-        "MARISA-2",
-        "MARISA-3",
-        "MARISA-8"
-      ],
-      "target_solved_count": 3,
-      "total_solved_count": 17,
-      "rating": 0,
-      "rating_change": "",
-      "title": "Newbie",
-      "stats": {
-        "week": 3,
-        "month": 15,
-        "year": 17,
-        "total": 17
-      },
-      "activity": {
-        "2026-09-30": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-29": {
-          "total": 4,
-          "ac": 3
-        },
-        "2026-09-28": {
-          "total": 5,
-          "ac": 4
-        },
-        "2026-09-27": {
-          "total": 4,
-          "ac": 3
-        },
-        "2026-09-26": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-22": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-21": {
-          "total": 2,
-          "ac": 1
-        }
-      },
-      "solved_problems_detail": [
-        {
-          "id": "MARISA-11",
-          "name": "Số chính phương",
-          "url": "https://marisaoj.com/problem/11",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-2",
-          "name": "A + B (Cộng hai số nguyên)",
-          "url": "https://marisaoj.com/problem/2",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-20",
-          "name": "Dãy Fibonacci",
-          "url": "https://marisaoj.com/problem/20",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-3",
-          "name": "Phép chia (A / B)",
-          "url": "https://marisaoj.com/problem/3",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-33",
-          "name": "Bài tập #33",
-          "url": "https://marisaoj.com/problem/33",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-408",
-          "name": "Bài tập #408",
-          "url": "https://marisaoj.com/problem/408",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-410",
-          "name": "Bài tập #410",
-          "url": "https://marisaoj.com/problem/410",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-411",
-          "name": "Bài tập #411",
-          "url": "https://marisaoj.com/problem/411",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-422",
-          "name": "Chỉnh hợp",
-          "url": "https://marisaoj.com/problem/422",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-43",
-          "name": "Giai thừa kép",
-          "url": "https://marisaoj.com/problem/43",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-430",
-          "name": "Bài tập #430",
-          "url": "https://marisaoj.com/problem/430",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-528",
-          "name": "Bài tập #528",
-          "url": "https://marisaoj.com/problem/528",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-534",
-          "name": "Tam giác vuông",
-          "url": "https://marisaoj.com/problem/534",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-539",
-          "name": "Bài tập #539",
-          "url": "https://marisaoj.com/problem/539",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-6",
-          "name": "Dãy số tăng",
-          "url": "https://marisaoj.com/problem/6",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-8",
-          "name": "Phép nhân phức (Complex multiplication)",
-          "url": "https://marisaoj.com/problem/8",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-9",
-          "name": "Ước số chung lớn nhất",
-          "url": "https://marisaoj.com/problem/9",
-          "is_target": false,
-          "status": "AC"
-        }
-      ],
-      "target_class_total": 6
-    },
-    {
-      "stt": 4,
-      "name": "Mai Thiên Kim",
-      "class": "C++",
-      "cf_handle": "",
-      "vjudge_handle": "",
-      "marisa_handle": "Kimkimkim",
-      "solved": [
-        "MARISA-1",
-        "MARISA-12",
-        "MARISA-13",
-        "MARISA-5",
-        "MARISA-534",
-        "MARISA-535",
-        "MARISA-587",
-        "MARISA-6",
-        "MARISA-7",
-        "MARISA-9"
-      ],
-      "target_solved": [
-        "MARISA-1"
-      ],
-      "target_solved_count": 1,
-      "total_solved_count": 10,
-      "rating": 0,
-      "rating_change": "",
-      "title": "Newbie",
-      "stats": {
-        "week": 1,
-        "month": 9,
-        "year": 10,
-        "total": 10
-      },
-      "activity": {
-        "2026-09-30": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-29": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-28": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-27": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-26": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-22": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-21": {
-          "total": 2,
-          "ac": 1
-        }
-      },
-      "solved_problems_detail": [
-        {
-          "id": "MARISA-1",
-          "name": "Hello Marisa! (Tính tổng A + B)",
-          "url": "https://marisaoj.com/problem/1",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-12",
-          "name": "Đếm số chính phương",
-          "url": "https://marisaoj.com/problem/12",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-13",
-          "name": "Chữ hoa chữ thường",
-          "url": "https://marisaoj.com/problem/13",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-5",
-          "name": "Phép cộng phân số",
-          "url": "https://marisaoj.com/problem/5",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-534",
-          "name": "Tam giác vuông",
-          "url": "https://marisaoj.com/problem/534",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-535",
-          "name": "Hình tròn",
-          "url": "https://marisaoj.com/problem/535",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-587",
-          "name": "Hóa đơn tiền điện",
-          "url": "https://marisaoj.com/problem/587",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-6",
-          "name": "Dãy số tăng",
-          "url": "https://marisaoj.com/problem/6",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-7",
-          "name": "Số nguyên tố",
-          "url": "https://marisaoj.com/problem/7",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-9",
-          "name": "Ước số chung lớn nhất",
-          "url": "https://marisaoj.com/problem/9",
-          "is_target": false,
-          "status": "AC"
-        }
-      ],
-      "target_class_total": 6
-    },
-    {
-      "stt": 5,
-      "name": "Trần Thái Thiên Ân",
-      "class": "C++",
-      "cf_handle": "",
-      "vjudge_handle": "",
-      "marisa_handle": "thienann200212",
-      "solved": [
-        "MARISA-1",
-        "MARISA-13",
-        "MARISA-20",
-        "MARISA-3",
-        "MARISA-314",
-        "MARISA-4",
-        "MARISA-42",
-        "MARISA-499",
-        "MARISA-535"
-      ],
-      "target_solved": [
-        "MARISA-1",
-        "MARISA-3",
-        "MARISA-314",
-        "MARISA-499"
-      ],
-      "target_solved_count": 4,
-      "total_solved_count": 9,
-      "rating": 0,
-      "rating_change": "",
-      "title": "Newbie",
-      "stats": {
-        "week": 4,
-        "month": 8,
-        "year": 9,
-        "total": 9
-      },
-      "activity": {
-        "2026-09-30": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-29": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-28": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-27": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-26": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-22": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-21": {
-          "total": 2,
-          "ac": 1
-        }
-      },
-      "solved_problems_detail": [
-        {
-          "id": "MARISA-1",
-          "name": "Hello Marisa! (Tính tổng A + B)",
-          "url": "https://marisaoj.com/problem/1",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-13",
-          "name": "Chữ hoa chữ thường",
-          "url": "https://marisaoj.com/problem/13",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-20",
-          "name": "Dãy Fibonacci",
-          "url": "https://marisaoj.com/problem/20",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-3",
-          "name": "Phép chia (A / B)",
-          "url": "https://marisaoj.com/problem/3",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-314",
-          "name": "Số chẵn (Even numbers)",
-          "url": "https://marisaoj.com/problem/314",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-4",
-          "name": "Hình chữ nhật",
-          "url": "https://marisaoj.com/problem/4",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-42",
-          "name": "Chữ số 0 tận cùng",
-          "url": "https://marisaoj.com/problem/42",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-499",
-          "name": "Vòng lặp (Loop)",
-          "url": "https://marisaoj.com/problem/499",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-535",
-          "name": "Hình tròn",
-          "url": "https://marisaoj.com/problem/535",
-          "is_target": false,
-          "status": "AC"
-        }
-      ],
-      "target_class_total": 6
-    },
-    {
-      "stt": 6,
-      "name": "Lê Phan Khánh Nam",
-      "class": "Python",
-      "cf_handle": "",
-      "vjudge_handle": "",
-      "marisa_handle": "khanhnam_15",
-      "solved": [
-        "MARISA-1",
-        "MARISA-314",
-        "MARISA-396",
-        "MARISA-397",
-        "MARISA-4",
-        "MARISA-420",
-        "MARISA-421",
-        "MARISA-499"
-      ],
-      "target_solved": [
-        "MARISA-1",
-        "MARISA-314",
-        "MARISA-396",
-        "MARISA-397",
-        "MARISA-499"
-      ],
-      "target_solved_count": 5,
-      "total_solved_count": 8,
-      "rating": 0,
-      "rating_change": "",
-      "title": "Newbie",
-      "stats": {
-        "week": 5,
-        "month": 7,
-        "year": 8,
-        "total": 8
-      },
-      "activity": {
-        "2026-09-30": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-29": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-28": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-27": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-26": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-22": {
-          "total": 2,
-          "ac": 1
-        }
-      },
-      "solved_problems_detail": [
-        {
-          "id": "MARISA-1",
-          "name": "Hello Marisa! (Tính tổng A + B)",
-          "url": "https://marisaoj.com/problem/1",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-314",
-          "name": "Số chẵn (Even numbers)",
-          "url": "https://marisaoj.com/problem/314",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-396",
-          "name": "Phân loại nấm (Mushroom Classification)",
-          "url": "https://marisaoj.com/problem/396",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-397",
-          "name": "Nấm độc (Toxic Mushroom)",
-          "url": "https://marisaoj.com/problem/397",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-4",
-          "name": "Hình chữ nhật",
-          "url": "https://marisaoj.com/problem/4",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-420",
-          "name": "Tập hợp con",
-          "url": "https://marisaoj.com/problem/420",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-421",
-          "name": "Hoán vị",
-          "url": "https://marisaoj.com/problem/421",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-499",
-          "name": "Vòng lặp (Loop)",
-          "url": "https://marisaoj.com/problem/499",
-          "is_target": true,
-          "status": "AC"
-        }
-      ],
-      "target_class_total": 7
-    },
-    {
-      "stt": 7,
-      "name": "Nguyễn Đắc Gia Huy",
-      "class": "C++",
-      "cf_handle": "",
-      "vjudge_handle": "",
-      "marisa_handle": "satfswert",
-      "solved": [
-        "MARISA-13",
-        "MARISA-15",
-        "MARISA-314",
-        "MARISA-397",
-        "MARISA-4",
-        "MARISA-420",
-        "MARISA-421",
-        "MARISA-499"
-      ],
-      "target_solved": [
-        "MARISA-314",
-        "MARISA-499"
-      ],
-      "target_solved_count": 2,
-      "total_solved_count": 8,
-      "rating": 0,
-      "rating_change": "",
-      "title": "Newbie",
-      "stats": {
-        "week": 3,
-        "month": 7,
-        "year": 8,
-        "total": 8
-      },
-      "activity": {
-        "2026-09-30": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-29": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-28": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-09-27": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-26": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-22": {
-          "total": 2,
-          "ac": 1
-        }
-      },
-      "solved_problems_detail": [
-        {
-          "id": "MARISA-13",
-          "name": "Chữ hoa chữ thường",
-          "url": "https://marisaoj.com/problem/13",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-15",
-          "name": "Đảo ngược xâu",
-          "url": "https://marisaoj.com/problem/15",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-314",
-          "name": "Số chẵn (Even numbers)",
-          "url": "https://marisaoj.com/problem/314",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-397",
-          "name": "Nấm độc (Toxic Mushroom)",
-          "url": "https://marisaoj.com/problem/397",
-          "is_target": true,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-4",
-          "name": "Hình chữ nhật",
-          "url": "https://marisaoj.com/problem/4",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-420",
-          "name": "Tập hợp con",
-          "url": "https://marisaoj.com/problem/420",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-421",
-          "name": "Hoán vị",
-          "url": "https://marisaoj.com/problem/421",
-          "is_target": false,
-          "status": "AC"
-        },
-        {
-          "id": "MARISA-499",
-          "name": "Vòng lặp (Loop)",
-          "url": "https://marisaoj.com/problem/499",
-          "is_target": true,
-          "status": "AC"
-        }
-      ],
-      "target_class_total": 6
-    },
-    {
-      "stt": 8,
-      "name": "Trần Gia Hưng",
-      "class": "Python",
-      "cf_handle": "",
-      "vjudge_handle": "",
-      "marisa_handle": "Gia_Hung_Tran",
-      "solved": [
-        "MARISA-1"
-      ],
-      "target_solved": [
-        "MARISA-1"
-      ],
-      "target_solved_count": 1,
-      "total_solved_count": 1,
-      "rating": 0,
-      "rating_change": "",
-      "title": "Newbie",
-      "stats": {
-        "week": 1,
-        "month": 1,
-        "year": 1,
-        "total": 1
-      },
-      "activity": {
-        "2026-09-30": {
-          "total": 2,
-          "ac": 1
-        },
-        "2026-09-29": {
-          "total": 2,
-          "ac": 1
-        }
-      },
-      "solved_problems_detail": [
-        {
-          "id": "MARISA-1",
-          "name": "Hello Marisa! (Tính tổng A + B)",
-          "url": "https://marisaoj.com/problem/1",
-          "is_target": true,
-          "status": "AC"
-        }
-      ],
-      "target_class_total": 7
-    },
-    {
-      "stt": 9,
-      "name": "Trần Thái Thiên Kim",
-      "class": "Python",
-      "cf_handle": "",
-      "vjudge_handle": "",
-      "marisa_handle": "",
-      "solved": [],
-      "target_solved": [],
-      "target_solved_count": 0,
-      "total_solved_count": 0,
-      "rating": 0,
-      "rating_change": "",
-      "title": "Newbie",
-      "stats": {
-        "week": 0,
-        "month": 0,
-        "year": 0,
-        "total": 0
-      },
-      "activity": {},
-      "solved_problems_detail": [],
-      "target_class_total": 7
+      ]
     }
   ],
   "curriculum": [
     {
-      "module": "Chuyên đề 01: C++ Căn bản & Kỹ thuật Tối ưu I/O",
-      "description": "Cấu trúc chương trình C++, các kiểu dữ liệu số nguyên lớn 64-bit, ép kiểu, Fast I/O và kiểm soát độ phức tạp thời gian O(N).",
-      "doc_url": "https://docs.google.com/document/d/1sample_cpp_basics/edit?usp=sharing",
-      "lecture_file": "lectures/01_cpp_can_ban.md",
-      "lessons": [
-        "1.1 Khởi tạo Template thi đấu C++ chuẩn & Kỹ thuật Fast I/O (cin.tie, sync_with_stdio)",
-        "1.2 Xử lý số học: Overflow, __int128, lũy thừa nhanh chia để trị (Binary Exponentiation)",
-        "1.3 Mảng 1 chiều, 2 chiều & Kỹ thuật Mảng cộng dồn (Prefix Sum), Mảng hiệu (Difference Array)"
-      ]
+      "id": "CPP-01",
+      "chapter": "Tuần 1",
+      "title": "Nhập xuất & Cấu trúc cơ bản C++",
+      "classes": [
+        "C++"
+      ],
+      "url": "https://notion.so",
+      "summary": "Cú pháp C++, biến, kiểu int/long long, cin/cout, toán tử số học"
     },
     {
-      "module": "Chuyên đề 02: STL & Cấu trúc Dữ liệu Nền tảng",
-      "description": "Làm chủ các container quan trọng của thư viện C++ STL trong giải thuật: vector, pair, set, map, priority_queue, deque.",
-      "doc_url": "https://docs.google.com/document/d/1sample_stl_dsa/edit?usp=sharing",
-      "lecture_file": "lectures/01_cpp_can_ban.md",
-      "lessons": [
-        "2.1 Vector, Sort đa tiêu chí với hàm Comparator, Binary Search & Chặt nhị phân kết quả",
-        "2.2 Set, Multiset, Unordered_set: Tìm kiếm và duy trì tập hợp trong O(log N)",
-        "2.3 Map, Unordered_map: Bảng băm đếm tần suất và nén tọa độ rời rạc",
-        "2.4 Priority Queue (Hàng đợi ưu tiên) & Kỹ thuật Hai con trỏ (Two Pointers)"
-      ]
+      "id": "CPP-02",
+      "chapter": "Tuần 2",
+      "title": "Cấu trúc rẽ nhánh & Vòng lặp",
+      "classes": [
+        "C++"
+      ],
+      "url": "https://notion.so",
+      "summary": "If/else, switch case, vòng lặp for, while, do-while"
     },
     {
-      "module": "Chuyên đề 03: Quy hoạch Động Kinh điển (Dynamic Programming)",
-      "description": "Tư duy tối ưu hóa bài toán con trùng lặp, xây dựng công thức truy hồi và bảng phương án.",
-      "doc_url": "https://docs.google.com/document/d/1sample_dp/edit?usp=sharing",
-      "lecture_file": "lectures/01_cpp_can_ban.md",
-      "lessons": [
-        "3.1 Quy hoạch động 1 chiều: Bài toán Bậc thang, Dãy con có tổng lớn nhất (Kadane)",
-        "3.2 Dãy con tăng dài nhất (LIS O(N log N)) & Xâu con chung dài nhất (LCS)",
-        "3.3 Bài toán Cái túi (Knapsack 0/1, Bounded & Unbounded Knapsack)",
-        "3.4 Quy hoạch động trên ma trận lưới & Tối ưu hóa bộ nhớ DP"
-      ]
+      "id": "CPP-03",
+      "chapter": "Tuần 3",
+      "title": "Mảng 1 chiều & Kỹ thuật đếm phân phối",
+      "classes": [
+        "C++"
+      ],
+      "url": "https://notion.so",
+      "summary": "Khai báo mảng, duyệt mảng, tìm kiếm, mảng đánh dấu"
     },
     {
-      "module": "Chuyên đề 04: Thuật toán Đồ thị (Graph Algorithms)",
-      "description": "Mô hình hóa bài toán đồ thị, biểu diễn danh sách kề và các thuật toán duyệt đồ thị cơ bản đến nâng cao.",
-      "doc_url": "https://docs.google.com/document/d/1sample_graph/edit?usp=sharing",
-      "lecture_file": "lectures/01_cpp_can_ban.md",
-      "lessons": [
-        "4.1 Biểu diễn đồ thị, Duyệt theo chiều sâu (DFS) & Duyệt theo chiều rộng (BFS)",
-        "4.2 Cây khung nhỏ nhất (Kruskal & Thuật toán Disjoint Set Union - DSU)",
-        "4.3 Đường đi ngắn nhất nguồn đơn: Thuật toán Dijkstra với priority_queue",
-        "4.4 Đồ thị có hướng không chu trình (DAG) & Sắp xếp Tô pô (Topological Sort)"
-      ]
+      "id": "PY-01",
+      "chapter": "Tuần 1",
+      "title": "Cơ bản về Python & Thao tác biến",
+      "classes": [
+        "Python 1-1"
+      ],
+      "url": "https://notion.so",
+      "summary": "Hàm print(), input(), ép kiểu int/float, toán tử cơ bản"
+    },
+    {
+      "id": "PY-02",
+      "chapter": "Tuần 2",
+      "title": "Vòng lặp & Cấu trúc rẽ nhánh trong Python",
+      "classes": [
+        "Python 1-1"
+      ],
+      "url": "https://notion.so",
+      "summary": "For in range, while, if/elif/else, xử lý số học"
+    },
+    {
+      "id": "PY-03",
+      "chapter": "Tuần 3",
+      "title": "Danh sách (List) & Chuỗi (String)",
+      "classes": [
+        "Python 1-1"
+      ],
+      "url": "https://notion.so",
+      "summary": "List indexing, slicing, methods append/pop/sort, chuỗi"
+    },
+    {
+      "id": "VIP-01",
+      "chapter": "Chuyên đề",
+      "title": "Kỹ thuật Duyệt nhánh cận & Tối ưu hóa",
+      "classes": [
+        "Python 1-1"
+      ],
+      "url": "https://notion.so",
+      "summary": "Tối ưu độ phức tạp thời gian O(N) và O(N log N) bồi dưỡng HSG"
     }
   ],
   "contests": [
@@ -1711,23 +1711,15 @@
         "MARISA-2",
         "MARISA-3",
         "MARISA-8",
-        "MARISA-314",
-        "MARISA-499"
+        "MARISA-499",
+        "MARISA-314"
       ]
     },
     "Python": {
       "name": "Lớp Python",
       "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-      "total_problems": 7,
-      "problem_ids": [
-        "MARISA-1",
-        "MARISA-2",
-        "MARISA-3",
-        "MARISA-314",
-        "MARISA-396",
-        "MARISA-397",
-        "MARISA-499"
-      ]
+      "total_problems": 0,
+      "problem_ids": []
     },
     "Python 1-1": {
       "name": "Lớp Python 1-1",
@@ -1738,11 +1730,87 @@
         "MARISA-2",
         "MARISA-3",
         "MARISA-8",
-        "MARISA-314",
         "MARISA-396",
         "MARISA-397",
-        "MARISA-499"
+        "MARISA-499",
+        "MARISA-314"
       ]
+    }
+  },
+  "auth_tokens": {
+    "c74b32eccef8ade5d079f81c4ab3a34ba62ec68f6a471cfd42961eda6acb3fa3": {
+      "role": "admin",
+      "name": "Quản trị viên / Giáo viên",
+      "class": "ALL"
+    },
+    "747a418c455f484f47e197ae1b563907e3caf8014f41a6fbffdadda6459ee9a7": {
+      "role": "class",
+      "name": "Lớp C++",
+      "class": "C++"
+    },
+    "bbe11ae2f8c5c6286c4c39b3cf17136b906ac3e6a670e3f3ecda54d1394427cd": {
+      "role": "class",
+      "name": "Lớp Python",
+      "class": "Python"
+    },
+    "016631a6e22b281fe23b9ab96cd5c0c6b83f98cea141a27b8cf41d6ea73a8829": {
+      "role": "class",
+      "name": "Lớp Python 1-1",
+      "class": "Python 1-1"
+    },
+    "a441c5ff4aa7185514c5161ba3ba8320232d52dc56d9232b907acb57e19e5e57": {
+      "role": "student",
+      "stt": 1,
+      "name": "Nguyễn Đình Phát",
+      "class": "C++"
+    },
+    "b6760997462627133fdd6f6156ab8f304972162179d216f64ea9da196017e234": {
+      "role": "student",
+      "stt": 2,
+      "name": "Nguyễn Đắc Gia Huy",
+      "class": "C++"
+    },
+    "78f1ed977dd8b7959674831522139aecee2ce8814a8446dbf12fee02601ec216": {
+      "role": "student",
+      "stt": 3,
+      "name": "Mai Thiên Kim",
+      "class": "C++"
+    },
+    "e4d8f0abd426ddb01555299c0d0e14190e48da88d667ab8b518babc55e9fbd72": {
+      "role": "student",
+      "stt": 4,
+      "name": "Trần Thái Thiên Ân",
+      "class": "C++"
+    },
+    "06584d9aa6499f67008e7faa65149142ab5d7b76856e517843c8d580d79949e0": {
+      "role": "student",
+      "stt": 5,
+      "name": "Nguyễn Đức Phát",
+      "class": "Python"
+    },
+    "8eddeb429510b7ba493020e4f29b7f91cd6cbaaa588b00ec2c0ffb92282f1e77": {
+      "role": "student",
+      "stt": 6,
+      "name": "Lê Phan Khánh Nam",
+      "class": "Python"
+    },
+    "427e527d60b0605ccfa50e38daba8f856191a09a7a195981512a2211c7219ce1": {
+      "role": "student",
+      "stt": 7,
+      "name": "Trần Gia Hưng",
+      "class": "Python"
+    },
+    "e14c27bee07eb09dc7e3dfc97c24935e77a0df09afbe148ef316515a5f26d257": {
+      "role": "student",
+      "stt": 8,
+      "name": "Trần Thái Thiên Kim",
+      "class": "Python"
+    },
+    "3764895fbb3ae59753594634e3786ed605ec2ddda8d73819bad9ea03047cc45f": {
+      "role": "student",
+      "stt": 9,
+      "name": "Lê Minh Khôi",
+      "class": "Python 1-1"
     }
   }
 }

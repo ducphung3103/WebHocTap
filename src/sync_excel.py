@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import hashlib
 import openpyxl
 from typing import List, Dict
 
@@ -10,9 +11,12 @@ if _sslkeylogfile and not os.path.exists(os.path.dirname(_sslkeylogfile)):
     del os.environ["SSLKEYLOGFILE"]
 
 from src.utils.logger import get_logger
-from src.crawlers.marisaoj import MarisaOJCrawler
 
 logger = get_logger("sync.excel")
+
+
+def hash_str(val: str) -> str:
+    return hashlib.sha256(val.strip().encode("utf-8")).hexdigest()
 
 
 def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/data.json"):
@@ -23,117 +27,228 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
     logger.info(f"Opening Excel file: {excel_path}")
     wb = openpyxl.load_workbook(excel_path, data_only=True)
 
-    # 1. Read Students (Sheet 0: 'Học Sinh')
-    sheet_students = wb.worksheets[0]
-    students_raw = []
-    marisa_handles = []
-
-    for r in range(3, sheet_students.max_row + 1):
-        name = sheet_students.cell(r, 1).value
-        if not name:
-            continue
-        cls_name = sheet_students.cell(r, 2).value or ""
-        marisa_h = sheet_students.cell(r, 3).value or ""
-        cf_h = sheet_students.cell(r, 4).value or ""
-        vj_h = sheet_students.cell(r, 5).value or ""
-
-        marisa_h_clean = str(marisa_h).strip()
-        if marisa_h_clean:
-            marisa_handles.append(marisa_h_clean)
-
-        students_raw.append({
-            "stt": len(students_raw) + 1,
-            "name": str(name).strip(),
-            "class": str(cls_name).strip(),
-            "marisa_handle": marisa_h_clean,
-            "cf_handle": str(cf_h).strip() if cf_h else "",
-            "vjudge_handle": str(vj_h).strip() if vj_h else ""
-        })
-
-    logger.info(f"Loaded {len(students_raw)} students from Excel.")
-
-    # 2. Read Problems (Sheet 2: 'Bài Tập')
-    sheet_problems = wb.worksheets[2] if len(wb.worksheets) > 2 else None
-    problems = []
-    target_pids = set()
-
-    if sheet_problems:
-        for r in range(3, sheet_problems.max_row + 1):
-            url = sheet_problems.cell(r, 1).value
-            if not url:
-                continue
-            url_str = str(url).strip()
-            level = sheet_problems.cell(r, 2).value or "1"
-            tag = sheet_problems.cell(r, 3).value or "Brute Force"
-
-            pid = url_str.rstrip("/").split("/")[-1]
-            target_pids.add(pid)
-
-            problems.append({
-                "id": f"MARISA-{pid}",
-                "name": f"Bài tập #{pid}",
-                "platform": "MarisaOJ",
-                "badge_color": "purple",
-                "category": "MarisaOJ",
-                "url": url_str,
-                "difficulty": f"Level {level} • {tag}"
-            })
-    logger.info(f"Loaded {len(problems)} problems from Excel.")
-
-    # 3. Crawl submissions from MarisaOJ
-    logger.info("Crawling submission status from MarisaOJ...")
-    crawler = MarisaOJCrawler(delay_seconds=2.0, headless=False)
-    crawl_results = crawler.crawl_students(marisa_handles)
-
-    # 4. Build final students list with ACs and Ratings
-    students = []
-    for s in students_raw:
-        h = s["marisa_handle"]
-        ac_ids = crawl_results.get(h, set())
-        
-        all_solved = [f"MARISA-{pid}" for pid in sorted(list(ac_ids))]
-        target_solved = [f"MARISA-{pid}" for pid in sorted(list(ac_ids.intersection(target_pids)))]
-
-        # Rating Contest: all currently set to 0, title Newbie
-        rating = 0
-        rating_change = ""
-
-        students.append({
-            "stt": s["stt"],
-            "name": s["name"],
-            "class": s["class"],
-            "cf_handle": s["cf_handle"],
-            "vjudge_handle": s["vjudge_handle"],
-            "marisa_handle": s["marisa_handle"],
-            "solved": all_solved,
-            "target_solved": target_solved,
-            "target_solved_count": len(target_solved),
-            "total_solved_count": len(all_solved),
-            "rating": rating,
-            "title": "Newbie",
-            "rating_change": rating_change
-        })
-
-    # Sort students by rating descending
-    students.sort(key=lambda x: (x["rating"], len(x["solved"])), reverse=True)
-    for idx, st in enumerate(students, 1):
-        st["stt"] = idx
-
-    # 5. Save to docs/data.json
+    # Load existing data.json if available to preserve crawled activity / stats
+    existing_data = {}
     if os.path.exists(json_path):
         with open(json_path, "r", encoding="utf-8") as f:
-            app_data = json.load(f)
-    else:
-        app_data = {}
+            try:
+                existing_data = json.load(f)
+            except Exception as e:
+                logger.warning(f"Could not load existing {json_path}: {e}")
 
-    app_data["students"] = students
-    if problems:
-        app_data["problems"] = problems
+    # Map existing student solved data by handle and name
+    existing_students_map = {}
+    for st in existing_data.get("students", []):
+        if st.get("marisa_handle"):
+            existing_students_map[st["marisa_handle"]] = st
+        existing_students_map[st.get("name", "")] = st
+
+    # 1. Parse Security / Keys
+    auth_tokens = {}
+    if "Cấu Hình Bảo Mật" in wb.sheetnames:
+        ws_sec = wb["Cấu Hình Bảo Mật"]
+        for r in range(2, ws_sec.max_row + 1):
+            target_name = ws_sec.cell(r, 1).value
+            role = ws_sec.cell(r, 2).value
+            key_val = ws_sec.cell(r, 3).value
+            if not key_val:
+                continue
+            key_str = str(key_val).strip()
+            h = hash_str(key_str)
+
+            if role == "ADMIN":
+                auth_tokens[h] = {
+                    "role": "admin",
+                    "name": str(target_name or "Giáo viên / Quản trị"),
+                    "class": "ALL"
+                }
+            elif role == "CLASS":
+                cls = "C++" if "C++" in str(target_name) else "Python 1-1" if "1-1" in str(target_name) else "Python"
+                auth_tokens[h] = {
+                    "role": "class",
+                    "name": str(target_name),
+                    "class": cls
+                }
+
+    # 2. Parse Problems
+    problems = []
+    class_problems_map = {"C++": [], "Python": [], "Python 1-1": []}
+
+    if "Bài Tập" in wb.sheetnames:
+        ws_prob = wb["Bài Tập"]
+        for r in range(2, ws_prob.max_row + 1):
+            pid = ws_prob.cell(r, 1).value
+            url = ws_prob.cell(r, 2).value
+            pname = ws_prob.cell(r, 3).value
+            classes_str = ws_prob.cell(r, 4).value or "Tất cả"
+            level = ws_prob.cell(r, 5).value or "1"
+            tag = ws_prob.cell(r, 6).value or "Brute Force"
+            platform = ws_prob.cell(r, 7).value or "MarisaOJ"
+
+            if not url:
+                continue
+
+            c_list = []
+            c_str_clean = str(classes_str).strip()
+            if "Tất cả" in c_str_clean or "All" in c_str_clean:
+                c_list = ["C++", "Python", "Python 1-1"]
+            else:
+                if "C++" in c_str_clean:
+                    c_list.append("C++")
+                if "Python 1-1" in c_str_clean or "1-1" in c_str_clean:
+                    c_list.append("Python 1-1")
+                elif "Python" in c_str_clean:
+                    c_list.append("Python")
+
+            prob_id = str(pid or f"PROB-{r}").strip()
+            problems.append({
+                "id": prob_id,
+                "name": str(pname or f"Bài tập #{r}").strip(),
+                "url": str(url).strip(),
+                "platform": str(platform).strip(),
+                "badge_color": "purple" if "marisa" in str(platform).lower() else "blue",
+                "category": str(tag).strip(),
+                "difficulty": f"Level {level} • {tag}",
+                "classes": c_list
+            })
+
+            for c in c_list:
+                if c in class_problems_map:
+                    class_problems_map[c].append(prob_id)
+
+    # 3. Parse Lectures
+    curriculum = []
+    if "Bài Giảng" in wb.sheetnames:
+        ws_lec = wb["Bài Giảng"]
+        for r in range(2, ws_lec.max_row + 1):
+            lid = ws_lec.cell(r, 1).value
+            chapter = ws_lec.cell(r, 2).value or ""
+            title = ws_lec.cell(r, 3).value
+            classes_str = ws_lec.cell(r, 4).value or "Tất cả"
+            link = ws_lec.cell(r, 5).value or "#"
+            summary = ws_lec.cell(r, 6).value or ""
+
+            if not title:
+                continue
+
+            c_list = []
+            c_str_clean = str(classes_str).strip()
+            if "Tất cả" in c_str_clean or "All" in c_str_clean:
+                c_list = ["C++", "Python", "Python 1-1"]
+            else:
+                if "C++" in c_str_clean:
+                    c_list.append("C++")
+                if "Python 1-1" in c_str_clean or "1-1" in c_str_clean:
+                    c_list.append("Python 1-1")
+                elif "Python" in c_str_clean:
+                    c_list.append("Python")
+
+            curriculum.append({
+                "id": str(lid or f"LEC-{r}").strip(),
+                "chapter": str(chapter).strip(),
+                "title": str(title).strip(),
+                "classes": c_list,
+                "url": str(link).strip(),
+                "summary": str(summary).strip()
+            })
+
+    # 4. Parse Students
+    students = []
+    if "Học Sinh" in wb.sheetnames:
+        ws_stu = wb["Học Sinh"]
+        for r in range(2, ws_stu.max_row + 1):
+            stt = ws_stu.cell(r, 1).value
+            name = ws_stu.cell(r, 2).value
+            cls = ws_stu.cell(r, 3).value
+            marisa_h = ws_stu.cell(r, 4).value or ""
+            cf_h = ws_stu.cell(r, 5).value or ""
+            vj_h = ws_stu.cell(r, 6).value or ""
+            pin = ws_stu.cell(r, 7).value or ""
+
+            if not name:
+                continue
+
+            name_str = str(name).strip()
+            cls_str = str(cls).strip()
+            marisa_str = str(marisa_h).strip()
+
+            # Preserve crawled solved data from existing_data
+            prev_st = existing_students_map.get(marisa_str) or existing_students_map.get(name_str) or {}
+            all_solved = prev_st.get("solved", [])
+            stats = prev_st.get("stats", {"week": 0, "month": 0, "year": 0, "total": len(all_solved)})
+            activity = prev_st.get("activity", {})
+            detail_archive = prev_st.get("solved_problems_detail", [])
+
+            # Target problems for this student's class
+            class_prob_ids = class_problems_map.get(cls_str, class_problems_map.get("C++", []))
+            solved_set = set(all_solved)
+            target_solved = [pid for pid in class_prob_ids if pid in solved_set]
+
+            st_idx = int(stt) if stt else len(students) + 1
+            students.append({
+                "stt": st_idx,
+                "name": name_str,
+                "class": cls_str,
+                "cf_handle": str(cf_h).strip(),
+                "vjudge_handle": str(vj_h).strip(),
+                "marisa_handle": marisa_str,
+                "solved": all_solved,
+                "target_solved": target_solved,
+                "target_solved_count": len(target_solved),
+                "target_class_total": len(class_prob_ids),
+                "total_solved_count": len(all_solved),
+                "rating": 0,
+                "title": "Newbie",
+                "rating_change": "",
+                "stats": stats,
+                "activity": activity,
+                "solved_problems_detail": detail_archive
+            })
+
+            # Auth PIN for student
+            if pin:
+                pin_h = hash_str(str(pin).strip())
+                auth_tokens[pin_h] = {
+                    "role": "student",
+                    "stt": st_idx,
+                    "name": name_str,
+                    "class": cls_str
+                }
+
+    # 5. Class Config
+    class_config = {
+        "C++": {
+            "name": "Lớp C++",
+            "badge_color": "bg-blue-500/15 text-blue-300 border-blue-500/30",
+            "total_problems": len(class_problems_map.get("C++", [])),
+            "problem_ids": class_problems_map.get("C++", [])
+        },
+        "Python": {
+            "name": "Lớp Python",
+            "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+            "total_problems": len(class_problems_map.get("Python", [])),
+            "problem_ids": class_problems_map.get("Python", [])
+        },
+        "Python 1-1": {
+            "name": "Lớp Python 1-1",
+            "badge_color": "bg-purple-500/15 text-purple-300 border-purple-500/30",
+            "total_problems": len(class_problems_map.get("Python 1-1", [])),
+            "problem_ids": class_problems_map.get("Python 1-1", [])
+        }
+    }
+
+    # Build final appData
+    final_data = existing_data if existing_data else {}
+    final_data["students"] = students
+    final_data["problems"] = problems
+    final_data["curriculum"] = curriculum
+    final_data["class_config"] = class_config
+    final_data["auth_tokens"] = auth_tokens
 
     with open(json_path, "w", encoding="utf-8") as f:
-        json.dump(app_data, f, ensure_ascii=False, indent=2)
+        json.dump(final_data, f, ensure_ascii=False, indent=2)
 
-    logger.info(f"Sync complete! Updated {json_path} with {len(students)} students and {len(problems)} problems.")
+    logger.info(f"Sync complete! Updated {json_path} with {len(students)} students, {len(problems)} problems, {len(curriculum)} lectures, and {len(auth_tokens)} auth tokens.")
 
 
 if __name__ == "__main__":

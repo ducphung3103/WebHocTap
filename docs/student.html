@@ -56,6 +56,67 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+  <!-- SECURITY AUTHENTICATION MODAL (BẢO VỆ LỚP HỌC & PHÂN QUYỀN) -->
+  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl transition-all duration-300">
+    <div class="relative w-full max-w-md bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6">
+      
+      <!-- Modal Header -->
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-2xl shadow-inner mb-1">
+          🔐
+        </div>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+          Cổng Học Tập & Thi Đấu Nội Bộ
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400">
+          Nhập <strong class="text-indigo-300">Mã PIN học sinh</strong> hoặc <strong class="text-indigo-300">Mã lớp học / Mật khẩu giáo viên</strong>
+        </p>
+      </div>
+
+      <!-- Auth Form -->
+      <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <div class="space-y-1.5">
+          <label for="auth-input-code" class="block text-xs font-semibold text-slate-300">
+            Mã truy cập / Mật khẩu:
+          </label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="auth-input-code" 
+              placeholder="Nhập mã PIN hoặc mã lớp..." 
+              autocomplete="off"
+              required
+              class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition pr-10 font-mono tracking-wider"
+            />
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3 text-slate-400 hover:text-slate-200 text-sm">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <div id="auth-error-msg" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 px-3 py-2 rounded-lg">
+          ❌ Mã truy cập không chính xác. Vui lòng kiểm tra lại hoặc liên hệ Giáo viên!
+        </div>
+
+        <button 
+          type="submit" 
+          id="auth-submit-btn" 
+          class="w-full py-3 px-4 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25 cursor-pointer"
+        >
+          <span>Đăng Nhập Vào Lớp Học</span>
+          <span>→</span>
+        </button>
+      </form>
+
+      <!-- Footer Info -->
+      <div class="pt-4 border-t border-slate-800 text-center text-xs text-slate-500 space-y-1">
+        <div>🔒 Trang web nội bộ dành riêng cho học sinh của lớp</div>
+        <div>Học sinh chưa có mã vui lòng liên hệ trực tiếp Giáo viên để nhận PIN</div>
+      </div>
+
+    </div>
+  </div>
+
 
   <!-- TOP NAVBAR -->
   <header class="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
@@ -72,12 +133,21 @@
         <span class="font-bold text-sm sm:text-base text-white tracking-tight hidden sm:inline">Hồ Sơ Coder • Lớp Chuyên Tin</span>
       </div>
 
-      <!-- Quick Student Switcher -->
-      <div class="flex items-center gap-2">
-        <label for="student-selector" class="text-xs text-slate-400 hidden md:inline">Đổi học sinh:</label>
-        <select id="student-selector" onchange="switchStudent(this.value)" class="bg-slate-900 border border-slate-800 text-slate-200 text-xs rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-indigo-500">
-          <!-- Populated dynamically -->
-        </select>
+      <!-- Quick Student Switcher & User Auth -->
+      <div class="flex items-center gap-2.5">
+        <div id="user-badge" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hidden sm:flex items-center gap-1.5">
+          <span>👤</span>
+          <span id="user-display-name">--</span>
+        </div>
+        <div class="flex items-center gap-1.5" id="switcher-container">
+          <label for="student-selector" class="text-xs text-slate-400 hidden md:inline">Đổi học sinh:</label>
+          <select id="student-selector" onchange="switchStudent(this.value)" class="bg-slate-900 border border-slate-800 text-slate-200 text-xs rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-indigo-500">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+        <button onclick="handleLogout()" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-rose-500/20 text-slate-300 hover:text-rose-300 border border-slate-700 transition" title="Đăng xuất">
+          <span>🔒</span>
+        </button>
       </div>
 
     </div>
@@ -341,7 +411,15 @@
       }
 
       selector.value = targetId;
-      loadStudentProfile(targetId);
+
+      // Check security auth
+      if (checkAuthSession()) {
+        if (currentAuth && currentAuth.role === 'student' && currentAuth.stt) {
+          targetId = currentAuth.stt;
+          selector.value = targetId;
+        }
+        loadStudentProfile(targetId);
+      }
     }
 
     function switchStudent(id) {
@@ -352,6 +430,26 @@
     function loadStudentProfile(id) {
       const student = appData.students.find(s => s.stt === id);
       if (!student) return;
+
+      // Class Permission Barrier
+      if (currentAuth && currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
+        if (student.class !== currentAuth.class) {
+          document.getElementById('loading-state').innerHTML = `
+            <div class="p-8 text-center bg-rose-500/10 border border-rose-500/30 rounded-2xl space-y-4 max-w-lg mx-auto">
+              <div class="text-4xl">⛔</div>
+              <h2 class="text-lg font-bold text-rose-300">Không Có Quyền Truy Cập Lớp Khác</h2>
+              <p class="text-xs text-slate-400">Bạn đang đăng nhập vào <strong>Lớp ${currentAuth.class}</strong>, không thể xem thông tin học sinh thuộc lớp khác.</p>
+              <button onclick="window.location.href='index.html'" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-white transition">
+                ← Quay lại Bảng Xếp Hạng lớp ${currentAuth.class}
+              </button>
+            </div>
+          `;
+          document.getElementById('loading-state').classList.remove('hidden');
+          document.getElementById('profile-container').classList.add('hidden');
+          return;
+        }
+      }
+
       currentStudent = student;
 
       document.getElementById('loading-state').classList.add('hidden');
@@ -651,6 +749,142 @@
         `;
         tbody.appendChild(tr);
       });
+    }
+
+        // ==========================================
+    // AUTHENTICATION & CLASS ACCESS CONTROL
+    // ==========================================
+    let currentAuth = null;
+
+    async function hashSHA256(str) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(str.trim());
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function checkAuthSession() {
+      const saved = sessionStorage.getItem('cp_auth_session');
+      if (saved) {
+        try {
+          currentAuth = JSON.parse(saved);
+          hideAuthModal();
+          applyAuthAccess();
+          return true;
+        } catch (e) {
+          sessionStorage.removeItem('cp_auth_session');
+        }
+      }
+      showAuthModal();
+      return false;
+    }
+
+    function showAuthModal() {
+      const modal = document.getElementById('auth-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+        setTimeout(() => document.getElementById('auth-input-code')?.focus(), 150);
+      }
+    }
+
+    function hideAuthModal() {
+      const modal = document.getElementById('auth-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('auth-input-code');
+      if (input) {
+        input.type = input.type === 'password' ? 'text' : 'password';
+      }
+    }
+
+    async function handleAuthSubmit(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('auth-input-code');
+      const errorMsg = document.getElementById('auth-error-msg');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      if (!input || !input.value.trim()) return;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Đang xác thực...</span>`;
+      errorMsg.classList.add('hidden');
+
+      const code = input.value.trim();
+      const codeHash = await hashSHA256(code);
+
+      const tokens = (appData && appData.auth_tokens) ? appData.auth_tokens : {};
+      const match = tokens[codeHash];
+
+      if (match) {
+        currentAuth = match;
+        sessionStorage.setItem('cp_auth_session', JSON.stringify(match));
+        hideAuthModal();
+        applyAuthAccess();
+        // Route to student profile
+        if (match.role === 'student' && match.stt) {
+          switchStudent(match.stt);
+        } else {
+          populateStudentSelector();
+          const firstAllowed = appData.students.find(s => match.class === 'ALL' || s.class === match.class);
+          if (firstAllowed) switchStudent(firstAllowed.stt);
+        }
+      } else {
+        errorMsg.classList.remove('hidden');
+        input.classList.add('border-rose-500');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Đăng Nhập Vào Lớp Học</span> <span>→</span>`;
+      }
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('cp_auth_session');
+      currentAuth = null;
+      window.location.reload();
+    }
+
+    function applyAuthAccess() {
+      if (!currentAuth) return;
+
+      const nameEl = document.getElementById('user-display-name');
+      if (nameEl) {
+        if (currentAuth.role === 'admin') {
+          nameEl.textContent = '👑 Giáo viên';
+        } else if (currentAuth.role === 'class') {
+          nameEl.textContent = `👥 ${currentAuth.name}`;
+        } else {
+          nameEl.textContent = `👤 ${currentAuth.name}`;
+        }
+      }
+
+      populateStudentSelector();
+    }
+
+    function populateStudentSelector() {
+      const selector = document.getElementById('student-selector');
+      if (!selector || !appData || !appData.students) return;
+      selector.innerHTML = '';
+
+      let allowedStudents = appData.students;
+      if (currentAuth && currentAuth.role !== 'admin' && currentAuth.class !== 'ALL') {
+        allowedStudents = appData.students.filter(s => s.class === currentAuth.class);
+      }
+
+      allowedStudents.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.stt;
+        opt.textContent = `${s.stt}. ${s.name} (${s.class})`;
+        selector.appendChild(opt);
+      });
+
+      if (currentAuth && currentAuth.role === 'student') {
+        selector.value = currentAuth.stt;
+      }
     }
 
     window.addEventListener('DOMContentLoaded', initStudentPage);
