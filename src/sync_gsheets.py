@@ -45,7 +45,7 @@ def get_worksheet_by_title(spreadsheet: gspread.Spreadsheet, target_names: List[
 def fetch_online_submissions(cf_handle: str = "", clue_handle: str = "", existing_solved: Optional[List[str]] = None, existing_activity: Optional[Dict[str, Any]] = None) -> Tuple[List[str], Dict[str, Any], Dict[str, int]]:
     """Crawls Codeforces and ClueOJ submissions to compute solved problems, heatmap activity, and stats."""
     solved_set = set(existing_solved or [])
-    activity_map = dict(existing_activity or {})
+    online_activity: Dict[str, Dict[str, int]] = {}
 
     # Codeforces
     if cf_handle and cf_handle.strip():
@@ -60,11 +60,11 @@ def fetch_online_submissions(cf_handle: str = "", clue_handle: str = "", existin
                         if not t:
                             continue
                         dt = datetime.fromtimestamp(t).strftime("%Y-%m-%d")
-                        if dt not in activity_map:
-                            activity_map[dt] = {"total": 0, "ac": 0}
-                        activity_map[dt]["total"] += 1
+                        if dt not in online_activity:
+                            online_activity[dt] = {"total": 0, "ac": 0}
+                        online_activity[dt]["total"] += 1
                         if sub.get("verdict") == "OK":
-                            activity_map[dt]["ac"] += 1
+                            online_activity[dt]["ac"] += 1
                             p = sub.get("problem", {})
                             cid = p.get("contestId")
                             idx = p.get("index")
@@ -93,14 +93,17 @@ def fetch_online_submissions(cf_handle: str = "", clue_handle: str = "", existin
                         score_str = scores[i] if i < len(scores) else ""
                         verdict_str = verdicts[i] if i < len(verdicts) else ""
                         is_ac = ("100" in score_str or "AC" in verdict_str or "Chấp nhận" in verdict_str)
-                        if d_str not in activity_map:
-                            activity_map[d_str] = {"total": 0, "ac": 0}
-                        activity_map[d_str]["total"] += 1
+                        if d_str not in online_activity:
+                            online_activity[d_str] = {"total": 0, "ac": 0}
+                        online_activity[d_str]["total"] += 1
                         if is_ac:
-                            activity_map[d_str]["ac"] += 1
+                            online_activity[d_str]["ac"] += 1
                             solved_set.add(f"CLUE-{p_code}")
             except Exception as e:
                 break
+
+    # If online activity was successfully fetched, use it; otherwise preserve existing_activity
+    activity_map = online_activity if online_activity else dict(existing_activity or {})
 
     # Stats calculation
     now = datetime.now()
@@ -121,11 +124,16 @@ def fetch_online_submissions(cf_handle: str = "", clue_handle: str = "", existin
         except Exception:
             pass
 
+    total_ac = len(solved_set)
+    stats_year = min(ac_year, total_ac)
+    stats_month = min(ac_month, stats_year)
+    stats_week = min(ac_week, stats_month)
+
     stats = {
-        "week": ac_week,
-        "month": ac_month,
-        "year": ac_year,
-        "total": len(solved_set)
+        "week": stats_week,
+        "month": stats_month,
+        "year": stats_year,
+        "total": total_ac
     }
 
     return list(solved_set), activity_map, stats
@@ -285,7 +293,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                         c_list.append("C++")
                     if "Python 1-1" in classes_str or "1-1" in classes_str:
                         c_list.append("Python 1-1")
-                    elif "Python" in classes_str:
+                    if "Python" in classes_str:
                         c_list.append("Python")
 
                 plat_lower = platform.lower()
@@ -330,7 +338,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                         c_list.append("C++")
                     if "Python 1-1" in classes_str or "1-1" in classes_str:
                         c_list.append("Python 1-1")
-                    elif "Python" in classes_str:
+                    if "Python" in classes_str:
                         c_list.append("Python")
 
                 curriculum.append({
@@ -494,26 +502,25 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
         print("⚠️ CẢNH BÁO: Sheet 'Học Sinh' rỗng hoặc chưa khớp cấu trúc. Giữ nguyên danh sách học sinh hiện có!")
         students = existing_data.get("students", [])
 
-    class_config = existing_data.get("class_config", {
-        "C++": {
-            "name": "Lớp C++",
-            "badge_color": "bg-blue-500/15 text-blue-300 border-blue-500/30",
-            "total_problems": len(class_problems_map.get("C++", [])) or 8,
-            "problem_ids": class_problems_map.get("C++", [])
-        },
-        "Python": {
-            "name": "Lớp Python",
-            "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-            "total_problems": len(class_problems_map.get("Python", [])) or 8,
-            "problem_ids": class_problems_map.get("Python", [])
-        },
-        "Python 1-1": {
-            "name": "Lớp Python 1-1",
-            "badge_color": "bg-purple-500/15 text-purple-300 border-purple-500/30",
-            "total_problems": len(class_problems_map.get("Python 1-1", [])) or 8,
-            "problem_ids": class_problems_map.get("Python 1-1", [])
-        }
-    })
+    class_config = dict(existing_data.get("class_config", {}))
+    default_classes = {
+        "C++": {"name": "Lớp C++", "badge_color": "bg-blue-500/15 text-blue-300 border-blue-500/30"},
+        "Python": {"name": "Lớp Python", "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"},
+        "Python 1-1": {"name": "Lớp Python 1-1", "badge_color": "bg-purple-500/15 text-purple-300 border-purple-500/30"}
+    }
+    for c_key, c_info in default_classes.items():
+        if c_key not in class_config:
+            class_config[c_key] = dict(c_info)
+        pids = class_problems_map.get(c_key, [])
+        if pids:
+            class_config[c_key]["problem_ids"] = pids
+            class_config[c_key]["total_problems"] = len(pids)
+        elif not class_config[c_key].get("problem_ids"):
+            if c_key == "Python" and class_problems_map.get("Python 1-1"):
+                class_config[c_key]["problem_ids"] = class_problems_map.get("Python 1-1")
+                class_config[c_key]["total_problems"] = len(class_problems_map.get("Python 1-1"))
+            elif not class_config[c_key].get("total_problems"):
+                class_config[c_key]["total_problems"] = 8
 
     final_data = existing_data if existing_data else {}
     final_data["students"] = students
