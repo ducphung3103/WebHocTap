@@ -122,6 +122,7 @@
       "marisa_handle": "za_pobeda",
       "vnoi_handle": "ngtan11dona",
       "clue_handle": "thienan2012909",
+      "ctoj_handle": "",
       "pin": "nguyenan2026",
       "status": "Đang học",
       "tuition": {
@@ -142,8 +143,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "ctoj_handle": ""
+      "activity": {}
     },
     {
       "stt": 2,
@@ -154,6 +154,7 @@
       "marisa_handle": "",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "ledung2026",
       "status": "Đang học",
       "tuition": {
@@ -174,8 +175,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "ctoj_handle": ""
+      "activity": {}
     },
     {
       "stt": 3,
@@ -186,6 +186,7 @@
       "marisa_handle": "",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "quocan2026",
       "status": "Đang học",
       "tuition": {
@@ -206,8 +207,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "ctoj_handle": ""
+      "activity": {}
     },
     {
       "stt": 4,
@@ -218,6 +218,7 @@
       "marisa_handle": "dphatdzvl",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "dphat2026",
       "status": "Đang học",
       "tuition": {
@@ -289,8 +290,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "ctoj_handle": ""
+      }
     },
     {
       "stt": 5,
@@ -301,6 +301,7 @@
       "marisa_handle": "satfswert",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "giahuy2026",
       "status": "Đang học",
       "tuition": {
@@ -358,8 +359,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "ctoj_handle": ""
+      }
     },
     {
       "stt": 6,
@@ -370,6 +370,7 @@
       "marisa_handle": "Kimkimkim",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "thienkim2026",
       "status": "Đang học",
       "tuition": {
@@ -432,8 +433,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "ctoj_handle": ""
+      }
     },
     {
       "stt": 7,
@@ -444,6 +444,7 @@
       "marisa_handle": "thienann200212",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "thienan2026",
       "status": "Đang học",
       "tuition": {
@@ -508,8 +509,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "ctoj_handle": ""
+      }
     },
     {
       "stt": 8,
@@ -520,6 +520,7 @@
       "marisa_handle": "",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "hnhung2026",
       "status": "Đang học",
       "tuition": {
@@ -540,8 +541,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "ctoj_handle": ""
+      "activity": {}
     },
     {
       "stt": 9,
@@ -552,6 +552,7 @@
       "marisa_handle": "Nguyenducphat",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "ducphat2026",
       "status": "Đang học",
       "tuition": {
@@ -622,8 +623,7 @@
           "total": 3,
           "ac": 2
         }
-      },
-      "ctoj_handle": ""
+      }
     },
     {
       "stt": 10,
@@ -634,6 +634,7 @@
       "marisa_handle": "khanhnam_15",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "khanhnam2026",
       "status": "Đang học",
       "tuition": {
@@ -688,8 +689,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "ctoj_handle": ""
+      }
     },
     {
       "stt": 11,
@@ -700,6 +700,7 @@
       "marisa_handle": "Gia_Hung_Tran",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "giahung2026",
       "status": "Đang học",
       "tuition": {
@@ -731,8 +732,7 @@
           "total": 2,
           "ac": 1
         }
-      },
-      "ctoj_handle": ""
+      }
     },
     {
       "stt": 12,
@@ -743,6 +743,7 @@
       "marisa_handle": "",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "kimkim2026",
       "status": "Đang học",
       "tuition": {
@@ -763,8 +764,7 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "ctoj_handle": ""
+      "activity": {}
     },
     {
       "stt": 13,
@@ -775,6 +775,7 @@
       "marisa_handle": "Shinnn",
       "vnoi_handle": "",
       "clue_handle": "",
+      "ctoj_handle": "",
       "pin": "minhkhoi2026",
       "status": "Đang học",
       "tuition": {
@@ -856,8 +857,7 @@
           "total": 3,
           "ac": 2
         }
-      },
-      "ctoj_handle": ""
+      }
     }
   ],
   "curriculum": [
@@ -1299,5 +1299,5 @@
     "Tháng 9",
     "Tháng 10"
   ],
-  "last_updated": "2026-10-02T10:53:17Z"
+  "last_updated": "2026-10-02T10:56:33Z"
 }
