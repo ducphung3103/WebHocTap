@@ -838,10 +838,14 @@
 
     // Load data from data.json or fallback
     async function initApp() {
+      let serverTokens = null;
       try {
         const response = await fetch('data.json?v=' + Date.now());
         if (response.ok) {
           appData = await response.json();
+          if (appData && appData.auth_tokens) {
+            serverTokens = Object.assign({}, appData.auth_tokens);
+          }
         }
         // Load local overrides if any and newer than server data
         const localSaved = localStorage.getItem('cp_app_data');
@@ -856,6 +860,10 @@
               }
             }
           } catch(e) {}
+        }
+        // CRUCIAL: Server auth_tokens always authoritative for logins!
+        if (appData && serverTokens) {
+          appData.auth_tokens = Object.assign({}, appData.auth_tokens || {}, serverTokens);
         }
       } catch (e) {
         console.warn("Could not fetch data.json, using embedded fallback", e);
