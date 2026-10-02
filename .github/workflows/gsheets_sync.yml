@@ -1,6 +1,9 @@
 name: Google Sheets Auto Sync
 
 on:
+  schedule:
+    # Tự động quét Google Sheet mỗi 1 tiếng trên Cloud
+    - cron: '0 * * * *'
   repository_dispatch:
     # Triggered instantly via Google Apps Script webhook
     types: [gsheets_updated]
@@ -40,7 +43,7 @@ jobs:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
         run: |
-          python -m src.sync_gsheets
+          python -m src.sync_gsheets --no-push
 
       - name: Commit and Push Changes
         run: |

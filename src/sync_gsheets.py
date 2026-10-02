@@ -388,7 +388,7 @@ if __name__ == "__main__":
     if ok:
         if args.push:
             git_push()
-        elif not args.no_push:
+        elif not args.no_push and sys.stdin.isatty():
             try:
                 ans = input("\nBạn có muốn tự động PUSH lên GitHub Pages không? (Y/n): ").strip().lower()
                 if ans in ["", "y", "yes", "co", "c", "1"]:
@@ -397,3 +397,5 @@ if __name__ == "__main__":
                     print("ℹ️ Dữ liệu đã cập nhật vào docs/data.json.\n")
             except (KeyboardInterrupt, EOFError):
                 print("\n")
+    else:
+        sys.exit(1)
