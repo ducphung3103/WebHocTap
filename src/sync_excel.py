@@ -23,7 +23,7 @@ def hash_str(val: str) -> str:
 def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/data.json"):
     if not os.path.exists(excel_path):
         logger.error(f"Excel file not found at: {excel_path}")
-        return
+        return False
 
     logger.info(f"Opening Excel file: {excel_path}")
     wb = openpyxl.load_workbook(excel_path, data_only=True)
@@ -286,6 +286,7 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
         json.dump(final_data, f, ensure_ascii=False, indent=2)
 
     logger.info(f"Sync complete! Updated {json_path} with {len(students)} students, {len(problems)} problems, {len(curriculum)} lectures, and {len(auth_tokens)} auth tokens.")
+    return True
 
 
 if __name__ == "__main__":
