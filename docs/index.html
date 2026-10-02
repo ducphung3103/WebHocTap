@@ -43,6 +43,7 @@
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
   <!-- SECURITY AUTHENTICATION MODAL (BẢO VỆ LỚP HỌC & PHÂN QUYỀN) -->
@@ -151,6 +152,10 @@
           <a href="student.html" class="px-3 py-2 rounded-lg text-indigo-300 hover:text-white hover:bg-indigo-600/20 border border-transparent hover:border-indigo-500/30 flex items-center gap-1.5 transition font-semibold">
             <span>👤</span> Tiến Độ Cá Nhân
           </a>
+          <button onclick="switchTab('admin')" id="tab-btn-admin" class="tab-btn hidden px-3 py-2 rounded-lg text-amber-300 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 flex items-center gap-1.5 transition font-semibold">
+            <span>👑</span> Quản Trị Hệ Thống
+            <span class="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">ADMIN</span>
+          </button>
         </nav>
 
         <!-- User Session & Right Quick Actions -->
@@ -173,6 +178,7 @@
         <button onclick="switchTab('problems')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
         <button onclick="switchTab('curriculum')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Lý thuyết</button>
         <a href="student.html" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
+        <button onclick="switchTab('admin')" id="tab-btn-admin-mobile" class="tab-btn hidden px-3 py-1.5 rounded-lg whitespace-nowrap text-amber-300 bg-amber-500/10">👑 Quản trị</button>
       </div>
     </div>
   </header>
@@ -370,6 +376,448 @@
       </div>
     </section>
 
+
+    <!-- ========================================== -->
+    <!-- TAB 6: BẢNG ĐIỀU KHIỂN QUẢN TRỊ (ADMIN ONLY) -->
+    <!-- ========================================== -->
+    <section id="section-admin" class="space-y-6 hidden">
+      
+      <!-- HERO ADMIN BANNER -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-950/60 via-slate-900 to-indigo-950/60 border border-amber-500/30 p-6 md:p-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="space-y-2 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              <span>👑 TOÀN QUYỀN QUẢN TRỊ (ADMIN GUI)</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+              Bảng Điều Khiển Quản Trị & Học Phí
+            </h2>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Quản lý học sinh, phân lớp, tài khoản thi đấu, tình trạng học, điểm danh học phí từng tháng, bài giảng và bài tập trực tiếp trên giao diện web.
+            </p>
+          </div>
+
+          <!-- Quick Admin Action Buttons -->
+          <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
+            <button onclick="exportToExcel()" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition flex items-center gap-1.5 cursor-pointer">
+              <span>📥</span> Xuất File Excel (.xlsx)
+            </button>
+            <button onclick="exportDataJson()" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25 transition flex items-center gap-1.5 cursor-pointer">
+              <span>💾</span> Tải data.json
+            </button>
+          </div>
+        </div>
+
+        <!-- STAT METRICS -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-800">
+          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+            <div class="text-xs text-slate-400">Tổng Học Sinh</div>
+            <div class="text-2xl font-bold text-white font-mono" id="admin-stat-total">0</div>
+          </div>
+          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+            <div class="text-xs text-slate-400">Đang Theo Học</div>
+            <div class="text-2xl font-bold text-emerald-400 font-mono" id="admin-stat-active">0</div>
+          </div>
+          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+            <div class="text-xs text-slate-400">Đã Đóng Học Phí (T10)</div>
+            <div class="text-2xl font-bold text-amber-300 font-mono" id="admin-stat-tuition">0</div>
+          </div>
+          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+            <div class="text-xs text-slate-400">Bài Giảng / Bài Tập</div>
+            <div class="text-2xl font-bold text-purple-400 font-mono" id="admin-stat-content">0 / 0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN SUB NAVIGATION TABS -->
+      <div class="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto">
+        <button onclick="switchAdminSubTab('students')" id="subtab-btn-students" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 transition whitespace-nowrap">
+          👨‍🎓 Học Sinh & Học Phí
+        </button>
+        <button onclick="switchAdminSubTab('curriculum')" id="subtab-btn-curriculum" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition whitespace-nowrap">
+          📚 Bài Giảng & Lý Thuyết
+        </button>
+        <button onclick="switchAdminSubTab('problems')" id="subtab-btn-problems" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition whitespace-nowrap">
+          📝 Kho Bài Tập
+        </button>
+        <button onclick="switchAdminSubTab('export')" id="subtab-btn-export" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition whitespace-nowrap">
+          💾 Hướng Dẫn & Xuất Dữ Liệu
+        </button>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- SUB-PANEL 1: HỌC SINH & HỌC PHÍ -->
+      <!-- ============================================== -->
+      <div id="admin-panel-students" class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <!-- Class Filter & Search -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="flex items-center gap-1 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
+              <button onclick="filterAdminStudents('all')" id="btn-admin-filter-all" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold transition">Tất cả</button>
+              <button onclick="filterAdminStudents('C++')" id="btn-admin-filter-C++" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Lớp C++</button>
+              <button onclick="filterAdminStudents('Python')" id="btn-admin-filter-Python" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Lớp Python</button>
+              <button onclick="filterAdminStudents('Python 1-1')" id="btn-admin-filter-Python-1-1" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Python 1-1</button>
+            </div>
+            <input type="text" id="admin-student-search" onkeyup="renderAdminStudents()" placeholder="Tìm tên, handle, PIN..." class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 w-48 sm:w-64">
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-2">
+            <button onclick="openAddStudentModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
+              <span>➕</span> Thêm Học Sinh Mới
+            </button>
+            <button onclick="promptAddTuitionMonth()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer">
+              <span>📅</span> Thêm Tháng Học Phí
+            </button>
+          </div>
+        </div>
+
+        <!-- Student & Tuition Table -->
+        <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/60 shadow-xl">
+          <table class="w-full text-left text-sm text-slate-300">
+            <thead class="bg-slate-800/90 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700" id="admin-students-head">
+              <!-- Rendered via JS -->
+            </thead>
+            <tbody class="divide-y divide-slate-800/60" id="admin-students-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- SUB-PANEL 2: BÀI GIẢNG & LÝ THUYẾT -->
+      <!-- ============================================== -->
+      <div id="admin-panel-curriculum" class="space-y-4 hidden">
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <h3 class="text-base font-bold text-white">Quản Lý Bài Giảng & Lý Thuyết (LMS)</h3>
+            <p class="text-xs text-slate-400">Thêm, chỉnh sửa link Notion, tài liệu lý thuyết và phân lớp áp dụng</p>
+          </div>
+          <button onclick="openAddCurriculumModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
+            <span>➕</span> Thêm Bài Giảng Mới
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="admin-curriculum-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- SUB-PANEL 3: KHO BÀI TẬP -->
+      <!-- ============================================== -->
+      <div id="admin-panel-problems" class="space-y-4 hidden">
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <h3 class="text-base font-bold text-white">Quản Lý Bài Tập & Đề Thi Phân Lớp</h3>
+            <p class="text-xs text-slate-400">Giao thêm bài tập mới trên MarisaOJ, Codeforces hoặc VJudge</p>
+          </div>
+          <button onclick="openAddProblemModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
+            <span>➕</span> Thêm Bài Tập Mới
+          </button>
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/60 shadow-xl">
+          <table class="w-full text-left text-sm text-slate-300">
+            <thead class="bg-slate-800/90 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
+              <tr>
+                <th class="px-4 py-3 text-center w-12">#</th>
+                <th class="px-4 py-3">Mã & Tên bài tập</th>
+                <th class="px-4 py-3">Lớp giao bài</th>
+                <th class="px-4 py-3">Nền tảng</th>
+                <th class="px-4 py-3">Độ khó</th>
+                <th class="px-4 py-3 text-center">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60" id="admin-problems-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- SUB-PANEL 4: HƯỚNG DẪN & XUẤT DỮ LIỆU -->
+      <!-- ============================================== -->
+      <div id="admin-panel-export" class="space-y-6 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <!-- Card 1: Excel Export -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="text-3xl">📊</div>
+              <div>
+                <h4 class="text-base font-bold text-white">Xuất File Excel Đồng Bộ</h4>
+                <p class="text-xs text-slate-400">Tải về file Excel chứa toàn bộ học sinh, học phí, bài tập, bài giảng vừa chỉnh sửa</p>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              File tải về có cấu trúc 5 sheet chuẩn: <strong>Học Sinh, Học Phí, Bài Tập, Bài Giảng, Cấu Hình Bảo Mật</strong>. Thầy chỉ cần lưu đè vào file <code class="text-indigo-300">Quản lý học sinh.xlsx</code> trên máy tính để lưu trữ lâu dài.
+            </p>
+            <button onclick="exportToExcel()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-emerald-600/20">
+              <span>📥</span> Tải File Excel Mới (.xlsx)
+            </button>
+          </div>
+
+          <!-- Card 2: JSON Export -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="text-3xl">💾</div>
+              <div>
+                <h4 class="text-base font-bold text-white">Tải File data.json</h4>
+                <p class="text-xs text-slate-400">Tải tệp JSON dữ liệu chứa các mã băm bảo mật SHA-256</p>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Thầy có thể sao chép file <code class="text-indigo-300">data.json</code> tải về này dán vào thư mục <code class="text-indigo-300">docs/data.json</code> của dự án rồi chạy git commit & push lên GitHub Pages.
+            </p>
+            <button onclick="exportDataJson()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-indigo-600/20">
+              <span>💾</span> Tải data.json Mới Nhất
+            </button>
+          </div>
+
+          <!-- Card 3: Reset Server Data -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="text-3xl">🔄</div>
+              <div>
+                <h4 class="text-base font-bold text-white">Khôi Phục Từ Máy Chủ</h4>
+                <p class="text-xs text-slate-400">Xóa các thay đổi tạm trên trình duyệt và nạp lại từ data.json</p>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Dùng khi thầy vừa chạy script <code class="text-indigo-300">sync.bat</code> trên máy tính và muốn cập nhật lại toàn bộ bảng điều khiển về trạng thái đồng bộ mới nhất từ Excel.
+            </p>
+            <button onclick="resetServerData()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center justify-center gap-2 cursor-pointer shadow-lg">
+              <span>🔄</span> Tải Lại Dữ Liệu Gốc Từ Máy Chủ
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Instructions Callout -->
+        <div class="bg-slate-900/60 border border-indigo-500/20 rounded-2xl p-6 space-y-3">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>⚡</span> Hướng dẫn cập nhật 1-Click bằng file `sync.bat`:
+          </h4>
+          <ol class="list-decimal pl-5 text-xs text-slate-400 space-y-1.5 leading-relaxed">
+            <li>Sau khi tải file Excel hoặc chỉnh sửa trực tiếp file <strong class="text-slate-200">Quản lý học sinh.xlsx</strong> trên máy tính, nhấn <code>Ctrl + S</code> để lưu.</li>
+            <li>Nhấp đúp chuột vào file <strong class="text-emerald-400">sync.bat</strong> trong thư mục <code class="text-slate-300">D:\0.CP\WebHocTap</code>.</li>
+            <li>File script sẽ tự động mã hóa bảo mật, cào lại bài nộp MarisaOJ và hỏi bạn có muốn tự động PUSH lên GitHub Pages không. Gõ <strong>Y</strong> để hoàn tất!</li>
+          </ol>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- MODAL 1: ADD/EDIT STUDENT MODAL -->
+    <!-- ============================================== -->
+    <div id="modal-student" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+      <div class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 space-y-5">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h3 class="text-lg font-bold text-white" id="modal-student-title">Thêm Học Sinh Mới</h3>
+          <button onclick="closeStudentModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+        </div>
+
+        <form onsubmit="handleSaveStudent(event)" class="space-y-4">
+          <input type="hidden" id="form-student-stt" value="">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Họ và tên (*):</label>
+              <input type="text" id="form-student-name" required placeholder="Ví dụ: Nguyễn Văn A" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Lớp học (*):</label>
+              <select id="form-student-class" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                <option value="C++">Lớp C++</option>
+                <option value="Python">Lớp Python</option>
+                <option value="Python 1-1">Lớp Python 1-1</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Mã PIN cá nhân (Đăng nhập):</label>
+              <input type="text" id="form-student-pin" placeholder="Ví dụ: van_a_2026" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Tình trạng học:</label>
+              <select id="form-student-status" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                <option value="Đang học">🟢 Đang học</option>
+                <option value="Tạm dừng">🟡 Tạm dừng</option>
+                <option value="Bảo lưu">🔴 Bảo lưu</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Tài khoản MarisaOJ:</label>
+            <input type="text" id="form-student-marisa" placeholder="Handle trên marisaoj.com" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Tài khoản Codeforces:</label>
+              <input type="text" id="form-student-cf" placeholder="Handle Codeforces" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Tài khoản VJudge:</label>
+              <input type="text" id="form-student-vj" placeholder="Handle VJudge" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+            <button type="button" onclick="closeStudentModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition">Hủy</button>
+            <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow">Lưu Thông Tin</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL 2: ADD/EDIT CURRICULUM MODAL -->
+    <!-- ============================================== -->
+    <div id="modal-curriculum" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+      <div class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 space-y-5">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h3 class="text-lg font-bold text-white" id="modal-curriculum-title">Thêm Bài Giảng Mới</h3>
+          <button onclick="closeCurriculumModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+        </div>
+
+        <form onsubmit="handleSaveCurriculum(event)" class="space-y-4">
+          <input type="hidden" id="form-curr-id-orig" value="">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Mã bài giảng (*):</label>
+              <input type="text" id="form-curr-id" required placeholder="Ví dụ: CPP-04" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Chương / Tuần:</label>
+              <input type="text" id="form-curr-chapter" placeholder="Ví dụ: Tuần 4" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Tiêu đề bài giảng (*):</label>
+            <input type="text" id="form-curr-title" required placeholder="Ví dụ: Thuật toán Sắp xếp & Tìm kiếm Nhị phân" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Lớp áp dụng (chọn các lớp):</label>
+            <div class="flex items-center gap-4 text-xs pt-1">
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="curr-class-cpp" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
+                <span>Lớp C++</span>
+              </label>
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="curr-class-python" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
+                <span>Lớp Python</span>
+              </label>
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="curr-class-python11" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
+                <span>Python 1-1</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Link Notion / Slide bài giảng:</label>
+            <input type="text" id="form-curr-url" placeholder="https://notion.so/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Tóm tắt nội dung chính:</label>
+            <textarea id="form-curr-summary" rows="3" placeholder="Tóm tắt ngắn gọn các kiến thức trọng tâm..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"></textarea>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+            <button type="button" onclick="closeCurriculumModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition">Hủy</button>
+            <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow">Lưu Bài Giảng</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL 3: ADD/EDIT PROBLEM MODAL -->
+    <!-- ============================================== -->
+    <div id="modal-problem" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+      <div class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 space-y-5">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h3 class="text-lg font-bold text-white" id="modal-problem-title">Thêm Bài Tập Mới</h3>
+          <button onclick="closeProblemModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+        </div>
+
+        <form onsubmit="handleSaveProblem(event)" class="space-y-4">
+          <input type="hidden" id="form-prob-id-orig" value="">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Mã bài tập (*):</label>
+              <input type="text" id="form-prob-id" required placeholder="Ví dụ: MARISA-100" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Nền tảng (*):</label>
+              <select id="form-prob-platform" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                <option value="MarisaOJ">MarisaOJ</option>
+                <option value="Codeforces">Codeforces</option>
+                <option value="VJudge">VJudge</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Tên bài tập (*):</label>
+            <input type="text" id="form-prob-name" required placeholder="Ví dụ: Tìm ước số lớn nhất" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Link nộp bài (*):</label>
+            <input type="url" id="form-prob-url" required placeholder="https://marisaoj.com/problem/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Lớp giao bài (chọn các lớp):</label>
+            <div class="flex items-center gap-4 text-xs pt-1">
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="prob-class-cpp" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
+                <span>Lớp C++</span>
+              </label>
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="prob-class-python" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
+                <span>Lớp Python</span>
+              </label>
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="prob-class-python11" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
+                <span>Python 1-1</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Độ khó / Dạng bài:</label>
+              <input type="text" id="form-prob-diff" placeholder="Level 1 • Brute Force" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Chủ đề:</label>
+              <input type="text" id="form-prob-cat" placeholder="Brute Force" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+            <button type="button" onclick="closeProblemModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition">Hủy</button>
+            <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow">Lưu Bài Tập</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </main>
 
   <!-- FOOTER -->
@@ -394,6 +842,20 @@
         const response = await fetch('data.json?v=' + Date.now());
         if (response.ok) {
           appData = await response.json();
+        }
+        // Load local overrides if any and newer than server data
+        const localSaved = localStorage.getItem('cp_app_data');
+        if (localSaved) {
+          try {
+            const parsed = JSON.parse(localSaved);
+            if (parsed && parsed.students) {
+              const localTime = parsed.last_updated ? new Date(parsed.last_updated).getTime() : 0;
+              const serverTime = (appData && appData.last_updated) ? new Date(appData.last_updated).getTime() : 0;
+              if (localTime > serverTime) {
+                appData = parsed;
+              }
+            }
+          } catch(e) {}
         }
       } catch (e) {
         console.warn("Could not fetch data.json, using embedded fallback", e);
@@ -449,24 +911,40 @@
       checkAuthSession();
     }
 
-    // TAB SWITCHING
+    // TAB SWITCHING (INCLUDES ADMIN TAB)
     function switchTab(tabName) {
-      const sections = ['leaderboard', 'contests', 'problems', 'curriculum'];
+      if (tabName === 'admin' && (!currentAuth || currentAuth.role !== 'admin')) {
+        alert('Chỉ tài khoản Giáo viên (ADMIN) mới có quyền truy cập bảng điều khiển này!');
+        return;
+      }
+
+      const sections = ['leaderboard', 'contests', 'problems', 'curriculum', 'admin'];
       sections.forEach(s => {
         const el = document.getElementById(`section-${s}`);
         const btn = document.getElementById(`tab-btn-${s}`);
+        const mBtn = document.getElementById(`tab-btn-${s}-mobile`);
         if (s === tabName) {
-          el.classList.remove('hidden');
+          if (el) el.classList.remove('hidden');
           if (btn) {
-            btn.className = "tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition";
+            btn.className = s === 'admin'
+              ? "tab-btn active px-3.5 py-2 rounded-lg text-amber-200 bg-amber-500/30 border border-amber-500/50 flex items-center gap-1.5 transition"
+              : "tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition";
           }
+          if (mBtn) mBtn.className = "tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-amber-500/30 text-amber-200";
         } else {
-          el.classList.add('hidden');
+          if (el) el.classList.add('hidden');
           if (btn) {
-            btn.className = "tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition";
+            btn.className = s === 'admin'
+              ? "tab-btn px-3 py-2 rounded-lg text-amber-300 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 flex items-center gap-1.5 transition font-semibold"
+              : "tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition";
           }
+          if (mBtn) mBtn.className = "tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400";
         }
       });
+
+      if (tabName === 'admin') {
+        renderAdminDashboard();
+      }
     }
 
     // 1. FILTER & RENDER MATRIX LEADERBOARD (XẾP THEO LỚP, RATING CONTEST = 0)
@@ -1252,6 +1730,17 @@
       // Update user session badge in navbar
       const badge = document.getElementById('user-badge');
       const nameEl = document.getElementById('user-display-name');
+      const adminBtn = document.getElementById('tab-btn-admin');
+      const adminBtnMobile = document.getElementById('tab-btn-admin-mobile');
+
+      if (currentAuth.role === 'admin') {
+        if (adminBtn) adminBtn.classList.remove('hidden');
+        if (adminBtnMobile) adminBtnMobile.classList.remove('hidden');
+      } else {
+        if (adminBtn) adminBtn.classList.add('hidden');
+        if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+      }
+
       if (nameEl) {
         if (currentAuth.role === 'admin') {
           nameEl.textContent = '👑 Giáo viên (Toàn quyền)';
@@ -1293,6 +1782,749 @@
     }
 
     window.addEventListener('DOMContentLoaded', initApp);
+  
+    // ==========================================
+    // ADMIN CONTROL CENTER (TOÀN QUYỀN QUẢN LÝ GUI)
+    // ==========================================
+    let currentAdminSubTab = 'students';
+    let currentAdminClassFilter = 'all';
+
+    function switchAdminSubTab(tab) {
+      currentAdminSubTab = tab;
+      const subtabs = ['students', 'curriculum', 'problems', 'export'];
+      subtabs.forEach(t => {
+        const btn = document.getElementById(`subtab-btn-${t}`);
+        const panel = document.getElementById(`admin-panel-${t}`);
+        if (t === tab) {
+          if (panel) panel.classList.remove('hidden');
+          if (btn) btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 transition whitespace-nowrap shadow-sm";
+        } else {
+          if (panel) panel.classList.add('hidden');
+          if (btn) btn.className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition whitespace-nowrap";
+        }
+      });
+
+      if (tab === 'students') renderAdminStudents();
+      else if (tab === 'curriculum') renderAdminCurriculum();
+      else if (tab === 'problems') renderAdminProblems();
+    }
+
+    function renderAdminDashboard() {
+      if (!currentAuth || currentAuth.role !== 'admin') return;
+
+      // Update stat metrics
+      const totalS = appData.students ? appData.students.length : 0;
+      const activeS = appData.students ? appData.students.filter(s => (s.status || 'Đang học') === 'Đang học').length : 0;
+      
+      const currentMonth = (appData.tuition_months && appData.tuition_months.length > 0) 
+        ? appData.tuition_months[appData.tuition_months.length - 1] 
+        : 'Tháng 10';
+      
+      const tuitionPaidCount = appData.students ? appData.students.filter(s => s.tuition && s.tuition[currentMonth]).length : 0;
+      const totalProblems = appData.problems ? appData.problems.length : 0;
+      const totalCurriculum = appData.curriculum ? appData.curriculum.length : 0;
+
+      const elTotal = document.getElementById('admin-stat-total');
+      const elActive = document.getElementById('admin-stat-active');
+      const elTuition = document.getElementById('admin-stat-tuition');
+      const elContent = document.getElementById('admin-stat-content');
+
+      if (elTotal) elTotal.textContent = totalS;
+      if (elActive) elActive.textContent = activeS;
+      if (elTuition) elTuition.textContent = `${tuitionPaidCount} / ${totalS}`;
+      if (elContent) elContent.textContent = `${totalCurriculum} / ${totalProblems}`;
+
+      switchAdminSubTab(currentAdminSubTab);
+    }
+
+    // 1. ADMIN STUDENTS & TUITION
+    function filterAdminStudents(cls) {
+      currentAdminClassFilter = cls;
+      ['all', 'C++', 'Python', 'Python 1-1'].forEach(c => {
+        const btn = document.getElementById(`btn-admin-filter-${c === 'Python 1-1' ? 'Python-1-1' : c}`);
+        if (btn) {
+          if (c === cls) {
+            btn.className = "px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold transition";
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition";
+          }
+        }
+      });
+      renderAdminStudents();
+    }
+
+    function renderAdminStudents() {
+      const head = document.getElementById('admin-students-head');
+      const body = document.getElementById('admin-students-body');
+      if (!head || !body) return;
+
+      const months = appData.tuition_months || ['Tháng 9', 'Tháng 10'];
+
+      // Render Header
+      let headHtml = `<tr>
+        <th class="px-3 py-3.5 text-center w-12">#</th>
+        <th class="px-4 py-3.5">Học sinh</th>
+        <th class="px-3 py-3.5 text-center">Lớp</th>
+        <th class="px-3.5 py-3.5 text-center">Tình trạng học</th>
+        <th class="px-3.5 py-3.5 text-center">Mã PIN cá nhân</th>
+        <th class="px-4 py-3.5">Handles thi đấu</th>`;
+      
+      months.forEach(m => {
+        headHtml += `<th class="px-3 py-3.5 text-center whitespace-nowrap">${m}</th>`;
+      });
+
+      headHtml += `<th class="px-3.5 py-3.5 text-center">Thao tác</th></tr>`;
+      head.innerHTML = headHtml;
+
+      // Filter students
+      const search = (document.getElementById('admin-student-search')?.value || '').toLowerCase().trim();
+      let list = [...(appData.students || [])];
+
+      if (currentAdminClassFilter !== 'all') {
+        list = list.filter(s => s.class === currentAdminClassFilter);
+      }
+
+      if (search) {
+        list = list.filter(s => 
+          s.name.toLowerCase().includes(search) || 
+          (s.pin && s.pin.toLowerCase().includes(search)) ||
+          (s.marisa_handle && s.marisa_handle.toLowerCase().includes(search))
+        );
+      }
+
+      body.innerHTML = '';
+      if (list.length === 0) {
+        body.innerHTML = `<tr><td colspan="${7 + months.length}" class="px-4 py-8 text-center text-slate-500 italic">Không có học sinh nào phù hợp.</td></tr>`;
+        return;
+      }
+
+      list.forEach((s, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/40 transition";
+
+        const cBadge = s.class === 'C++' 
+          ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' 
+          : s.class === 'Python' 
+            ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' 
+            : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
+
+        const status = s.status || 'Đang học';
+        const statusClass = status === 'Đang học' 
+          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' 
+          : status === 'Tạm dừng' 
+            ? 'bg-amber-500/20 text-amber-300 border-amber-500/30' 
+            : 'bg-rose-500/20 text-rose-300 border-rose-500/30';
+
+        const pinDisplay = s.pin || 'Chưa đặt';
+
+        let handlesList = [];
+        if (s.marisa_handle) handlesList.push(`<a href="https://marisaoj.com/user/${s.marisa_handle}/submissions" target="_blank" class="text-purple-400 hover:underline">Marisa: ${s.marisa_handle}</a>`);
+        if (s.cf_handle) handlesList.push(`<a href="https://codeforces.com/profile/${s.cf_handle}" target="_blank" class="text-blue-400 hover:underline">CF: ${s.cf_handle}</a>`);
+        if (s.vjudge_handle) handlesList.push(`<a href="https://vjudge.net/user/${s.vjudge_handle}" target="_blank" class="text-emerald-400 hover:underline">VJ: ${s.vjudge_handle}</a>`);
+
+        const handlesHtml = handlesList.length > 0 ? handlesList.join(' • ') : '<span class="text-slate-500 italic">--</span>';
+
+        let tuitionCellsHtml = '';
+        months.forEach(m => {
+          const isPaid = s.tuition && s.tuition[m];
+          const btnClass = isPaid 
+            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30" 
+            : "bg-slate-800 text-rose-300 border-slate-700 hover:bg-rose-500/20";
+          const label = isPaid ? "Đã đóng ✅" : "Chưa đóng ⏳";
+
+          tuitionCellsHtml += `
+            <td class="px-2 py-3 text-center">
+              <button onclick="toggleTuition(${s.stt}, '${m}')" class="px-2 py-1 rounded-lg text-[11px] font-bold border transition ${btnClass} cursor-pointer whitespace-nowrap" title="Bấm để chuyển trạng thái đóng học phí">
+                ${label}
+              </button>
+            </td>
+          `;
+        });
+
+        tr.innerHTML = `
+          <td class="px-3 py-3 text-center font-mono text-slate-400 font-bold">${s.stt}</td>
+          <td class="px-4 py-3 font-semibold text-white">
+            <div class="flex items-center gap-2">
+              <a href="student.html?id=${s.stt}" target="_blank" class="hover:text-indigo-400 font-bold text-sm transition">
+                ${s.name}
+              </a>
+            </div>
+          </td>
+          <td class="px-3 py-3 text-center">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${cBadge} border">${s.class}</span>
+          </td>
+          <td class="px-3.5 py-3 text-center">
+            <select onchange="updateStudentStatus(${s.stt}, this.value)" class="bg-slate-950 border border-slate-700 text-xs rounded-lg px-2 py-1 font-semibold ${statusClass} focus:outline-none cursor-pointer">
+              <option value="Đang học" ${status === 'Đang học' ? 'selected' : ''}>🟢 Đang học</option>
+              <option value="Tạm dừng" ${status === 'Tạm dừng' ? 'selected' : ''}>🟡 Tạm dừng</option>
+              <option value="Bảo lưu" ${status === 'Bảo lưu' ? 'selected' : ''}>🔴 Bảo lưu</option>
+            </select>
+          </td>
+          <td class="px-3.5 py-3 text-center font-mono">
+            <div class="inline-flex items-center gap-1.5 bg-slate-950 border border-slate-800 px-2 py-1 rounded-lg text-xs">
+              <span id="pin-text-${s.stt}" class="font-bold text-slate-300">••••••</span>
+              <button onclick="togglePinReveal(${s.stt}, '${pinDisplay}')" class="text-slate-400 hover:text-white text-xs cursor-pointer" title="Xem mã PIN">👁️</button>
+            </div>
+          </td>
+          <td class="px-4 py-3 text-xs text-slate-300 font-mono">
+            ${handlesHtml}
+          </td>
+          ${tuitionCellsHtml}
+          <td class="px-3.5 py-3 text-center whitespace-nowrap">
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="openEditStudentModal(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition cursor-pointer" title="Sửa thông tin học sinh">
+                ✏️
+              </button>
+              <button onclick="deleteStudent(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer" title="Xóa học sinh">
+                🗑️
+              </button>
+            </div>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function togglePinReveal(stt, pinVal) {
+      const el = document.getElementById(`pin-text-${stt}`);
+      if (!el) return;
+      if (el.textContent === '••••••') {
+        el.textContent = pinVal;
+        el.classList.add('text-indigo-300');
+      } else {
+        el.textContent = '••••••';
+        el.classList.remove('text-indigo-300');
+      }
+    }
+
+    function toggleTuition(stt, month) {
+      const student = appData.students.find(s => s.stt === stt);
+      if (!student) return;
+      if (!student.tuition) student.tuition = {};
+      student.tuition[month] = !student.tuition[month];
+      
+      saveAppDataLocally();
+      renderAdminStudents();
+      renderAdminDashboard();
+    }
+
+    function updateStudentStatus(stt, newStatus) {
+      const student = appData.students.find(s => s.stt === stt);
+      if (!student) return;
+      student.status = newStatus;
+      saveAppDataLocally();
+      renderAdminStudents();
+      renderAdminDashboard();
+    }
+
+    function promptAddTuitionMonth() {
+      const current = appData.tuition_months || ['Tháng 9', 'Tháng 10'];
+      const nextNum = current.length + 8; // approx
+      const monthName = prompt("Nhập tên tháng học phí mới:", `Tháng ${nextNum > 12 ? nextNum - 12 : nextNum}`);
+      if (!monthName || !monthName.trim()) return;
+
+      const cleanName = monthName.trim();
+      if (!appData.tuition_months) appData.tuition_months = [];
+      if (!appData.tuition_months.includes(cleanName)) {
+        appData.tuition_months.push(cleanName);
+        appData.students.forEach(s => {
+          if (!s.tuition) s.tuition = {};
+          if (s.tuition[cleanName] === undefined) s.tuition[cleanName] = false;
+        });
+        saveAppDataLocally();
+        renderAdminStudents();
+      }
+    }
+
+    // STUDENT MODAL
+    function openAddStudentModal() {
+      document.getElementById('modal-student-title').textContent = 'Thêm Học Sinh Mới';
+      document.getElementById('form-student-stt').value = '';
+      document.getElementById('form-student-name').value = '';
+      document.getElementById('form-student-class').value = 'C++';
+      document.getElementById('form-student-pin').value = `hs_${Date.now().toString().slice(-4)}`;
+      document.getElementById('form-student-status').value = 'Đang học';
+      document.getElementById('form-student-marisa').value = '';
+      document.getElementById('form-student-cf').value = '';
+      document.getElementById('form-student-vj').value = '';
+      document.getElementById('modal-student').classList.remove('hidden');
+    }
+
+    function openEditStudentModal(stt) {
+      const student = appData.students.find(s => s.stt === stt);
+      if (!student) return;
+
+      document.getElementById('modal-student-title').textContent = `Chỉnh Sửa: ${student.name}`;
+      document.getElementById('form-student-stt').value = student.stt;
+      document.getElementById('form-student-name').value = student.name;
+      document.getElementById('form-student-class').value = student.class || 'C++';
+      document.getElementById('form-student-pin').value = student.pin || '';
+      document.getElementById('form-student-status').value = student.status || 'Đang học';
+      document.getElementById('form-student-marisa').value = student.marisa_handle || '';
+      document.getElementById('form-student-cf').value = student.cf_handle || '';
+      document.getElementById('form-student-vj').value = student.vjudge_handle || '';
+      document.getElementById('modal-student').classList.remove('hidden');
+    }
+
+    function closeStudentModal() {
+      document.getElementById('modal-student').classList.add('hidden');
+    }
+
+    async function handleSaveStudent(e) {
+      e.preventDefault();
+      const sttVal = document.getElementById('form-student-stt').value;
+      const name = document.getElementById('form-student-name').value.trim();
+      const cls = document.getElementById('form-student-class').value;
+      const pin = document.getElementById('form-student-pin').value.trim();
+      const status = document.getElementById('form-student-status').value;
+      const marisa = document.getElementById('form-student-marisa').value.trim();
+      const cf = document.getElementById('form-student-cf').value.trim();
+      const vj = document.getElementById('form-student-vj').value.trim();
+
+      if (!name) return;
+
+      if (sttVal) {
+        // Edit existing
+        const student = appData.students.find(s => s.stt === parseInt(sttVal));
+        if (student) {
+          student.name = name;
+          student.class = cls;
+          student.pin = pin;
+          student.status = status;
+          student.marisa_handle = marisa;
+          student.cf_handle = cf;
+          student.vjudge_handle = vj;
+        }
+      } else {
+        // Add new
+        const newStt = appData.students.length > 0 
+          ? Math.max(...appData.students.map(s => s.stt)) + 1 
+          : 1;
+        
+        const newStudent = {
+          stt: newStt,
+          name: name,
+          class: cls,
+          pin: pin,
+          status: status,
+          marisa_handle: marisa,
+          cf_handle: cf,
+          vjudge_handle: vj,
+          rating: 0,
+          title: "Newbie",
+          rating_change: "",
+          solved: [],
+          target_solved: [],
+          target_solved_count: 0,
+          target_class_total: 8,
+          total_solved_count: 0,
+          stats: { week: 0, month: 0, year: 0, total: 0 },
+          activity: {},
+          tuition: {}
+        };
+        (appData.tuition_months || ['Tháng 9', 'Tháng 10']).forEach(m => newStudent.tuition[m] = false);
+        appData.students.push(newStudent);
+      }
+
+      // Re-hash PIN
+      if (pin) {
+        const pinHash = await hashSHA256(pin);
+        if (!appData.auth_tokens) appData.auth_tokens = {};
+        appData.auth_tokens[pinHash] = {
+          role: "student",
+          name: name,
+          class: cls
+        };
+      }
+
+      saveAppDataLocally();
+      closeStudentModal();
+      renderAdminStudents();
+      renderAdminDashboard();
+      renderMatrix();
+    }
+
+    function deleteStudent(stt) {
+      const student = appData.students.find(s => s.stt === stt);
+      if (!student) return;
+      if (!confirm(`Bạn có chắc chắn muốn xóa học sinh "${student.name}" không?`)) return;
+
+      appData.students = appData.students.filter(s => s.stt !== stt);
+      saveAppDataLocally();
+      renderAdminStudents();
+      renderAdminDashboard();
+      renderMatrix();
+    }
+
+    // 2. ADMIN CURRICULUM
+    function renderAdminCurriculum() {
+      const grid = document.getElementById('admin-curriculum-grid');
+      if (!grid || !appData || !appData.curriculum) return;
+      grid.innerHTML = '';
+
+      appData.curriculum.forEach(c => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3 flex flex-col justify-between";
+        
+        const classesBadges = (c.classes || []).map(cls => {
+          const col = cls === 'C++' ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' : cls === 'Python' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
+          return `<span class="px-2 py-0.5 rounded text-[10px] font-bold ${col} border">${cls}</span>`;
+        }).join(' ');
+
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-indigo-400">${c.id} • ${c.chapter}</span>
+              <div class="flex gap-1">${classesBadges}</div>
+            </div>
+            <h4 class="text-base font-bold text-white">${c.title}</h4>
+            <p class="text-xs text-slate-400 line-clamp-2">${c.summary || ''}</p>
+            <div class="text-[11px] text-slate-500 truncate font-mono">Link: ${c.url}</div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+            <a href="${c.url}" target="_blank" class="text-xs text-indigo-400 hover:underline font-semibold">Xem tài liệu ↗</a>
+            <div class="flex items-center gap-1.5">
+              <button onclick="openEditCurriculumModal('${c.id}')" class="px-2 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition cursor-pointer">✏️ Sửa</button>
+              <button onclick="deleteCurriculum('${c.id}')" class="px-2 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer">🗑️ Xóa</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openAddCurriculumModal() {
+      document.getElementById('modal-curriculum-title').textContent = 'Thêm Bài Giảng Mới';
+      document.getElementById('form-curr-id-orig').value = '';
+      document.getElementById('form-curr-id').value = `LEC-${(appData.curriculum?.length || 0) + 1}`;
+      document.getElementById('form-curr-chapter').value = 'Tuần 1';
+      document.getElementById('form-curr-title').value = '';
+      document.getElementById('form-curr-url').value = 'https://notion.so';
+      document.getElementById('form-curr-summary').value = '';
+      document.getElementById('curr-class-cpp').checked = true;
+      document.getElementById('curr-class-python').checked = true;
+      document.getElementById('curr-class-python11').checked = true;
+      document.getElementById('modal-curriculum').classList.remove('hidden');
+    }
+
+    function openEditCurriculumModal(id) {
+      const lec = appData.curriculum.find(c => c.id === id);
+      if (!lec) return;
+
+      document.getElementById('modal-curriculum-title').textContent = `Sửa Bài Giảng: ${lec.title}`;
+      document.getElementById('form-curr-id-orig').value = lec.id;
+      document.getElementById('form-curr-id').value = lec.id;
+      document.getElementById('form-curr-chapter').value = lec.chapter || '';
+      document.getElementById('form-curr-title').value = lec.title;
+      document.getElementById('form-curr-url').value = lec.url || '';
+      document.getElementById('form-curr-summary').value = lec.summary || '';
+      
+      const cList = lec.classes || [];
+      document.getElementById('curr-class-cpp').checked = cList.includes('C++');
+      document.getElementById('curr-class-python').checked = cList.includes('Python');
+      document.getElementById('curr-class-python11').checked = cList.includes('Python 1-1');
+
+      document.getElementById('modal-curriculum').classList.remove('hidden');
+    }
+
+    function closeCurriculumModal() {
+      document.getElementById('modal-curriculum').classList.add('hidden');
+    }
+
+    function handleSaveCurriculum(e) {
+      e.preventDefault();
+      const origId = document.getElementById('form-curr-id-orig').value;
+      const id = document.getElementById('form-curr-id').value.trim();
+      const chapter = document.getElementById('form-curr-chapter').value.trim();
+      const title = document.getElementById('form-curr-title').value.trim();
+      const url = document.getElementById('form-curr-url').value.trim();
+      const summary = document.getElementById('form-curr-summary').value.trim();
+
+      const classes = [];
+      if (document.getElementById('curr-class-cpp').checked) classes.push('C++');
+      if (document.getElementById('curr-class-python').checked) classes.push('Python');
+      if (document.getElementById('curr-class-python11').checked) classes.push('Python 1-1');
+
+      if (!id || !title) return;
+      if (!appData.curriculum) appData.curriculum = [];
+
+      if (origId) {
+        const item = appData.curriculum.find(c => c.id === origId);
+        if (item) {
+          item.id = id;
+          item.chapter = chapter;
+          item.title = title;
+          item.url = url;
+          item.summary = summary;
+          item.classes = classes;
+        }
+      } else {
+        appData.curriculum.push({
+          id, chapter, title, url, summary, classes
+        });
+      }
+
+      saveAppDataLocally();
+      closeCurriculumModal();
+      renderAdminCurriculum();
+      renderCurriculum();
+      renderAdminDashboard();
+    }
+
+    function deleteCurriculum(id) {
+      if (!confirm(`Bạn có chắc chắn muốn xóa bài giảng "${id}" không?`)) return;
+      appData.curriculum = appData.curriculum.filter(c => c.id !== id);
+      saveAppDataLocally();
+      renderAdminCurriculum();
+      renderCurriculum();
+      renderAdminDashboard();
+    }
+
+    // 3. ADMIN PROBLEMS
+    function renderAdminProblems() {
+      const body = document.getElementById('admin-problems-body');
+      if (!body || !appData || !appData.problems) return;
+      body.innerHTML = '';
+
+      appData.problems.forEach((p, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/40 transition";
+
+        const classesBadges = (p.classes || []).map(cls => {
+          const col = cls === 'C++' ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' : cls === 'Python' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
+          return `<span class="px-2 py-0.5 rounded text-[10px] font-bold ${col} border">${cls}</span>`;
+        }).join(' ');
+
+        tr.innerHTML = `
+          <td class="px-4 py-3 text-center text-slate-500 font-mono">${idx + 1}</td>
+          <td class="px-4 py-3 font-semibold text-white">
+            <div class="font-mono text-xs text-indigo-400 font-bold">${p.id}</div>
+            <a href="${p.url}" target="_blank" class="hover:text-indigo-300 transition text-sm">${p.name}</a>
+          </td>
+          <td class="px-4 py-3">${classesBadges}</td>
+          <td class="px-4 py-3 text-xs text-purple-300 font-semibold">${p.platform || 'MarisaOJ'}</td>
+          <td class="px-4 py-3 text-xs text-slate-300 font-mono">${p.difficulty || ''}</td>
+          <td class="px-4 py-3 text-center whitespace-nowrap">
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="openEditProblemModal('${p.id}')" class="px-2 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition cursor-pointer">✏️ Sửa</button>
+              <button onclick="deleteProblem('${p.id}')" class="px-2 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer">🗑️ Xóa</button>
+            </div>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function openAddProblemModal() {
+      document.getElementById('modal-problem-title').textContent = 'Thêm Bài Tập Mới';
+      document.getElementById('form-prob-id-orig').value = '';
+      document.getElementById('form-prob-id').value = `MARISA-${(appData.problems?.length || 0) + 1}`;
+      document.getElementById('form-prob-name').value = '';
+      document.getElementById('form-prob-platform').value = 'MarisaOJ';
+      document.getElementById('form-prob-url').value = '';
+      document.getElementById('form-prob-diff').value = 'Level 1 • Brute Force';
+      document.getElementById('form-prob-cat').value = 'Brute Force';
+      document.getElementById('prob-class-cpp').checked = true;
+      document.getElementById('prob-class-python').checked = true;
+      document.getElementById('prob-class-python11').checked = true;
+      document.getElementById('modal-problem').classList.remove('hidden');
+    }
+
+    function openEditProblemModal(id) {
+      const prob = appData.problems.find(p => p.id === id);
+      if (!prob) return;
+
+      document.getElementById('modal-problem-title').textContent = `Sửa Bài Tập: ${prob.name}`;
+      document.getElementById('form-prob-id-orig').value = prob.id;
+      document.getElementById('form-prob-id').value = prob.id;
+      document.getElementById('form-prob-name').value = prob.name;
+      document.getElementById('form-prob-platform').value = prob.platform || 'MarisaOJ';
+      document.getElementById('form-prob-url').value = prob.url || '';
+      document.getElementById('form-prob-diff').value = prob.difficulty || '';
+      document.getElementById('form-prob-cat').value = prob.category || '';
+      
+      const cList = prob.classes || [];
+      document.getElementById('prob-class-cpp').checked = cList.includes('C++');
+      document.getElementById('prob-class-python').checked = cList.includes('Python');
+      document.getElementById('prob-class-python11').checked = cList.includes('Python 1-1');
+
+      document.getElementById('modal-problem').classList.remove('hidden');
+    }
+
+    function closeProblemModal() {
+      document.getElementById('modal-problem').classList.add('hidden');
+    }
+
+    function handleSaveProblem(e) {
+      e.preventDefault();
+      const origId = document.getElementById('form-prob-id-orig').value;
+      const id = document.getElementById('form-prob-id').value.trim();
+      const name = document.getElementById('form-prob-name').value.trim();
+      const platform = document.getElementById('form-prob-platform').value;
+      const url = document.getElementById('form-prob-url').value.trim();
+      const diff = document.getElementById('form-prob-diff').value.trim();
+      const cat = document.getElementById('form-prob-cat').value.trim();
+
+      const classes = [];
+      if (document.getElementById('prob-class-cpp').checked) classes.push('C++');
+      if (document.getElementById('prob-class-python').checked) classes.push('Python');
+      if (document.getElementById('prob-class-python11').checked) classes.push('Python 1-1');
+
+      if (!id || !name || !url) return;
+      if (!appData.problems) appData.problems = [];
+
+      if (origId) {
+        const item = appData.problems.find(p => p.id === origId);
+        if (item) {
+          item.id = id;
+          item.name = name;
+          item.platform = platform;
+          item.url = url;
+          item.difficulty = diff;
+          item.category = cat;
+          item.classes = classes;
+        }
+      } else {
+        appData.problems.push({
+          id, name, platform, url, difficulty: diff, category: cat, classes
+        });
+      }
+
+      saveAppDataLocally();
+      closeProblemModal();
+      renderAdminProblems();
+      renderProblems();
+      renderAdminDashboard();
+    }
+
+    function deleteProblem(id) {
+      if (!confirm(`Bạn có chắc chắn muốn xóa bài tập "${id}" không?`)) return;
+      appData.problems = appData.problems.filter(p => p.id !== id);
+      saveAppDataLocally();
+      renderAdminProblems();
+      renderProblems();
+      renderAdminDashboard();
+    }
+
+    // 4. EXPORT TO EXCEL (.XLSX) WITH SHEETJS
+    function exportToExcel() {
+      if (typeof XLSX === 'undefined') {
+        alert("Đang tải thư viện Excel... Vui lòng thử lại sau vài giây!");
+        return;
+      }
+
+      const wb = XLSX.utils.book_new();
+
+      // Sheet 1: Học Sinh
+      const studentHeaders = ["STT", "Họ và tên", "Lớp", "Tài khoản Marisaoj", "Tài khoản Codeforces", "Tài khoản Vjudge", "Mã PIN cá nhân (Đăng nhập)", "Trạng thái", "Ghi chú"];
+      const studentRows = [studentHeaders];
+      (appData.students || []).forEach(s => {
+        studentRows.push([
+          s.stt,
+          s.name,
+          s.class,
+          s.marisa_handle || '',
+          s.cf_handle || '',
+          s.vjudge_handle || '',
+          s.pin || '',
+          s.status || 'Đang học',
+          `Lớp ${s.class}`
+        ]);
+      });
+      const wsStudents = XLSX.utils.aoa_to_sheet(studentRows);
+      XLSX.utils.book_append_sheet(wb, wsStudents, "Học Sinh");
+
+      // Sheet 2: Học Phí
+      const months = appData.tuition_months || ['Tháng 9', 'Tháng 10'];
+      const feeHeaders = ["Họ và tên", "Lớp", ...months];
+      const feeRows = [feeHeaders];
+      (appData.students || []).forEach(s => {
+        const row = [s.name, s.class];
+        months.forEach(m => {
+          row.push((s.tuition && s.tuition[m]) ? "x" : "");
+        });
+        feeRows.push(row);
+      });
+      const wsFee = XLSX.utils.aoa_to_sheet(feeRows);
+      XLSX.utils.book_append_sheet(wb, wsFee, "Học Phí");
+
+      // Sheet 3: Bài Tập
+      const probHeaders = ["Mã bài", "Link bài tập", "Tên bài tập", "Lớp áp dụng", "Level", "Dạng bài", "Nền tảng", "Ghi chú"];
+      const probRows = [probHeaders];
+      (appData.problems || []).forEach(p => {
+        probRows.push([
+          p.id,
+          p.url,
+          p.name,
+          (p.classes || []).join(', '),
+          1,
+          p.category || 'Brute Force',
+          p.platform || 'MarisaOJ',
+          p.difficulty || ''
+        ]);
+      });
+      const wsProb = XLSX.utils.aoa_to_sheet(probRows);
+      XLSX.utils.book_append_sheet(wb, wsProb, "Bài Tập");
+
+      // Sheet 4: Bài Giảng
+      const currHeaders = ["Mã bài giảng", "Chương / Tuần", "Tiêu đề bài giảng", "Lớp áp dụng", "Link bài giảng / Notion", "Tóm tắt kiến thức"];
+      const currRows = [currHeaders];
+      (appData.curriculum || []).forEach(c => {
+        currRows.push([
+          c.id,
+          c.chapter || '',
+          c.title,
+          (c.classes || []).join(', '),
+          c.url || '',
+          c.summary || ''
+        ]);
+      });
+      const wsCurr = XLSX.utils.aoa_to_sheet(currRows);
+      XLSX.utils.book_append_sheet(wb, wsCurr, "Bài Giảng");
+
+      // Sheet 5: Cấu Hình Bảo Mật
+      const secHeaders = ["Tên Đối Tượng / Lớp", "Cấp độ quyền", "Mã truy cập / Mật khẩu", "Mô tả phạm vi truy cập"];
+      const secRows = [
+        secHeaders,
+        ["Quản trị viên / Giáo viên", "ADMIN", "THAYPHUNG2026", "Toàn quyền: xem tất cả các lớp, tất cả học sinh, và mở mọi bài giảng"],
+        ["Lớp C++", "CLASS", "CPP2026", "Mã chung lớp C++: học sinh chỉ xem bảng xếp hạng, bài tập, bài giảng lớp C++"],
+        ["Lớp Python", "CLASS", "PYTHON2026", "Mã chung lớp Python: học sinh chỉ xem bảng xếp hạng, bài tập, bài giảng lớp Python"],
+        ["Lớp Python 1-1", "CLASS", "VIP11", "Mã chung lớp 1-1: học sinh chỉ xem bảng xếp hạng, bài tập, bài giảng lớp 1-1"]
+      ];
+      const wsSec = XLSX.utils.aoa_to_sheet(secRows);
+      XLSX.utils.book_append_sheet(wb, wsSec, "Cấu Hình Bảo Mật");
+
+      XLSX.writeFile(wb, "Quản lý học sinh.xlsx");
+    }
+
+    function exportDataJson() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "data.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function saveAppDataLocally() {
+      try {
+        if (appData) {
+          appData.last_updated = new Date().toISOString();
+        }
+        localStorage.setItem('cp_app_data', JSON.stringify(appData));
+      } catch (e) {
+        console.warn("Could not save to localStorage", e);
+      }
+    }
+
+    function resetServerData() {
+      if (confirm("Thao tác này sẽ xóa mọi chỉnh sửa tạm thời trên trình duyệt và tải lại dữ liệu mới nhất từ máy chủ (data.json). Bạn có muốn tiếp tục?")) {
+        localStorage.removeItem('cp_app_data');
+        location.reload();
+      }
+    }
+
   </script>
 </body>
 </html>

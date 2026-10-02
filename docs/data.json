@@ -120,6 +120,12 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "dphatdzvl",
+      "pin": "dphat2026",
+      "status": "Đang học",
+      "tuition": {
+        "Tháng 9": true,
+        "Tháng 10": false
+      },
       "solved": [
         "MARISA-11",
         "MARISA-2",
@@ -315,6 +321,12 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "satfswert",
+      "pin": "giahuy2026",
+      "status": "Đang học",
+      "tuition": {
+        "Tháng 9": true,
+        "Tháng 10": false
+      },
       "solved": [
         "MARISA-13",
         "MARISA-15",
@@ -433,6 +445,12 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Kimkimkim",
+      "pin": "thienkim2026",
+      "status": "Đang học",
+      "tuition": {
+        "Tháng 9": true,
+        "Tháng 10": false
+      },
       "solved": [
         "MARISA-1",
         "MARISA-12",
@@ -570,6 +588,12 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "thienann200212",
+      "pin": "thienan2026",
+      "status": "Đang học",
+      "tuition": {
+        "Tháng 9": true,
+        "Tháng 10": false
+      },
       "solved": [
         "MARISA-1",
         "MARISA-13",
@@ -702,6 +726,12 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Nguyenducphat",
+      "pin": "ducphat2026",
+      "status": "Đang học",
+      "tuition": {
+        "Tháng 9": true,
+        "Tháng 10": false
+      },
       "solved": [
         "MARISA-1",
         "MARISA-10",
@@ -945,6 +975,12 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "khanhnam_15",
+      "pin": "khanhnam2026",
+      "status": "Đang học",
+      "tuition": {
+        "Tháng 9": true,
+        "Tháng 10": false
+      },
       "solved": [
         "MARISA-1",
         "MARISA-314",
@@ -1060,6 +1096,12 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Gia_Hung_Tran",
+      "pin": "giahung2026",
+      "status": "Đang học",
+      "tuition": {
+        "Tháng 9": true,
+        "Tháng 10": false
+      },
       "solved": [
         "MARISA-1"
       ],
@@ -1103,6 +1145,12 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "",
+      "pin": "kimkim2026",
+      "status": "Đang học",
+      "tuition": {
+        "Tháng 9": true,
+        "Tháng 10": true
+      },
       "solved": [],
       "target_solved": [],
       "target_solved_count": 0,
@@ -1127,6 +1175,12 @@
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Shinnn",
+      "pin": "minhkhoi2026",
+      "status": "Đang học",
+      "tuition": {
+        "Tháng 9": true,
+        "Tháng 10": false
+      },
       "solved": [
         "MARISA-1",
         "MARISA-13",
@@ -1812,5 +1866,10 @@
       "name": "Lê Minh Khôi",
       "class": "Python 1-1"
     }
-  }
+  },
+  "tuition_months": [
+    "Tháng 9",
+    "Tháng 10"
+  ],
+  "last_updated": "2026-10-02T14:15:31.876518"
 }

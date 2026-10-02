@@ -3,6 +3,7 @@ import sys
 import json
 import hashlib
 import openpyxl
+from datetime import datetime
 from typing import List, Dict
 
 # Ensure SSLKEYLOGFILE is safe
@@ -152,7 +153,28 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
                 "summary": str(summary).strip()
             })
 
-    # 4. Parse Students
+    # 4. Parse Tuition Fees
+    tuition_months = []
+    tuition_data = {}
+    if "Học Phí" in wb.sheetnames:
+        ws_fee = wb["Học Phí"]
+        for c in range(3, ws_fee.max_column + 1):
+            m_val = ws_fee.cell(2, c).value
+            if m_val:
+                tuition_months.append(str(m_val).strip())
+        
+        for r in range(3, ws_fee.max_row + 1):
+            fee_name = ws_fee.cell(r, 1).value
+            if not fee_name or str(fee_name).startswith("="):
+                continue
+            fee_name_clean = str(fee_name).strip()
+            st_fee_map = {}
+            for idx, m in enumerate(tuition_months, 3):
+                cell_val = ws_fee.cell(r, idx).value
+                st_fee_map[m] = True if cell_val and str(cell_val).strip().lower() == "x" else False
+            tuition_data[fee_name_clean] = st_fee_map
+
+    # 5. Parse Students
     students = []
     if "Học Sinh" in wb.sheetnames:
         ws_stu = wb["Học Sinh"]
@@ -164,6 +186,7 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
             cf_h = ws_stu.cell(r, 5).value or ""
             vj_h = ws_stu.cell(r, 6).value or ""
             pin = ws_stu.cell(r, 7).value or ""
+            status = ws_stu.cell(r, 8).value or "Đang học"
 
             if not name:
                 continue
@@ -184,6 +207,15 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
             solved_set = set(all_solved)
             target_solved = [pid for pid in class_prob_ids if pid in solved_set]
 
+            # Match tuition by name or short name
+            st_tuition = {}
+            for fn, fmap in tuition_data.items():
+                if fn.lower() in name_str.lower() or name_str.lower() in fn.lower():
+                    st_tuition = fmap
+                    break
+            if not st_tuition:
+                st_tuition = {m: False for m in tuition_months}
+
             st_idx = int(stt) if stt else len(students) + 1
             students.append({
                 "stt": st_idx,
@@ -192,6 +224,9 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
                 "cf_handle": str(cf_h).strip(),
                 "vjudge_handle": str(vj_h).strip(),
                 "marisa_handle": marisa_str,
+                "pin": str(pin).strip() if pin else "",
+                "status": str(status or "Đang học").strip(),
+                "tuition": st_tuition,
                 "solved": all_solved,
                 "target_solved": target_solved,
                 "target_solved_count": len(target_solved),
@@ -215,7 +250,7 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
                     "class": cls_str
                 }
 
-    # 5. Class Config
+    # 6. Class Config
     class_config = {
         "C++": {
             "name": "Lớp C++",
@@ -244,6 +279,8 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
     final_data["curriculum"] = curriculum
     final_data["class_config"] = class_config
     final_data["auth_tokens"] = auth_tokens
+    final_data["tuition_months"] = tuition_months
+    final_data["last_updated"] = datetime.now().isoformat()
 
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(final_data, f, ensure_ascii=False, indent=2)
