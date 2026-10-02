@@ -61,8 +61,13 @@ def git_push() -> bool:
 def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/data.json") -> bool:
     settings = get_settings()
     sheet_id = (spreadsheet_id or settings.spreadsheet_id).strip()
+    is_ci = os.getenv("CI") == "true" or not sys.stdin.isatty()
 
     if not sheet_id:
+        if is_ci:
+            print("ℹ️ SPREADSHEET_ID chưa được cấu hình trong GitHub Secrets. Bỏ qua bước đồng bộ.")
+            return True
+
         print("\n========================================================")
         print("  🔑 CẤU HÌNH LIÊN KẾT GOOGLE SHEETS")
         print("========================================================")
@@ -86,6 +91,9 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
 
     sa_info = settings.get_service_account_dict()
     if not sa_info:
+        if is_ci:
+            print("ℹ️ GCP_SA_KEY chưa được cấu hình trong GitHub Secrets. Bỏ qua bước đồng bộ.")
+            return True
         logger.error("Google Service Account credentials not found (checked JSON, env, and service_account.json)!")
         print("❌ Lỗi: Không tìm thấy thông tin xác thực Google Service Account (service_account.json hoặc GCP_SA_KEY)!")
         return False

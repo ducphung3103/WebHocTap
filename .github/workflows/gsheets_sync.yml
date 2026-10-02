@@ -1,14 +1,15 @@
 name: Google Sheets Auto Sync
 
 on:
+  push:
+    branches: ["master", "main"]
+    paths:
+      - ".github/workflows/gsheets_sync.yml"
   schedule:
-    # Tự động quét Google Sheet mỗi 1 tiếng trên Cloud
     - cron: '0 * * * *'
   repository_dispatch:
-    # Triggered instantly via Google Apps Script webhook
     types: [gsheets_updated]
   workflow_dispatch:
-    # Manual trigger button in GitHub Actions
 
 concurrency:
   group: sync-gsheets
@@ -41,12 +42,7 @@ jobs:
         env:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
-        run: |
-          if [ -z "$SPREADSHEET_ID" ] || [ -z "$GCP_SA_KEY" ]; then
-            echo "::warning ::SPREADSHEET_ID hoặc GCP_SA_KEY chưa được cấu hình. Bỏ qua bước đồng bộ."
-            exit 0
-          fi
-          python -m src.sync_gsheets --no-push
+        run: python -m src.sync_gsheets --no-push
 
       - name: Commit and Push Changes
         run: |
