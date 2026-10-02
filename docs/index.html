@@ -71,23 +71,27 @@
 
         <!-- Navigation Tabs -->
         <nav class="hidden md:flex items-center space-x-1 font-medium text-sm" id="nav-tabs">
-          <button onclick="switchTab('students')" id="tab-btn-students" class="tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-2 transition">
-            👥 Danh sách Học sinh
+          <button onclick="switchTab('students')" id="tab-btn-students" class="tab-btn active px-3 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition">
+            👥 Học sinh
           </button>
-          <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-2 transition">
-            🏆 Bảng Xếp Hạng
+          <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            🏆 Xếp hạng
           </button>
-          <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-2 transition">
-            📝 Bài Tập & Đề Thi
+          <button onclick="switchTab('contests')" id="tab-btn-contests" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            <span>⚔️</span> Contest Định Kỳ
+            <span class="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">MỚI</span>
           </button>
-          <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-2 transition">
-            📚 Bài Giảng & Lý Thuyết
+          <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            📝 Bài tập
+          </button>
+          <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+            📚 Lý thuyết
           </button>
         </nav>
 
         <!-- Right Quick Actions -->
         <div class="flex items-center gap-3">
-          <a href="https://github.com/Deruck" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition">
+          <a href="https://github.com/ducphung3103/WebHocTap" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition">
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             GitHub Repo
           </a>
@@ -98,6 +102,7 @@
       <div class="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-slate-800 text-xs">
         <button onclick="switchTab('students')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300">👥 Học sinh</button>
         <button onclick="switchTab('leaderboard')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">🏆 Xếp hạng</button>
+        <button onclick="switchTab('contests')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
         <button onclick="switchTab('problems')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
         <button onclick="switchTab('curriculum')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Lý thuyết</button>
       </div>
@@ -250,6 +255,69 @@
       </div>
     </section>
 
+    <!-- ========================================== -->
+    <!-- TAB 5: ĐẤU TRƯỜNG & CONTEST ĐỊNH KỲ -->
+    <!-- ========================================== -->
+    <section id="section-contests" class="space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>⚔️</span> Đấu Trường & Contest Định Kỳ
+          </h2>
+          <p class="text-xs text-slate-400">Tập dượt áp lực phòng thi, rèn luyện kỹ năng phân bổ thời gian và chiến thuật làm bài</p>
+        </div>
+
+        <!-- Filter buttons -->
+        <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
+          <button onclick="filterContests('all')" id="contest-filter-all" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition">Tất cả</button>
+          <button onclick="filterContests('UPCOMING')" id="contest-filter-UPCOMING" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🟡 Sắp tới</button>
+          <button onclick="filterContests('ENDED')" id="contest-filter-ENDED" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">⚪ Đã thi</button>
+        </div>
+      </div>
+
+      <!-- COUNTDOWN TIMER HERO -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-950/80 via-slate-900 to-indigo-950/80 border border-purple-500/30 p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="space-y-2 max-w-lg">
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-ping"></span>
+              <span>KỲ THI SẮP DIỄN RA</span>
+            </div>
+            <h3 class="text-lg md:text-xl font-bold text-white" id="next-contest-title">Contest Định Kỳ #02: Quy Hoạch Động</h3>
+            <p class="text-xs text-slate-400" id="next-contest-desc">Thời gian: 19:30 - 22:00 • Thời lượng: 150 phút • Thể thức ICPC 5 bài</p>
+          </div>
+
+          <!-- Countdown boxes -->
+          <div class="flex items-center gap-2 font-mono">
+            <div class="bg-slate-900/90 border border-purple-500/30 rounded-xl px-3 py-2 text-center min-w-[56px]">
+              <div class="text-xl md:text-2xl font-bold text-purple-300" id="timer-days">00</div>
+              <div class="text-[10px] text-slate-500 uppercase">Ngày</div>
+            </div>
+            <span class="text-purple-400 font-bold">:</span>
+            <div class="bg-slate-900/90 border border-purple-500/30 rounded-xl px-3 py-2 text-center min-w-[56px]">
+              <div class="text-xl md:text-2xl font-bold text-purple-300" id="timer-hours">00</div>
+              <div class="text-[10px] text-slate-500 uppercase">Giờ</div>
+            </div>
+            <span class="text-purple-400 font-bold">:</span>
+            <div class="bg-slate-900/90 border border-purple-500/30 rounded-xl px-3 py-2 text-center min-w-[56px]">
+              <div class="text-xl md:text-2xl font-bold text-purple-300" id="timer-minutes">00</div>
+              <div class="text-[10px] text-slate-500 uppercase">Phút</div>
+            </div>
+            <span class="text-purple-400 font-bold">:</span>
+            <div class="bg-slate-900/90 border border-purple-500/30 rounded-xl px-3 py-2 text-center min-w-[56px]">
+              <div class="text-xl md:text-2xl font-bold text-rose-400 animate-pulse" id="timer-seconds">00</div>
+              <div class="text-[10px] text-slate-500 uppercase">Giây</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contests Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="contests-grid">
+        <!-- Dynamically populated -->
+      </div>
+    </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -316,23 +384,25 @@
       renderMatrix();
       renderProblems();
       renderCurriculum();
+      renderContests();
+      startCountdown();
     }
 
     // TAB SWITCHING
     function switchTab(tabName) {
-      const sections = ['students', 'leaderboard', 'problems', 'curriculum'];
+      const sections = ['students', 'leaderboard', 'contests', 'problems', 'curriculum'];
       sections.forEach(s => {
         const el = document.getElementById(`section-${s}`);
         const btn = document.getElementById(`tab-btn-${s}`);
         if (s === tabName) {
           el.classList.remove('hidden');
           if (btn) {
-            btn.className = "tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-2 transition";
+            btn.className = "tab-btn active px-3 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition";
           }
         } else {
           el.classList.add('hidden');
           if (btn) {
-            btn.className = "tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-2 transition";
+            btn.className = "tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition";
           }
         }
       });
@@ -561,6 +631,174 @@
         `;
         list.appendChild(item);
       });
+    }
+
+    // 5. RENDER CONTESTS
+    let currentContestFilter = 'all';
+
+    function filterContests(filter) {
+      currentContestFilter = filter;
+      ['all', 'UPCOMING', 'ENDED'].forEach(f => {
+        const btn = document.getElementById(`contest-filter-${f}`);
+        if (btn) {
+          if (f === filter) {
+            btn.className = "px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition";
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition";
+          }
+        }
+      });
+      renderContests(filter);
+    }
+
+    function renderContests(filter = currentContestFilter) {
+      const grid = document.getElementById('contests-grid');
+      if (!grid || !appData.contests) return;
+      grid.innerHTML = '';
+
+      const list = appData.contests.filter(c => filter === 'all' || c.status === filter);
+
+      list.forEach(c => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-xl p-5 space-y-4 flex flex-col justify-between transition group";
+
+        let statusBadge = "";
+        if (c.status === "UPCOMING") {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Sắp diễn ra
+          </span>`;
+        } else if (c.status === "LIVE") {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30 animate-pulse">
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> ĐANG THI
+          </span>`;
+        } else {
+          statusBadge = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-800 text-slate-400 border border-slate-700">
+            Đã kết thúc
+          </span>`;
+        }
+
+        // Problems list
+        let problemsPills = "";
+        if (c.problems) {
+          problemsPills = `<div class="flex items-center gap-1.5 flex-wrap pt-1">`;
+          c.problems.forEach(p => {
+            problemsPills += `
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800/80 text-slate-300 border border-slate-700">
+                <strong class="text-purple-400">${p.code}.</strong> ${p.name}
+              </span>
+            `;
+          });
+          problemsPills += `</div>`;
+        }
+
+        // Action buttons
+        let actions = ``;
+        if (c.status === 'UPCOMING' || c.status === 'LIVE') {
+          actions = `
+            <a href="${c.url}" target="_blank" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 flex items-center gap-1.5 transition">
+              <span>⚔️</span> Vào Phòng Thi Ngay ↗
+            </a>
+            ${c.editorial_url ? `
+              <a href="${c.editorial_url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                Lời giải (Editorial)
+              </a>
+            ` : ''}
+          `;
+        } else {
+          actions = `
+            <a href="${c.standings_url || c.url}" target="_blank" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 flex items-center gap-1.5 transition">
+              <span>📊</span> Bảng Điểm (Ranklist) ↗
+            </a>
+            <a href="${c.url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+              Làm lại (Upsolve) ↗
+            </a>
+            ${c.editorial_url ? `
+              <a href="${c.editorial_url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                Lời giải 📄
+              </a>
+            ` : ''}
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs text-purple-400 font-bold">${c.id}</span>
+              ${statusBadge}
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition">${c.title}</h3>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">${c.description || ''}</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2 text-xs py-2 border-y border-slate-800/80 text-slate-400">
+              <div>Thời lượng: <strong class="text-slate-200">${c.duration_minutes} phút</strong></div>
+              <div>Thể thức: <strong class="text-slate-200">${c.format}</strong></div>
+              <div>Nền tảng: <strong class="text-slate-200">${c.platform}</strong></div>
+              <div>Số lượng: <strong class="text-slate-200">${c.problems ? c.problems.length : c.problems_count} bài</strong></div>
+            </div>
+
+            <div>
+              <div class="text-[11px] uppercase font-semibold text-slate-500 mb-1.5">Danh sách bài thi:</div>
+              ${problemsPills}
+            </div>
+
+            ${c.winner ? `
+              <div class="text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                <span>👑</span> <strong>Quán quân:</strong> ${c.winner}
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between flex-wrap gap-2">
+            ${actions}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function startCountdown() {
+      const upcoming = appData.contests ? appData.contests.find(c => c.status === "UPCOMING") : null;
+      if (!upcoming) return;
+
+      const titleEl = document.getElementById('next-contest-title');
+      const descEl = document.getElementById('next-contest-desc');
+      if (titleEl) titleEl.innerText = upcoming.title;
+      if (descEl) descEl.innerText = `Thời gian: ${new Date(upcoming.start_time).toLocaleDateString('vi-VN')} • Thời lượng: ${upcoming.duration_minutes} phút • Thể thức: ${upcoming.format}`;
+
+      const target = new Date(upcoming.start_time).getTime();
+
+      function update() {
+        const now = new Date().getTime();
+        const diff = target - now;
+
+        if (diff <= 0) {
+          document.getElementById('timer-days').innerText = "00";
+          document.getElementById('timer-hours').innerText = "00";
+          document.getElementById('timer-minutes').innerText = "00";
+          document.getElementById('timer-seconds').innerText = "00";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        const dEl = document.getElementById('timer-days');
+        const hEl = document.getElementById('timer-hours');
+        const mEl = document.getElementById('timer-minutes');
+        const sEl = document.getElementById('timer-seconds');
+
+        if (dEl) dEl.innerText = String(days).padStart(2, '0');
+        if (hEl) hEl.innerText = String(hours).padStart(2, '0');
+        if (mEl) mEl.innerText = String(minutes).padStart(2, '0');
+        if (sEl) sEl.innerText = String(seconds).padStart(2, '0');
+      }
+
+      update();
+      setInterval(update, 1000);
     }
 
     // Initialize on load

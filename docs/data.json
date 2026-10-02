@@ -253,5 +253,48 @@
         "4.4 Đồ thị có hướng không chu trình (DAG) & Sắp xếp Tô pô (Topological Sort)"
       ]
     }
+  ],
+  "contests": [
+    {
+      "id": "CONTEST-02",
+      "title": "⚔️ Contest Định Kỳ #02: Quy Hoạch Động & Mảng Cộng Dồn",
+      "platform": "VJudge / Codeforces",
+      "status": "UPCOMING",
+      "start_time": "2026-10-06T19:30:00+07:00",
+      "duration_minutes": 150,
+      "format": "ICPC Rules (5 bài)",
+      "url": "https://vjudge.net/contest",
+      "editorial_url": "https://docs.google.com",
+      "problems_count": 5,
+      "description": "Kỳ thi định kỳ kiểm tra năng lực tư duy tối ưu giải thuật, áp dụng mảng cộng dồn 2D và các bài toán quy hoạch động kinh điển.",
+      "problems": [
+        { "code": "A", "name": "Tổng hình chữ nhật con", "points": 100, "oj": "CSES" },
+        { "code": "B", "name": "Đếm bước nhảy tối ưu", "points": 100, "oj": "Codeforces" },
+        { "code": "C", "name": "Cái túi 0/1 giới hạn lớn", "points": 100, "oj": "VNOI" },
+        { "code": "D", "name": "Dãy con chung dài nhất", "points": 100, "oj": "MarisaOJ" },
+        { "code": "E", "name": "Chia kẹo may mắn", "points": 100, "oj": "CSES" }
+      ]
+    },
+    {
+      "id": "CONTEST-01",
+      "title": "🏆 Contest Khởi Động #01: C++ STL & Fast I/O",
+      "platform": "VJudge",
+      "status": "ENDED",
+      "start_time": "2026-09-26T19:30:00+07:00",
+      "duration_minutes": 120,
+      "format": "ICPC Rules (4 bài)",
+      "url": "https://vjudge.net/contest",
+      "editorial_url": "https://docs.google.com",
+      "standings_url": "https://vjudge.net/contest",
+      "problems_count": 4,
+      "description": "Contest khởi động rèn luyện kỹ năng cài đặt nhanh với STL vector, map, set và tránh lỗi tràn số.",
+      "winner": "Nguyễn Văn An (tourist) - 4/4 AC",
+      "problems": [
+        { "code": "A", "name": "Way Too Long Words", "points": 100, "oj": "Codeforces" },
+        { "code": "B", "name": "Weird Algorithm", "points": 100, "oj": "CSES" },
+        { "code": "C", "name": "Taxi", "points": 100, "oj": "Codeforces" },
+        { "code": "D", "name": "Tổng hai số A + B", "points": 100, "oj": "MarisaOJ" }
+      ]
+    }
   ]
 }
