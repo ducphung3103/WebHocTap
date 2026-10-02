@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lớp Chuyên Tin & Thuật Toán - LMS & Tiến Độ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-gradient-to-r from-indigo-900/60 via-purple-900/60 to-slate-900/60 border-b border-indigo-500/20 px-4 py-2 text-xs md:text-sm text-center text-indigo-200 flex items-center justify-center gap-3">
+    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/30 text-indigo-300 border border-indigo-400/30 animate-pulse">LIVE</span>
+    <span>Hệ thống Tự động Đồng bộ Tiến độ Giải bài trên <strong>Codeforces</strong>, <strong>VJudge</strong> & <strong>MarisaOJ</strong></span>
+    <span class="hidden md:inline text-slate-400">• Lịch học: Tối T3 & T7 (19:30 - 21:30)</span>
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Brand Logo -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 ring-1 ring-white/20">
+            <span class="text-xl">🚀</span>
+          </div>
+          <div>
+            <div class="font-bold text-white text-base leading-tight tracking-tight flex items-center gap-2">
+              Lớp Chuyên Tin 2026
+              <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Free LMS</span>
+            </div>
+            <div class="text-xs text-slate-400">Competitive Programming LMS & Tracker</div>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="hidden md:flex items-center space-x-1 font-medium text-sm" id="nav-tabs">
+          <button onclick="switchTab('students')" id="tab-btn-students" class="tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-2 transition">
+            👥 Danh sách Học sinh
+          </button>
+          <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-2 transition">
+            🏆 Bảng Xếp Hạng
+          </button>
+          <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-2 transition">
+            📝 Bài Tập & Đề Thi
+          </button>
+          <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-2 transition">
+            📚 Bài Giảng & Lý Thuyết
+          </button>
+        </nav>
+
+        <!-- Right Quick Actions -->
+        <div class="flex items-center gap-3">
+          <a href="https://github.com/Deruck" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub Repo
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile Tab Bar -->
+      <div class="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-slate-800 text-xs">
+        <button onclick="switchTab('students')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300">👥 Học sinh</button>
+        <button onclick="switchTab('leaderboard')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">🏆 Xếp hạng</button>
+        <button onclick="switchTab('problems')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
+        <button onclick="switchTab('curriculum')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Lý thuyết</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- HERO INTRO -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-900 border border-indigo-500/20 p-6 md:p-8">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">
+            <span>🎯 Khóa Luyện Thi Chuyên Tin & HSG 2026</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+            Cổng Thông Tin Học Tập & Theo Dõi Tiến Độ
+          </h1>
+          <p class="text-slate-400 text-sm md:text-base leading-relaxed">
+            Hệ thống hỗ trợ tự động chấm và theo dõi bài nộp của học sinh từ <strong>Codeforces</strong> (đề thi), <strong>VJudge</strong> (Codeforces, VNOI, CSES) và <strong>MarisaOJ</strong>.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 shrink-0">
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 text-center">
+            <div class="text-xs text-slate-400">Học sinh</div>
+            <div class="text-2xl font-bold text-white font-mono" id="stat-students">10</div>
+          </div>
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 text-center">
+            <div class="text-xs text-slate-400">Bài tập tuần</div>
+            <div class="text-2xl font-bold text-indigo-400 font-mono" id="stat-problems">7</div>
+          </div>
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 text-center col-span-2 sm:col-span-1">
+            <div class="text-xs text-slate-400">Tỉ lệ AC</div>
+            <div class="text-2xl font-bold text-emerald-400 font-mono">68%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 1: DANH SÁCH HỌC SINH (MỖI HÀNG LÀ 1 HỌC SINH) -->
+    <!-- ========================================== -->
+    <section id="section-students" class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            👥 Danh Sách Học Sinh & Tài Khoản Luyện Tập
+          </h2>
+          <p class="text-xs text-slate-400">Mỗi hàng hiển thị đầy đủ thông tin định danh và tài khoản Codeforces, VJudge, MarisaOJ</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative w-full sm:w-72">
+          <input type="text" id="student-search-input" onkeyup="filterStudents()" placeholder="Tìm tên, trường hoặc handle..." 
+            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+          <span class="absolute right-3 top-2.5 text-slate-500 text-sm">🔍</span>
+        </div>
+      </div>
+
+      <!-- Students Table -->
+      <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/50 shadow-xl">
+        <table class="w-full text-left text-sm text-slate-300" id="students-table">
+          <thead class="bg-slate-800/80 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
+            <tr>
+              <th class="px-4 py-3.5 text-center w-12">STT</th>
+              <th class="px-4 py-3.5">Họ và Tên</th>
+              <th class="px-4 py-3.5">Email</th>
+              <th class="px-4 py-3.5 text-indigo-300">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-blue-400"></span> Codeforces (Làm đề)
+                </span>
+              </th>
+              <th class="px-4 py-3.5 text-emerald-300">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span> VJudge (CF/VNOI/CSES)
+                </span>
+              </th>
+              <th class="px-4 py-3.5 text-purple-300">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-purple-400"></span> MarisaOJ
+                </span>
+              </th>
+              <th class="px-4 py-3.5 text-center">Trạng thái</th>
+              <th class="px-4 py-3.5">Trường / Lớp</th>
+              <th class="px-4 py-3.5">Mục tiêu</th>
+              <th class="px-4 py-3.5 text-center">Liên hệ</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60" id="students-table-body">
+            <!-- Dynamically populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: BẢNG XẾP HẠNG & TIẾN ĐỘ GIẢI BÀI -->
+    <!-- ========================================== -->
+    <section id="section-leaderboard" class="space-y-6 hidden">
+      <div>
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          🏆 Bảng Vàng & Ma Trận Bài Tập Đã Giải
+        </h2>
+        <p class="text-xs text-slate-400">Theo dõi trạng thái hoàn thành từng bài tập (Codeforces, VJudge, MarisaOJ) của học sinh</p>
+      </div>
+
+      <!-- Matrix Table -->
+      <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/50 shadow-xl">
+        <table class="w-full text-left text-sm text-slate-300">
+          <thead class="bg-slate-800/90 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700" id="matrix-head">
+            <!-- Dynamically populated -->
+          </thead>
+          <tbody class="divide-y divide-slate-800/60" id="matrix-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: DANH SÁCH BÀI TẬP & ĐỀ THI -->
+    <!-- ========================================== -->
+    <section id="section-problems" class="space-y-6 hidden">
+      <div>
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          📝 Kho Bài Tập & Đề Thi Phân Loại
+        </h2>
+        <p class="text-xs text-slate-400">Bấm vào từng bài để trực tiếp chuyển đến trang nộp bài của nền tảng tương ứng</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="problems-grid">
+        <!-- Dynamically populated -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: BÀI GIẢNG & LÝ THUYẾT (LMS) -->
+    <!-- ========================================== -->
+    <section id="section-curriculum" class="space-y-6 hidden">
+      <div>
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          📚 Giáo Trình Chuyên Tin & Thuật Toán
+        </h2>
+        <p class="text-xs text-slate-400">Tài liệu, giáo trình chuẩn hóa thay thế không gian Notion, học sinh có thể ôn lại bất cứ lúc nào</p>
+      </div>
+
+      <div class="space-y-4" id="curriculum-list">
+        <!-- Dynamically populated -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>© 2026 Lớp Chuyên Tin & Thuật Toán • Tự động hóa với Python & GitHub Actions</div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <a href="https://codeforces.com" target="_blank" class="hover:text-indigo-400 transition">Codeforces</a>
+        <a href="https://vjudge.net" target="_blank" class="hover:text-emerald-400 transition">VJudge</a>
+        <a href="https://marisaoj.com" target="_blank" class="hover:text-purple-400 transition">MarisaOJ</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DATA & APP LOGIC -->
+  <script>
+    let appData = null;
+
+    // Load data from data.json or fallback
+    async function initApp() {
+      try {
+        const response = await fetch('data.json');
+        if (response.ok) {
+          appData = await response.json();
+        }
+      } catch (e) {
+        console.warn("Could not fetch data.json, using embedded fallback", e);
+      }
+
+      if (!appData) {
+        // Fallback default data
+        appData = {
+          students: [
+            { stt: 1, name: "Nguyễn Văn An", email: "an.nguyen@gmail.com", cf_handle: "tourist", vjudge_handle: "an_vjudge", marisa_handle: "an_marisa", status: "Active", phone: "0912.345.678", school: "10 Tin - Chu Văn An", target: "HSG Quốc gia", solved: ["CF-71A", "CF-158B", "CF-4A", "VJ-CSES-1068", "VJ-VNOI-nklineup", "MARISA-1", "MARISA-20"] },
+            { stt: 2, name: "Trần Thị Bình", email: "binh.tran@gmail.com", cf_handle: "Petr", vjudge_handle: "binh_vjudge", marisa_handle: "binh_marisa", status: "Active", phone: "0987.654.321", school: "10 Tin - KHTN", target: "HSG Quốc gia", solved: ["CF-71A", "CF-4A", "VJ-CSES-1068", "MARISA-1", "MARISA-20"] },
+            { stt: 3, name: "Lê Hoàng Cường", email: "cuong.le@gmail.com", cf_handle: "Benq", vjudge_handle: "cuong_vj", marisa_handle: "cuong_marisa", status: "Active", phone: "0903.112.233", school: "10 Tin - Sư Phạm", target: "Tin học trẻ", solved: ["CF-71A", "CF-158B", "VJ-CSES-1068", "VJ-VNOI-nklineup", "MARISA-1"] },
+            { stt: 4, name: "Phạm Minh Đức", email: "duc.pham@gmail.com", cf_handle: "Radewoosh", vjudge_handle: "duc_vjudge", marisa_handle: "duc_marisa", status: "Active", phone: "0914.556.677", school: "11 Tin - Hà Nội Amsterdam", target: "HSG Tỉnh/TP", solved: ["CF-71A", "CF-4A", "VJ-CSES-1068", "MARISA-1"] },
+            { stt: 5, name: "Hoàng Khánh Linh", email: "linh.hoang@gmail.com", cf_handle: "Um_nik", vjudge_handle: "linh_cses", marisa_handle: "linh_marisa", status: "Active", phone: "0978.889.900", school: "10 Toán - KHTN", target: "HSG Tỉnh/TP", solved: ["CF-71A", "CF-158B", "CF-4A", "MARISA-1"] },
+            { stt: 6, name: "Đỗ Nam Phong", email: "phong.do@gmail.com", cf_handle: "ecnerwala", vjudge_handle: "phong_vjudge", marisa_handle: "phong_marisa", status: "Active", phone: "0966.123.456", school: "11 Tin - Lê Hồng Phong", target: "HSG Quốc gia", solved: ["CF-71A", "VJ-CSES-1068", "VJ-VNOI-nklineup", "MARISA-1", "MARISA-20"] },
+            { stt: 7, name: "Vũ Mai Phương", email: "phuong.vu@gmail.com", cf_handle: "maroonrk", vjudge_handle: "phuong_vj", marisa_handle: "phuong_marisa", status: "Active", phone: "0932.789.012", school: "10 Tin - Năng Khiếu", target: "Tin học trẻ", solved: ["CF-71A", "CF-4A", "MARISA-1"] },
+            { stt: 8, name: "Bùi Gia Huy", email: "huy.bui@gmail.com", cf_handle: "Endagorion", vjudge_handle: "huy_vjudge", marisa_handle: "huy_marisa", status: "Active", phone: "0945.678.901", school: "11 Tin - Lam Sơn", target: "Đổi giải Đại học", solved: ["CF-71A", "CF-158B", "VJ-CSES-1068", "MARISA-1"] },
+            { stt: 9, name: "Đặng Quốc Bảo", email: "bao.dang@gmail.com", cf_handle: "tourist_fan", vjudge_handle: "baodang_vj", marisa_handle: "baodang_oj", status: "Active", phone: "0981.234.567", school: "10 Tin - Bắc Ninh", target: "HSG Quốc gia", solved: ["CF-71A", "CF-4A", "VJ-CSES-1068"] },
+            { stt: 10, name: "Trịnh Thu Trang", email: "trang.trinh@gmail.com", cf_handle: "trang_cp", vjudge_handle: "trang_vjudge", marisa_handle: "thutrang_mrs", status: "Active", phone: "0973.456.789", school: "10 Tin - Lê Khiết", target: "HSG Tỉnh/TP", solved: ["CF-71A", "MARISA-1"] }
+          ],
+          problems: [
+            { id: "CF-71A", name: "Way Too Long Words", platform: "Codeforces", badge_color: "blue", url: "https://codeforces.com/problemset/problem/71/A", difficulty: "800" },
+            { id: "CF-158B", name: "Taxi (Tham lam)", platform: "Codeforces", badge_color: "blue", url: "https://codeforces.com/problemset/problem/158/B", difficulty: "1100" },
+            { id: "CF-4A", name: "Watermelon", platform: "Codeforces", badge_color: "blue", url: "https://codeforces.com/problemset/problem/4/A", difficulty: "800" },
+            { id: "VJ-CSES-1068", name: "Weird Algorithm", platform: "VJudge (CSES)", badge_color: "emerald", url: "https://vjudge.net/problem/CSES-1068", difficulty: "Intro" },
+            { id: "VJ-VNOI-nklineup", name: "Hàng cây (Segment Tree)", platform: "VJudge (VNOI)", badge_color: "emerald", url: "https://vjudge.net/problem/SPOJ-NKLINEUP", difficulty: "Medium" },
+            { id: "MARISA-1", name: "Tổng hai số A + B", platform: "MarisaOJ", badge_color: "purple", url: "https://marisaoj.com/problem/1", difficulty: "Căn bản" },
+            { id: "MARISA-20", name: "Dãy con tăng dài nhất", platform: "MarisaOJ", badge_color: "purple", url: "https://marisaoj.com/problem/20", difficulty: "Quy hoạch động" }
+          ],
+          curriculum: [
+            { module: "Chuyên đề 01: C++ Căn bản & Kỹ thuật Tối ưu I/O", lessons: ["1.1 Fast I/O và Template thi đấu", "1.2 Mảng cộng dồn (Prefix Sum) & Mảng hiệu", "1.3 Lũy thừa nhanh & Xử lý số học"] },
+            { module: "Chuyên đề 02: STL & Cấu trúc Dữ liệu Nền tảng", lessons: ["2.1 Vector, Custom Comparator & Chặt nhị phân", "2.2 Set, Map, Priority Queue trong giải thuật", "2.3 Kỹ thuật Hai con trỏ (Two Pointers)"] },
+            { module: "Chuyên đề 03: Quy hoạch Động Kinh điển", lessons: ["3.1 Bậc thang, Kadane & DP 1 chiều", "3.2 Dãy con tăng dài nhất (LIS) & Knapsack 0/1", "3.3 Quy hoạch động ma trận"] },
+            { module: "Chuyên đề 04: Thuật toán Đồ thị", lessons: ["4.1 Biểu diễn đồ thị, DFS & BFS", "4.2 Cây khung Kruskal & Cấu trúc DSU", "4.3 Đường đi ngắn nhất Dijkstra"] }
+          ]
+        };
+      }
+
+      renderStudentsTable();
+      renderMatrix();
+      renderProblems();
+      renderCurriculum();
+    }
+
+    // TAB SWITCHING
+    function switchTab(tabName) {
+      const sections = ['students', 'leaderboard', 'problems', 'curriculum'];
+      sections.forEach(s => {
+        const el = document.getElementById(`section-${s}`);
+        const btn = document.getElementById(`tab-btn-${s}`);
+        if (s === tabName) {
+          el.classList.remove('hidden');
+          if (btn) {
+            btn.className = "tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-2 transition";
+          }
+        } else {
+          el.classList.add('hidden');
+          if (btn) {
+            btn.className = "tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-2 transition";
+          }
+        }
+      });
+    }
+
+    // 1. RENDER STUDENTS TABLE (ROW-BASED)
+    function renderStudentsTable(filterText = '') {
+      const tbody = document.getElementById('students-table-body');
+      tbody.innerHTML = '';
+
+      const query = filterText.toLowerCase().trim();
+      const filtered = appData.students.filter(s => 
+        !query || 
+        s.name.toLowerCase().includes(query) || 
+        s.cf_handle.toLowerCase().includes(query) || 
+        s.vjudge_handle.toLowerCase().includes(query) || 
+        s.marisa_handle.toLowerCase().includes(query) || 
+        s.school.toLowerCase().includes(query)
+      );
+
+      filtered.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/40 transition";
+        tr.innerHTML = `
+          <td class="px-4 py-3.5 text-center font-mono text-xs text-slate-400">${String(s.stt).padStart(2, '0')}</td>
+          <td class="px-4 py-3.5 font-semibold text-white">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-300 font-bold flex items-center justify-center text-xs">
+                ${s.name.split(' ').slice(-1)[0][0]}
+              </div>
+              <div>
+                <div>${s.name}</div>
+                <div class="text-[11px] text-slate-400 font-normal md:hidden">${s.email}</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-4 py-3.5 text-xs text-slate-400">${s.email}</td>
+          <td class="px-4 py-3.5 font-mono text-xs">
+            <a href="https://codeforces.com/profile/${s.cf_handle}" target="_blank" 
+               class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 border border-blue-500/20 transition">
+              <span>⚡</span> ${s.cf_handle}
+            </a>
+          </td>
+          <td class="px-4 py-3.5 font-mono text-xs">
+            <a href="https://vjudge.net/user/${s.vjudge_handle}" target="_blank" 
+               class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+              <span>🎯</span> ${s.vjudge_handle}
+            </a>
+          </td>
+          <td class="px-4 py-3.5 font-mono text-xs">
+            <a href="https://marisaoj.com" target="_blank" 
+               class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 border border-purple-500/20 transition">
+              <span>🦊</span> ${s.marisa_handle}
+            </a>
+          </td>
+          <td class="px-4 py-3.5 text-center">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              ● Đang học
+            </span>
+          </td>
+          <td class="px-4 py-3.5 text-xs text-slate-300">${s.school}</td>
+          <td class="px-4 py-3.5 text-xs">
+            <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">${s.target}</span>
+          </td>
+          <td class="px-4 py-3.5 text-center text-xs font-mono">
+            <a href="tel:${s.phone.replace(/[^0-9]/g, '')}" class="text-indigo-400 hover:underline">${s.phone}</a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterStudents() {
+      const q = document.getElementById('student-search-input').value;
+      renderStudentsTable(q);
+    }
+
+    // 2. RENDER MATRIX LEADERBOARD
+    function renderMatrix() {
+      const head = document.getElementById('matrix-head');
+      const body = document.getElementById('matrix-body');
+
+      // Head
+      let headHtml = `<tr>
+        <th class="px-4 py-3.5 text-center w-12">Hạng</th>
+        <th class="px-4 py-3.5">Học sinh</th>
+        <th class="px-4 py-3.5 text-center">Tổng AC</th>
+      `;
+      appData.problems.forEach(p => {
+        headHtml += `<th class="px-3 py-3.5 text-center text-xs font-mono whitespace-nowrap" title="${p.name} (${p.platform})">
+          <a href="${p.url}" target="_blank" class="hover:text-indigo-300">${p.id}</a>
+        </th>`;
+      });
+      headHtml += `</tr>`;
+      head.innerHTML = headHtml;
+
+      // Sort students by AC count
+      const sorted = [...appData.students].sort((a, b) => (b.solved?.length || 0) - (a.solved?.length || 0));
+
+      body.innerHTML = '';
+      sorted.forEach((s, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/40 transition";
+        const totalAc = s.solved ? s.solved.length : 0;
+        const rankMedal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `${idx + 1}`;
+
+        let rowHtml = `
+          <td class="px-4 py-3 text-center font-bold font-mono text-sm">${rankMedal}</td>
+          <td class="px-4 py-3 font-semibold text-white">
+            <div>${s.name}</div>
+            <div class="text-[11px] font-mono text-slate-400 font-normal">CF: ${s.cf_handle} | VJ: ${s.vjudge_handle}</div>
+          </td>
+          <td class="px-4 py-3 text-center">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              ${totalAc}/${appData.problems.length}
+            </span>
+          </td>
+        `;
+
+        appData.problems.forEach(p => {
+          const isSolved = s.solved && s.solved.includes(p.id);
+          rowHtml += `<td class="px-3 py-3 text-center font-mono text-xs">
+            ${isSolved 
+              ? `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">AC</span>` 
+              : `<span class="text-slate-600">-</span>`}
+          </td>`;
+        });
+
+        tr.innerHTML = rowHtml;
+        body.appendChild(tr);
+      });
+    }
+
+    // 3. RENDER PROBLEMS
+    function renderProblems() {
+      const grid = document.getElementById('problems-grid');
+      grid.innerHTML = '';
+
+      appData.problems.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-xl p-5 flex flex-col justify-between transition group";
+        
+        let platBadge = "";
+        if (p.platform.includes("Codeforces")) {
+          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-blue-500/10 text-blue-300 border border-blue-500/20">Codeforces (Làm đề)</span>`;
+        } else if (p.platform.includes("VJudge")) {
+          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">${p.platform}</span>`;
+        } else {
+          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-purple-500/10 text-purple-300 border border-purple-500/20">MarisaOJ</span>`;
+        }
+
+        // Count solved
+        const solvedCount = appData.students.filter(s => s.solved && s.solved.includes(p.id)).length;
+
+        card.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-slate-400">${p.id}</span>
+              ${platBadge}
+            </div>
+            <h3 class="text-base font-bold text-white group-hover:text-indigo-300 transition">${p.name}</h3>
+            <div class="text-xs text-slate-400">Độ khó: <span class="text-slate-300 font-medium">${p.difficulty}</span></div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div class="text-xs text-slate-400 font-mono">
+              Đã AC: <span class="text-emerald-400 font-bold">${solvedCount}/${appData.students.length}</span>
+            </div>
+            <a href="${p.url}" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1">
+              Làm bài ↗
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // 4. RENDER CURRICULUM
+    function renderCurriculum() {
+      const list = document.getElementById('curriculum-list');
+      list.innerHTML = '';
+
+      appData.curriculum.forEach((c, idx) => {
+        const item = document.createElement('div');
+        item.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3";
+        let lessonsHtml = '<ul class="space-y-1.5 text-sm text-slate-400 pl-4 list-disc">';
+        c.lessons.forEach(l => {
+          lessonsHtml += `<li class="hover:text-indigo-200 transition">${l}</li>`;
+        });
+        lessonsHtml += '</ul>';
+
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-sm font-mono">
+              0${idx + 1}
+            </div>
+            <h3 class="text-base font-bold text-white">${c.module}</h3>
+          </div>
+          ${c.description ? `<p class="text-xs text-slate-400">${c.description}</p>` : ''}
+          <div class="pt-2">
+            ${lessonsHtml}
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+{
+  "class_info": {
+    "title": "🚀 LỚP CHUYÊN TIN & THUẬT TOÁN - KHÓA 2026",
+    "subtitle": "Hệ thống Quản lý Học tập & Theo dõi Tiến độ Lập trình Thi đấu",
+    "schedule": "Tối Thứ 3 & Thứ 7 (19:30 - 21:30)",
+    "target": "HSG Quốc Gia, HSG Tỉnh/TP & Olympic Tin học",
+    "teacher": "Thầy Phùng Đức",
+    "zalo_link": "https://zalo.me",
+    "discord_link": "https://discord.com"
+  },
+  "problems": [
+    {
+      "id": "CF-71A",
+      "name": "Way Too Long Words",
+      "platform": "Codeforces",
+      "badge_color": "blue",
+      "category": "Làm đề thi",
+      "url": "https://codeforces.com/problemset/problem/71/A",
+      "difficulty": "800"
+    },
+    {
+      "id": "CF-158B",
+      "name": "Taxi (Tham lam)",
+      "platform": "Codeforces",
+      "badge_color": "blue",
+      "category": "Làm đề thi",
+      "url": "https://codeforces.com/problemset/problem/158/B",
+      "difficulty": "1100"
+    },
+    {
+      "id": "CF-4A",
+      "name": "Watermelon",
+      "platform": "Codeforces",
+      "badge_color": "blue",
+      "category": "Làm đề thi",
+      "url": "https://codeforces.com/problemset/problem/4/A",
+      "difficulty": "800"
+    },
+    {
+      "id": "VJ-CSES-1068",
+      "name": "Weird Algorithm (Collatz)",
+      "platform": "VJudge (CSES)",
+      "badge_color": "emerald",
+      "category": "Luyện tập VJudge",
+      "url": "https://vjudge.net/problem/CSES-1068",
+      "difficulty": "CSES Introductory"
+    },
+    {
+      "id": "VJ-VNOI-nklineup",
+      "name": "Hàng cây (Segment Tree)",
+      "platform": "VJudge (VNOI)",
+      "badge_color": "emerald",
+      "category": "Luyện tập VJudge",
+      "url": "https://vjudge.net/problem/SPOJ-NKLINEUP",
+      "difficulty": "VNOI Medium"
+    },
+    {
+      "id": "MARISA-1",
+      "name": "Tổng hai số A + B",
+      "platform": "MarisaOJ",
+      "badge_color": "purple",
+      "category": "Chuyên đề MarisaOJ",
+      "url": "https://marisaoj.com/problem/1",
+      "difficulty": "Căn bản"
+    },
+    {
+      "id": "MARISA-20",
+      "name": "Dãy con tăng dài nhất (LIS)",
+      "platform": "MarisaOJ",
+      "badge_color": "purple",
+      "category": "Chuyên đề MarisaOJ",
+      "url": "https://marisaoj.com/problem/20",
+      "difficulty": "Quy hoạch động"
+    }
+  ],
+  "students": [
+    {
+      "stt": 1,
+      "name": "Nguyễn Văn An",
+      "email": "an.nguyen@gmail.com",
+      "cf_handle": "tourist",
+      "vjudge_handle": "an_vjudge",
+      "marisa_handle": "an_marisa",
+      "status": "Active",
+      "phone": "0912.345.678",
+      "school": "10 Tin - Chu Văn An",
+      "target": "HSG Quốc gia",
+      "solved": ["CF-71A", "CF-158B", "CF-4A", "VJ-CSES-1068", "VJ-VNOI-nklineup", "MARISA-1", "MARISA-20"]
+    },
+    {
+      "stt": 2,
+      "name": "Trần Thị Bình",
+      "email": "binh.tran@gmail.com",
+      "cf_handle": "Petr",
+      "vjudge_handle": "binh_vjudge",
+      "marisa_handle": "binh_marisa",
+      "status": "Active",
+      "phone": "0987.654.321",
+      "school": "10 Tin - KHTN",
+      "target": "HSG Quốc gia",
+      "solved": ["CF-71A", "CF-4A", "VJ-CSES-1068", "MARISA-1", "MARISA-20"]
+    },
+    {
+      "stt": 3,
+      "name": "Lê Hoàng Cường",
+      "email": "cuong.le@gmail.com",
+      "cf_handle": "Benq",
+      "vjudge_handle": "cuong_vj",
+      "marisa_handle": "cuong_marisa",
+      "status": "Active",
+      "phone": "0903.112.233",
+      "school": "10 Tin - Sư Phạm",
+      "target": "Tin học trẻ",
+      "solved": ["CF-71A", "CF-158B", "VJ-CSES-1068", "VJ-VNOI-nklineup", "MARISA-1"]
+    },
+    {
+      "stt": 4,
+      "name": "Phạm Minh Đức",
+      "email": "duc.pham@gmail.com",
+      "cf_handle": "Radewoosh",
+      "vjudge_handle": "duc_vjudge",
+      "marisa_handle": "duc_marisa",
+      "status": "Active",
+      "phone": "0914.556.677",
+      "school": "11 Tin - Hà Nội Amsterdam",
+      "target": "HSG Tỉnh/TP",
+      "solved": ["CF-71A", "CF-4A", "VJ-CSES-1068", "MARISA-1"]
+    },
+    {
+      "stt": 5,
+      "name": "Hoàng Khánh Linh",
+      "email": "linh.hoang@gmail.com",
+      "cf_handle": "Um_nik",
+      "vjudge_handle": "linh_cses",
+      "marisa_handle": "linh_marisa",
+      "status": "Active",
+      "phone": "0978.889.900",
+      "school": "10 Toán - KHTN",
+      "target": "HSG Tỉnh/TP",
+      "solved": ["CF-71A", "CF-158B", "CF-4A", "MARISA-1"]
+    },
+    {
+      "stt": 6,
+      "name": "Đỗ Nam Phong",
+      "email": "phong.do@gmail.com",
+      "cf_handle": "ecnerwala",
+      "vjudge_handle": "phong_vjudge",
+      "marisa_handle": "phong_marisa",
+      "status": "Active",
+      "phone": "0966.123.456",
+      "school": "11 Tin - Lê Hồng Phong",
+      "target": "HSG Quốc gia",
+      "solved": ["CF-71A", "VJ-CSES-1068", "VJ-VNOI-nklineup", "MARISA-1", "MARISA-20"]
+    },
+    {
+      "stt": 7,
+      "name": "Vũ Mai Phương",
+      "email": "phuong.vu@gmail.com",
+      "cf_handle": "maroonrk",
+      "vjudge_handle": "phuong_vj",
+      "marisa_handle": "phuong_marisa",
+      "status": "Active",
+      "phone": "0932.789.012",
+      "school": "10 Tin - Phổ thông Năng Khiếu",
+      "target": "Tin học trẻ",
+      "solved": ["CF-71A", "CF-4A", "MARISA-1"]
+    },
+    {
+      "stt": 8,
+      "name": "Bùi Gia Huy",
+      "email": "huy.bui@gmail.com",
+      "cf_handle": "Endagorion",
+      "vjudge_handle": "huy_vjudge",
+      "marisa_handle": "huy_marisa",
+      "status": "Active",
+      "phone": "0945.678.901",
+      "school": "11 Tin - Lam Sơn",
+      "target": "Đổi giải Đại học",
+      "solved": ["CF-71A", "CF-158B", "VJ-CSES-1068", "MARISA-1"]
+    },
+    {
+      "stt": 9,
+      "name": "Đặng Quốc Bảo",
+      "email": "bao.dang@gmail.com",
+      "cf_handle": "tourist_fan",
+      "vjudge_handle": "baodang_vj",
+      "marisa_handle": "baodang_oj",
+      "status": "Active",
+      "phone": "0981.234.567",
+      "school": "10 Tin - Chuyên Bắc Ninh",
+      "target": "HSG Quốc gia",
+      "solved": ["CF-71A", "CF-4A", "VJ-CSES-1068"]
+    },
+    {
+      "stt": 10,
+      "name": "Trịnh Thu Trang",
+      "email": "trang.trinh@gmail.com",
+      "cf_handle": "trang_cp",
+      "vjudge_handle": "trang_vjudge",
+      "marisa_handle": "thutrang_mrs",
+      "status": "Active",
+      "phone": "0973.456.789",
+      "school": "10 Tin - Chuyên Lê Khiết",
+      "target": "HSG Tỉnh/TP",
+      "solved": ["CF-71A", "MARISA-1"]
+    }
+  ],
+  "curriculum": [
+    {
+      "module": "Chuyên đề 01: C++ Căn bản & Kỹ thuật Tối ưu I/O",
+      "description": "Cấu trúc chương trình C++, các kiểu dữ liệu số nguyên lớn 64-bit, ép kiểu, Fast I/O và kiểm soát độ phức tạp thời gian O(N).",
+      "lessons": [
+        "1.1 Khởi tạo Template thi đấu C++ chuẩn & Kỹ thuật Fast I/O (cin.tie, sync_with_stdio)",
+        "1.2 Xử lý số học: Overflow, __int128, lũy thừa nhanh chia để trị (Binary Exponentiation)",
+        "1.3 Mảng 1 chiều, 2 chiều & Kỹ thuật Mảng cộng dồn (Prefix Sum), Mảng hiệu (Difference Array)"
+      ]
+    },
+    {
+      "module": "Chuyên đề 02: STL & Cấu trúc Dữ liệu Nền tảng",
+      "description": "Làm chủ các container quan trọng của thư viện C++ STL trong giải thuật: vector, pair, set, map, priority_queue, deque.",
+      "lessons": [
+        "2.1 Vector, Sort đa tiêu chí với hàm Comparator, Binary Search & Chặt nhị phân kết quả",
+        "2.2 Set, Multiset, Unordered_set: Tìm kiếm và duy trì tập hợp trong O(log N)",
+        "2.3 Map, Unordered_map: Bảng băm đếm tần suất và nén tọa độ rời rạc",
+        "2.4 Priority Queue (Hàng đợi ưu tiên) & Kỹ thuật Hai con trỏ (Two Pointers)"
+      ]
+    },
+    {
+      "module": "Chuyên đề 03: Quy hoạch Động Kinh điển (Dynamic Programming)",
+      "description": "Tư duy tối ưu hóa bài toán con trùng lặp, xây dựng công thức truy hồi và bảng phương án.",
+      "lessons": [
+        "3.1 Quy hoạch động 1 chiều: Bài toán Bậc thang, Dãy con có tổng lớn nhất (Kadane)",
+        "3.2 Dãy con tăng dài nhất (LIS O(N log N)) & Xâu con chung dài nhất (LCS)",
+        "3.3 Bài toán Cái túi (Knapsack 0/1, Bounded & Unbounded Knapsack)",
+        "3.4 Quy hoạch động trên ma trận lưới & Tối ưu hóa bộ nhớ DP"
+      ]
+    },
+    {
+      "module": "Chuyên đề 04: Thuật toán Đồ thị (Graph Algorithms)",
+      "description": "Mô hình hóa bài toán đồ thị, biểu diễn danh sách kề và các thuật toán duyệt đồ thị cơ bản đến nâng cao.",
+      "lessons": [
+        "4.1 Biểu diễn đồ thị, Duyệt theo chiều sâu (DFS) & Duyệt theo chiều rộng (BFS)",
+        "4.2 Cây khung nhỏ nhất (Kruskal & Thuật toán Disjoint Set Union - DSU)",
+        "4.3 Đường đi ngắn nhất nguồn đơn: Thuật toán Dijkstra với priority_queue",
+        "4.4 Đồ thị có hướng không chu trình (DAG) & Sắp xếp Tô pô (Topological Sort)"
+      ]
+    }
+  ]
+}

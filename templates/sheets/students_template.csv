@@ -1,4 +1,4 @@
-STT,Họ Tên,Email,Codeforces Handle,VNOI Handle,LQDOJ Handle,Trạng thái
-1,Nguyễn Văn An,an.nguyen@example.com,tourist,TAQUAN,tranvanphan17071987,Active
-2,Trần Thị Bình,binh.tran@example.com,Petr,bach_hoc_code,AnhtriIt2,Active
-3,Lê Hoàng Cường,cuong.le@example.com,Benq,nguyenducdoanh008377,quoctuann79,Active
+STT,Họ Tên,Email,Codeforces Handle,VJudge Handle,MarisaOJ Handle,Trạng thái
+1,Nguyễn Văn An,an.nguyen@example.com,tourist,an_vjudge,an_marisa,Active
+2,Trần Thị Bình,binh.tran@example.com,Petr,binh_vjudge,binh_marisa,Active
+3,Lê Hoàng Cường,cuong.le@example.com,Benq,cuong_vj,cuong_marisa,Active
