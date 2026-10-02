@@ -122,7 +122,7 @@
             Cổng Thông Tin Học Tập & Theo Dõi Tiến Độ
           </h1>
           <p class="text-slate-400 text-sm md:text-base leading-relaxed">
-            Hệ thống hỗ trợ tự động chấm và theo dõi bài nộp của học sinh từ <strong>Codeforces</strong> (đề thi), <strong>VJudge</strong> (Codeforces, VNOI, CSES) và <strong>MarisaOJ</strong>.
+            Hệ thống hỗ trợ tự động chấm và theo dõi bài nộp của học sinh từ <strong>MarisaOJ</strong>, <strong>VJudge</strong> và <strong>Codeforces</strong>.
           </p>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 shrink-0">
@@ -179,11 +179,21 @@
     <!-- TAB 3: DANH SÁCH BÀI TẬP & ĐỀ THI -->
     <!-- ========================================== -->
     <section id="section-problems" class="space-y-6 hidden">
-      <div>
-        <h2 class="text-xl font-bold text-white flex items-center gap-2">
-          📝 Kho Bài Tập & Đề Thi Phân Loại
-        </h2>
-        <p class="text-xs text-slate-400">Bấm vào từng bài để trực tiếp chuyển đến trang nộp bài của nền tảng tương ứng</p>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            📝 Kho Bài Tập & Đề Thi Phân Loại
+          </h2>
+          <p class="text-xs text-slate-400">Bấm vào từng bài để trực tiếp chuyển đến trang nộp bài của nền tảng tương ứng</p>
+        </div>
+
+        <!-- Filter tabs: Tất cả, MarisaOJ, VJudge, Codeforces -->
+        <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
+          <button onclick="filterProblems('all')" id="prob-filter-all" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition">Tất cả</button>
+          <button onclick="filterProblems('MarisaOJ')" id="prob-filter-MarisaOJ" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🟣 MarisaOJ</button>
+          <button onclick="filterProblems('VJudge')" id="prob-filter-VJudge" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🟢 VJudge</button>
+          <button onclick="filterProblems('Codeforces')" id="prob-filter-Codeforces" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🔵 Codeforces</button>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="problems-grid">
@@ -318,8 +328,8 @@
             { id: "CF-71A", name: "Way Too Long Words", platform: "Codeforces", badge_color: "blue", url: "https://codeforces.com/problemset/problem/71/A", difficulty: "800" },
             { id: "CF-158B", name: "Taxi (Tham lam)", platform: "Codeforces", badge_color: "blue", url: "https://codeforces.com/problemset/problem/158/B", difficulty: "1100" },
             { id: "CF-4A", name: "Watermelon", platform: "Codeforces", badge_color: "blue", url: "https://codeforces.com/problemset/problem/4/A", difficulty: "800" },
-            { id: "VJ-CSES-1068", name: "Weird Algorithm", platform: "VJudge (CSES)", badge_color: "emerald", url: "https://vjudge.net/problem/CSES-1068", difficulty: "Intro" },
-            { id: "VJ-VNOI-nklineup", name: "Hàng cây (Segment Tree)", platform: "VJudge (VNOI)", badge_color: "emerald", url: "https://vjudge.net/problem/SPOJ-NKLINEUP", difficulty: "Medium" },
+            { id: "VJ-CSES-1068", name: "Weird Algorithm", platform: "VJudge", badge_color: "emerald", url: "https://vjudge.net/problem/CSES-1068", difficulty: "Intro" },
+            { id: "VJ-VNOI-nklineup", name: "Hàng cây (Segment Tree)", platform: "VJudge", badge_color: "emerald", url: "https://vjudge.net/problem/SPOJ-NKLINEUP", difficulty: "Medium" },
             { id: "MARISA-1", name: "Tổng hai số A + B", platform: "MarisaOJ", badge_color: "purple", url: "https://marisaoj.com/problem/1", difficulty: "Căn bản" },
             { id: "MARISA-20", name: "Dãy con tăng dài nhất", platform: "MarisaOJ", badge_color: "purple", url: "https://marisaoj.com/problem/20", difficulty: "Quy hoạch động" }
           ],
@@ -463,25 +473,58 @@
     }
 
     // 3. RENDER PROBLEMS
-    function renderProblems() {
+    let currentProblemFilter = 'all';
+
+    function filterProblems(filter) {
+      currentProblemFilter = filter;
+      ['all', 'MarisaOJ', 'VJudge', 'Codeforces'].forEach(f => {
+        const btn = document.getElementById(`prob-filter-${f}`);
+        if (btn) {
+          if (f === filter) {
+            btn.className = "px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition";
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition";
+          }
+        }
+      });
+      renderProblems(filter);
+    }
+
+    function getPlatformName(platform) {
+      if (!platform) return 'VJudge';
+      const p = platform.toLowerCase();
+      if (p.includes('codeforces')) return 'Codeforces';
+      if (p.includes('marisa')) return 'MarisaOJ';
+      return 'VJudge';
+    }
+
+    function renderProblems(filter = currentProblemFilter) {
       const grid = document.getElementById('problems-grid');
+      if (!grid || !appData || !appData.problems) return;
       grid.innerHTML = '';
 
-      appData.problems.forEach(p => {
+      const filteredList = appData.problems.filter(p => {
+        const plat = getPlatformName(p.platform);
+        return filter === 'all' || plat === filter;
+      });
+
+      filteredList.forEach(p => {
         const card = document.createElement('div');
         card.className = "bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-xl p-5 flex flex-col justify-between transition group";
         
+        const plat = getPlatformName(p.platform);
         let platBadge = "";
-        if (p.platform.includes("Codeforces")) {
-          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-blue-500/10 text-blue-300 border border-blue-500/20">Codeforces (Làm đề)</span>`;
-        } else if (p.platform.includes("VJudge")) {
-          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">${p.platform}</span>`;
+        if (plat === "Codeforces") {
+          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-blue-500/10 text-blue-300 border border-blue-500/20">Codeforces</span>`;
+        } else if (plat === "VJudge") {
+          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">VJudge</span>`;
         } else {
           platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-purple-500/10 text-purple-300 border border-purple-500/20">MarisaOJ</span>`;
         }
 
         // Count solved
-        const solvedCount = appData.students.filter(s => s.solved && s.solved.includes(p.id)).length;
+        const solvedCount = appData.students ? appData.students.filter(s => s.solved && s.solved.includes(p.id)).length : 0;
+        const totalStudents = appData.students ? appData.students.length : 0;
 
         card.innerHTML = `
           <div class="space-y-3">
@@ -494,7 +537,7 @@
           </div>
           <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
             <div class="text-xs text-slate-400 font-mono">
-              Đã AC: <span class="text-emerald-400 font-bold">${solvedCount}/${appData.students.length}</span>
+              Đã AC: <span class="text-emerald-400 font-bold">${solvedCount}/${totalStudents}</span>
             </div>
             <a href="${p.url}" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1">
               Làm bài ↗

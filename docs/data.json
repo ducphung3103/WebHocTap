@@ -14,7 +14,7 @@
       "name": "Way Too Long Words",
       "platform": "Codeforces",
       "badge_color": "blue",
-      "category": "Làm đề thi",
+      "category": "Codeforces",
       "url": "https://codeforces.com/problemset/problem/71/A",
       "difficulty": "800"
     },
@@ -23,7 +23,7 @@
       "name": "Taxi (Tham lam)",
       "platform": "Codeforces",
       "badge_color": "blue",
-      "category": "Làm đề thi",
+      "category": "Codeforces",
       "url": "https://codeforces.com/problemset/problem/158/B",
       "difficulty": "1100"
     },
@@ -32,25 +32,25 @@
       "name": "Watermelon",
       "platform": "Codeforces",
       "badge_color": "blue",
-      "category": "Làm đề thi",
+      "category": "Codeforces",
       "url": "https://codeforces.com/problemset/problem/4/A",
       "difficulty": "800"
     },
     {
       "id": "VJ-CSES-1068",
       "name": "Weird Algorithm (Collatz)",
-      "platform": "VJudge (CSES)",
+      "platform": "VJudge",
       "badge_color": "emerald",
-      "category": "Luyện tập VJudge",
+      "category": "VJudge",
       "url": "https://vjudge.net/problem/CSES-1068",
       "difficulty": "CSES Introductory"
     },
     {
       "id": "VJ-VNOI-nklineup",
       "name": "Hàng cây (Segment Tree)",
-      "platform": "VJudge (VNOI)",
+      "platform": "VJudge",
       "badge_color": "emerald",
-      "category": "Luyện tập VJudge",
+      "category": "VJudge",
       "url": "https://vjudge.net/problem/SPOJ-NKLINEUP",
       "difficulty": "VNOI Medium"
     },
@@ -59,7 +59,7 @@
       "name": "Tổng hai số A + B",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "Chuyên đề MarisaOJ",
+      "category": "MarisaOJ",
       "url": "https://marisaoj.com/problem/1",
       "difficulty": "Căn bản"
     },
@@ -68,7 +68,7 @@
       "name": "Dãy con tăng dài nhất (LIS)",
       "platform": "MarisaOJ",
       "badge_color": "purple",
-      "category": "Chuyên đề MarisaOJ",
+      "category": "MarisaOJ",
       "url": "https://marisaoj.com/problem/20",
       "difficulty": "Quy hoạch động"
     }
