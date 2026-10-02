@@ -64,7 +64,7 @@
     <div class="relative w-full max-w-md bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6">
       
       <!-- Close Button -->
-      <button onclick="hideAuthModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white text-lg p-1 transition" title="Đóng và xem chế độ Public">
+      <button onclick="hideAuthModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white text-lg p-1 transition cursor-pointer" title="Đóng và xem Trang Chủ Giới Thiệu">
         ✕
       </button>
 
@@ -79,6 +79,9 @@
         <p class="text-xs sm:text-sm text-slate-400">
           Nhập <strong class="text-indigo-300">Mã PIN cá nhân</strong> của học sinh hoặc <strong class="text-amber-300">Mật khẩu Giáo viên</strong>
         </p>
+        <div id="auth-modal-notice" class="hidden text-xs text-amber-300 bg-amber-500/10 border border-amber-500/30 px-3 py-2 rounded-xl text-left leading-relaxed">
+          🔒 Toàn bộ thông tin học tập, bảng xếp hạng và bài giảng được bảo mật. Bắt buộc phải có tài khoản để truy cập!
+        </div>
       </div>
 
       <!-- Auth Form -->
@@ -96,7 +99,7 @@
               required
               class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition pr-10 font-mono tracking-wider"
             />
-            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3 text-slate-400 hover:text-slate-200 text-sm">
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3 text-slate-400 hover:text-slate-200 text-sm cursor-pointer">
               👁️
             </button>
           </div>
@@ -122,8 +125,8 @@
           <span>🍪</span> Hệ thống sẽ tự động lưu đăng nhập bằng <strong>Cookie</strong> (chỉ cần đăng nhập 1 lần)
         </div>
         <div>
-          <button onclick="hideAuthModal()" class="text-xs text-indigo-400 hover:underline">
-            Bỏ qua & Xem Bảng Xếp Hạng Public →
+          <button onclick="hideAuthModal()" class="text-xs text-slate-400 hover:text-slate-200 hover:underline cursor-pointer">
+            ✕ Đóng lại & Xem Trang Chủ Giới Thiệu
           </button>
         </div>
       </div>
@@ -160,25 +163,25 @@
 
         <!-- Navigation Tabs -->
         <nav class="hidden md:flex items-center space-x-1 font-medium text-sm" id="nav-tabs">
-          <button onclick="switchTab('leaderboard')" id="tab-btn-home" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 flex items-center gap-1.5 transition">
-            🏠 Trang Chủ
+          <button onclick="switchTab('home')" id="tab-btn-home" class="tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition font-semibold cursor-pointer">
+            🏠 Giới Thiệu
           </button>
-          <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition">
+          <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
             🏆 Bảng Xếp Hạng
           </button>
-          <button onclick="switchTab('contests')" id="tab-btn-contests" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+          <button onclick="switchTab('contests')" id="tab-btn-contests" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
             <span>⚔️</span> Contest
           </button>
-          <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+          <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
             📝 Bài Tập
           </button>
-          <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
+          <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
             📚 Bài Giảng
           </button>
           <a href="student.html" id="tab-btn-student" class="tab-btn px-3 py-2 rounded-lg text-indigo-300 hover:text-white hover:bg-indigo-600/20 border border-transparent hover:border-indigo-500/30 flex items-center gap-1.5 transition font-semibold">
             <span>👤</span> Tiến Độ Cá Nhân
           </a>
-          <button onclick="switchTab('admin')" id="tab-btn-admin" class="tab-btn hidden px-3 py-2 rounded-lg text-amber-300 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 flex items-center gap-1.5 transition font-semibold">
+          <button onclick="switchTab('admin')" id="tab-btn-admin" class="tab-btn hidden px-3 py-2 rounded-lg text-amber-300 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 flex items-center gap-1.5 transition font-semibold cursor-pointer">
             <span>👑</span> Quản Trị Hệ Thống
             <span class="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">ADMIN</span>
           </button>
@@ -188,7 +191,7 @@
         <div class="flex items-center gap-2.5">
           <div id="user-badge" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1.5">
             <span>👤</span>
-            <span id="user-display-name">Khách (Public)</span>
+            <span id="user-display-name">Khách (Chưa đăng nhập)</span>
           </div>
           <button id="btn-auth-action" onclick="showAuthModal()" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white border border-indigo-500/40 transition flex items-center gap-1 cursor-pointer" title="Đăng nhập hoặc đăng xuất">
             <span>🔑</span>
@@ -199,11 +202,12 @@
 
       <!-- Mobile Tab Bar -->
       <div class="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-slate-800 text-xs">
-        <button onclick="switchTab('leaderboard')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300">🏠 Trang chủ / BXH</button>
-        <button onclick="switchTab('contests')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
-        <button onclick="switchTab('problems')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
-        <button onclick="switchTab('curriculum')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</button>
-        <a href="student.html" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
+        <button onclick="switchTab('home')" id="tab-btn-home-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold">🏠 Giới thiệu</button>
+        <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">🏆 BXH</button>
+        <button onclick="switchTab('contests')" id="tab-btn-contests-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
+        <button onclick="switchTab('problems')" id="tab-btn-problems-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
+        <button onclick="switchTab('curriculum')" id="tab-btn-curriculum-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</button>
+        <a href="student.html" id="tab-btn-student-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
         <button onclick="switchTab('admin')" id="tab-btn-admin-mobile" class="tab-btn hidden px-3 py-1.5 rounded-lg whitespace-nowrap text-amber-300 bg-amber-500/10">👑 Quản trị</button>
       </div>
     </div>
@@ -212,41 +216,235 @@
   <!-- MAIN CONTENT CONTAINER -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-    <!-- HERO INTRO -->
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-900 border border-indigo-500/20 p-4 sm:p-5">
-      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div class="space-y-1.5 max-w-2xl">
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">
-            <span>🎯</span> Deruck's Competitive Programming
+    <!-- ========================================== -->
+    <!-- SECTION 0: TRANG CHỦ GIỚI THIỆU (PUBLIC LANDING PAGE) -->
+    <!-- ========================================== -->
+    <section id="section-home" class="space-y-8">
+      
+      <!-- HERO BANNER -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border border-indigo-500/30 p-6 sm:p-8 shadow-2xl">
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div class="space-y-3 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>HỆ THỐNG ĐÀO TẠO & LUYỆN LẬP TRÌNH THI ĐẤU</span>
+            </div>
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-tight">
+              Deruck's Competitive Programming
+            </h1>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+              Cổng học tập chuyên sâu thuật toán, cấu trúc dữ liệu và bồi dưỡng kỹ năng lập trình thi đấu. Chuẩn bị vững chắc cho học sinh định hướng thi Chuyên Tin, Học sinh giỏi (HSG) các cấp và Olympic Tin học.
+            </p>
+            
+            <!-- Quick Actions -->
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <button onclick="showAuthModal()" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/30 flex items-center gap-2 cursor-pointer active:scale-95">
+                <span>🔑</span>
+                <span>Đăng Nhập Bằng Mã PIN / Tài Khoản</span>
+                <span>→</span>
+              </button>
+              <button onclick="document.getElementById('courses-section')?.scrollIntoView({behavior: 'smooth'})" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 transition flex items-center gap-1.5 cursor-pointer">
+                <span>📖</span>
+                <span>Xem Các Lớp Học</span>
+              </button>
+            </div>
           </div>
-          <h1 class="text-lg md:text-xl font-bold text-white tracking-tight">
-            Deruck's Competitive Programming - Cổng Học Tập & Thi Đấu
-          </h1>
-          <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
-            Hệ thống quản lý bài tập, bài giảng và theo dõi tiến độ lập trình thi đấu.
-          </p>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 shrink-0">
-          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2.5 text-center min-w-[75px]">
-            <div class="text-[11px] text-slate-400">Thành viên</div>
-            <div class="text-base md:text-lg font-bold text-white font-mono" id="stat-students">10</div>
-          </div>
-          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2.5 text-center min-w-[75px]">
-            <div class="text-[11px] text-slate-400">Bài tập</div>
-            <div class="text-base md:text-lg font-bold text-indigo-400 font-mono" id="stat-problems">7</div>
-          </div>
-          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2.5 text-center col-span-2 sm:col-span-1 min-w-[75px]">
-            <div class="text-[11px] text-slate-400">Tỉ lệ AC</div>
-            <div class="text-base md:text-lg font-bold text-emerald-400 font-mono">68%</div>
+
+          <!-- Feature Highlights Box -->
+          <div class="grid grid-cols-2 gap-3 shrink-0 lg:w-80">
+            <div class="bg-slate-900/90 border border-indigo-500/20 rounded-2xl p-3.5 space-y-1">
+              <div class="text-indigo-400 text-lg">⚡</div>
+              <div class="text-xs font-bold text-white">3 Lớp Trọng Điểm</div>
+              <div class="text-[11px] text-slate-400">C++, Python & Kèm 1-1</div>
+            </div>
+            <div class="bg-slate-900/90 border border-indigo-500/20 rounded-2xl p-3.5 space-y-1">
+              <div class="text-emerald-400 text-lg">🤖</div>
+              <div class="text-xs font-bold text-white">Chấm Tự Động</div>
+              <div class="text-[11px] text-slate-400">Codeforces, VNOI, Marisa</div>
+            </div>
+            <div class="bg-slate-900/90 border border-indigo-500/20 rounded-2xl p-3.5 space-y-1">
+              <div class="text-purple-400 text-lg">📊</div>
+              <div class="text-xs font-bold text-white">Heatmap Cá Nhân</div>
+              <div class="text-[11px] text-slate-400">Theo dõi nộp bài 365 ngày</div>
+            </div>
+            <div class="bg-slate-900/90 border border-indigo-500/20 rounded-2xl p-3.5 space-y-1">
+              <div class="text-amber-400 text-lg">🏆</div>
+              <div class="text-xs font-bold text-white">Contest Định Kỳ</div>
+              <div class="text-[11px] text-slate-400">Bảng xếp hạng Rating ELO</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- SECURITY NOTICE CALLOUT -->
+      <div class="rounded-2xl bg-slate-900/80 border border-amber-500/30 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-lg">
+        <div class="flex items-start sm:items-center gap-3.5">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-xl shrink-0 text-amber-300">
+            🔒
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              Khu Vực Nội Bộ Dành Cho Học Viên & Phụ Huynh
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase">Bảo mật</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">
+              Toàn bộ Bảng xếp hạng chi tiết, Ngân hàng bài tập giao về nhà và Hệ thống bài giảng được mã hóa bảo mật. Vui lòng đăng nhập bằng Mã PIN cá nhân để truy cập.
+            </p>
+          </div>
+        </div>
+        <button onclick="showAuthModal()" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 transition shrink-0 self-start sm:self-auto cursor-pointer">
+          Đăng Nhập Ngay →
+        </button>
+      </div>
+
+      <!-- COURSES SECTION -->
+      <div id="courses-section" class="space-y-4 pt-2">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span>🎯</span> Các Chương Trình Đào Tạo Trọng Điểm
+            </h2>
+            <p class="text-xs text-slate-400">Lộ trình bài bản từ nền tảng đến nâng cao, bám sát cấu trúc đề thi HSG và Olympic</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Class C++ -->
+          <div class="rounded-2xl bg-slate-900 border border-blue-500/30 p-5 space-y-4 flex flex-col justify-between hover:border-blue-500/50 transition">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">Lớp C++ Thuật Toán</span>
+                <span class="text-xs text-slate-400">Nâng cao</span>
+              </div>
+              <h3 class="text-base font-bold text-white">Competitive Programming & HSG</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Trang bị cấu trúc dữ liệu và thuật toán nâng cao: Cây phân đoạn (Segment Tree), Quy hoạch động (DP), Đồ thị (Graph, DSU, Dijkstra), Lý thuyết số.
+              </p>
+              <div class="text-[11px] text-slate-400 space-y-1 pt-1 font-mono">
+                <div>• Mục tiêu: HSG Tỉnh/TP, Quốc gia, Chuyên Tin</div>
+                <div>• Nền tảng: Codeforces, VNOI, VJudge</div>
+              </div>
+            </div>
+            <button onclick="showAuthModal()" class="w-full py-2 rounded-xl text-xs font-semibold text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition text-center cursor-pointer">
+              Đăng nhập để vào lớp C++ →
+            </button>
+          </div>
+
+          <!-- Class Python -->
+          <div class="rounded-2xl bg-slate-900 border border-emerald-500/30 p-5 space-y-4 flex flex-col justify-between hover:border-emerald-500/50 transition">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Lớp Python Nền Tảng</span>
+                <span class="text-xs text-slate-400">Cơ bản → Trung cấp</span>
+              </div>
+              <h3 class="text-base font-bold text-white">Tư Duy Thuật Toán Cơ Bản</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Rèn luyện tư duy logic, kỹ thuật đệ quy, vét cạn toàn bộ (Brute Force), thuật toán tham lam (Greedy), tìm kiếm nhị phân và xử lý mảng/xâu.
+              </p>
+              <div class="text-[11px] text-slate-400 space-y-1 pt-1 font-mono">
+                <div>• Mục tiêu: Tin học trẻ, HSG Quận/Huyện</div>
+                <div>• Nền tảng: MarisaOJ, ChuyenTinOJ</div>
+              </div>
+            </div>
+            <button onclick="showAuthModal()" class="w-full py-2 rounded-xl text-xs font-semibold text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 transition text-center cursor-pointer">
+              Đăng nhập để vào lớp Python →
+            </button>
+          </div>
+
+          <!-- Class 1-1 -->
+          <div class="rounded-2xl bg-slate-900 border border-purple-500/30 p-5 space-y-4 flex flex-col justify-between hover:border-purple-500/50 transition">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">Kèm Riêng 1-1</span>
+                <span class="text-xs text-slate-400">Cá nhân hóa 100%</span>
+              </div>
+              <h3 class="text-base font-bold text-white">Lộ Trình Tăng Tốc Đặc Biệt</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Giáo trình thiết kế riêng biệt theo mục tiêu cá nhân của từng học viên. Hướng dẫn trực tiếp, sửa bài từng dòng code và chuẩn bị gấp rút trước kỳ thi.
+              </p>
+              <div class="text-[11px] text-slate-400 space-y-1 pt-1 font-mono">
+                <div>• Mục tiêu: Đạt giải mục tiêu, thi chuyển cấp</div>
+                <div>• Hình thức: Trực tuyến kèm 1-1 tương tác cao</div>
+              </div>
+            </div>
+            <button onclick="showAuthModal()" class="w-full py-2 rounded-xl text-xs font-semibold text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 transition text-center cursor-pointer">
+              Đăng nhập để vào lớp 1-1 →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEATURES & ECOSYSTEM -->
+      <div class="rounded-3xl bg-slate-900/60 border border-slate-800 p-6 sm:p-8 space-y-6">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>✨</span> Tính Năng Nổi Bật Của Hệ Thống Học Tập
+          </h2>
+          <p class="text-xs text-slate-400">Ứng dụng công nghệ tự động hóa hỗ trợ tối đa cho học sinh trong quá trình rèn luyện</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2">
+            <div class="text-2xl">🔄</div>
+            <h4 class="text-sm font-bold text-white">Auto-Sync Đa Nền Tảng</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Tự động thu thập bài nộp thành công từ Codeforces, MarisaOJ, VNOI, VJudge mà học sinh không cần báo cáo thủ công.
+            </p>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2">
+            <div class="text-2xl">📈</div>
+            <h4 class="text-sm font-bold text-white">Heatmap Hoạt Động</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Biểu đồ trực quan hóa số lượng bài giải mỗi ngày giống GitHub, giúp duy trì thói quen luyện code đều đặn suốt 365 ngày.
+            </p>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2">
+            <div class="text-2xl">🛡️</div>
+            <h4 class="text-sm font-bold text-white">Bảo Mật Quyền Riêng Tư</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Học sinh chỉ xem tiến độ và bài nộp của chính mình qua mã PIN cá nhân, tôn trọng tối đa quyền riêng tư và tạo tâm lý học tập thoải mái.
+            </p>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2">
+            <div class="text-2xl">⚔️</div>
+            <h4 class="text-sm font-bold text-white">Contest Rating ELO</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Hệ thống tổ chức thi đấu định kỳ tính điểm Rating thực chiến, rèn bản lĩnh thi cử và kỹ năng phân bổ thời gian làm bài.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- INSTRUCTOR & SCHEDULE -->
+      <div class="rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-3xl shadow-lg shrink-0">
+            👨‍🏫
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-base font-bold text-white">Giảng viên Thầy Đức (Deruck)</h3>
+            <p class="text-xs text-slate-400">Huấn luyện viên Lập trình thi đấu • Kinh nghiệm bồi dưỡng nhiều thế hệ học sinh đạt giải HSG và Olympic Tin học</p>
+            <div class="flex flex-wrap items-center gap-3 pt-1 text-xs text-indigo-300 font-mono">
+              <span>📅 Lịch học: Tối T3 & T7 (19:30 - 21:30)</span>
+              <span>💬 Hỗ trợ giải đáp 24/7</span>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="showAuthModal()" class="px-5 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/30 shrink-0 cursor-pointer">
+          Đăng Nhập Ngay →
+        </button>
+      </div>
+
+    </section>
 
     <!-- ========================================== -->
-    <!-- BẢNG XẾP HẠNG & TIẾN ĐỘ GIẢI BÀI (DEFAULT TAB) -->
+    <!-- BẢNG XẾP HẠNG & TIẾN ĐỘ GIẢI BÀI (YÊU CẦU ĐĂNG NHẬP) -->
     <!-- ========================================== -->
-    <section id="section-leaderboard" class="space-y-6">
+    <section id="section-leaderboard" class="space-y-6 hidden">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
@@ -1088,8 +1286,12 @@
       // Check hash tab routing
       if (window.location.hash) {
         const hashTab = window.location.hash.replace('#', '');
-        if (['leaderboard', 'contests', 'problems', 'curriculum', 'admin'].includes(hashTab)) {
-          switchTab(hashTab);
+        if (['home', 'leaderboard', 'contests', 'problems', 'curriculum', 'admin'].includes(hashTab)) {
+          if (currentAuth || hashTab === 'home') {
+            switchTab(hashTab);
+          } else {
+            switchTab('home');
+          }
         }
       }
 
@@ -1148,15 +1350,25 @@
 
     // TAB SWITCHING & HASH ROUTING (INCLUDES ADMIN TAB & RETURN HOME)
     function switchTab(tabName) {
+      if (!currentAuth && tabName !== 'home') {
+        showAuthModal();
+        const noticeEl = document.getElementById('auth-modal-notice');
+        if (noticeEl) {
+          noticeEl.classList.remove('hidden');
+          noticeEl.textContent = '🔒 Toàn bộ thông tin học tập, bảng xếp hạng và bài giảng được bảo mật. Bắt buộc phải có tài khoản để xem!';
+        }
+        tabName = 'home';
+      }
+
       if (tabName === 'admin' && (!currentAuth || currentAuth.role !== 'admin')) {
         alert('Chỉ tài khoản Giáo viên (ADMIN) mới có quyền truy cập bảng điều khiển này! Vui lòng đăng nhập.');
         showAuthModal();
-        return;
+        tabName = currentAuth ? 'leaderboard' : 'home';
       }
 
       window.location.hash = tabName;
 
-      const sections = ['leaderboard', 'contests', 'problems', 'curriculum', 'admin'];
+      const sections = ['home', 'leaderboard', 'contests', 'problems', 'curriculum', 'admin'];
       sections.forEach(s => {
         const el = document.getElementById(`section-${s}`);
         const btn = document.getElementById(`tab-btn-${s}`);
@@ -1179,16 +1391,6 @@
           if (mBtn) mBtn.className = "tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400";
         }
       });
-
-      // Update home button state
-      const homeBtn = document.getElementById('tab-btn-home');
-      if (homeBtn) {
-        if (tabName === 'leaderboard') {
-          homeBtn.className = "tab-btn px-3 py-2 rounded-lg text-white bg-slate-800/80 flex items-center gap-1.5 transition";
-        } else {
-          homeBtn.className = "tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 flex items-center gap-1.5 transition";
-        }
-      }
 
       if (tabName === 'admin') {
         renderAdminDashboard();
@@ -1503,6 +1705,29 @@
       const body = document.getElementById('matrix-body');
       if (!head || !body) return;
 
+      if (!currentAuth) {
+        head.innerHTML = '';
+        body.innerHTML = `
+          <tr>
+            <td colspan="8" class="px-4 py-16 text-center text-slate-400">
+              <div class="max-w-md mx-auto space-y-4">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl">🔒</div>
+                <div class="space-y-1">
+                  <div class="font-bold text-white text-base">Bảng Xếp Hạng Được Bảo Mật</div>
+                  <div class="text-xs text-slate-400 leading-relaxed">
+                    Bắt buộc phải có tài khoản để xem thông tin học sinh, điểm số rating và bảng xếp hạng thi đua.
+                  </div>
+                </div>
+                <button onclick="showAuthModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/25 cursor-pointer">
+                  🔑 Đăng Nhập Bằng Mã PIN →
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
       const searchInput = document.getElementById('leaderboard-search-input');
       const query = (filterText || (searchInput ? searchInput.value : '')).toLowerCase().trim();
 
@@ -1559,17 +1784,16 @@
 
     // ROLE & PERMISSION CHECK FOR CONTENT (PROBLEMS & CURRICULUM)
     function canViewItem(item) {
+      if (!currentAuth) return false;
       const classes = item.classes || [];
-      // Public / Tất cả / All or empty is visible to all classes and guests
+      if (currentAuth.role === 'admin') return true;
       if (classes.length === 0 || classes.includes('Public') || classes.includes('Tất cả') || classes.includes('All')) {
         return true;
       }
-      if (currentAuth && currentAuth.role === 'admin') return true;
-      if (currentAuth && currentAuth.role === 'student') {
+      if (currentAuth.role === 'student' || currentAuth.role === 'class') {
         return classes.includes('Public') || classes.includes(currentAuth.class);
       }
-      // Guest: can view if public or multi-class
-      return classes.includes('Public') || classes.length >= 2;
+      return false;
     }
 
     // 2. RENDER PROBLEMS
@@ -1622,6 +1846,22 @@
     function renderProblems(filter = currentProblemFilter) {
       const grid = document.getElementById('problems-grid');
       if (!grid || !appData || !appData.problems) return;
+
+      if (!currentAuth) {
+        grid.innerHTML = `
+          <div class="col-span-full p-12 text-center bg-slate-900/60 border border-slate-800 rounded-2xl space-y-4">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl">🔒</div>
+            <div class="space-y-1">
+              <div class="font-bold text-white text-base">Kho Bài Tập Được Bảo Mật</div>
+              <p class="text-xs text-slate-400">Bắt buộc phải đăng nhập bằng Mã PIN hoặc Mật khẩu để truy cập danh sách bài tập được giao.</p>
+            </div>
+            <button onclick="showAuthModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/25 cursor-pointer">
+              🔑 Đăng Nhập Bằng Mã PIN →
+            </button>
+          </div>
+        `;
+        return;
+      }
       grid.innerHTML = '';
 
       const totalStudents = (appData.students || []).length;
@@ -1743,6 +1983,22 @@
     function renderCurriculum() {
       const list = document.getElementById('curriculum-list');
       if (!list || !appData || !appData.curriculum) return;
+
+      if (!currentAuth) {
+        list.innerHTML = `
+          <div class="p-12 text-center bg-slate-900/60 border border-slate-800 rounded-2xl space-y-4">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl">🔒</div>
+            <div class="space-y-1">
+              <div class="font-bold text-white text-base">Hệ Thống Bài Giảng Được Bảo Mật</div>
+              <p class="text-xs text-slate-400">Bắt buộc phải đăng nhập bằng Mã PIN hoặc Mật khẩu để xem giáo trình và bài giảng lý thuyết.</p>
+            </div>
+            <button onclick="showAuthModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/25 cursor-pointer">
+              🔑 Đăng Nhập Bằng Mã PIN →
+            </button>
+          </div>
+        `;
+        return;
+      }
       list.innerHTML = '';
 
       let lectures = appData.curriculum.filter(l => {
@@ -1916,6 +2172,22 @@
     function renderContests(filter = currentContestFilter) {
       const grid = document.getElementById('contests-grid');
       if (!grid || !appData.contests) return;
+
+      if (!currentAuth) {
+        grid.innerHTML = `
+          <div class="col-span-full p-12 text-center bg-slate-900/60 border border-slate-800 rounded-2xl space-y-4">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-2xl">🔒</div>
+            <div class="space-y-1">
+              <div class="font-bold text-white text-base">Đấu Trường & Kỳ Thi Được Bảo Mật</div>
+              <p class="text-xs text-slate-400">Bắt buộc phải có tài khoản để tham gia và xem bảng điểm contest.</p>
+            </div>
+            <button onclick="showAuthModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/25 cursor-pointer">
+              🔑 Đăng Nhập Bằng Mã PIN →
+            </button>
+          </div>
+        `;
+        return;
+      }
       grid.innerHTML = '';
 
       const list = appData.contests.filter(c => filter === 'all' || c.status === filter);
@@ -2259,6 +2531,11 @@
         setAuthCookie(currentAuth);
         hideAuthModal();
         applyAuthAccess();
+        if (currentAuth.role === 'admin') {
+          switchTab('admin');
+        } else {
+          switchTab('leaderboard');
+        }
       } else {
         errorMsg.classList.remove('hidden');
         input.classList.add('border-rose-500');
@@ -2280,47 +2557,117 @@
       const adminBtn = document.getElementById('tab-btn-admin');
       const adminBtnMobile = document.getElementById('tab-btn-admin-mobile');
       const studentTabBtn = document.getElementById('tab-btn-student');
+      const studentTabBtnMobile = document.getElementById('tab-btn-student-mobile');
+
+      const dataTabs = ['leaderboard', 'contests', 'problems', 'curriculum'];
 
       if (!currentAuth) {
-        // Guest mode
-        if (nameEl) nameEl.textContent = 'Khách (Public)';
+        // Guest mode: strictly public landing page only
+        if (nameEl) nameEl.textContent = 'Khách (Chưa đăng nhập)';
         if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1.5";
         if (authBtn) {
           authBtn.onclick = showAuthModal;
           authBtn.innerHTML = `<span>🔑</span> <span class="hidden sm:inline">Đăng nhập</span>`;
           authBtn.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white border border-indigo-500/40 transition flex items-center gap-1 cursor-pointer";
         }
+        // Admin tab ALWAYS hidden for guests
         if (adminBtn) adminBtn.classList.add('hidden');
         if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+
+        // Personal profile button for guest triggers modal
         if (studentTabBtn) {
           studentTabBtn.href = "javascript:void(0)";
           studentTabBtn.onclick = () => { showAuthModal(); return false; };
+          studentTabBtn.innerHTML = `<span>👤</span> Tiến Độ Cá Nhân <span class="text-[10px] opacity-70">🔒</span>`;
         }
+        if (studentTabBtnMobile) {
+          studentTabBtnMobile.href = "javascript:void(0)";
+          studentTabBtnMobile.onclick = () => { showAuthModal(); return false; };
+          studentTabBtnMobile.innerHTML = `👤 Cá nhân 🔒`;
+        }
+
+        // Lock badges and guards on data tabs for guest
+        dataTabs.forEach(t => {
+          const btn = document.getElementById(`tab-btn-${t}`);
+          const mBtn = document.getElementById(`tab-btn-${t}-mobile`);
+          if (btn) {
+            btn.onclick = () => { showAuthModal(); return false; };
+            if (!btn.innerHTML.includes('🔒')) {
+              btn.innerHTML += ` <span class="text-[10px] opacity-70">🔒</span>`;
+            }
+          }
+          if (mBtn) {
+            mBtn.onclick = () => { showAuthModal(); return false; };
+            if (!mBtn.innerHTML.includes('🔒')) {
+              mBtn.innerHTML += ` 🔒`;
+            }
+          }
+        });
+
+        // Ensure we are viewing public home section
+        switchTab('home');
+
       } else {
-        // Logged in
+        // Authenticated mode: remove locks and enable click handlers
+        dataTabs.forEach(t => {
+          const btn = document.getElementById(`tab-btn-${t}`);
+          const mBtn = document.getElementById(`tab-btn-${t}-mobile`);
+          if (btn) {
+            btn.onclick = () => switchTab(t);
+            btn.innerHTML = btn.innerHTML.replace(/<span class="text-\[10px\] opacity-70">🔒<\/span>/g, '').replace(/🔒/g, '').trim();
+          }
+          if (mBtn) {
+            mBtn.onclick = () => switchTab(t);
+            mBtn.innerHTML = mBtn.innerHTML.replace(/🔒/g, '').trim();
+          }
+        });
+
         if (currentAuth.role === 'admin') {
           if (nameEl) nameEl.textContent = '👑 Giáo viên (Admin)';
           if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5";
+          // ONLY ADMIN SEES ADMIN TAB
           if (adminBtn) adminBtn.classList.remove('hidden');
           if (adminBtnMobile) adminBtnMobile.classList.remove('hidden');
+
           if (studentTabBtn) {
             studentTabBtn.href = "student.html?id=1";
             studentTabBtn.onclick = null;
+            studentTabBtn.innerHTML = `<span>👤</span> Tiến Độ Học Viên`;
+          }
+          if (studentTabBtnMobile) {
+            studentTabBtnMobile.href = "student.html?id=1";
+            studentTabBtnMobile.onclick = null;
+            studentTabBtnMobile.innerHTML = `👤 Tiến độ`;
           }
         } else if (currentAuth.role === 'student') {
           if (nameEl) nameEl.textContent = `👤 ${currentAuth.name} (${currentAuth.class})`;
           if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5";
+          // ADMIN TAB MUST BE HIDDEN FOR STUDENTS
           if (adminBtn) adminBtn.classList.add('hidden');
           if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+
           if (studentTabBtn) {
             studentTabBtn.href = `student.html?id=${currentAuth.stt || 1}`;
             studentTabBtn.onclick = null;
+            studentTabBtn.innerHTML = `<span>👤</span> Tiến Độ Của Bạn`;
+          }
+          if (studentTabBtnMobile) {
+            studentTabBtnMobile.href = `student.html?id=${currentAuth.stt || 1}`;
+            studentTabBtnMobile.onclick = null;
+            studentTabBtnMobile.innerHTML = `👤 Của bạn`;
           }
         } else {
+          // CLASS / OTHER
           if (nameEl) nameEl.textContent = `👥 ${currentAuth.name}`;
           if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5";
           if (adminBtn) adminBtn.classList.add('hidden');
           if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+
+          if (studentTabBtn) {
+            studentTabBtn.href = "student.html?id=1";
+            studentTabBtn.onclick = null;
+            studentTabBtn.innerHTML = `<span>👤</span> Tiến Độ Lớp`;
+          }
         }
 
         if (authBtn) {
@@ -2337,6 +2684,7 @@
       renderMatrix();
       renderProblems();
       renderCurriculum();
+      renderContests();
     }
 
     // Modal quick permission helpers
