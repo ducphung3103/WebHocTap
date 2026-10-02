@@ -87,6 +87,9 @@
           <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition">
             📚 Lý thuyết
           </button>
+          <a href="student.html" class="px-3 py-2 rounded-lg text-indigo-300 hover:text-white hover:bg-indigo-600/20 border border-transparent hover:border-indigo-500/30 flex items-center gap-1.5 transition font-semibold">
+            <span>👤</span> Tiến Độ Cá Nhân
+          </a>
         </nav>
 
         <!-- Right Quick Actions -->
@@ -104,6 +107,7 @@
         <button onclick="switchTab('contests')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
         <button onclick="switchTab('problems')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
         <button onclick="switchTab('curriculum')" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Lý thuyết</button>
+        <a href="student.html" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
       </div>
     </div>
   </header>
@@ -382,7 +386,10 @@
       renderMatrix(q);
     }
 
-    function getRatingBadge(rating) {
+    function getRatingBadge(rating, title = 'Newbie') {
+      if (title === 'Newbie' || !title || rating <= 1200) {
+        return `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-700/40 text-slate-400 border border-slate-700">Newbie ⚪</span>`;
+      }
       if (rating >= 2100) {
         return `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">Master 🔴</span>`;
       } else if (rating >= 1900) {
@@ -403,21 +410,24 @@
       const body = document.getElementById('matrix-body');
       if (!head || !body) return;
 
-      // Clean Header: Rank, Coder, Contest Rating, Contest Title, Total Solved
+      // Header: Hạng, Coder, Danh hiệu, 1 Tuần, 1 Tháng, 1 Năm, Tổng AC, Hồ sơ
       head.innerHTML = `<tr>
-        <th class="px-4 py-3.5 text-center w-16">Hạng</th>
-        <th class="px-4 py-3.5">Coder & Tài khoản</th>
-        <th class="px-4 py-3.5 text-center">Contest Rating</th>
-        <th class="px-4 py-3.5 text-center">Danh hiệu Contest</th>
-        <th class="px-4 py-3.5 text-center">Tổng bài đã AC</th>
+        <th class="px-3 py-3.5 text-center w-14">Hạng</th>
+        <th class="px-4 py-3.5">Coder & Lớp học</th>
+        <th class="px-3 py-3.5 text-center">Danh hiệu</th>
+        <th class="px-3 py-3.5 text-center">1 Tuần</th>
+        <th class="px-3 py-3.5 text-center">1 Tháng</th>
+        <th class="px-3 py-3.5 text-center">1 Năm</th>
+        <th class="px-3.5 py-3.5 text-center">Tổng AC</th>
+        <th class="px-3.5 py-3.5 text-center">Hồ sơ</th>
       </tr>`;
 
-      // Sort students by Contest Rating descending (fallback to AC count)
+      // Sort students by Total Solved descending (since ratings are all Newbie 1200)
       const sorted = [...(appData.students || [])].sort((a, b) => {
-        const rB = b.rating || 0;
-        const rA = a.rating || 0;
-        if (rB !== rA) return rB - rA;
-        return (b.solved?.length || 0) - (a.solved?.length || 0);
+        const totalB = (b.stats ? b.stats.total : (b.solved ? b.solved.length : 0));
+        const totalA = (a.stats ? a.stats.total : (a.solved ? a.solved.length : 0));
+        if (totalB !== totalA) return totalB - totalA;
+        return (b.target_solved_count || 0) - (a.target_solved_count || 0);
       });
 
       const query = (filterText || '').toLowerCase().trim();
@@ -446,7 +456,7 @@
           changeBadge = `<span class="text-[11px] font-mono text-rose-400 font-bold ml-1.5">${ratingChange}</span>`;
         }
 
-        const titleBadge = getRatingBadge(rating);
+        const titleBadge = getRatingBadge(rating, s.title || 'Newbie');
 
         let handlesList = [];
         if (s.cf_handle && s.cf_handle.trim()) {
@@ -465,35 +475,53 @@
 
         const classBadge = s.class ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">${s.class}</span>` : '';
 
+        const stWeek = s.stats ? s.stats.week : (s.target_solved_count || 0);
+        const stMonth = s.stats ? s.stats.month : totalAc;
+        const stYear = s.stats ? s.stats.year : totalAc;
+        const stTotal = s.stats ? s.stats.total : totalAc;
+
         tr.innerHTML = `
-          <td class="px-4 py-3.5 text-center font-bold font-mono text-sm">${rankMedal}</td>
+          <td class="px-3 py-3.5 text-center font-bold font-mono text-sm">${rankMedal}</td>
           <td class="px-4 py-3.5 font-semibold text-white">
             <div class="flex items-center gap-2">
-              <span class="text-white font-bold text-base">${s.name}</span>
+              <a href="student.html?id=${s.stt}" class="text-white hover:text-indigo-400 font-bold text-base transition flex items-center gap-1 group">
+                <span>${s.name}</span>
+                <span class="text-xs text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+              </a>
               ${classBadge}
             </div>
             <div class="text-[11px] font-mono text-slate-400 font-normal flex items-center gap-2 mt-1 flex-wrap">
               ${handlesHtml}
             </div>
           </td>
-          <td class="px-4 py-3.5 text-center font-mono">
-            <span class="text-base font-extrabold text-white">${rating}</span>
-            ${changeBadge}
-          </td>
-          <td class="px-4 py-3.5 text-center">
+          <td class="px-3 py-3.5 text-center font-mono">
             ${titleBadge}
           </td>
-          <td class="px-4 py-3.5 text-center">
+          <td class="px-3 py-3.5 text-center font-mono">
+            <span class="text-sm font-bold ${stWeek > 0 ? 'text-indigo-400' : 'text-slate-500'}">${stWeek}</span>
+          </td>
+          <td class="px-3 py-3.5 text-center font-mono">
+            <span class="text-sm font-bold ${stMonth > 0 ? 'text-purple-300' : 'text-slate-500'}">${stMonth}</span>
+          </td>
+          <td class="px-3 py-3.5 text-center font-mono">
+            <span class="text-sm font-bold ${stYear > 0 ? 'text-emerald-400' : 'text-slate-500'}">${stYear}</span>
+          </td>
+          <td class="px-3.5 py-3.5 text-center">
             <div class="inline-flex flex-col items-center">
-              <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-indigo-300 border border-slate-700">
-                ${totalAc} bài AC
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-rose-300 border border-slate-700">
+                ${stTotal} bài
               </span>
               ${s.target_solved_count !== undefined ? `
-                <span class="text-[10px] text-slate-400 font-mono mt-0.5" title="Số bài đã giải trong danh sách 8 bài được giao">
+                <span class="text-[10px] text-slate-400 font-mono mt-0.5" title="Đề tuần này">
                   Đề tuần: <strong class="text-emerald-400">${s.target_solved_count}/${appData.problems ? appData.problems.length : 8}</strong>
                 </span>
               ` : ''}
             </div>
+          </td>
+          <td class="px-3.5 py-3.5 text-center">
+            <a href="student.html?id=${s.stt}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 hover:border-indigo-500/60 transition whitespace-nowrap">
+              <span>👤</span> Xem Heatmap ↗
+            </a>
           </td>
         `;
         body.appendChild(tr);
