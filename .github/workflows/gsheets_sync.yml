@@ -1,9 +1,6 @@
 name: Google Sheets Auto Sync
 
 on:
-  schedule:
-    # Auto-sync every 30 minutes
-    - cron: '*/30 * * * *'
   repository_dispatch:
     # Triggered instantly via Google Apps Script webhook
     types: [gsheets_updated]
@@ -18,6 +15,7 @@ jobs:
   sync:
     name: Sync Google Sheets to Web
     runs-on: ubuntu-latest
+    if: "${{ secrets.SPREADSHEET_ID != '' && secrets.GCP_SA_KEY != '' }}"
 
     permissions:
       contents: write

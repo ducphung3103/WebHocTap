@@ -1,9 +1,6 @@
 name: Online Judge Auto Tracker
 
 on:
-  schedule:
-    # Run every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
-    - cron: '0 */6 * * *'
   workflow_dispatch: # Allows manual trigger from GitHub Actions UI
 
 concurrency:
@@ -14,6 +11,7 @@ jobs:
   sync:
     name: Sync Student Progress
     runs-on: ubuntu-latest
+    if: "${{ secrets.SPREADSHEET_ID != '' && secrets.GCP_SA_KEY != '' }}"
 
     steps:
       - name: Checkout Code

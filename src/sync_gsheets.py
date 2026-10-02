@@ -22,22 +22,65 @@ def hash_str(val: str) -> str:
     return hashlib.sha256(val.strip().encode("utf-8")).hexdigest()
 
 
-def get_worksheet_by_title(spreadsheet: gspread.Spreadsheet, title: str) -> Optional[gspread.Worksheet]:
+def get_worksheet_by_title(spreadsheet: gspread.Spreadsheet, target_names: List[str]) -> Optional[gspread.Worksheet]:
     try:
-        return spreadsheet.worksheet(title)
+        ws_map = {ws.title.strip().lower(): ws for ws in spreadsheet.worksheets()}
+        # 1. Exact match
+        for name in target_names:
+            key = name.strip().lower()
+            if key in ws_map:
+                return ws_map[key]
+        # 2. Fuzzy match
+        for ws_title, ws in ws_map.items():
+            for name in target_names:
+                if name.lower() in ws_title or ws_title in name.lower():
+                    return ws
     except Exception:
-        # Fallback case-insensitive match
-        for ws in spreadsheet.worksheets():
-            if ws.title.strip().lower() == title.strip().lower():
-                return ws
-        return None
+        pass
+    return None
+
+
+def git_push() -> bool:
+    import subprocess
+    print("\n📤 Đang commit và đẩy lên GitHub Pages...")
+    try:
+        subprocess.run(["git", "add", "docs/data.json"], check=True)
+        res = subprocess.run(["git", "diff", "--staged", "--quiet"])
+        if res.returncode != 0:
+            subprocess.run(["git", "commit", "-m", "update: sync data from google sheets"], check=True)
+            subprocess.run(["git", "push", "origin", "master"], check=True)
+            print("✅ [HOÀN TẤT] Hệ thống đã được cập nhật trực tuyến trên GitHub Pages!\n")
+        else:
+            print("ℹ️ Dữ liệu đã mới nhất trên GitHub, không có thay đổi nào cần push.\n")
+        return True
+    except Exception as e:
+        print(f"❌ [LỖI PUSH GITHUB] {e}\n")
+        return False
 
 
 def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/data.json") -> bool:
     settings = get_settings()
     sheet_id = (spreadsheet_id or settings.spreadsheet_id).strip()
+
     if not sheet_id:
-        logger.error("SPREADSHEET_ID is not configured in settings or environment variable!")
+        print("\n========================================================")
+        print("  🔑 CẤU HÌNH LIÊN KẾT GOOGLE SHEETS")
+        print("========================================================")
+        try:
+            val = input("Vui lòng dán link Google Sheet (hoặc mã Spreadsheet ID) của thầy: ").strip()
+            if "/d/" in val:
+                val = val.split("/d/")[1].split("/")[0]
+            sheet_id = val
+            if sheet_id:
+                with open(".env", "a", encoding="utf-8") as f:
+                    f.write(f"\nSPREADSHEET_ID={sheet_id}\n")
+                print(f"✅ Đã lưu SPREADSHEET_ID vào .env để sử dụng cho các lần sau!\n")
+        except (KeyboardInterrupt, EOFError):
+            print()
+            return False
+
+    if not sheet_id:
+        logger.error("Chưa cung cấp SPREADSHEET_ID!")
         print("❌ Lỗi: Chưa cung cấp SPREADSHEET_ID. Vui lòng thiết lập biến môi trường hoặc trong .env!")
         return False
 
@@ -57,9 +100,20 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
         gc = gspread.authorize(credentials)
         sh = gc.open_by_key(sheet_id)
         logger.info(f"Connected to Google Spreadsheet: '{sh.title}'")
+        print(f"📡 Đã kết nối thành công tới Google Trang Tính: '{sh.title}'")
     except Exception as e:
         logger.error(f"Failed to connect to Google Sheets: {e}")
-        print(f"❌ Lỗi kết nối Google Sheets: {e}")
+        print(f"\n❌ Lỗi kết nối Google Sheets: {e}")
+        sa_email = sa_info.get("client_email", "")
+        if "403" in str(e) or "permission" in str(e).lower():
+            print("\n💡 HƯỚNG DẪN KHẮC PHỤC:")
+            print(f"Tài khoản dịch vụ chưa được cấp quyền mở Google Sheet.")
+            print(f"👉 Thầy hãy mở Google Sheet, bấm nút 'Chia sẻ' (Share) ở góc trên bên phải.")
+            print(f"👉 Dán email sau vào với quyền 'Người xem' (Viewer):\n   {sa_email}\n")
+        elif "404" in str(e):
+            print("\n💡 HƯỚNG DẪN KHẮC PHỤC:")
+            print(f"Không tìm thấy Google Sheet có ID: {sheet_id}")
+            print(f"👉 Vui lòng kiểm tra lại đường link hoặc mã Spreadsheet ID trong file .env!\n")
         return False
 
     # Load existing docs/data.json
@@ -75,7 +129,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
 
     # 1. Parse Security Config ("Cấu Hình Bảo Mật")
     auth_tokens = {}
-    ws_sec = get_worksheet_by_title(sh, "Cấu Hình Bảo Mật")
+    ws_sec = get_worksheet_by_title(sh, ["Cấu Hình Bảo Mật", "Cau Hinh Bao Mat", "Bảo Mật", "Security"])
     if ws_sec:
         sec_rows = ws_sec.get_all_values()
         for r in sec_rows[1:]:  # skip header
@@ -88,8 +142,8 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                 if role_val == "ADMIN":
                     auth_tokens[token_hash] = {
                         "role": "admin",
-                        "name": "Giáo viên (Admin)",
-                        "class": "all"
+                        "name": target or "Giáo viên (Admin)",
+                        "class": "ALL"
                     }
                 elif role_val == "CLASS":
                     cls_name = target
@@ -100,16 +154,18 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                         "class": cls_key
                     }
     else:
-        # Fallback defaults
-        auth_tokens[hash_str("THAYPHUNG2026")] = {"role": "admin", "name": "Giáo viên (Admin)", "class": "all"}
-        auth_tokens[hash_str("CPP2026")] = {"role": "class", "name": "Lớp C++", "class": "C++"}
-        auth_tokens[hash_str("PYTHON2026")] = {"role": "class", "name": "Lớp Python", "class": "Python"}
-        auth_tokens[hash_str("VIP11")] = {"role": "class", "name": "Lớp Python 1-1", "class": "Python 1-1"}
+        # Fallback to existing tokens if available
+        auth_tokens = existing_data.get("auth_tokens", {})
+        if not auth_tokens:
+            auth_tokens[hash_str("NgocTrinh3101")] = {"role": "admin", "name": "Giáo viên (Admin)", "class": "ALL"}
+            auth_tokens[hash_str("CPP2026")] = {"role": "class", "name": "Lớp C++", "class": "C++"}
+            auth_tokens[hash_str("PYTHON2026")] = {"role": "class", "name": "Lớp Python", "class": "Python"}
+            auth_tokens[hash_str("VIP11")] = {"role": "class", "name": "Lớp Python 1-1", "class": "Python 1-1"}
 
     # 2. Parse Problems ("Bài Tập")
     problems = []
     class_problems_map = {"C++": [], "Python": [], "Python 1-1": []}
-    ws_prob = get_worksheet_by_title(sh, "Bài Tập")
+    ws_prob = get_worksheet_by_title(sh, ["Bài Tập", "Bai Tap", "Theo dõi Bài tập", "Problems"])
     if ws_prob:
         prob_rows = ws_prob.get_all_values()
         for r in prob_rows[1:]:
@@ -148,9 +204,12 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     if c in class_problems_map:
                         class_problems_map[c].append(pid)
 
+    if not problems:
+        problems = existing_data.get("problems", [])
+
     # 3. Parse Lectures ("Bài Giảng")
     curriculum = []
-    ws_lec = get_worksheet_by_title(sh, "Bài Giảng")
+    ws_lec = get_worksheet_by_title(sh, ["Bài Giảng", "Bai Giang", "Lectures", "Curriculum"])
     if ws_lec:
         lec_rows = ws_lec.get_all_values()
         for idx, r in enumerate(lec_rows[1:], 2):
@@ -182,15 +241,17 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     "summary": summary
                 })
 
+    if not curriculum:
+        curriculum = existing_data.get("curriculum", [])
+
     # 4. Parse Tuition Fees ("Học Phí")
     tuition_months = []
     tuition_data = {}
-    ws_fee = get_worksheet_by_title(sh, "Học Phí")
+    ws_fee = get_worksheet_by_title(sh, ["Học Phí", "Hoc Phi", "Tuition", "Fee"])
     if ws_fee:
         fee_rows = ws_fee.get_all_values()
         if fee_rows:
             header_row = fee_rows[0]
-            # Months are from column index 2 onwards
             for c_idx in range(2, len(header_row)):
                 m_val = header_row[c_idx].strip()
                 if m_val:
@@ -205,13 +266,16 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                         st_fee_map[m] = True if cell_val == "x" else False
                     tuition_data[fee_name] = st_fee_map
 
+    if not tuition_months:
+        tuition_months = existing_data.get("tuition_months", ["Tháng 9", "Tháng 10"])
+
     # 5. Parse Students ("Học Sinh")
     students = []
-    ws_stu = get_worksheet_by_title(sh, "Học Sinh")
+    ws_stu = get_worksheet_by_title(sh, ["Học Sinh", "Hoc Sinh", "Danh sách Học sinh", "Danh sach Hoc sinh", "Students"])
     if ws_stu:
         stu_rows = ws_stu.get_all_values()
         for idx, r in enumerate(stu_rows[1:], 1):
-            if not r or not r[1].strip():
+            if not r or len(r) < 2 or not r[1].strip():
                 continue
             stt = r[0].strip() if r[0].strip() else str(idx)
             name_str = r[1].strip()
@@ -251,7 +315,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                 "solved": all_solved,
                 "target_solved": target_solved,
                 "target_solved_count": len(target_solved),
-                "target_class_total": len(class_prob_ids),
+                "target_class_total": len(class_prob_ids) if class_prob_ids else 8,
                 "total_solved_count": len(all_solved),
                 "rating": existing_st.get("rating", 0),
                 "title": existing_st.get("title", "Newbie"),
@@ -268,26 +332,32 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     "class": cls_str
                 }
 
-    class_config = {
+    # SAFETY GUARD: Never wipe out existing student list
+    if not students:
+        logger.warning("Không tìm thấy học sinh nào từ Google Sheet. Giữ nguyên dữ liệu hiện tại để bảo vệ website.")
+        print("⚠️ CẢNH BÁO: Sheet 'Học Sinh' rỗng hoặc chưa khớp cấu trúc. Giữ nguyên danh sách học sinh hiện có!")
+        students = existing_data.get("students", [])
+
+    class_config = existing_data.get("class_config", {
         "C++": {
             "name": "Lớp C++",
             "badge_color": "bg-blue-500/15 text-blue-300 border-blue-500/30",
-            "total_problems": len(class_problems_map.get("C++", [])),
+            "total_problems": len(class_problems_map.get("C++", [])) or 8,
             "problem_ids": class_problems_map.get("C++", [])
         },
         "Python": {
             "name": "Lớp Python",
             "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-            "total_problems": len(class_problems_map.get("Python", [])),
+            "total_problems": len(class_problems_map.get("Python", [])) or 8,
             "problem_ids": class_problems_map.get("Python", [])
         },
         "Python 1-1": {
             "name": "Lớp Python 1-1",
             "badge_color": "bg-purple-500/15 text-purple-300 border-purple-500/30",
-            "total_problems": len(class_problems_map.get("Python 1-1", [])),
+            "total_problems": len(class_problems_map.get("Python 1-1", [])) or 8,
             "problem_ids": class_problems_map.get("Python 1-1", [])
         }
-    }
+    })
 
     final_data = existing_data if existing_data else {}
     final_data["students"] = students
@@ -307,5 +377,23 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
 
 
 if __name__ == "__main__":
-    sid = sys.argv[1] if len(sys.argv) > 1 else None
-    sync_gsheets(sid)
+    import argparse
+    parser = argparse.ArgumentParser(description="Sync Google Sheets to Web")
+    parser.add_argument("--push", action="store_true", help="Auto push to GitHub")
+    parser.add_argument("--no-push", action="store_true", help="Skip push")
+    parser.add_argument("sheet_id", nargs="?", default=None, help="Google Spreadsheet ID")
+    args = parser.parse_args()
+
+    ok = sync_gsheets(args.sheet_id)
+    if ok:
+        if args.push:
+            git_push()
+        elif not args.no_push:
+            try:
+                ans = input("\nBạn có muốn tự động PUSH lên GitHub Pages không? (Y/n): ").strip().lower()
+                if ans in ["", "y", "yes", "co", "c", "1"]:
+                    git_push()
+                else:
+                    print("ℹ️ Dữ liệu đã cập nhật vào docs/data.json.\n")
+            except (KeyboardInterrupt, EOFError):
+                print("\n")
