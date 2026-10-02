@@ -130,119 +130,119 @@
         "Tháng 10": false
       },
       "solved": [
-        "CF-2260B",
-        "CF-2269A",
-        "CF-2267B",
-        "CF-2267A",
-        "CF-236A",
-        "CF-2266B",
-        "CF-2266A",
-        "CF-443A",
-        "CF-1398C",
-        "CF-4C",
-        "CF-466C",
-        "CF-313B",
-        "CF-295A",
-        "CF-816B",
-        "CF-2167A",
-        "CLUE-tq_ts10_26_b",
-        "CLUE-tq_ts10_26_a",
-        "CLUE-dnai_ts10_26_e",
-        "CLUE-dnai_ts10_26_d",
-        "CLUE-dnai_ts10_26_c",
-        "CLUE-dnai_ts10_26_b",
-        "CLUE-ld_ts10_26_c",
-        "CLUE-ld_ts10_26_b",
         "CLUE-ld_ts10_26_a",
-        "CLUE-ct_ts10_26_c",
-        "CLUE-ct_ts10_26_b",
-        "CLUE-ct_ts10_26_a",
-        "CLUE-dt_ts10_25_d",
-        "CLUE-gl_ts10_26_d",
-        "CLUE-kh_ts10_26_d",
-        "CLUE-gl_ts10_26_c",
-        "CLUE-gl_ts10_26_b",
-        "CLUE-gl_ts10_26_a",
-        "CLUE-dhh_ts10_26_a",
-        "CLUE-contest02_d",
-        "CLUE-ls_ts10_26_b",
-        "CLUE-ls_ts10_26_c",
-        "CLUE-ls_ts10_26_a",
-        "CLUE-qngai_ts10_26_c",
-        "CLUE-qngai_ts10_26_b",
-        "CLUE-qngai_ts10_26_d",
-        "CLUE-qngai_ts10_26_a",
-        "CLUE-na_ts10_26_b",
-        "CLUE-tn_ts10_26_a",
-        "CLUE-dt_ts10_26_d",
-        "CLUE-dt_ts10_26_b",
-        "CLUE-dt_ts10_26_a",
         "CLUE-dl_hsg9_26_d",
-        "CLUE-dn_hsg9_26_b",
-        "CLUE-dn_hsg9_26_a",
-        "CLUE-db_ts10_26_a",
-        "CLUE-ht_ts10_26_a",
-        "CLUE-ht_ts10_26_c",
-        "CLUE-ag_ts10_26_d",
-        "CLUE-dhh_ts10_26_b",
-        "CLUE-lc_ts10_26_c",
-        "CLUE-lc_ts10_26_b",
-        "CLUE-lc_ts10_26_a",
-        "CLUE-ag_ts10_26_b",
-        "CLUE-ag_ts10_26_a",
-        "CLUE-dhv_ts10_26_b",
-        "CLUE-tninh_ts10_26_c",
-        "CLUE-tninh_ts10_26_b",
-        "CLUE-tninh_ts10_26_a",
-        "CLUE-th_ts10_26_b",
-        "CLUE-pt_ts10_26_b",
-        "CLUE-dhv_ts10_26_a",
-        "CLUE-contest06_aa",
-        "CLUE-kh_ts10_26_e",
-        "CLUE-kh_ts10_26_c",
-        "CLUE-kh_ts10_26_a",
-        "CLUE-dl_hsg9_26_b",
-        "CLUE-dl_hsg9_26_a",
-        "CLUE-gl_hsg9_26_a",
+        "CLUE-ct_hsg9_26_b",
+        "CLUE-dnai_ts10_26_b",
         "CLUE-kh_ts10_26_b",
-        "CLUE-bl_ts10_25_a",
+        "CLUE-tn_ttts10_25_b",
+        "CLUE-dt_ts10_26_a",
+        "CLUE-nb_ts10_26_d",
+        "CLUE-ct_ts10_26_a",
+        "CLUE-ld_ts10_26_c",
+        "CF-443A",
+        "CLUE-lc_ts10_26_c",
+        "CLUE-ct_hsg9_26_a",
+        "CLUE-hp_hsg9_26_a",
+        "CLUE-gl_ts10_26_b",
+        "CLUE-ls_ts10_26_b",
+        "CLUE-ag_ts10_26_d",
+        "CLUE-kh_ts10_26_a",
+        "CLUE-pt_prets10_26_b",
+        "CLUE-hy_ts10_26_b",
+        "CLUE-ht_ts10_26_a",
+        "CLUE-dhh_ts10_26_b",
+        "CLUE-kh_ts10_26_e",
+        "CLUE-nb_ts10_26_c",
+        "CF-816B",
+        "CLUE-dhv_ts10_26_b",
+        "CLUE-ls_ts10_25_b",
+        "CLUE-dhv_ts10_26_a",
+        "CF-2167A",
+        "CLUE-tq_ts10_26_a",
+        "CF-2266A",
+        "CLUE-dt_ts10_26_b",
+        "CLUE-tg_ts10_25_b",
+        "CF-295A",
+        "CLUE-dhh_ts10_26_a",
+        "CLUE-gl_ts10_26_c",
         "CLUE-dt_ts10_25_c",
+        "CLUE-pt_ts10_26_b",
         "CLUE-dt_ts10_25_b",
+        "CLUE-gl_ts10_26_d",
+        "CLUE-ag_ts10_26_a",
+        "CLUE-nb_ts10_25_a",
+        "CLUE-tq_ts10_26_b",
+        "CF-2266B",
+        "CLUE-tg_ts10_25_c",
+        "CLUE-ct_hsg9_26_c",
+        "CF-236A",
+        "CLUE-dnai_ts10_26_d",
+        "CLUE-dn_hsg9_26_b",
+        "CF-4C",
         "CLUE-dt_ts10_25_a",
         "CLUE-qngai_ts10_25_c",
-        "CLUE-ls_ts10_25_c",
-        "CLUE-hy_ts10_26_b",
-        "CLUE-hy_ts10_26_a",
-        "CLUE-nb_ts10_26_d",
-        "CLUE-nb_ts10_26_c",
-        "CLUE-nb_ts10_26_b",
-        "CLUE-nb_ts10_26_a",
-        "CLUE-qnam_ts10_25_b",
-        "CLUE-nb_ts10_25_a",
-        "CLUE-bg_ts10_25_a",
-        "CLUE-ls_ts10_25_b",
-        "CLUE-ls_ts10_25_a",
-        "CLUE-qngai_ts10_25_b",
-        "CLUE-qngai_ts10_25_a",
-        "CLUE-hp_hsg9_26_a",
-        "CLUE-qt_hsg9_26_a",
         "CLUE-tn_hsg9_26_b",
-        "CLUE-ct_hsg9_26_c",
-        "CLUE-ct_hsg9_26_b",
-        "CLUE-ct_hsg9_26_a",
-        "CLUE-pt_prets10_26_c",
-        "CLUE-pt_prets10_26_b",
-        "CLUE-pt_prets10_26_a",
-        "CLUE-nb_hsg9_26_e",
-        "CLUE-tn_ttts10_25_b",
-        "CLUE-nb_hsg9_26_c",
-        "CLUE-nb_hsg9_26_b",
-        "CLUE-nb_hsg9_26_a",
-        "CLUE-tg_ts10_25_c",
-        "CLUE-tg_ts10_25_b",
-        "CLUE-tg_ts10_25_a",
+        "CLUE-th_ts10_26_b",
         "CLUE-th_ttts10_26_a",
-        "CLUE-th_ttts10_26_b"
+        "CLUE-th_ttts10_26_b",
+        "CLUE-dl_hsg9_26_a",
+        "CLUE-tninh_ts10_26_c",
+        "CLUE-ls_ts10_25_c",
+        "CLUE-ct_ts10_26_b",
+        "CLUE-qngai_ts10_25_b",
+        "CF-466C",
+        "CLUE-qt_hsg9_26_a",
+        "CLUE-na_ts10_26_b",
+        "CF-313B",
+        "CLUE-contest02_d",
+        "CF-2260B",
+        "CLUE-pt_prets10_26_a",
+        "CLUE-ls_ts10_26_c",
+        "CLUE-ht_ts10_26_c",
+        "CLUE-hy_ts10_26_a",
+        "CLUE-bl_ts10_25_a",
+        "CLUE-nb_hsg9_26_b",
+        "CLUE-qngai_ts10_26_b",
+        "CLUE-ct_ts10_26_c",
+        "CLUE-tg_ts10_25_a",
+        "CLUE-nb_ts10_26_b",
+        "CLUE-lc_ts10_26_b",
+        "CLUE-nb_ts10_26_a",
+        "CLUE-dn_hsg9_26_a",
+        "CLUE-nb_hsg9_26_c",
+        "CLUE-dt_ts10_25_d",
+        "CLUE-ls_ts10_26_a",
+        "CLUE-ld_ts10_26_b",
+        "CLUE-qnam_ts10_25_b",
+        "CLUE-tninh_ts10_26_b",
+        "CLUE-tn_ts10_26_a",
+        "CLUE-db_ts10_26_a",
+        "CLUE-tninh_ts10_26_a",
+        "CF-2267B",
+        "CLUE-kh_ts10_26_c",
+        "CLUE-nb_hsg9_26_a",
+        "CLUE-kh_ts10_26_d",
+        "CLUE-qngai_ts10_25_a",
+        "CLUE-qngai_ts10_26_d",
+        "CLUE-ls_ts10_25_a",
+        "CLUE-gl_ts10_26_a",
+        "CLUE-pt_prets10_26_c",
+        "CLUE-dnai_ts10_26_e",
+        "CLUE-lc_ts10_26_a",
+        "CLUE-contest06_aa",
+        "CLUE-bg_ts10_25_a",
+        "CLUE-nb_hsg9_26_e",
+        "CLUE-dt_ts10_26_d",
+        "CLUE-qngai_ts10_26_a",
+        "CLUE-ag_ts10_26_b",
+        "CF-1398C",
+        "CF-2269A",
+        "CLUE-qngai_ts10_26_c",
+        "CLUE-gl_hsg9_26_a",
+        "CLUE-dnai_ts10_26_c",
+        "CF-2267A",
+        "CLUE-dl_hsg9_26_b"
       ],
       "target_solved": [],
       "target_solved_count": 0,
@@ -252,198 +252,198 @@
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 4,
-        "month": 7,
-        "year": 161,
+        "week": 8,
+        "month": 14,
+        "year": 322,
         "total": 113
       },
       "activity": {
         "2026-09-27": {
-          "total": 1,
-          "ac": 1
+          "total": 2,
+          "ac": 2
         },
         "2026-09-26": {
-          "total": 3,
-          "ac": 1
+          "total": 6,
+          "ac": 2
         },
         "2026-09-25": {
-          "total": 7,
-          "ac": 2
+          "total": 14,
+          "ac": 4
         },
         "2026-09-23": {
-          "total": 5,
-          "ac": 1
-        },
-        "2026-09-21": {
-          "total": 2,
+          "total": 10,
           "ac": 2
         },
+        "2026-09-21": {
+          "total": 4,
+          "ac": 4
+        },
         "2026-08-27": {
-          "total": 5,
-          "ac": 3
+          "total": 10,
+          "ac": 6
         },
         "2026-08-20": {
-          "total": 5,
-          "ac": 1
+          "total": 10,
+          "ac": 2
         },
         "2026-08-18": {
-          "total": 6,
-          "ac": 1
+          "total": 12,
+          "ac": 2
         },
         "2026-08-14": {
-          "total": 2,
+          "total": 4,
           "ac": 0
         },
         "2026-08-13": {
-          "total": 5,
+          "total": 10,
           "ac": 0
         },
         "2026-08-12": {
-          "total": 1,
-          "ac": 1
+          "total": 2,
+          "ac": 2
         },
         "2026-08-11": {
-          "total": 11,
-          "ac": 4
+          "total": 22,
+          "ac": 8
         },
         "2026-08-04": {
-          "total": 2,
+          "total": 4,
           "ac": 0
         },
         "2026-06-26": {
-          "total": 1,
-          "ac": 1
+          "total": 2,
+          "ac": 2
         },
         "2026-05-03": {
-          "total": 4,
+          "total": 8,
           "ac": 0
         },
         "2026-07-16": {
-          "total": 9,
-          "ac": 8
+          "total": 18,
+          "ac": 16
         },
         "2026-07-15": {
-          "total": 1,
+          "total": 2,
           "ac": 0
         },
         "2026-07-14": {
-          "total": 1,
+          "total": 2,
           "ac": 0
         },
         "2026-07-13": {
-          "total": 5,
-          "ac": 3
-        },
-        "2026-07-03": {
-          "total": 4,
-          "ac": 4
-        },
-        "2026-07-02": {
-          "total": 8,
-          "ac": 7
-        },
-        "2026-06-19": {
-          "total": 4,
-          "ac": 2
-        },
-        "2026-06-18": {
-          "total": 6,
-          "ac": 2
-        },
-        "2026-06-17": {
-          "total": 6,
+          "total": 10,
           "ac": 6
         },
+        "2026-07-03": {
+          "total": 8,
+          "ac": 8
+        },
+        "2026-07-02": {
+          "total": 16,
+          "ac": 14
+        },
+        "2026-06-19": {
+          "total": 8,
+          "ac": 4
+        },
+        "2026-06-18": {
+          "total": 12,
+          "ac": 4
+        },
+        "2026-06-17": {
+          "total": 12,
+          "ac": 12
+        },
         "2026-06-15": {
-          "total": 2,
-          "ac": 2
-        },
-        "2026-06-14": {
-          "total": 4,
-          "ac": 3
-        },
-        "2026-06-12": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-06-10": {
-          "total": 7,
-          "ac": 7
-        },
-        "2026-06-09": {
-          "total": 39,
-          "ac": 26
-        },
-        "2026-06-03": {
-          "total": 2,
-          "ac": 2
-        },
-        "2026-06-02": {
-          "total": 3,
-          "ac": 2
-        },
-        "2026-06-01": {
-          "total": 2,
-          "ac": 2
-        },
-        "2026-05-31": {
           "total": 4,
           "ac": 4
         },
+        "2026-06-14": {
+          "total": 8,
+          "ac": 6
+        },
+        "2026-06-12": {
+          "total": 6,
+          "ac": 4
+        },
+        "2026-06-10": {
+          "total": 14,
+          "ac": 14
+        },
+        "2026-06-09": {
+          "total": 78,
+          "ac": 52
+        },
+        "2026-06-03": {
+          "total": 4,
+          "ac": 4
+        },
+        "2026-06-02": {
+          "total": 6,
+          "ac": 4
+        },
+        "2026-06-01": {
+          "total": 4,
+          "ac": 4
+        },
+        "2026-05-31": {
+          "total": 8,
+          "ac": 8
+        },
         "2026-05-30": {
-          "total": 1,
-          "ac": 1
+          "total": 2,
+          "ac": 2
         },
         "2026-05-28": {
-          "total": 5,
-          "ac": 5
+          "total": 10,
+          "ac": 10
         },
         "2026-05-27": {
-          "total": 9,
-          "ac": 9
+          "total": 18,
+          "ac": 18
         },
         "2026-05-26": {
-          "total": 7,
-          "ac": 5
+          "total": 14,
+          "ac": 10
         },
         "2026-05-25": {
-          "total": 16,
-          "ac": 15
+          "total": 32,
+          "ac": 30
         },
         "2026-05-24": {
-          "total": 1,
+          "total": 2,
           "ac": 0
         },
         "2026-05-23": {
-          "total": 5,
-          "ac": 5
+          "total": 10,
+          "ac": 10
         },
         "2026-05-22": {
-          "total": 6,
-          "ac": 5
+          "total": 12,
+          "ac": 10
         },
         "2026-05-21": {
-          "total": 6,
-          "ac": 6
+          "total": 12,
+          "ac": 12
         },
         "2026-05-20": {
-          "total": 3,
-          "ac": 2
+          "total": 6,
+          "ac": 4
         },
         "2026-05-19": {
-          "total": 6,
-          "ac": 5
+          "total": 12,
+          "ac": 10
         },
         "2026-05-18": {
-          "total": 1,
-          "ac": 1
-        },
-        "2026-05-17": {
           "total": 2,
           "ac": 2
         },
+        "2026-05-17": {
+          "total": 4,
+          "ac": 4
+        },
         "2025-05-31": {
-          "total": 3,
+          "total": 6,
           "ac": 0
         }
       }
@@ -681,16 +681,16 @@
         "Tháng 10": false
       },
       "solved": [
-        "MARISA-1",
-        "MARISA-12",
-        "MARISA-13",
-        "MARISA-5",
-        "MARISA-534",
-        "MARISA-535",
         "MARISA-587",
+        "MARISA-13",
         "MARISA-6",
+        "MARISA-535",
+        "MARISA-5",
+        "MARISA-1",
+        "MARISA-9",
         "MARISA-7",
-        "MARISA-9"
+        "MARISA-534",
+        "MARISA-12"
       ],
       "target_solved": [
         "MARISA-1"
@@ -702,8 +702,8 @@
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 1,
-        "month": 9,
+        "week": 8,
+        "month": 10,
         "year": 10,
         "total": 10
       },
@@ -1602,5 +1602,5 @@
     "Tháng 9",
     "Tháng 10"
   ],
-  "last_updated": "2026-10-02T10:56:33Z"
+  "last_updated": "2026-10-02T11:10:09Z"
 }
