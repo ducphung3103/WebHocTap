@@ -277,41 +277,52 @@
 
       <!-- ACTIVITY HEATMAP (Biểu đồ nhiệt hoạt động) -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <h2 class="text-lg font-bold text-white flex items-center gap-2">
               <span>🟩</span> Biểu Đồ Hoạt Động Nộp Bài (Activity Heatmap)
             </h2>
-            <p class="text-xs text-slate-400">Theo dõi cường độ luyện tập và tần suất nộp bài theo từng ngày</p>
+            <p class="text-xs text-slate-400">Theo dõi cường độ luyện tập và tần suất nộp bài theo từng năm</p>
           </div>
 
-          <!-- Heatmap Legend -->
-          <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
-            <span>Ít</span>
-            <span class="w-3.5 h-3.5 rounded bg-slate-800 border border-slate-700/60 inline-block"></span>
-            <span class="w-3.5 h-3.5 rounded bg-emerald-950 border border-emerald-800/60 inline-block"></span>
-            <span class="w-3.5 h-3.5 rounded bg-emerald-700 inline-block"></span>
-            <span class="w-3.5 h-3.5 rounded bg-emerald-400 inline-block"></span>
-            <span>Nhiều</span>
+          <!-- Heatmap Controls & Legend -->
+          <div class="flex items-center gap-3 flex-wrap">
+            <!-- Year Selector tabs -->
+            <div id="heatmap-year-selector" class="flex items-center gap-1 bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 text-xs">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Heatmap Legend -->
+            <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
+              <span>Ít</span>
+              <span class="w-3.5 h-3.5 rounded bg-slate-800 border border-slate-700/60 inline-block"></span>
+              <span class="w-3.5 h-3.5 rounded bg-emerald-950 border border-emerald-800/60 inline-block"></span>
+              <span class="w-3.5 h-3.5 rounded bg-emerald-700 inline-block"></span>
+              <span class="w-3.5 h-3.5 rounded bg-emerald-400 inline-block"></span>
+              <span>Nhiều</span>
+            </div>
           </div>
         </div>
 
         <!-- Heatmap Grid Container -->
         <div class="overflow-x-auto pb-2">
-          <div id="heatmap-calendar" class="min-w-[650px] space-y-2">
+          <div id="heatmap-calendar" class="min-w-fit w-max space-y-2">
             <!-- Heatmap days rendered via JS -->
           </div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-800 text-xs">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-800 text-xs">
           <div class="text-slate-400">
             Ngày tích cực nhất: <strong class="text-emerald-400 font-mono" id="heatmap-max-day">--</strong>
           </div>
           <div class="text-slate-400">
             Số ngày có nộp bài: <strong class="text-indigo-400 font-mono" id="heatmap-active-days">0 ngày</strong>
           </div>
-          <div class="text-slate-400 col-span-2 sm:col-span-1">
-            Nền tảng chính: <strong class="text-purple-400">MarisaOJ</strong>
+          <div class="text-slate-400">
+            Tổng nộp trong năm: <strong class="text-purple-300 font-mono" id="heatmap-total-subs">0 bài (0 AC)</strong>
+          </div>
+          <div class="text-slate-400">
+            Nền tảng hoạt động: <strong class="text-cyan-400" id="heatmap-platforms">--</strong>
           </div>
         </div>
       </div>
@@ -559,8 +570,8 @@
       // Homework Progress specific to student's class
       renderHomeworkChecklist(student);
 
-      // Activity Heatmap
-      renderHeatmap(student);
+      // Activity Heatmap & Year Switching
+      setupStudentHeatmap(student);
 
       // Solved Archive Table
       renderSolvedArchive(student);
@@ -635,58 +646,168 @@
       return `${year}-${month}-${day}`;
     }
 
-    function renderHeatmap(student) {
+    let currentHeatmapYear = '2026';
+
+    function setupStudentHeatmap(student) {
+      const currentYear = new Date().getFullYear();
+      const yearsSet = new Set([currentYear]);
+      Object.keys(student.activity || {}).forEach(k => {
+        const y = parseInt(k.split('-')[0]);
+        if (!isNaN(y)) yearsSet.add(y);
+      });
+      if (yearsSet.size === 1) {
+        yearsSet.add(currentYear - 1);
+      }
+      const availableYears = Array.from(yearsSet).sort((a, b) => b - a);
+
+      if (currentHeatmapYear !== 'recent' && !yearsSet.has(parseInt(currentHeatmapYear))) {
+        currentHeatmapYear = String(availableYears[0]);
+      }
+
+      renderYearSelector(student, availableYears);
+      renderHeatmap(student, currentHeatmapYear);
+    }
+
+    function renderYearSelector(student, availableYears) {
+      const container = document.getElementById('heatmap-year-selector');
+      if (!container) return;
+      container.innerHTML = '';
+
+      availableYears.forEach(yr => {
+        const btn = document.createElement('button');
+        const isAct = String(yr) === String(currentHeatmapYear);
+        btn.className = isAct 
+          ? "px-3 py-1 rounded-lg font-bold text-xs bg-indigo-600 text-white shadow-sm transition"
+          : "px-3 py-1 rounded-lg font-medium text-xs text-slate-400 hover:text-white hover:bg-slate-700/60 transition";
+        btn.textContent = `Năm ${yr}`;
+        btn.onclick = () => {
+          currentHeatmapYear = String(yr);
+          renderYearSelector(student, availableYears);
+          renderHeatmap(student, currentHeatmapYear);
+        };
+        container.appendChild(btn);
+      });
+
+      const recentBtn = document.createElement('button');
+      const isRecentAct = currentHeatmapYear === 'recent';
+      recentBtn.className = isRecentAct
+        ? "px-3 py-1 rounded-lg font-bold text-xs bg-indigo-600 text-white shadow-sm transition"
+        : "px-3 py-1 rounded-lg font-medium text-xs text-slate-400 hover:text-white hover:bg-slate-700/60 transition";
+      recentBtn.textContent = '16 tuần qua';
+      recentBtn.onclick = () => {
+        currentHeatmapYear = 'recent';
+        renderYearSelector(student, availableYears);
+        renderHeatmap(student, currentHeatmapYear);
+      };
+      container.appendChild(recentBtn);
+    }
+
+    function renderHeatmap(student, yearMode) {
       const container = document.getElementById('heatmap-calendar');
       if (!container) return;
       container.innerHTML = '';
 
+      const mode = yearMode || currentHeatmapYear || '2026';
       const activity = student.activity || {};
-      const dates = Object.keys(activity).sort();
+      const now = new Date();
+
+      let startDate, endDate;
+      let targetYear = null;
+
+      if (mode === 'recent') {
+        const endDayOfWeek = now.getDay();
+        const daysUntilSunday = (7 - endDayOfWeek) % 7;
+        endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilSunday);
+        startDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() - (16 * 7 - 1));
+      } else {
+        targetYear = parseInt(mode) || now.getFullYear();
+        startDate = new Date(targetYear, 0, 1);
+        endDate = new Date(targetYear, 11, 31);
+      }
+
+      // Monday offset for week 0: (getDay() + 6) % 7
+      const startDayOffset = (startDate.getDay() + 6) % 7;
+      const startMonday = new Date(startDate);
+      startMonday.setDate(startMonday.getDate() - startDayOffset);
+
+      // Sunday offset for last week: (7 - ((getDay() + 6) % 7 + 1)) % 7
+      const endDayOffset = (7 - ((endDate.getDay() + 6) % 7 + 1)) % 7;
+      const endSunday = new Date(endDate);
+      endSunday.setDate(endSunday.getDate() + endDayOffset);
+
+      const weeks = [];
+      let cur = new Date(startMonday);
+      let curWeek = [];
+
       let activeDaysCount = 0;
       let maxDay = '--';
       let maxCount = 0;
+      let totalSubs = 0;
+      let totalAc = 0;
 
-      dates.forEach(d => {
-        const item = activity[d];
-        if (item.total > 0) activeDaysCount++;
-        if (item.total > maxCount) {
-          maxCount = item.total;
-          maxDay = `${d} (${item.total} bài)`;
-        }
-      });
-
-      document.getElementById('heatmap-max-day').textContent = maxDay;
-      document.getElementById('heatmap-active-days').textContent = `${activeDaysCount} ngày`;
-
-      // Build 16-week timeline ending on upcoming Sunday (dynamic and timezone-safe)
-      const now = new Date();
-      const endDayOfWeek = now.getDay();
-      const daysUntilSunday = (7 - endDayOfWeek) % 7;
-      const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilSunday);
-      const startDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() - (16 * 7 - 1));
-      
-      const weeks = [];
-      let cur = new Date(startDate);
-      let curWeek = [];
-
-      while (cur <= endDate) {
+      while (cur <= endSunday) {
         const iso = formatDateKey(cur);
-        const dayOfWeek = cur.getDay(); // 0 is Sunday, 1 is Monday...
+        const dayIndex = (cur.getDay() + 6) % 7;
         const act = activity[iso] || { total: 0, ac: 0 };
-        curWeek.push({ date: iso, act, dayOfWeek, month: cur.getMonth() + 1 });
+        const isInRange = (mode === 'recent')
+          ? (cur >= startDate && cur <= endDate)
+          : (cur.getFullYear() === targetYear);
 
-        if (dayOfWeek === 0 || cur.getTime() >= endDate.getTime()) {
+        if (isInRange && act.total > 0) {
+          activeDaysCount++;
+          totalSubs += act.total;
+          totalAc += act.ac;
+          if (act.total > maxCount) {
+            maxCount = act.total;
+            maxDay = `${iso} (${act.total} bài)`;
+          }
+        }
+
+        curWeek.push({
+          date: iso,
+          act,
+          dayIndex,
+          month: cur.getMonth() + 1,
+          isInRange
+        });
+
+        if (curWeek.length === 7) {
           weeks.push(curWeek);
           curWeek = [];
         }
         cur.setDate(cur.getDate() + 1);
       }
 
+      // Update stat cards below heatmap
+      const maxDayEl = document.getElementById('heatmap-max-day');
+      if (maxDayEl) maxDayEl.textContent = maxDay;
+
+      const activeDaysEl = document.getElementById('heatmap-active-days');
+      if (activeDaysEl) activeDaysEl.textContent = `${activeDaysCount} ngày`;
+
+      const totalSubsEl = document.getElementById('heatmap-total-subs');
+      if (totalSubsEl) {
+        totalSubsEl.textContent = `${totalSubs} bài (${totalAc} AC)`;
+      }
+
+      const platformsEl = document.getElementById('heatmap-platforms');
+      if (platformsEl) {
+        const plats = [];
+        if (student.marisa_handle) plats.push('Marisa');
+        if (student.cf_handle) plats.push('CF');
+        if (student.clue_handle) plats.push('ClueOJ');
+        if (student.vnoi_handle) plats.push('VNOI');
+        if (student.ctoj_handle) plats.push('CTOJ');
+        if (student.vjudge_handle) plats.push('VJudge');
+        platformsEl.textContent = plats.length > 0 ? plats.join(', ') : 'Chưa liên kết';
+      }
+
       // Month labels header row
       let monthHeaderHtml = '<div class="flex gap-1.5 text-[10px] text-slate-400 font-mono mb-1.5 ml-7">';
       let lastMonth = -1;
       weeks.forEach((w, wIdx) => {
-        const firstDayOfMonth = w.find(d => d.date.endsWith('-01')) || (wIdx === 0 ? w[0] : null);
+        const inRangeDays = w.filter(d => d.isInRange);
+        const firstDayOfMonth = inRangeDays.find(d => d.date.endsWith('-01')) || (wIdx === 0 ? inRangeDays[0] : null);
         if (firstDayOfMonth && firstDayOfMonth.month !== lastMonth) {
           lastMonth = firstDayOfMonth.month;
           monthHeaderHtml += `<div class="w-3.5 text-slate-300 font-bold whitespace-nowrap">Th${lastMonth}</div>`;
@@ -697,8 +818,8 @@
       monthHeaderHtml += '</div>';
 
       // Render weeks as vertical columns
-      let html = monthHeaderHtml + '<div class="flex gap-1.5 items-start justify-between">';
-      
+      let html = monthHeaderHtml + '<div class="flex gap-1.5 items-start">';
+
       // Days of week label column (T2 to CN)
       html += `
         <div class="flex flex-col gap-1.5 text-[9px] text-slate-500 font-mono pr-2 select-none">
@@ -715,6 +836,11 @@
       weeks.forEach(w => {
         html += '<div class="flex flex-col gap-1.5">';
         w.forEach(d => {
+          if (!d.isInRange) {
+            html += '<div class="w-3.5 h-3.5 opacity-0 pointer-events-none"></div>';
+            return;
+          }
+
           const tot = d.act.total;
           const ac = d.act.ac;
           let colorClass = "bg-slate-800/80 border border-slate-700/40";
