@@ -85,13 +85,13 @@
       <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
         <div class="space-y-1.5">
           <label for="auth-input-code" class="block text-xs font-semibold text-slate-300">
-            Mã PIN học sinh / Mật khẩu Giáo viên:
+            Mã PIN cá nhân / Mật khẩu Giảng viên & Admin:
           </label>
           <div class="relative">
             <input 
               type="password" 
               id="auth-input-code" 
-              placeholder="Nhập mã PIN học sinh hoặc mật khẩu Admin..." 
+              placeholder="Nhập mã PIN hoặc mật khẩu..." 
               autocomplete="off"
               required
               class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition pr-10 font-mono tracking-wider"
@@ -445,7 +445,7 @@
       <div id="leaderboard-admin-bar" class="hidden bg-slate-900/90 border border-amber-500/30 rounded-2xl p-3.5 shadow-xl space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-2.5 text-xs">
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-bold text-amber-300 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20">
+            <span id="admin-bar-title" class="font-bold text-amber-300 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20">
               <span>👑</span> Quyền Admin:
             </span>
             <button onclick="toggleAdminStudentView('ranking')" id="btn-admin-view-ranking" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer">
@@ -456,10 +456,10 @@
             </button>
           </div>
           <div class="flex items-center gap-2 flex-wrap">
-            <button onclick="openAddStudentModal()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition flex items-center gap-1 shadow cursor-pointer">
+            <button onclick="openAddStudentModal()" id="btn-add-student" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition flex items-center gap-1 shadow cursor-pointer">
               <span>➕</span> Thêm Học Sinh
             </button>
-            <button onclick="promptAddTuitionMonth()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold transition flex items-center gap-1 cursor-pointer">
+            <button onclick="promptAddTuitionMonth()" id="btn-add-tuition-month" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold transition flex items-center gap-1 cursor-pointer">
               <span>📅</span> Thêm Tháng Học Phí
             </button>
             <button onclick="exportToExcel()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition flex items-center gap-1 shadow cursor-pointer">
@@ -1198,7 +1198,7 @@
 
       if (tabName === 'admin') {
         tabName = 'leaderboard';
-        if (currentAuth && currentAuth.role === 'admin') {
+        if (currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher')) {
           setTimeout(() => toggleAdminStudentView('tuition'), 50);
         }
       }
@@ -1519,18 +1519,20 @@
 
       // Personal / Admin profile link permission check
       let profileActionHtml = '';
-      if (currentAuth && currentAuth.role === 'admin') {
+      if (currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher')) {
+        const isFullAdmin = currentAuth.role === 'admin';
         profileActionHtml = `
           <div class="flex items-center justify-center gap-1.5 whitespace-nowrap">
             <a href="student.html?id=${s.stt}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition">
               <span>👤</span> Heatmap
             </a>
+            ${isFullAdmin ? `
             <button onclick="openEditStudentModal(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 border border-amber-500/30 transition cursor-pointer" title="Sửa học sinh">
               ✏️
             </button>
             <button onclick="deleteStudent(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer" title="Xóa học sinh">
               🗑️
-            </button>
+            </button>` : ''}
           </div>
         `;
       } else if (isCurrentStudent) {
@@ -1670,7 +1672,7 @@
     function canViewItem(item) {
       if (!currentAuth) return false;
       const classes = item.classes || [];
-      if (currentAuth.role === 'admin') return true;
+      if (currentAuth.role === 'admin' || currentAuth.role === 'teacher') return true;
       if (classes.length === 0 || classes.includes('Public') || classes.includes('Tất cả') || classes.includes('All')) {
         return true;
       }
@@ -1811,7 +1813,7 @@
         const solvedCount = (appData.students || []).filter(s => s.solved && s.solved.includes(p.id)).length;
 
         // Admin action buttons on card
-        const adminCardActions = (currentAuth && currentAuth.role === 'admin') ? `
+        const adminCardActions = (currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher')) ? `
           <div class="flex items-center gap-1">
             <button onclick="openEditProblemModal('${p.id}')" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition">✏️ Sửa</button>
             <button onclick="deleteProblem('${p.id}')" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition">🗑️ Xóa</button>
@@ -1920,7 +1922,7 @@
         const publicBadge = isPublic ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">🌐 Public</span>` : '';
 
         // Admin action buttons
-        const adminActions = (currentAuth && currentAuth.role === 'admin') ? `
+        const adminActions = (currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher')) ? `
           <div class="flex items-center gap-1.5">
             <button onclick="openEditCurriculumModal('${c.id}')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition cursor-pointer">✏️ Sửa</button>
             <button onclick="deleteCurriculum('${c.id}')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer">🗑️ Xóa</button>
@@ -1958,8 +1960,8 @@
 
     // TRIGGER QUICK ADD PROBLEM & CURRICULUM
     function triggerAddProblem() {
-      if (!currentAuth || currentAuth.role !== 'admin') {
-        alert('Chỉ tài khoản Giáo viên (ADMIN) mới có quyền tạo bài tập mới! Vui lòng đăng nhập.');
+      if (!currentAuth || (currentAuth.role !== 'admin' && currentAuth.role !== 'teacher')) {
+        alert('Chỉ tài khoản Giảng viên hoặc Quản trị viên mới có quyền tạo bài tập mới! Vui lòng đăng nhập.');
         showAuthModal();
         return;
       }
@@ -1967,8 +1969,8 @@
     }
 
     function triggerAddCurriculum() {
-      if (!currentAuth || currentAuth.role !== 'admin') {
-        alert('Chỉ tài khoản Giáo viên (ADMIN) mới có quyền tạo bài giảng mới! Vui lòng đăng nhập.');
+      if (!currentAuth || (currentAuth.role !== 'admin' && currentAuth.role !== 'teacher')) {
+        alert('Chỉ tài khoản Giảng viên hoặc Quản trị viên mới có quyền tạo bài giảng mới! Vui lòng đăng nhập.');
         showAuthModal();
         return;
       }
@@ -2510,7 +2512,45 @@
           if (nameEl) nameEl.textContent = '👑 Admin';
           if (badge) badge.className = "px-2 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1";
           
-          if (lbAdminBar) lbAdminBar.classList.remove('hidden');
+          if (lbAdminBar) {
+            lbAdminBar.classList.remove('hidden');
+            const titleEl = document.getElementById('admin-bar-title');
+            if (titleEl) titleEl.innerHTML = `<span>👑</span> Quyền Admin:`;
+            const tuitionViewBtn = document.getElementById('btn-admin-view-tuition');
+            if (tuitionViewBtn) tuitionViewBtn.innerHTML = `📋 Quản Lý Học Sinh & Học Phí`;
+            const addTuitionBtn = document.getElementById('btn-add-tuition-month');
+            if (addTuitionBtn) addTuitionBtn.classList.remove('hidden');
+            const addStuBtn = document.getElementById('btn-add-student');
+            if (addStuBtn) addStuBtn.classList.remove('hidden');
+          }
+          document.querySelectorAll('.admin-only-btn').forEach(b => b.classList.remove('hidden'));
+          updateAdminMiniStats();
+
+          if (studentTabBtn) {
+            studentTabBtn.href = "student.html?id=1";
+            studentTabBtn.onclick = null;
+            studentTabBtn.innerHTML = `<span>👤</span> Học Viên`;
+          }
+          if (studentTabBtnMobile) {
+            studentTabBtnMobile.href = "student.html?id=1";
+            studentTabBtnMobile.onclick = null;
+            studentTabBtnMobile.innerHTML = `👤 Học viên`;
+          }
+        } else if (currentAuth.role === 'teacher') {
+          if (nameEl) nameEl.textContent = '🧑‍🏫 Giảng Viên';
+          if (badge) badge.className = "px-2 py-1 rounded-lg text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-500/40 flex items-center gap-1";
+          
+          if (lbAdminBar) {
+            lbAdminBar.classList.remove('hidden');
+            const titleEl = document.getElementById('admin-bar-title');
+            if (titleEl) titleEl.innerHTML = `<span>🧑‍🏫</span> Quyền Giảng Viên:`;
+            const tuitionViewBtn = document.getElementById('btn-admin-view-tuition');
+            if (tuitionViewBtn) tuitionViewBtn.innerHTML = `📋 Danh Sách Học Sinh`;
+            const addTuitionBtn = document.getElementById('btn-add-tuition-month');
+            if (addTuitionBtn) addTuitionBtn.classList.add('hidden');
+            const addStuBtn = document.getElementById('btn-add-student');
+            if (addStuBtn) addStuBtn.classList.add('hidden');
+          }
           document.querySelectorAll('.admin-only-btn').forEach(b => b.classList.remove('hidden'));
           updateAdminMiniStats();
 
@@ -2687,7 +2727,9 @@
       const head = document.getElementById('admin-students-head');
       const body = document.getElementById('admin-students-body');
       if (!head || !body) return;
+      if (!currentAuth || (currentAuth.role !== 'admin' && currentAuth.role !== 'teacher')) return;
 
+      const isFullAdmin = currentAuth.role === 'admin';
       const months = appData.tuition_months || ['Tháng 9', 'Tháng 10'];
 
       // Render Header
@@ -2766,18 +2808,71 @@
         months.forEach(m => {
           const isPaid = s.tuition && s.tuition[m];
           const btnClass = isPaid 
-            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30" 
-            : "bg-slate-800 text-rose-300 border-slate-700 hover:bg-rose-500/20";
+            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30" 
+            : "bg-slate-800 text-rose-300 border-slate-700";
           const label = isPaid ? "Đã đóng ✅" : "Chưa đóng ⏳";
 
-          tuitionCellsHtml += `
-            <td class="px-2 py-3 text-center">
-              <button onclick="toggleTuition(${s.stt}, '${m}')" class="px-2 py-1 rounded-lg text-[11px] font-bold border transition ${btnClass} cursor-pointer whitespace-nowrap" title="Bấm để chuyển trạng thái đóng học phí">
-                ${label}
-              </button>
-            </td>
-          `;
+          if (isFullAdmin) {
+            tuitionCellsHtml += `
+              <td class="px-2 py-3 text-center">
+                <button onclick="toggleTuition(${s.stt}, '${m}')" class="px-2 py-1 rounded-lg text-[11px] font-bold border transition ${btnClass} hover:opacity-80 cursor-pointer whitespace-nowrap" title="Bấm để chuyển trạng thái đóng học phí">
+                  ${label}
+                </button>
+              </td>
+            `;
+          } else {
+            tuitionCellsHtml += `
+              <td class="px-2 py-3 text-center">
+                <span class="inline-block px-2 py-1 rounded-lg text-[11px] font-bold border ${btnClass} whitespace-nowrap">
+                  ${label}
+                </span>
+              </td>
+            `;
+          }
         });
+
+        const statusCellHtml = isFullAdmin ? `
+          <select onchange="updateStudentStatus(${s.stt}, this.value)" class="bg-slate-950 border border-slate-700 text-xs rounded-lg px-2 py-1 font-semibold ${statusClass} focus:outline-none cursor-pointer">
+            <option value="Đang học" ${status === 'Đang học' ? 'selected' : ''}>🟢 Đang học</option>
+            <option value="Tạm dừng" ${status === 'Tạm dừng' ? 'selected' : ''}>🟡 Tạm dừng</option>
+            <option value="Bảo lưu" ${status === 'Bảo lưu' ? 'selected' : ''}>🔴 Bảo lưu</option>
+          </select>
+        ` : `
+          <span class="inline-block px-2 py-1 rounded-lg text-xs font-semibold border ${statusClass}">
+            ${status === 'Đang học' ? '🟢 Đang học' : status === 'Tạm dừng' ? '🟡 Tạm dừng' : '🔴 Bảo lưu'}
+          </span>
+        `;
+
+        const pinCellHtml = isFullAdmin ? `
+          <div class="inline-flex items-center gap-1.5 bg-slate-950 border border-slate-800 px-2 py-1 rounded-lg text-xs">
+            <span id="pin-text-${s.stt}" class="font-bold text-slate-300">••••••</span>
+            <button onclick="togglePinReveal(${s.stt}, '${pinDisplay}')" class="text-slate-400 hover:text-white text-xs cursor-pointer" title="Xem mã PIN">👁️</button>
+          </div>
+        ` : `
+          <div class="inline-flex items-center gap-1.5 bg-slate-950 border border-slate-800 px-2 py-1 rounded-lg text-xs">
+            <span class="font-bold text-slate-500">••••••</span>
+          </div>
+        `;
+
+        const actionCellHtml = isFullAdmin ? `
+          <div class="flex items-center justify-center gap-1.5">
+            <a href="student.html?id=${s.stt}" target="_blank" class="px-2 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition" title="Xem hồ sơ">
+              👤
+            </a>
+            <button onclick="openEditStudentModal(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 border border-amber-500/30 transition cursor-pointer" title="Sửa thông tin học sinh">
+              ✏️
+            </button>
+            <button onclick="deleteStudent(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer" title="Xóa học sinh">
+              🗑️
+            </button>
+          </div>
+        ` : `
+          <div class="flex items-center justify-center gap-1.5">
+            <a href="student.html?id=${s.stt}" target="_blank" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition flex items-center gap-1" title="Xem Heatmap">
+              <span>👤</span> Heatmap
+            </a>
+          </div>
+        `;
 
         tr.innerHTML = `
           <td class="px-3 py-3 text-center font-mono text-slate-400 font-bold">${s.stt}</td>
@@ -2792,31 +2887,17 @@
             <span class="px-2 py-0.5 rounded text-[10px] font-bold ${cBadge} border">${s.class}</span>
           </td>
           <td class="px-3.5 py-3 text-center">
-            <select onchange="updateStudentStatus(${s.stt}, this.value)" class="bg-slate-950 border border-slate-700 text-xs rounded-lg px-2 py-1 font-semibold ${statusClass} focus:outline-none cursor-pointer">
-              <option value="Đang học" ${status === 'Đang học' ? 'selected' : ''}>🟢 Đang học</option>
-              <option value="Tạm dừng" ${status === 'Tạm dừng' ? 'selected' : ''}>🟡 Tạm dừng</option>
-              <option value="Bảo lưu" ${status === 'Bảo lưu' ? 'selected' : ''}>🔴 Bảo lưu</option>
-            </select>
+            ${statusCellHtml}
           </td>
           <td class="px-3.5 py-3 text-center font-mono">
-            <div class="inline-flex items-center gap-1.5 bg-slate-950 border border-slate-800 px-2 py-1 rounded-lg text-xs">
-              <span id="pin-text-${s.stt}" class="font-bold text-slate-300">••••••</span>
-              <button onclick="togglePinReveal(${s.stt}, '${pinDisplay}')" class="text-slate-400 hover:text-white text-xs cursor-pointer" title="Xem mã PIN">👁️</button>
-            </div>
+            ${pinCellHtml}
           </td>
           <td class="px-4 py-3 text-xs text-slate-300 font-mono">
             ${handlesHtml}
           </td>
           ${tuitionCellsHtml}
           <td class="px-3.5 py-3 text-center whitespace-nowrap">
-            <div class="flex items-center justify-center gap-1.5">
-              <button onclick="openEditStudentModal(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition cursor-pointer" title="Sửa thông tin học sinh">
-                ✏️
-              </button>
-              <button onclick="deleteStudent(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer" title="Xóa học sinh">
-                🗑️
-              </button>
-            </div>
+            ${actionCellHtml}
           </td>
         `;
         body.appendChild(tr);
@@ -3350,7 +3431,8 @@
       const secHeaders = ["Tên Đối Tượng / Lớp", "Cấp độ quyền", "Mã truy cập / Mật khẩu", "Mô tả phạm vi truy cập"];
       const secRows = [
         secHeaders,
-        ["Quản trị viên / Giáo viên", "ADMIN", "THAYPHUNG2026", "Toàn quyền: xem tất cả các lớp, tất cả học sinh, và mở mọi bài giảng"],
+        ["Quản trị viên / Giáo viên", "ADMIN", "NgocTrinh3101", "Toàn quyền: xem tất cả các lớp, tất cả học sinh, và mở mọi bài giảng"],
+        ["Giảng viên", "TEACHER", "GIANGVIEN2026", "Quyền Giảng viên: Xem toàn bộ học sinh, theo dõi heatmap, quản lý bài tập & bài giảng"],
         ["Lớp C++", "CLASS", "CPP2026", "Mã chung lớp C++: học sinh chỉ xem bảng xếp hạng, bài tập, bài giảng lớp C++"],
         ["Lớp Python", "CLASS", "PYTHON2026", "Mã chung lớp Python: học sinh chỉ xem bảng xếp hạng, bài tập, bài giảng lớp Python"],
         ["Lớp Python 1-1", "CLASS", "VIP11", "Mã chung lớp 1-1: học sinh chỉ xem bảng xếp hạng, bài tập, bài giảng lớp 1-1"]

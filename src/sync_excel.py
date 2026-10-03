@@ -60,9 +60,22 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
             if role == "ADMIN":
                 auth_tokens[h] = {
                     "role": "admin",
-                    "name": str(target_name or "Giáo viên / Quản trị"),
+                    "name": str(target_name or "Quản trị viên"),
                     "class": "ALL"
                 }
+            elif role in ["TEACHER", "GIANGVIEN", "LECTURER"]:
+                auth_tokens[h] = {
+                    "role": "teacher",
+                    "name": str(target_name or "Giảng viên"),
+                    "class": "ALL"
+                }
+                # Also support GV2026 alias if key was GIANGVIEN2026
+                if key_str == "GIANGVIEN2026":
+                    auth_tokens[hash_str("GV2026")] = {
+                        "role": "teacher",
+                        "name": str(target_name or "Giảng viên"),
+                        "class": "ALL"
+                    }
             elif role == "CLASS":
                 cls = "C++" if "C++" in str(target_name) else "Python 1-1" if "1-1" in str(target_name) else "Python"
                 auth_tokens[h] = {
