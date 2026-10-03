@@ -4,11 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <title>Deruck's Competitive Programming - Cổng Học Tập & Thi Đấu</title>
+  <title>Deruck's Competitive Programming</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script>
@@ -120,26 +117,13 @@
       </form>
 
       <!-- Footer Info -->
-      <div class="pt-4 border-t border-slate-800 text-center text-xs text-slate-500 space-y-2">
-        <div class="flex items-center justify-center gap-1.5 text-slate-400">
-          <span>🍪</span> Hệ thống sẽ tự động lưu đăng nhập bằng <strong>Cookie</strong> (chỉ cần đăng nhập 1 lần)
-        </div>
-        <div>
-          <button onclick="hideAuthModal()" class="text-xs text-slate-400 hover:text-slate-200 hover:underline cursor-pointer">
-            ✕ Đóng lại & Xem Trang Chủ Giới Thiệu
-          </button>
-        </div>
+      <div class="pt-4 border-t border-slate-800 text-center text-xs text-slate-500">
+        <button onclick="hideAuthModal()" class="text-xs text-slate-400 hover:text-slate-200 hover:underline cursor-pointer">
+          ✕ Đóng lại & Xem Trang Chủ Giới Thiệu
+        </button>
       </div>
 
     </div>
-  </div>
-
-
-  <!-- TOP ANNOUNCEMENT BAR -->
-  <div class="bg-gradient-to-r from-indigo-900/60 via-purple-900/60 to-slate-900/60 border-b border-indigo-500/20 px-4 py-2 text-xs md:text-sm text-center text-indigo-200 flex items-center justify-center gap-3">
-    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/30 text-indigo-300 border border-indigo-400/30 animate-pulse">LIVE</span>
-    <span>Hệ thống Tự động Đồng bộ Tiến độ Giải bài trên <strong>Codeforces</strong>, <strong>VJudge</strong> & <strong>MarisaOJ</strong></span>
-    <span class="hidden md:inline text-slate-400">• Lịch học: Tối T3 & T7 (19:30 - 21:30)</span>
   </div>
 
   <!-- NAVIGATION BAR -->
@@ -157,7 +141,6 @@
               Deruck's Competitive Programming
               <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LMS</span>
             </div>
-            <div class="text-xs text-slate-400">Cổng Học Tập & Thi Đấu Chuyên Tin Thuật Toán</div>
           </div>
         </a>
 
@@ -1889,7 +1872,6 @@
         grid.innerHTML = `
           <div class="col-span-full p-8 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
             <div>Chưa có bài tập nào phù hợp với bộ lọc hiện tại.</div>
-            ${!currentAuth ? '<div class="text-xs text-indigo-400">💡 Hãy đăng nhập bằng Mã PIN học sinh để xem các bài tập riêng của lớp bạn.</div>' : ''}
           </div>
         `;
         return;
@@ -2017,7 +1999,6 @@
         list.innerHTML = `
           <div class="p-8 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
             <div>Chưa có bài giảng nào được công bố cho bộ lọc này.</div>
-            ${!currentAuth ? '<div class="text-xs text-indigo-400">💡 Hãy đăng nhập bằng Mã PIN học sinh để xem các bài giảng riêng của lớp bạn.</div>' : ''}
           </div>
         `;
         return;
