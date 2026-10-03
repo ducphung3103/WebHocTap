@@ -132,49 +132,44 @@
       <div class="flex items-center justify-between h-16">
         
         <!-- Brand Logo & Return Home Link -->
-        <a href="index.html" class="flex items-center gap-3 group hover:opacity-95 transition" title="Trở về Trang chủ">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 ring-1 ring-white/20 group-hover:scale-105 transition-transform">
-            <span class="text-xl">🚀</span>
+        <a href="index.html" class="flex items-center gap-2.5 group hover:opacity-95 transition shrink-0" title="Trở về Trang chủ">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-md shadow-indigo-500/25 ring-1 ring-white/20 group-hover:scale-105 transition-transform">
+            <span class="text-base">🚀</span>
           </div>
-          <div>
-            <div class="font-bold text-white text-base leading-tight tracking-tight flex items-center gap-2">
-              Deruck's Competitive Programming
-              <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LMS</span>
-            </div>
+          <div class="font-bold text-white text-xs sm:text-sm leading-tight tracking-tight flex items-center gap-1.5">
+            <span class="hidden sm:inline">Deruck's Competitive Programming</span>
+            <span class="sm:hidden">Deruck's CP</span>
+            <span class="text-[9px] font-mono px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LMS</span>
           </div>
         </a>
 
         <!-- Navigation Tabs -->
-        <nav class="hidden md:flex items-center space-x-1 font-medium text-sm" id="nav-tabs">
-          <button onclick="switchTab('home')" id="tab-btn-home" class="tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition font-semibold cursor-pointer">
-            🏠 Giới Thiệu
+        <nav class="hidden md:flex items-center space-x-1 font-semibold text-xs" id="nav-tabs">
+          <button onclick="switchTab('home')" id="tab-btn-home" class="tab-btn active px-2.5 py-1.5 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1 transition cursor-pointer">
+            🏠 Trang Chủ
           </button>
-          <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
+          <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
             🏆 Bảng Xếp Hạng
           </button>
-          <button onclick="switchTab('contests')" id="tab-btn-contests" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
-            <span>⚔️</span> Contest
+          <button onclick="switchTab('contests')" id="tab-btn-contests" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
+            ⚔️ Contest
           </button>
-          <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
+          <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
             📝 Bài Tập
           </button>
-          <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
+          <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
             📚 Bài Giảng
           </button>
-          <a href="student.html" id="tab-btn-student" class="tab-btn px-3 py-2 rounded-lg text-indigo-300 hover:text-white hover:bg-indigo-600/20 border border-transparent hover:border-indigo-500/30 flex items-center gap-1.5 transition font-semibold">
-            <span>👤</span> Tiến Độ Cá Nhân
+          <a href="student.html" id="tab-btn-student" class="tab-btn px-2.5 py-1.5 rounded-lg text-indigo-300 hover:text-white hover:bg-indigo-600/20 border border-transparent hover:border-indigo-500/30 flex items-center gap-1 transition">
+            👤 Cá Nhân
           </a>
-          <button onclick="switchTab('admin')" id="tab-btn-admin" class="tab-btn hidden px-3 py-2 rounded-lg text-amber-300 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 flex items-center gap-1.5 transition font-semibold cursor-pointer">
-            <span>👑</span> Quản Trị Hệ Thống
-            <span class="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">ADMIN</span>
-          </button>
         </nav>
 
         <!-- User Session & Right Quick Actions -->
-        <div class="flex items-center gap-2.5">
-          <div id="user-badge" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1.5">
+        <div class="flex items-center gap-2 shrink-0">
+          <div id="user-badge" class="px-2 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1">
             <span>👤</span>
-            <span id="user-display-name">Khách (Chưa đăng nhập)</span>
+            <span id="user-display-name">Khách</span>
           </div>
           <button id="btn-auth-action" onclick="showAuthModal()" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white border border-indigo-500/40 transition flex items-center gap-1 cursor-pointer" title="Đăng nhập hoặc đăng xuất">
             <span>🔑</span>
@@ -184,14 +179,13 @@
       </div>
 
       <!-- Mobile Tab Bar -->
-      <div class="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-slate-800 text-xs">
-        <button onclick="switchTab('home')" id="tab-btn-home-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold">🏠 Giới thiệu</button>
-        <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">🏆 BXH</button>
-        <button onclick="switchTab('contests')" id="tab-btn-contests-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
-        <button onclick="switchTab('problems')" id="tab-btn-problems-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
-        <button onclick="switchTab('curriculum')" id="tab-btn-curriculum-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</button>
-        <a href="student.html" id="tab-btn-student-mobile" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
-        <button onclick="switchTab('admin')" id="tab-btn-admin-mobile" class="tab-btn hidden px-3 py-1.5 rounded-lg whitespace-nowrap text-amber-300 bg-amber-500/10">👑 Quản trị</button>
+      <div class="flex md:hidden overflow-x-auto py-1.5 space-x-1 border-t border-slate-800 text-xs">
+        <button onclick="switchTab('home')" id="tab-btn-home-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold">🏠 Trang chủ</button>
+        <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">🏆 BXH</button>
+        <button onclick="switchTab('contests')" id="tab-btn-contests-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
+        <button onclick="switchTab('problems')" id="tab-btn-problems-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
+        <button onclick="switchTab('curriculum')" id="tab-btn-curriculum-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</button>
+        <a href="student.html" id="tab-btn-student-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
       </div>
     </div>
   </header>
@@ -427,78 +421,170 @@
     <!-- ========================================== -->
     <!-- BẢNG XẾP HẠNG & TIẾN ĐỘ GIẢI BÀI (YÊU CẦU ĐĂNG NHẬP) -->
     <!-- ========================================== -->
-    <section id="section-leaderboard" class="space-y-6 hidden">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <section id="section-leaderboard" class="space-y-5 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            🏆 Bảng Xếp Hạng Toàn Bộ Học Viên
+          <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+            🏆 Bảng Xếp Hạng Học Viên
           </h2>
-          <p class="text-xs text-slate-400">Bảng xếp hạng công khai tổng hợp theo Contest Rating và Tổng số bài đã giải thành công</p>
+          <p class="text-xs text-slate-400">Tổng hợp theo Contest Rating và Tổng số bài giải thành công</p>
         </div>
 
         <!-- Search Bar on Leaderboard -->
-        <div class="relative w-full sm:w-72">
+        <div class="relative w-full sm:w-64">
           <input type="text" id="leaderboard-search-input" onkeyup="filterLeaderboard()" placeholder="Tìm tên hoặc handle học sinh..." 
-            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-          <span class="absolute right-3 top-2.5 text-slate-500 text-sm">🔍</span>
+            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+          <span class="absolute right-3 top-2 text-slate-500 text-xs">🔍</span>
         </div>
       </div>
 
       <!-- PERSONAL PROGRESS WIDGET (CHỈ HIỆN TIẾN ĐỘ CỦA BẢN THÂN KHI ĐĂNG NHẬP) -->
       <div id="student-personal-progress-card" class="hidden"></div>
 
-      <!-- Class Filter Bar & Sort Controls (Sắp xếp theo Rating Contest & Tổng số bài làm được) -->
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
-        <!-- Class Filter Buttons -->
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0" id="class-filter-container">
-          <button onclick="filterClass('all')" id="btn-class-all" class="class-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition whitespace-nowrap shadow-sm">
-            Tất cả học sinh (Public)
-          </button>
-          <button onclick="filterClass('C++')" id="btn-class-C++" class="class-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
-            🟦 Lớp C++
-          </button>
-          <button onclick="filterClass('Python')" id="btn-class-Python" class="class-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
-            🟩 Lớp Python
-          </button>
-          <button onclick="filterClass('Python 1-1')" id="btn-class-Python-1-1" class="class-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
-            🟪 Lớp Python 1-1
-          </button>
+      <!-- ADMIN LEADERBOARD CONTROLS (TÍCH HỢP QUYỀN ADMIN TRỰC TIẾP TRÊN TRANG BẢNG XẾP HẠNG) -->
+      <div id="leaderboard-admin-bar" class="hidden bg-slate-900/90 border border-amber-500/30 rounded-2xl p-3.5 shadow-xl space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-2.5 text-xs">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-bold text-amber-300 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <span>👑</span> Quyền Admin:
+            </span>
+            <button onclick="toggleAdminStudentView('ranking')" id="btn-admin-view-ranking" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer">
+              🏆 Bảng Xếp Hạng AC
+            </button>
+            <button onclick="toggleAdminStudentView('tuition')" id="btn-admin-view-tuition" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-amber-300 hover:bg-slate-800 transition font-semibold cursor-pointer">
+              📋 Quản Lý Học Sinh & Học Phí
+            </button>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="openAddStudentModal()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition flex items-center gap-1 shadow cursor-pointer">
+              <span>➕</span> Thêm Học Sinh
+            </button>
+            <button onclick="promptAddTuitionMonth()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold transition flex items-center gap-1 cursor-pointer">
+              <span>📅</span> Thêm Tháng Học Phí
+            </button>
+            <button onclick="exportToExcel()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition flex items-center gap-1 shadow cursor-pointer">
+              <span>📊</span> Xuất Excel
+            </button>
+            <button onclick="exportDataJson()" class="px-3 py-1.5 rounded-xl bg-indigo-700 hover:bg-indigo-600 text-white font-semibold transition flex items-center gap-1 cursor-pointer">
+              <span>💾</span> data.json
+            </button>
+          </div>
         </div>
 
-        <!-- Sort Control Buttons -->
-        <div class="flex items-center gap-1.5 bg-slate-800/80 p-1 rounded-xl border border-slate-700/80 text-xs shrink-0 flex-wrap">
-          <span class="text-slate-400 pl-2 font-medium flex items-center gap-1 select-none">
-            <span>↕️</span> Sắp xếp:
-          </span>
-          <button onclick="setLeaderboardSort('rating')" id="sort-btn-rating" class="sort-pill-btn px-2.5 py-1 rounded-lg font-bold bg-indigo-600 text-white shadow-sm transition flex items-center gap-1" title="Sắp xếp theo điểm thi đấu Contest Rating">
-            <span>⭐ Rating Contest</span>
-            <span id="sort-arrow-rating" class="text-[10px]">↓</span>
-          </button>
-          <button onclick="setLeaderboardSort('total')" id="sort-btn-total" class="sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo Tổng số bài làm được (Tổng AC)">
-            <span>🏆 Tổng số bài (Tổng AC)</span>
-            <span id="sort-arrow-total" class="text-[10px] hidden">↓</span>
-          </button>
-          <button onclick="setLeaderboardSort('week')" id="sort-btn-week" class="sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo số bài AC trong tuần qua">
-            <span>📅 1 Tuần</span>
-            <span id="sort-arrow-week" class="text-[10px] hidden">↓</span>
-          </button>
-          <button onclick="setLeaderboardSort('month')" id="sort-btn-month" class="sort-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo số bài AC trong tháng qua">
-            <span>📅 1 Tháng</span>
-            <span id="sort-arrow-month" class="text-[10px] hidden">↓</span>
-          </button>
+        <!-- Admin Stats Mini Bar -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-2">
+            <span class="text-slate-400">Tổng Học Sinh:</span>
+            <span class="font-bold text-indigo-400 font-mono ml-1" id="admin-mini-stat-total">0</span>
+          </div>
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-2">
+            <span class="text-slate-400">Đang Học:</span>
+            <span class="font-bold text-emerald-400 font-mono ml-1" id="admin-mini-stat-active">0</span>
+          </div>
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-2">
+            <span class="text-slate-400">Đã Đóng Học Phí:</span>
+            <span class="font-bold text-amber-300 font-mono ml-1" id="admin-mini-stat-tuition">0</span>
+          </div>
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-2">
+            <span class="text-slate-400">Bài Giảng / Bài Tập:</span>
+            <span class="font-bold text-purple-400 font-mono ml-1" id="admin-mini-stat-content">0/0</span>
+          </div>
         </div>
       </div>
 
-      <!-- Matrix Table -->
-      <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/50 shadow-xl">
-        <table class="w-full text-left text-sm text-slate-300">
-          <thead class="bg-slate-800/90 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700" id="matrix-head">
-            <!-- Dynamically populated -->
-          </thead>
-          <tbody class="divide-y divide-slate-800/60" id="matrix-body">
-            <!-- Dynamically populated -->
-          </tbody>
-        </table>
+      <!-- VIEW 1: RANKING MATRIX TABLE CONTAINER -->
+      <div id="leaderboard-ranking-container" class="space-y-4">
+        <!-- Class Filter Bar & Sort Controls (Sắp xếp theo Rating Contest & Tổng số bài làm được) -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800 text-xs">
+          <!-- Class Filter Buttons -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0" id="class-filter-container">
+            <button onclick="filterClass('all')" id="btn-class-all" class="class-filter-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition whitespace-nowrap shadow-sm">
+              Tất cả (Public)
+            </button>
+            <button onclick="filterClass('C++')" id="btn-class-C++" class="class-filter-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
+              🟦 Lớp C++
+            </button>
+            <button onclick="filterClass('Python')" id="btn-class-Python" class="class-filter-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
+              🟩 Lớp Python
+            </button>
+            <button onclick="filterClass('Python 1-1')" id="btn-class-Python-1-1" class="class-filter-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-transparent transition whitespace-nowrap">
+              🟪 Python 1-1
+            </button>
+          </div>
+
+          <!-- Sort Control Buttons -->
+          <div class="flex items-center gap-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700/80 text-xs shrink-0 flex-wrap">
+            <span class="text-slate-400 pl-1.5 font-medium flex items-center gap-1 select-none">
+              <span>↕️</span> Sắp xếp:
+            </span>
+            <button onclick="setLeaderboardSort('rating')" id="sort-btn-rating" class="sort-pill-btn px-2 py-1 rounded-lg font-bold bg-indigo-600 text-white shadow-sm transition flex items-center gap-1" title="Sắp xếp theo điểm thi đấu Contest Rating">
+              <span>⭐ Rating</span>
+              <span id="sort-arrow-rating" class="text-[10px]">↓</span>
+            </button>
+            <button onclick="setLeaderboardSort('total')" id="sort-btn-total" class="sort-pill-btn px-2 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo Tổng số bài làm được (Tổng AC)">
+              <span>🏆 Tổng AC</span>
+              <span id="sort-arrow-total" class="text-[10px] hidden">↓</span>
+            </button>
+            <button onclick="setLeaderboardSort('week')" id="sort-btn-week" class="sort-pill-btn px-2 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo số bài AC trong tuần qua">
+              <span>📅 1 Tuần</span>
+              <span id="sort-arrow-week" class="text-[10px] hidden">↓</span>
+            </button>
+            <button onclick="setLeaderboardSort('month')" id="sort-btn-month" class="sort-pill-btn px-2 py-1 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-slate-700/60 transition flex items-center gap-1" title="Sắp xếp theo số bài AC trong tháng qua">
+              <span>📅 1 Tháng</span>
+              <span id="sort-arrow-month" class="text-[10px] hidden">↓</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Matrix Table -->
+        <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/50 shadow-xl">
+          <table class="w-full text-left text-xs sm:text-sm text-slate-300">
+            <thead class="bg-slate-800/90 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700" id="matrix-head">
+              <!-- Dynamically populated -->
+            </thead>
+            <tbody class="divide-y divide-slate-800/60" id="matrix-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- VIEW 2: ADMIN STUDENT & TUITION MANAGEMENT CONTAINER -->
+      <div id="leaderboard-admin-tuition-container" class="space-y-4 hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <!-- Class Filter & Search -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="flex items-center gap-1 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
+              <button onclick="filterAdminStudents('all')" id="btn-admin-filter-all" class="px-2.5 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold transition">Tất cả</button>
+              <button onclick="filterAdminStudents('C++')" id="btn-admin-filter-C++" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Lớp C++</button>
+              <button onclick="filterAdminStudents('Python')" id="btn-admin-filter-Python" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Lớp Python</button>
+              <button onclick="filterAdminStudents('Python 1-1')" id="btn-admin-filter-Python-1-1" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Python 1-1</button>
+            </div>
+            <input type="text" id="admin-student-search" onkeyup="renderAdminStudents()" placeholder="Tìm tên, handle, PIN..." class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 w-44 sm:w-60">
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-2">
+            <button onclick="openAddStudentModal()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1 cursor-pointer">
+              <span>➕</span> Thêm Học Sinh Mới
+            </button>
+            <button onclick="promptAddTuitionMonth()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1 cursor-pointer">
+              <span>📅</span> Thêm Tháng Học Phí
+            </button>
+          </div>
+        </div>
+
+        <!-- Student & Tuition Table -->
+        <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/60 shadow-xl">
+          <table class="w-full text-left text-xs sm:text-sm text-slate-300">
+            <thead class="bg-slate-800/90 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700" id="admin-students-head">
+              <!-- Rendered via JS -->
+            </thead>
+            <tbody class="divide-y divide-slate-800/60" id="admin-students-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -515,7 +601,7 @@
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
-          <button onclick="triggerAddProblem()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
+          <button onclick="triggerAddProblem()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
             <span>➕</span> Thêm Bài Tập Mới
           </button>
         </div>
@@ -560,7 +646,7 @@
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
-          <button onclick="triggerAddCurriculum()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
+          <button onclick="triggerAddCurriculum()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
             <span>➕</span> Thêm Bài Giảng Mới
           </button>
         </div>
@@ -647,239 +733,6 @@
     </section>
 
 
-    <!-- ========================================== -->
-    <!-- TAB 6: BẢNG ĐIỀU KHIỂN QUẢN TRỊ (ADMIN ONLY) -->
-    <!-- ========================================== -->
-    <section id="section-admin" class="space-y-6 hidden">
-      
-      <!-- HERO ADMIN BANNER -->
-      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-950/60 via-slate-900 to-indigo-950/60 border border-amber-500/30 p-6 md:p-8">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div class="space-y-2 max-w-2xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-              <span>👑 TOÀN QUYỀN QUẢN TRỊ (ADMIN GUI)</span>
-            </div>
-            <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-              Bảng Điều Khiển Quản Trị & Học Phí
-            </h2>
-            <p class="text-slate-400 text-sm leading-relaxed">
-              Quản lý học sinh, phân lớp, tài khoản thi đấu, tình trạng học, điểm danh học phí từng tháng, bài giảng và bài tập trực tiếp trên giao diện web.
-            </p>
-          </div>
-
-          <!-- Quick Admin Action Buttons -->
-          <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
-            <button onclick="exportToExcel()" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition flex items-center gap-1.5 cursor-pointer">
-              <span>📥</span> Xuất File Excel (.xlsx)
-            </button>
-            <button onclick="exportDataJson()" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25 transition flex items-center gap-1.5 cursor-pointer">
-              <span>💾</span> Tải data.json
-            </button>
-          </div>
-        </div>
-
-        <!-- STAT METRICS -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-800">
-          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
-            <div class="text-xs text-slate-400">Tổng Học Sinh</div>
-            <div class="text-2xl font-bold text-white font-mono" id="admin-stat-total">0</div>
-          </div>
-          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
-            <div class="text-xs text-slate-400">Đang Theo Học</div>
-            <div class="text-2xl font-bold text-emerald-400 font-mono" id="admin-stat-active">0</div>
-          </div>
-          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
-            <div class="text-xs text-slate-400">Đã Đóng Học Phí (T10)</div>
-            <div class="text-2xl font-bold text-amber-300 font-mono" id="admin-stat-tuition">0</div>
-          </div>
-          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
-            <div class="text-xs text-slate-400">Bài Giảng / Bài Tập</div>
-            <div class="text-2xl font-bold text-purple-400 font-mono" id="admin-stat-content">0 / 0</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ADMIN SUB NAVIGATION TABS -->
-      <div class="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto">
-        <button onclick="switchAdminSubTab('students')" id="subtab-btn-students" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 transition whitespace-nowrap">
-          👨‍🎓 Học Sinh & Học Phí
-        </button>
-        <button onclick="switchAdminSubTab('curriculum')" id="subtab-btn-curriculum" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition whitespace-nowrap">
-          📚 Bài Giảng & Lý Thuyết
-        </button>
-        <button onclick="switchAdminSubTab('problems')" id="subtab-btn-problems" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition whitespace-nowrap">
-          📝 Kho Bài Tập
-        </button>
-        <button onclick="switchAdminSubTab('export')" id="subtab-btn-export" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition whitespace-nowrap">
-          💾 Hướng Dẫn & Xuất Dữ Liệu
-        </button>
-      </div>
-
-      <!-- ============================================== -->
-      <!-- SUB-PANEL 1: HỌC SINH & HỌC PHÍ -->
-      <!-- ============================================== -->
-      <div id="admin-panel-students" class="space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <!-- Class Filter & Search -->
-          <div class="flex items-center gap-2 flex-wrap">
-            <div class="flex items-center gap-1 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
-              <button onclick="filterAdminStudents('all')" id="btn-admin-filter-all" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold transition">Tất cả</button>
-              <button onclick="filterAdminStudents('C++')" id="btn-admin-filter-C++" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Lớp C++</button>
-              <button onclick="filterAdminStudents('Python')" id="btn-admin-filter-Python" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Lớp Python</button>
-              <button onclick="filterAdminStudents('Python 1-1')" id="btn-admin-filter-Python-1-1" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Python 1-1</button>
-            </div>
-            <input type="text" id="admin-student-search" onkeyup="renderAdminStudents()" placeholder="Tìm tên, handle, PIN..." class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 w-48 sm:w-64">
-          </div>
-
-          <!-- Action Buttons -->
-          <div class="flex items-center gap-2">
-            <button onclick="openAddStudentModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
-              <span>➕</span> Thêm Học Sinh Mới
-            </button>
-            <button onclick="promptAddTuitionMonth()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer">
-              <span>📅</span> Thêm Tháng Học Phí
-            </button>
-          </div>
-        </div>
-
-        <!-- Student & Tuition Table -->
-        <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/60 shadow-xl">
-          <table class="w-full text-left text-sm text-slate-300">
-            <thead class="bg-slate-800/90 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700" id="admin-students-head">
-              <!-- Rendered via JS -->
-            </thead>
-            <tbody class="divide-y divide-slate-800/60" id="admin-students-body">
-              <!-- Rendered via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ============================================== -->
-      <!-- SUB-PANEL 2: BÀI GIẢNG & LÝ THUYẾT -->
-      <!-- ============================================== -->
-      <div id="admin-panel-curriculum" class="space-y-4 hidden">
-        <div class="flex items-center justify-between gap-3">
-          <div>
-            <h3 class="text-base font-bold text-white">Quản Lý Bài Giảng & Lý Thuyết (LMS)</h3>
-            <p class="text-xs text-slate-400">Thêm, chỉnh sửa link Notion, tài liệu lý thuyết và phân lớp áp dụng</p>
-          </div>
-          <button onclick="openAddCurriculumModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
-            <span>➕</span> Thêm Bài Giảng Mới
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="admin-curriculum-grid">
-          <!-- Rendered via JS -->
-        </div>
-      </div>
-
-      <!-- ============================================== -->
-      <!-- SUB-PANEL 3: KHO BÀI TẬP -->
-      <!-- ============================================== -->
-      <div id="admin-panel-problems" class="space-y-4 hidden">
-        <div class="flex items-center justify-between gap-3">
-          <div>
-            <h3 class="text-base font-bold text-white">Quản Lý Bài Tập & Đề Thi Phân Lớp</h3>
-            <p class="text-xs text-slate-400">Giao thêm bài tập mới trên MarisaOJ, Codeforces hoặc VJudge</p>
-          </div>
-          <button onclick="openAddProblemModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
-            <span>➕</span> Thêm Bài Tập Mới
-          </button>
-        </div>
-
-        <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/60 shadow-xl">
-          <table class="w-full text-left text-sm text-slate-300">
-            <thead class="bg-slate-800/90 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
-              <tr>
-                <th class="px-4 py-3 text-center w-12">#</th>
-                <th class="px-4 py-3">Mã & Tên bài tập</th>
-                <th class="px-4 py-3">Lớp giao bài</th>
-                <th class="px-4 py-3">Nền tảng</th>
-                <th class="px-4 py-3">Độ khó</th>
-                <th class="px-4 py-3 text-center">Thao tác</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-800/60" id="admin-problems-body">
-              <!-- Rendered via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ============================================== -->
-      <!-- SUB-PANEL 4: HƯỚNG DẪN & XUẤT DỮ LIỆU -->
-      <!-- ============================================== -->
-      <div id="admin-panel-export" class="space-y-6 hidden">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          
-          <!-- Card 1: Excel Export -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
-            <div class="flex items-center gap-3">
-              <div class="text-3xl">📊</div>
-              <div>
-                <h4 class="text-base font-bold text-white">Xuất File Excel Đồng Bộ</h4>
-                <p class="text-xs text-slate-400">Tải về file Excel chứa toàn bộ học sinh, học phí, bài tập, bài giảng vừa chỉnh sửa</p>
-              </div>
-            </div>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              File tải về có cấu trúc 5 sheet chuẩn: <strong>Học Sinh, Học Phí, Bài Tập, Bài Giảng, Cấu Hình Bảo Mật</strong>. Thầy chỉ cần lưu đè vào file <code class="text-indigo-300">Quản lý học sinh.xlsx</code> trên máy tính để lưu trữ lâu dài.
-            </p>
-            <button onclick="exportToExcel()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-emerald-600/20">
-              <span>📥</span> Tải File Excel Mới (.xlsx)
-            </button>
-          </div>
-
-          <!-- Card 2: JSON Export -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
-            <div class="flex items-center gap-3">
-              <div class="text-3xl">💾</div>
-              <div>
-                <h4 class="text-base font-bold text-white">Tải File data.json</h4>
-                <p class="text-xs text-slate-400">Tải tệp JSON dữ liệu chứa các mã băm bảo mật SHA-256</p>
-              </div>
-            </div>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Thầy có thể sao chép file <code class="text-indigo-300">data.json</code> tải về này dán vào thư mục <code class="text-indigo-300">docs/data.json</code> của dự án rồi chạy git commit & push lên GitHub Pages.
-            </p>
-            <button onclick="exportDataJson()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-indigo-600/20">
-              <span>💾</span> Tải data.json Mới Nhất
-            </button>
-          </div>
-
-          <!-- Card 3: Reset Server Data -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
-            <div class="flex items-center gap-3">
-              <div class="text-3xl">🔄</div>
-              <div>
-                <h4 class="text-base font-bold text-white">Khôi Phục Từ Máy Chủ</h4>
-                <p class="text-xs text-slate-400">Xóa các thay đổi tạm trên trình duyệt và nạp lại từ data.json</p>
-              </div>
-            </div>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Dùng khi thầy vừa chạy script <code class="text-indigo-300">sync.bat</code> trên máy tính và muốn cập nhật lại toàn bộ bảng điều khiển về trạng thái đồng bộ mới nhất từ Excel.
-            </p>
-            <button onclick="resetServerData()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center justify-center gap-2 cursor-pointer shadow-lg">
-              <span>🔄</span> Tải Lại Dữ Liệu Gốc Từ Máy Chủ
-            </button>
-          </div>
-
-        </div>
-
-        <!-- Instructions Callout -->
-        <div class="bg-slate-900/60 border border-indigo-500/20 rounded-2xl p-6 space-y-3">
-          <h4 class="text-sm font-bold text-white flex items-center gap-2">
-            <span>⚡</span> Hướng dẫn cập nhật 1-Click bằng file `sync.bat`:
-          </h4>
-          <ol class="list-decimal pl-5 text-xs text-slate-400 space-y-1.5 leading-relaxed">
-            <li>Sau khi tải file Excel hoặc chỉnh sửa trực tiếp file <strong class="text-slate-200">Quản lý học sinh.xlsx</strong> trên máy tính, nhấn <code>Ctrl + S</code> để lưu.</li>
-            <li>Nhấp đúp chuột vào file <strong class="text-emerald-400">sync.bat</strong> trong thư mục <code class="text-slate-300">D:\0.CP\WebHocTap</code>.</li>
-            <li>File script sẽ tự động mã hóa bảo mật, cào lại bài nộp MarisaOJ và hỏi bạn có muốn tự động PUSH lên GitHub Pages không. Gõ <strong>Y</strong> để hoàn tất!</li>
-          </ol>
-        </div>
-      </div>
-
-    </section>
 
     <!-- ============================================== -->
     <!-- MODAL 1: ADD/EDIT STUDENT MODAL -->
@@ -1331,7 +1184,7 @@
       }, 25000);
     }
 
-    // TAB SWITCHING & HASH ROUTING (INCLUDES ADMIN TAB & RETURN HOME)
+    // TAB SWITCHING & HASH ROUTING (INCLUDES RETURN HOME)
     function switchTab(tabName) {
       if (!currentAuth && tabName !== 'home') {
         showAuthModal();
@@ -1343,15 +1196,16 @@
         tabName = 'home';
       }
 
-      if (tabName === 'admin' && (!currentAuth || currentAuth.role !== 'admin')) {
-        alert('Chỉ tài khoản Giáo viên (ADMIN) mới có quyền truy cập bảng điều khiển này! Vui lòng đăng nhập.');
-        showAuthModal();
-        tabName = currentAuth ? 'leaderboard' : 'home';
+      if (tabName === 'admin') {
+        tabName = 'leaderboard';
+        if (currentAuth && currentAuth.role === 'admin') {
+          setTimeout(() => toggleAdminStudentView('tuition'), 50);
+        }
       }
 
       window.location.hash = tabName;
 
-      const sections = ['home', 'leaderboard', 'contests', 'problems', 'curriculum', 'admin'];
+      const sections = ['home', 'leaderboard', 'contests', 'problems', 'curriculum'];
       sections.forEach(s => {
         const el = document.getElementById(`section-${s}`);
         const btn = document.getElementById(`tab-btn-${s}`);
@@ -1359,25 +1213,64 @@
         if (s === tabName) {
           if (el) el.classList.remove('hidden');
           if (btn) {
-            btn.className = s === 'admin'
-              ? "tab-btn active px-3.5 py-2 rounded-lg text-amber-200 bg-amber-500/30 border border-amber-500/50 flex items-center gap-1.5 transition font-semibold"
-              : "tab-btn active px-3.5 py-2 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition font-semibold";
+            btn.className = "tab-btn active px-2.5 py-1.5 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1 transition font-semibold cursor-pointer";
           }
-          if (mBtn) mBtn.className = "tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold";
+          if (mBtn) mBtn.className = "tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold";
         } else {
           if (el) el.classList.add('hidden');
           if (btn) {
-            btn.className = s === 'admin'
-              ? "tab-btn px-3 py-2 rounded-lg text-amber-300 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 flex items-center gap-1.5 transition font-semibold"
-              : "tab-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition";
+            btn.className = "tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer";
           }
-          if (mBtn) mBtn.className = "tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-400";
+          if (mBtn) mBtn.className = "tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400";
         }
       });
+    }
 
-      if (tabName === 'admin') {
-        renderAdminDashboard();
+    // TOGGLE ADMIN STUDENT MANAGEMENT & MINI STATS (INTEGRATED ON LEADERBOARD)
+    let currentAdminStudentViewMode = 'ranking'; // 'ranking' | 'tuition'
+    function toggleAdminStudentView(mode) {
+      currentAdminStudentViewMode = mode;
+      const rankContainer = document.getElementById('leaderboard-ranking-container');
+      const tuitionContainer = document.getElementById('leaderboard-admin-tuition-container');
+      const btnRank = document.getElementById('btn-admin-view-ranking');
+      const btnTuition = document.getElementById('btn-admin-view-tuition');
+
+      if (mode === 'tuition') {
+        if (rankContainer) rankContainer.classList.add('hidden');
+        if (tuitionContainer) tuitionContainer.classList.remove('hidden');
+        if (btnRank) btnRank.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition font-semibold cursor-pointer";
+        if (btnTuition) btnTuition.className = "px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 font-bold border border-amber-500/40 transition cursor-pointer";
+        renderAdminStudents();
+      } else {
+        if (rankContainer) rankContainer.classList.remove('hidden');
+        if (tuitionContainer) tuitionContainer.classList.add('hidden');
+        if (btnRank) btnRank.className = "px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer";
+        if (btnTuition) btnTuition.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition font-semibold cursor-pointer";
+        renderMatrix();
       }
+      updateAdminMiniStats();
+    }
+
+    function updateAdminMiniStats() {
+      if (!appData) return;
+      const totalS = appData.students ? appData.students.length : 0;
+      const activeS = appData.students ? appData.students.filter(s => (s.status || 'Đang học') === 'Đang học').length : 0;
+      const currentMonth = (appData.tuition_months && appData.tuition_months.length > 0) 
+        ? appData.tuition_months[appData.tuition_months.length - 1] 
+        : 'Tháng 10';
+      const tuitionPaidCount = appData.students ? appData.students.filter(s => s.tuition && s.tuition[currentMonth]).length : 0;
+      const totalProblems = appData.problems ? appData.problems.length : 0;
+      const totalCurriculum = appData.curriculum ? appData.curriculum.length : 0;
+
+      const elTotal = document.getElementById('admin-mini-stat-total');
+      const elActive = document.getElementById('admin-mini-stat-active');
+      const elTuition = document.getElementById('admin-mini-stat-tuition');
+      const elContent = document.getElementById('admin-mini-stat-content');
+
+      if (elTotal) elTotal.textContent = totalS;
+      if (elActive) elActive.textContent = activeS;
+      if (elTuition) elTuition.textContent = `${tuitionPaidCount} / ${totalS}`;
+      if (elContent) elContent.textContent = `${totalCurriculum} / ${totalProblems}`;
     }
 
     // 1. FILTER & RENDER PUBLIC LEADERBOARD (KHÔNG CHIA THEO LỚP, HIỆN TẤT CẢ HỌC SINH, RATING & TỔNG AC)
@@ -1628,9 +1521,17 @@
       let profileActionHtml = '';
       if (currentAuth && currentAuth.role === 'admin') {
         profileActionHtml = `
-          <a href="student.html?id=${s.stt}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 hover:border-indigo-500/60 transition whitespace-nowrap">
-            <span>👤</span> Xem Heatmap ↗
-          </a>
+          <div class="flex items-center justify-center gap-1.5 whitespace-nowrap">
+            <a href="student.html?id=${s.stt}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition">
+              <span>👤</span> Heatmap
+            </a>
+            <button onclick="openEditStudentModal(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 border border-amber-500/30 transition cursor-pointer" title="Sửa học sinh">
+              ✏️
+            </button>
+            <button onclick="deleteStudent(${s.stt})" class="px-2 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer" title="Xóa học sinh">
+              🗑️
+            </button>
+          </div>
         `;
       } else if (isCurrentStudent) {
         profileActionHtml = `
@@ -2513,7 +2414,7 @@
         hideAuthModal();
         applyAuthAccess();
         if (currentAuth.role === 'admin') {
-          switchTab('admin');
+          switchTab('leaderboard');
         } else {
           switchTab('leaderboard');
         }
@@ -2539,27 +2440,29 @@
       const adminBtnMobile = document.getElementById('tab-btn-admin-mobile');
       const studentTabBtn = document.getElementById('tab-btn-student');
       const studentTabBtnMobile = document.getElementById('tab-btn-student-mobile');
+      const lbAdminBar = document.getElementById('leaderboard-admin-bar');
 
       const dataTabs = ['leaderboard', 'contests', 'problems', 'curriculum'];
 
       if (!currentAuth) {
         // Guest mode: strictly public landing page only
-        if (nameEl) nameEl.textContent = 'Khách (Chưa đăng nhập)';
-        if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1.5";
+        if (nameEl) nameEl.textContent = 'Khách';
+        if (badge) badge.className = "px-2 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1";
         if (authBtn) {
           authBtn.onclick = showAuthModal;
           authBtn.innerHTML = `<span>🔑</span> <span class="hidden sm:inline">Đăng nhập</span>`;
           authBtn.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white border border-indigo-500/40 transition flex items-center gap-1 cursor-pointer";
         }
-        // Admin tab ALWAYS hidden for guests
         if (adminBtn) adminBtn.classList.add('hidden');
         if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+        if (lbAdminBar) lbAdminBar.classList.add('hidden');
+        document.querySelectorAll('.admin-only-btn').forEach(b => b.classList.add('hidden'));
 
         // Personal profile button for guest triggers modal
         if (studentTabBtn) {
           studentTabBtn.href = "javascript:void(0)";
           studentTabBtn.onclick = () => { showAuthModal(); return false; };
-          studentTabBtn.innerHTML = `<span>👤</span> Tiến Độ Cá Nhân <span class="text-[10px] opacity-70">🔒</span>`;
+          studentTabBtn.innerHTML = `<span>👤</span> Cá Nhân <span class="text-[10px] opacity-70">🔒</span>`;
         }
         if (studentTabBtnMobile) {
           studentTabBtnMobile.href = "javascript:void(0)";
@@ -2604,33 +2507,34 @@
         });
 
         if (currentAuth.role === 'admin') {
-          if (nameEl) nameEl.textContent = '👑 Giáo viên (Admin)';
-          if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5";
-          // ONLY ADMIN SEES ADMIN TAB
-          if (adminBtn) adminBtn.classList.remove('hidden');
-          if (adminBtnMobile) adminBtnMobile.classList.remove('hidden');
+          if (nameEl) nameEl.textContent = '👑 Admin';
+          if (badge) badge.className = "px-2 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1";
+          
+          if (lbAdminBar) lbAdminBar.classList.remove('hidden');
+          document.querySelectorAll('.admin-only-btn').forEach(b => b.classList.remove('hidden'));
+          updateAdminMiniStats();
 
           if (studentTabBtn) {
             studentTabBtn.href = "student.html?id=1";
             studentTabBtn.onclick = null;
-            studentTabBtn.innerHTML = `<span>👤</span> Tiến Độ Học Viên`;
+            studentTabBtn.innerHTML = `<span>👤</span> Học Viên`;
           }
           if (studentTabBtnMobile) {
             studentTabBtnMobile.href = "student.html?id=1";
             studentTabBtnMobile.onclick = null;
-            studentTabBtnMobile.innerHTML = `👤 Tiến độ`;
+            studentTabBtnMobile.innerHTML = `👤 Học viên`;
           }
         } else if (currentAuth.role === 'student') {
-          if (nameEl) nameEl.textContent = `👤 ${currentAuth.name} (${currentAuth.class})`;
-          if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5";
-          // ADMIN TAB MUST BE HIDDEN FOR STUDENTS
-          if (adminBtn) adminBtn.classList.add('hidden');
-          if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+          if (nameEl) nameEl.textContent = `👤 ${currentAuth.name}`;
+          if (badge) badge.className = "px-2 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1";
+
+          if (lbAdminBar) lbAdminBar.classList.add('hidden');
+          document.querySelectorAll('.admin-only-btn').forEach(b => b.classList.add('hidden'));
 
           if (studentTabBtn) {
             studentTabBtn.href = `student.html?id=${currentAuth.stt || 1}`;
             studentTabBtn.onclick = null;
-            studentTabBtn.innerHTML = `<span>👤</span> Tiến Độ Của Bạn`;
+            studentTabBtn.innerHTML = `<span>👤</span> Của bạn`;
           }
           if (studentTabBtnMobile) {
             studentTabBtnMobile.href = `student.html?id=${currentAuth.stt || 1}`;
@@ -2640,14 +2544,14 @@
         } else {
           // CLASS / OTHER
           if (nameEl) nameEl.textContent = `👥 ${currentAuth.name}`;
-          if (badge) badge.className = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5";
-          if (adminBtn) adminBtn.classList.add('hidden');
-          if (adminBtnMobile) adminBtnMobile.classList.add('hidden');
+          if (badge) badge.className = "px-2 py-1 rounded-lg text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 flex items-center gap-1";
+          if (lbAdminBar) lbAdminBar.classList.add('hidden');
+          document.querySelectorAll('.admin-only-btn').forEach(b => b.classList.add('hidden'));
 
           if (studentTabBtn) {
             studentTabBtn.href = "student.html?id=1";
             studentTabBtn.onclick = null;
-            studentTabBtn.innerHTML = `<span>👤</span> Tiến Độ Lớp`;
+            studentTabBtn.innerHTML = `<span>👤</span> Lớp học`;
           }
         }
 
