@@ -1,0 +1,53 @@
+name: Auto Crawl & Sync Submissions
+
+on:
+  schedule:
+    # Run automatically every 30 minutes
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: auto-crawl-sync
+  cancel-in-progress: false
+
+jobs:
+  crawl-and-sync:
+    name: Crawl Online Judges & Sync to Web
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Crawler Once
+        run: |
+          python -m src.auto_watch --once
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data.json
+          if ! git diff --staged --quiet; then
+            echo "New submissions detected! Committing and pushing to GitHub..."
+            git commit -m "auto: periodic crawl and update student submissions"
+            git push origin master
+          else
+            echo "No new submissions detected. Nothing to push."
+          fi

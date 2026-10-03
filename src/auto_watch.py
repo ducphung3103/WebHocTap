@@ -11,6 +11,7 @@ from typing import Dict, List, Set, Any, Tuple
 
 # Fix Windows console encoding
 sys.stdout.reconfigure(encoding='utf-8')
+os.environ.pop("SSLKEYLOGFILE", None)
 
 # Ensure project root is in sys.path
 _PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

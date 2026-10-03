@@ -27,21 +27,55 @@ class MarisaOJCrawler:
 
     def _create_driver(self):
         from selenium import webdriver
-        from selenium.webdriver.edge.options import Options
 
-        options = Options()
-        if self.headless:
+        # On Linux / GitHub Actions CI, Google Chrome is preinstalled
+        if sys.platform.startswith("linux"):
+            from selenium.webdriver.chrome.options import Options as ChromeOptions
+            options = ChromeOptions()
             options.add_argument("--headless=new")
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_experimental_option("useAutomationExtension", False)
-        options.add_argument("--disable-blink-features=AutomationControlled")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--disable-gpu")
+            options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
+            options.add_argument("--disable-blink-features=AutomationControlled")
+            options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            options.add_experimental_option("useAutomationExtension", False)
+            driver = webdriver.Chrome(options=options)
+            driver.execute_cdp_cmd(
+                "Page.addScriptToEvaluateOnNewDocument",
+                {"source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"}
+            )
+            return driver
 
-        driver = webdriver.Edge(options=options)
-        driver.execute_cdp_cmd(
-            "Page.addScriptToEvaluateOnNewDocument",
-            {"source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"}
-        )
-        return driver
+        # On Windows/other, try Edge first, then Chrome fallback
+        try:
+            from selenium.webdriver.edge.options import Options as EdgeOptions
+            options = EdgeOptions()
+            if self.headless:
+                options.add_argument("--headless=new")
+            options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            options.add_experimental_option("useAutomationExtension", False)
+            options.add_argument("--disable-blink-features=AutomationControlled")
+            driver = webdriver.Edge(options=options)
+            driver.execute_cdp_cmd(
+                "Page.addScriptToEvaluateOnNewDocument",
+                {"source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"}
+            )
+            return driver
+        except Exception:
+            from selenium.webdriver.chrome.options import Options as ChromeOptions
+            options = ChromeOptions()
+            if self.headless:
+                options.add_argument("--headless=new")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--disable-blink-features=AutomationControlled")
+            driver = webdriver.Chrome(options=options)
+            driver.execute_cdp_cmd(
+                "Page.addScriptToEvaluateOnNewDocument",
+                {"source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"}
+            )
+            return driver
 
     def crawl_user(self, handle: str, driver=None) -> Tuple[Set[str], Dict[str, Dict[str, int]]]:
         """

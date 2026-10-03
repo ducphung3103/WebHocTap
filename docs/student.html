@@ -630,13 +630,19 @@
 
       container.innerHTML = '';
       
-      const sClass = student.class || 'C++';
+      const sClass = student.class || 'C++ nâng cao';
       const classCfg = (appData.class_config && appData.class_config[sClass]) ? appData.class_config[sClass] : null;
       let classProblems = [];
-      if (classCfg && classCfg.problem_ids) {
+      if (classCfg && classCfg.problem_ids && classCfg.problem_ids.length > 0) {
         classProblems = (appData.problems || []).filter(p => classCfg.problem_ids.includes(p.id));
       } else {
-        classProblems = (appData.problems || []).filter(p => !p.classes || p.classes.includes(sClass));
+        classProblems = (appData.problems || []).filter(p => {
+          const pClasses = p.classes || [];
+          if (pClasses.includes(sClass)) return true;
+          if (pClasses.includes('C++') && (sClass === 'C++ nâng cao' || sClass === 'C++ cơ bản')) return true;
+          if (pClasses.includes('Python') && (sClass === 'Python cơ bản' || sClass === 'Python 1-1')) return true;
+          return false;
+        });
       }
       if (classProblems.length === 0) classProblems = appData.problems || [];
 
@@ -1228,6 +1234,26 @@
         if (nameEl) nameEl.textContent = `👤 ${currentAuth.name}`;
         if (badge) badge.className = "px-2 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1";
         // CRITICAL PRIVACY: Students CANNOT see the switcher!
+        if (switcher) switcher.classList.add('hidden');
+      } else if (currentAuth.role === 'class') {
+        const cls = currentAuth.class || '';
+        let badgeColor = "bg-indigo-500/20 text-indigo-300 border-indigo-500/40";
+        let icon = "👥";
+        if (cls === 'C++ nâng cao') {
+          badgeColor = "bg-blue-500/20 text-blue-300 border-blue-500/40";
+          icon = "🟦";
+        } else if (cls === 'C++ cơ bản') {
+          badgeColor = "bg-cyan-500/20 text-cyan-300 border-cyan-500/40";
+          icon = "🔷";
+        } else if (cls === 'Python cơ bản') {
+          badgeColor = "bg-emerald-500/20 text-emerald-300 border-emerald-500/40";
+          icon = "🟩";
+        } else if (cls === 'Python 1-1') {
+          badgeColor = "bg-purple-500/20 text-purple-300 border-purple-500/40";
+          icon = "🟪";
+        }
+        if (nameEl) nameEl.textContent = `${icon} ${currentAuth.name || cls}`;
+        if (badge) badge.className = `px-2 py-1 rounded-lg text-xs font-semibold ${badgeColor} border flex items-center gap-1`;
         if (switcher) switcher.classList.add('hidden');
       } else {
         if (nameEl) nameEl.textContent = `👥 ${currentAuth.name}`;

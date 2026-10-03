@@ -77,7 +77,15 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
                         "class": "ALL"
                     }
             elif role == "CLASS":
-                cls = "C++" if "C++" in str(target_name) else "Python 1-1" if "1-1" in str(target_name) else "Python"
+                target_str = str(target_name).lower()
+                if "1-1" in target_str:
+                    cls = "Python 1-1"
+                elif "python" in target_str:
+                    cls = "Python cơ bản"
+                elif "nâng cao" in target_str or "nc" in target_str or "advanced" in target_str:
+                    cls = "C++ nâng cao"
+                else:
+                    cls = "C++ cơ bản"
                 auth_tokens[h] = {
                     "role": "class",
                     "name": str(target_name),
@@ -86,7 +94,14 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
 
     # 2. Parse Problems
     problems = []
-    class_problems_map = {"C++": [], "Python": [], "Python 1-1": []}
+    class_problems_map = {
+        "C++ nâng cao": [],
+        "C++ cơ bản": [],
+        "Python cơ bản": [],
+        "Python 1-1": [],
+        "C++": [],
+        "Python": []
+    }
 
     if "Bài Tập" in wb.sheetnames:
         ws_prob = wb["Bài Tập"]
@@ -104,21 +119,26 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
 
             c_list = []
             c_str_clean = str(classes_str).strip()
-            if "Public" in c_str_clean or "Công khai" in c_str_clean or "public" in c_str_clean:
+            c_lower = c_str_clean.lower()
+            if "public" in c_lower or "công khai" in c_lower:
                 c_list.append("Public")
-            if "Tất cả" in c_str_clean or "All" in c_str_clean:
+            if "tất cả" in c_lower or "all" in c_lower:
                 if "Public" not in c_list:
                     c_list.append("Public")
-                for c in ["C++", "Python", "Python 1-1"]:
+                for c in ["C++ nâng cao", "C++ cơ bản", "Python cơ bản", "Python 1-1"]:
                     if c not in c_list:
                         c_list.append(c)
             else:
-                if "C++" in c_str_clean and "C++" not in c_list:
-                    c_list.append("C++")
-                if ("Python 1-1" in c_str_clean or "1-1" in c_str_clean) and "Python 1-1" not in c_list:
+                if "nâng cao" in c_lower or "nc" in c_lower:
+                    c_list.append("C++ nâng cao")
+                if "cơ bản" in c_lower and "c++" in c_lower:
+                    c_list.append("C++ cơ bản")
+                if "1-1" in c_lower:
                     c_list.append("Python 1-1")
-                elif "Python" in c_str_clean and "Python" not in c_list:
-                    c_list.append("Python")
+                if "python" in c_lower and "1-1" not in c_lower:
+                    c_list.append("Python cơ bản")
+                if "c++" in c_lower and "nâng cao" not in c_lower and "cơ bản" not in c_lower:
+                    c_list.extend(["C++ nâng cao", "C++ cơ bản"])
             if not c_list:
                 c_list = ["Public"]
 
@@ -158,21 +178,26 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
 
             c_list = []
             c_str_clean = str(classes_str).strip()
-            if "Public" in c_str_clean or "Công khai" in c_str_clean or "public" in c_str_clean:
+            c_lower = c_str_clean.lower()
+            if "public" in c_lower or "công khai" in c_lower:
                 c_list.append("Public")
-            if "Tất cả" in c_str_clean or "All" in c_str_clean:
+            if "tất cả" in c_lower or "all" in c_lower:
                 if "Public" not in c_list:
                     c_list.append("Public")
-                for c in ["C++", "Python", "Python 1-1"]:
+                for c in ["C++ nâng cao", "C++ cơ bản", "Python cơ bản", "Python 1-1"]:
                     if c not in c_list:
                         c_list.append(c)
             else:
-                if "C++" in c_str_clean and "C++" not in c_list:
-                    c_list.append("C++")
-                if ("Python 1-1" in c_str_clean or "1-1" in c_str_clean) and "Python 1-1" not in c_list:
+                if "nâng cao" in c_lower or "nc" in c_lower:
+                    c_list.append("C++ nâng cao")
+                if "cơ bản" in c_lower and "c++" in c_lower:
+                    c_list.append("C++ cơ bản")
+                if "1-1" in c_lower:
                     c_list.append("Python 1-1")
-                elif "Python" in c_str_clean and "Python" not in c_list:
-                    c_list.append("Python")
+                if "python" in c_lower and "1-1" not in c_lower:
+                    c_list.append("Python cơ bản")
+                if "c++" in c_lower and "nâng cao" not in c_lower and "cơ bản" not in c_lower:
+                    c_list.extend(["C++ nâng cao", "C++ cơ bản"])
             if not c_list:
                 c_list = ["Public"]
 
@@ -323,17 +348,23 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
 
     # 6. Class Config
     class_config = {
-        "C++": {
-            "name": "Lớp C++",
+        "C++ nâng cao": {
+            "name": "Lớp C++ nâng cao",
             "badge_color": "bg-blue-500/15 text-blue-300 border-blue-500/30",
-            "total_problems": len(class_problems_map.get("C++", [])),
-            "problem_ids": class_problems_map.get("C++", [])
+            "total_problems": len(class_problems_map.get("C++ nâng cao", class_problems_map.get("C++", []))),
+            "problem_ids": class_problems_map.get("C++ nâng cao", class_problems_map.get("C++", []))
         },
-        "Python": {
-            "name": "Lớp Python",
+        "C++ cơ bản": {
+            "name": "Lớp C++ cơ bản",
+            "badge_color": "bg-cyan-500/15 text-cyan-300 border-cyan-500/30",
+            "total_problems": len(class_problems_map.get("C++ cơ bản", class_problems_map.get("C++", []))),
+            "problem_ids": class_problems_map.get("C++ cơ bản", class_problems_map.get("C++", []))
+        },
+        "Python cơ bản": {
+            "name": "Lớp Python cơ bản",
             "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-            "total_problems": len(class_problems_map.get("Python", [])),
-            "problem_ids": class_problems_map.get("Python", [])
+            "total_problems": len(class_problems_map.get("Python cơ bản", class_problems_map.get("Python", []))),
+            "problem_ids": class_problems_map.get("Python cơ bản", class_problems_map.get("Python", []))
         },
         "Python 1-1": {
             "name": "Lớp Python 1-1",
