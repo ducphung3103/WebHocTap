@@ -821,20 +821,23 @@
       container.innerHTML = '';
       
       const sClass = student.class || 'C++ nâng cao';
-      const classCfg = (appData.class_config && appData.class_config[sClass]) ? appData.class_config[sClass] : null;
-      let classProblems = [];
-      if (classCfg && classCfg.problem_ids && classCfg.problem_ids.length > 0) {
-        classProblems = (appData.problems || []).filter(p => classCfg.problem_ids.includes(p.id));
-      } else {
-        classProblems = (appData.problems || []).filter(p => {
-          const pClasses = p.classes || [];
-          if (pClasses.includes(sClass)) return true;
-          if (pClasses.includes('C++') && (sClass === 'C++ nâng cao' || sClass === 'C++ cơ bản')) return true;
-          if (pClasses.includes('Python') && (sClass === 'Python cơ bản' || sClass === 'Python 1-1')) return true;
-          return false;
-        });
+      const classProblems = (appData.problems || []).filter(p => {
+        const pClasses = p.classes || [];
+        return pClasses.includes(sClass) || pClasses.includes('Tất cả');
+      });
+
+      if (classProblems.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full p-8 text-center bg-slate-900/60 border border-slate-800 rounded-xl space-y-2">
+            <span class="text-3xl">📭</span>
+            <div class="text-sm font-bold text-slate-300">Chưa có bài tập nào được giao cho lớp ${sClass}</div>
+            <p class="text-xs text-slate-400">Các bài tập mới sẽ tự động hiển thị tại đây khi Thầy giao bài.</p>
+          </div>
+        `;
+        if (badge) badge.textContent = `0 / 0 bài (0%)`;
+        if (bar) bar.style.width = `0%`;
+        return;
       }
-      if (classProblems.length === 0) classProblems = appData.problems || [];
 
       const totalProblems = classProblems.length;
       const solvedList = student.solved || [];
@@ -1559,6 +1562,12 @@
       const prob = (appData.problems || []).find(p => p.id === probId);
       if (!prob) {
         alert("Không tìm thấy thông tin bài tập này!");
+        return;
+      }
+      const sClass = currentStudent.class;
+      const pClasses = prob.classes || [];
+      if (sClass && !pClasses.includes(sClass) && !pClasses.includes('Tất cả')) {
+        alert("Bài tập này không thuộc lớp của bạn!");
         return;
       }
 

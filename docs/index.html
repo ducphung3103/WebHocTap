@@ -2907,17 +2907,15 @@
     // ROLE & PERMISSION CHECK FOR CONTENT (PROBLEMS & CURRICULUM)
     function canViewItem(item) {
       if (!currentAuth) return false;
-      const classes = item.classes || [];
       if (currentAuth.role === 'admin' || currentAuth.role === 'teacher') return true;
-      if (classes.length === 0 || classes.includes('Public') || classes.includes('Tất cả') || classes.includes('All')) {
+      const classes = item.classes || [];
+      if (classes.includes('Tất cả') || classes.includes('All')) {
         return true;
       }
       if (currentAuth.role === 'student' || currentAuth.role === 'class') {
         const userCls = currentAuth.class;
-        if (classes.includes(userCls)) return true;
-        if (classes.includes('C++') && (userCls === 'C++ nâng cao' || userCls === 'C++ cơ bản')) return true;
-        if (classes.includes('Python') && (userCls === 'Python cơ bản' || userCls === 'Python 1-1')) return true;
-        return false;
+        if (!userCls) return false;
+        return classes.includes(userCls);
       }
       return false;
     }
@@ -2938,6 +2936,9 @@
     }
 
     function filterProblemClass(cls) {
+      if (currentAuth && currentAuth.role === 'student' && currentAuth.class) {
+        cls = currentAuth.class;
+      }
       currentProblemClassFilter = cls;
       currentProblemDisplayLimit = 60;
       const classKeys = [
@@ -3028,12 +3029,8 @@
           if (currentProblemClassFilter === 'Public') {
             if (!pClasses.includes('Public') && !pClasses.includes('Tất cả') && pClasses.length > 0) return false;
           } else {
-            const matches = pClasses.includes(currentProblemClassFilter) ||
-              (currentProblemClassFilter === 'C++ nâng cao' && pClasses.includes('C++')) ||
-              (currentProblemClassFilter === 'C++ cơ bản' && pClasses.includes('C++')) ||
-              (currentProblemClassFilter === 'Python cơ bản' && pClasses.includes('Python')) ||
-              (currentProblemClassFilter === 'Python 1-1' && pClasses.includes('Python'));
-            if (!matches && !pClasses.includes('Public') && !pClasses.includes('Tất cả')) return false;
+            const matches = pClasses.includes(currentProblemClassFilter) || pClasses.includes('Tất cả');
+            if (!matches) return false;
           }
         }
 
@@ -3186,6 +3183,9 @@
     let currentCurriculumClassFilter = 'all';
 
     function filterCurriculumClass(cls) {
+      if (currentAuth && currentAuth.role === 'student' && currentAuth.class) {
+        cls = currentAuth.class;
+      }
       currentCurriculumClassFilter = cls;
       const classKeys = [
         { key: 'all', id: 'curr-class-filter-all' },
@@ -3261,12 +3261,8 @@
           if (currentCurriculumClassFilter === 'Public') {
             if (!lClasses.includes('Public') && !lClasses.includes('Tất cả') && lClasses.length > 0) return false;
           } else {
-            const matches = lClasses.includes(currentCurriculumClassFilter) ||
-              (currentCurriculumClassFilter === 'C++ nâng cao' && lClasses.includes('C++')) ||
-              (currentCurriculumClassFilter === 'C++ cơ bản' && lClasses.includes('C++')) ||
-              (currentCurriculumClassFilter === 'Python cơ bản' && lClasses.includes('Python')) ||
-              (currentCurriculumClassFilter === 'Python 1-1' && lClasses.includes('Python'));
-            if (!matches && !lClasses.includes('Public') && !lClasses.includes('Tất cả')) return false;
+            const matches = lClasses.includes(currentCurriculumClassFilter) || lClasses.includes('Tất cả');
+            if (!matches) return false;
           }
         }
         return canViewItem(l);
@@ -3752,9 +3748,12 @@
       const saved = getAuthCookie();
       if (saved) {
         currentAuth = saved;
-        if (currentAuth.role === 'student' && !currentAuth.stt && appData && appData.students) {
+        if (currentAuth.role === 'student' && appData && appData.students) {
           const st = appData.students.find(s => s.name === currentAuth.name);
-          if (st) currentAuth.stt = st.stt;
+          if (st) {
+            if (!currentAuth.stt) currentAuth.stt = st.stt;
+            if (st.class) currentAuth.class = st.class;
+          }
         }
         hideAuthModal();
         applyAuthAccess();
@@ -3808,10 +3807,12 @@
 
       if (match) {
         currentAuth = Object.assign({}, match);
-        // Find stt for student role
-        if (currentAuth.role === 'student' && !currentAuth.stt && appData && appData.students) {
+        if (currentAuth.role === 'student' && appData && appData.students) {
           const st = appData.students.find(s => s.name === currentAuth.name);
-          if (st) currentAuth.stt = st.stt;
+          if (st) {
+            if (!currentAuth.stt) currentAuth.stt = st.stt;
+            if (st.class) currentAuth.class = st.class;
+          }
         }
         setAuthCookie(currentAuth);
         hideAuthModal();
@@ -3909,6 +3910,33 @@
           }
         });
 
+        if (currentAuth.role === 'admin' || currentAuth.role === 'teacher') {
+          const probClassFilterCont = document.getElementById('prob-class-filter-container');
+          if (probClassFilterCont) {
+            probClassFilterCont.innerHTML = `
+              <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>👥</span> Xem bài tập:</span>
+              <button onclick="filterProblemClass('all')" id="prob-class-filter-all" class="prob-class-btn px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/40 transition">Tất cả bài tập</button>
+              <button onclick="filterProblemClass('Public')" id="prob-class-filter-Public" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🌐 Public</button>
+              <button onclick="filterProblemClass('C++ nâng cao')" id="prob-class-filter-cppnc" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-blue-300 hover:bg-slate-800 transition">🟦 C++ nâng cao</button>
+              <button onclick="filterProblemClass('C++ cơ bản')" id="prob-class-filter-cppcb" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-800 transition">🔷 C++ cơ bản</button>
+              <button onclick="filterProblemClass('Python cơ bản')" id="prob-class-filter-pythoncb" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🟩 Python cơ bản</button>
+              <button onclick="filterProblemClass('Python 1-1')" id="prob-class-filter-python11" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-purple-300 hover:bg-slate-800 transition">🟪 Python 1-1</button>
+            `;
+          }
+          const currClassFilterCont = document.getElementById('curr-class-filter-container');
+          if (currClassFilterCont) {
+            currClassFilterCont.innerHTML = `
+              <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>👥</span> Xem bài giảng:</span>
+              <button onclick="filterCurriculumClass('all')" id="curr-class-filter-all" class="curr-class-btn px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/40 transition">Tất cả bài giảng</button>
+              <button onclick="filterCurriculumClass('Public')" id="curr-class-filter-Public" class="curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🌐 Public</button>
+              <button onclick="filterCurriculumClass('C++ nâng cao')" id="curr-class-filter-cppnc" class="curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-blue-300 hover:bg-slate-800 transition">🟦 C++ nâng cao</button>
+              <button onclick="filterCurriculumClass('C++ cơ bản')" id="curr-class-filter-cppcb" class="curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-800 transition">🔷 C++ cơ bản</button>
+              <button onclick="filterCurriculumClass('Python cơ bản')" id="curr-class-filter-pythoncb" class="curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🟩 Python cơ bản</button>
+              <button onclick="filterCurriculumClass('Python 1-1')" id="curr-class-filter-python11" class="curr-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-purple-300 hover:bg-slate-800 transition">🟪 Python 1-1</button>
+            `;
+          }
+        }
+
         if (currentAuth.role === 'admin') {
           if (nameEl) nameEl.textContent = '👑 Admin';
           if (badge) badge.className = "px-2 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1";
@@ -3966,6 +3994,7 @@
             studentTabBtnMobile.innerHTML = `👤 Học viên`;
           }
         } else if (currentAuth.role === 'student') {
+          const uClass = currentAuth.class || '';
           if (nameEl) nameEl.textContent = `👤 ${currentAuth.name}`;
           if (badge) badge.className = "px-2 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1";
 
@@ -3981,6 +4010,34 @@
             studentTabBtnMobile.href = `student.html?id=${currentAuth.stt || 1}`;
             studentTabBtnMobile.onclick = null;
             studentTabBtnMobile.innerHTML = `👤 Của bạn`;
+          }
+
+          // Lock Problem filter bar strictly to student's class
+          const probClassFilterCont = document.getElementById('prob-class-filter-container');
+          if (probClassFilterCont && uClass) {
+            probClassFilterCont.innerHTML = `
+              <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>🎯</span> Lớp học của bạn:</span>
+              <span class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 flex items-center gap-1.5 shadow-sm">
+                <span>👥</span> Lớp ${uClass}
+              </span>
+            `;
+            currentProblemClassFilter = uClass;
+          }
+
+          // Lock Curriculum filter bar strictly to student's class
+          const currClassFilterCont = document.getElementById('curr-class-filter-container');
+          if (currClassFilterCont && uClass) {
+            currClassFilterCont.innerHTML = `
+              <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>🎯</span> Bài giảng của lớp:</span>
+              <span class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 flex items-center gap-1.5 shadow-sm">
+                <span>📚</span> Lớp ${uClass}
+              </span>
+            `;
+            currentCurriculumClassFilter = uClass;
+          }
+
+          if (uClass) {
+            filterClass(uClass);
           }
         } else if (currentAuth.role === 'class') {
           // 4 CLASS ROLES: C++ nâng cao, C++ cơ bản, Python cơ bản, Python 1-1
@@ -4016,10 +4073,29 @@
             studentTabBtnMobile.innerHTML = `👤 ${cls || 'Lớp học'}`;
           }
 
-          if (cls && currentClassFilter === 'all') {
+          const probClassFilterCont = document.getElementById('prob-class-filter-container');
+          if (probClassFilterCont && cls) {
+            probClassFilterCont.innerHTML = `
+              <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>🎯</span> Bài tập lớp:</span>
+              <span class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 flex items-center gap-1.5 shadow-sm">
+                <span>👥</span> Lớp ${cls}
+              </span>
+            `;
+            currentProblemClassFilter = cls;
+          }
+          const currClassFilterCont = document.getElementById('curr-class-filter-container');
+          if (currClassFilterCont && cls) {
+            currClassFilterCont.innerHTML = `
+              <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>🎯</span> Bài giảng lớp:</span>
+              <span class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 flex items-center gap-1.5 shadow-sm">
+                <span>📚</span> Lớp ${cls}
+              </span>
+            `;
+            currentCurriculumClassFilter = cls;
+          }
+
+          if (cls) {
             filterClass(cls);
-            filterProblemClass(cls);
-            filterCurriculumClass(cls);
           }
         } else {
           // FALLBACK / OTHER
@@ -5151,14 +5227,16 @@
     let currentTestcaseEditingProbId = 'CPP-EX-01';
 
     function getGraderProblems() {
+      let list = [];
       if (appData && Array.isArray(appData.grader_problems) && appData.grader_problems.length > 0) {
-        return appData.grader_problems;
+        list = appData.grader_problems;
+      } else if (appData && Array.isArray(appData.problems)) {
+        list = appData.problems.filter(p => p.platform === 'DeruckOJ' || p.testcases);
       }
-      if (appData && Array.isArray(appData.problems)) {
-        const list = appData.problems.filter(p => p.platform === 'DeruckOJ' || p.testcases);
-        if (list.length > 0) return list;
+      if (!currentAuth || currentAuth.role === 'admin' || currentAuth.role === 'teacher') {
+        return list;
       }
-      return [];
+      return list.filter(p => canViewItem(p));
     }
 
     async function checkLocalJudgeHealth() {
@@ -7044,6 +7122,10 @@ OUTPUT:
       const prob = (appData.problems || []).find(p => p.id === probId) || (getGraderProblems()).find(p => p.id === probId);
       if (!prob) {
         alert("Không tìm thấy thông tin bài tập này!");
+        return;
+      }
+      if (!canViewItem(prob)) {
+        alert("Bài tập này không thuộc lớp của bạn!");
         return;
       }
 
