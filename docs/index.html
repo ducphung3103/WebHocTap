@@ -779,17 +779,24 @@
             
             <!-- Editor Toolbar -->
             <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
-              <div class="flex items-center gap-2">
-                <label for="judge-lang-select" class="text-xs font-semibold text-slate-400">Ngôn ngữ:</label>
-                <select id="judge-lang-select" onchange="handleJudgeLanguageChange()" class="bg-slate-900 border border-slate-700 text-xs font-bold text-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer">
-                  <option value="cpp">C++ (g++ 13 / C++20)</option>
-                  <option value="python">Python (Python 3.12)</option>
-                </select>
+              <div class="flex items-center flex-wrap gap-2.5">
+                <span class="text-xs font-bold text-slate-400">Ngôn ngữ:</span>
+                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800 gap-1 shadow-inner">
+                  <button type="button" id="btn-lang-cpp" onclick="setJudgeLanguage('cpp')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer bg-blue-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/40">
+                    <span>🟦</span> C++20
+                  </button>
+                  <button type="button" id="btn-lang-python" onclick="setJudgeLanguage('python')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer bg-slate-900 text-slate-400 hover:text-slate-200 border border-transparent">
+                    <span>🐍</span> Python 3
+                  </button>
+                </div>
+                <span id="judge-lang-info" class="text-[11px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">
+                  g++ 13 / C++20 (O2)
+                </span>
               </div>
 
               <div class="flex items-center gap-2">
-                <button onclick="insertJudgeStarterTemplate()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Lấy code khung mẫu">
-                  <span>📄</span> Code mẫu
+                <button onclick="insertJudgeStarterTemplate()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Lấy code khung mẫu theo ngôn ngữ đang chọn">
+                  <span>📄</span> Khung code mẫu
                 </button>
                 <button onclick="clearJudgeCode()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-rose-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Xóa trắng code">
                   <span>🗑️</span>
@@ -4281,9 +4288,8 @@
         }
       }
 
-      // Load code from localStorage or template
-      const langSelect = document.getElementById('judge-lang-select');
-      if (langSelect) langSelect.value = currentJudgeLang;
+      // Update Language Switcher UI & Load code from localStorage or template
+      updateJudgeLangUI();
 
       const codeEditor = document.getElementById('judge-code-editor');
       if (codeEditor) {
@@ -4321,11 +4327,12 @@
       }
     }
 
-    function handleJudgeLanguageChange() {
+    function setJudgeLanguage(lang) {
+      if (currentJudgeLang === lang) return;
       saveCurrentJudgeCodeToLocal();
-      const langSelect = document.getElementById('judge-lang-select');
-      if (langSelect) currentJudgeLang = langSelect.value;
-      
+      currentJudgeLang = lang;
+      updateJudgeLangUI();
+
       const codeEditor = document.getElementById('judge-code-editor');
       if (codeEditor) {
         const savedCode = localStorage.getItem(`deruck_code_${currentJudgeProbId}_${currentJudgeLang}`);
@@ -4335,12 +4342,58 @@
           codeEditor.value = getStarterTemplate(currentJudgeProbId, currentJudgeLang);
         }
       }
+      showLiveToast(`Đã chuyển sang ${lang === 'cpp' ? 'C++20' : 'Python 3'}`);
+    }
+
+    function updateJudgeLangUI() {
+      const btnCpp = document.getElementById('btn-lang-cpp');
+      const btnPy = document.getElementById('btn-lang-python');
+      const langInfo = document.getElementById('judge-lang-info');
+      const codeEditor = document.getElementById('judge-code-editor');
+      const statusEl = document.getElementById('judge-editor-status');
+
+      if (currentJudgeLang === 'cpp') {
+        if (btnCpp) {
+          btnCpp.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer bg-blue-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/40";
+        }
+        if (btnPy) {
+          btnPy.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer bg-slate-900 text-slate-400 hover:text-slate-200 border border-transparent";
+        }
+        if (langInfo) {
+          langInfo.className = "text-[11px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20";
+          langInfo.textContent = "g++ 13 / C++20 (O2)";
+        }
+        if (codeEditor) {
+          codeEditor.placeholder = "// Viết code C++ (C++20) tại đây...\n#include <iostream>\nusing namespace std;\n\nint main() {\n    return 0;\n}";
+        }
+        if (statusEl) {
+          statusEl.textContent = "C++20 (Tối ưu -O2)";
+        }
+      } else {
+        if (btnCpp) {
+          btnCpp.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer bg-slate-900 text-slate-400 hover:text-slate-200 border border-transparent";
+        }
+        if (btnPy) {
+          btnPy.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer bg-emerald-600 text-white shadow-md shadow-emerald-500/25 border border-emerald-400/40";
+        }
+        if (langInfo) {
+          langInfo.className = "text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20";
+          langInfo.textContent = "Python 3.12 (Bù x2.0s)";
+        }
+        if (codeEditor) {
+          codeEditor.placeholder = "# Viết code Python 3 tại đây...\nimport sys\n\ndef main():\n    pass\n\nif __name__ == '__main__':\n    main()";
+        }
+        if (statusEl) {
+          statusEl.textContent = "Python 3 (Tự động bù thời gian)";
+        }
+      }
     }
 
     function getStarterTemplate(probId, lang) {
       if (lang === 'cpp') {
-        if (probId === 'CB-01') {
-          return `#include <iostream>
+        switch (probId) {
+          case 'CB-01':
+            return `#include <iostream>
 using namespace std;
 
 int main() {
@@ -4353,8 +4406,127 @@ int main() {
     }
     return 0;
 }`;
-        }
-        return `#include <iostream>
+          case 'CB-02':
+            return `#include <iostream>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    long long n;
+    if (cin >> n) {
+        if (n % 2 == 0) cout << "CHAN\\n";
+        else cout << "LE\\n";
+    }
+    return 0;
+}`;
+          case 'CB-03':
+            return `#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    long long a, b, c;
+    if (cin >> a >> b >> c) {
+        cout << max({a, b, c}) << "\\n";
+    }
+    return 0;
+}`;
+          case 'CB-04':
+            return `#include <iostream>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    long long n;
+    if (cin >> n) {
+        long long sum = n * (n + 1) / 2;
+        cout << sum << "\\n";
+    }
+    return 0;
+}`;
+          case 'CB-05':
+            return `#include <iostream>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n;
+    if (cin >> n) {
+        long long ans = 1;
+        for (int i = 1; i <= n; i++) ans *= i;
+        cout << ans << "\\n";
+    }
+    return 0;
+}`;
+          case 'CB-06':
+            return `#include <iostream>
+using namespace std;
+
+bool isPrime(long long n) {
+    if (n < 2) return false;
+    for (long long i = 2; i * i <= n; i++) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    long long n;
+    if (cin >> n) {
+        cout << (isPrime(n) ? "YES" : "NO") << "\\n";
+    }
+    return 0;
+}`;
+          case 'CB-07':
+            return `#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    string s;
+    if (cin >> s) {
+        reverse(s.begin(), s.end());
+        cout << s << "\\n";
+    }
+    return 0;
+}`;
+          case 'CB-08':
+            return `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n;
+    if (cin >> n) {
+        vector<long long> a(n);
+        for (int i = 0; i < n; i++) cin >> a[i];
+        long long max_val = *max_element(a.begin(), a.end());
+        cout << max_val << "\\n";
+    }
+    return 0;
+}`;
+          default:
+            return `#include <iostream>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -4368,9 +4540,12 @@ int main() {
 
     return 0;
 }`;
+        }
       } else {
-        if (probId === 'CB-01') {
-          return `import sys
+        // Python 3 templates
+        switch (probId) {
+          case 'CB-01':
+            return `import sys
 
 def main():
     tokens = sys.stdin.read().split()
@@ -4381,15 +4556,107 @@ def main():
 
 if __name__ == '__main__':
     main()`;
-        }
-        return `import sys
+          case 'CB-02':
+            return `import sys
+
+def main():
+    tokens = sys.stdin.read().split()
+    if tokens:
+        n = int(tokens[0])
+        print("CHAN" if n % 2 == 0 else "LE")
+
+if __name__ == '__main__':
+    main()`;
+          case 'CB-03':
+            return `import sys
+
+def main():
+    tokens = sys.stdin.read().split()
+    if len(tokens) >= 3:
+        a, b, c = int(tokens[0]), int(tokens[1]), int(tokens[2])
+        print(max(a, b, c))
+
+if __name__ == '__main__':
+    main()`;
+          case 'CB-04':
+            return `import sys
+
+def main():
+    tokens = sys.stdin.read().split()
+    if tokens:
+        n = int(tokens[0])
+        print(n * (n + 1) // 2)
+
+if __name__ == '__main__':
+    main()`;
+          case 'CB-05':
+            return `import sys
+import math
+
+def main():
+    tokens = sys.stdin.read().split()
+    if tokens:
+        n = int(tokens[0])
+        print(math.factorial(n))
+
+if __name__ == '__main__':
+    main()`;
+          case 'CB-06':
+            return `import sys
+
+def is_prime(n):
+    if n < 2:
+        return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+
+def main():
+    tokens = sys.stdin.read().split()
+    if tokens:
+        n = int(tokens[0])
+        print("YES" if is_prime(n) else "NO")
+
+if __name__ == '__main__':
+    main()`;
+          case 'CB-07':
+            return `import sys
+
+def main():
+    s = sys.stdin.read().strip()
+    if s:
+        print(s[::-1])
+
+if __name__ == '__main__':
+    main()`;
+          case 'CB-08':
+            return `import sys
+
+def main():
+    tokens = sys.stdin.read().split()
+    if tokens:
+        n = int(tokens[0])
+        arr = [int(x) for x in tokens[1:1+n]]
+        print(max(arr))
+
+if __name__ == '__main__':
+    main()`;
+          default:
+            return `import sys
 
 def solve():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
     # Viết code giải bài tại đây
     pass
 
 if __name__ == '__main__':
     solve()`;
+        }
       }
     }
 
@@ -4441,6 +4708,10 @@ if __name__ == '__main__':
 
     // Execute code on either local judge server or Wandbox API
     async function executeCode(lang, code, stdin, timeLimit = 1.0) {
+      const baseTime = parseFloat(timeLimit) || 1.0;
+      // Python gets a fair multiplier (min 2.5s or 2x base time limit) to offset interpreter startup
+      const effectiveTimeLimit = (lang === 'python') ? Math.max(baseTime * 2.0, 2.5) : baseTime;
+
       // 1. Try Local Judge Server first
       if (localJudgeAvailable !== false) {
         try {
@@ -4451,9 +4722,9 @@ if __name__ == '__main__':
               lang,
               code,
               stdin,
-              time_limit: timeLimit
+              time_limit: effectiveTimeLimit
             }),
-            signal: AbortSignal.timeout((timeLimit + 3) * 1000)
+            signal: AbortSignal.timeout((effectiveTimeLimit + 4) * 1000)
           });
           if (resp.ok) {
             const data = await resp.json();
@@ -4479,7 +4750,7 @@ if __name__ == '__main__':
             stdin,
             compiler_options: compilerOptions
           }),
-          signal: AbortSignal.timeout(15000)
+          signal: AbortSignal.timeout(Math.max((effectiveTimeLimit + 6) * 1000, 15000))
         });
 
         if (!resp.ok) {
@@ -4512,8 +4783,8 @@ if __name__ == '__main__':
           return {
             status: 'TLE',
             stdout: '',
-            stderr: 'Time Limit Exceeded',
-            execution_time: timeLimit
+            stderr: `Quá thời gian cho phép (${effectiveTimeLimit}s)`,
+            execution_time: effectiveTimeLimit
           };
         }
 
@@ -4521,7 +4792,7 @@ if __name__ == '__main__':
           status: 'OK',
           stdout: data.program_output || data.program_message || '',
           stderr: data.program_error || '',
-          execution_time: 0.08
+          execution_time: (lang === 'python' ? 0.05 : 0.02)
         };
       } catch (err) {
         return {
@@ -4944,14 +5215,19 @@ if __name__ == '__main__':
               : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
           }">${sub.verdict}</span>`;
 
+          const isPy = (sub.lang && sub.lang.toLowerCase().includes('python'));
+          const lBadge = isPy
+            ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">🐍 Python 3</span>`
+            : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">🟦 C++20</span>`;
+
           tr.innerHTML = `
             <td class="py-2.5 px-2 text-slate-400">${sub.time}</td>
             <td class="py-2.5 px-2 font-bold text-white">${sub.probId}</td>
-            <td class="py-2.5 px-2 text-slate-300">${sub.lang}</td>
+            <td class="py-2.5 px-2">${lBadge}</td>
             <td class="py-2.5 px-2">${vBadge}</td>
             <td class="py-2.5 px-2 font-bold ${isAC ? 'text-emerald-400' : 'text-slate-300'}">${sub.score}/100</td>
             <td class="py-2.5 px-2 text-right">
-              <button onclick="restoreJudgeCodeFromHistory(${idx})" class="text-indigo-400 hover:text-indigo-300 hover:underline cursor-pointer">Lấy code</button>
+              <button onclick="restoreJudgeCodeFromHistory(${idx})" class="text-indigo-400 hover:text-indigo-300 hover:underline font-semibold cursor-pointer">Lấy code</button>
             </td>
           `;
           tbody.appendChild(tr);
@@ -4965,12 +5241,23 @@ if __name__ == '__main__':
       try {
         const historyJson = localStorage.getItem('deruck_judge_history');
         const list = historyJson ? JSON.parse(historyJson) : [];
-        if (list[index] && list[index].code) {
+        const item = list[index];
+        if (item && item.code) {
+          const itemLang = (item.lang && item.lang.toLowerCase().includes('python')) ? 'python' : 'cpp';
+          
+          if (item.probId && item.probId !== currentJudgeProbId) {
+            currentJudgeProbId = item.probId;
+          }
+
+          currentJudgeLang = itemLang;
+          updateJudgeLangUI();
+          renderJudgeWorkspace();
+
           const codeEditor = document.getElementById('judge-code-editor');
           if (codeEditor) {
-            codeEditor.value = list[index].code;
+            codeEditor.value = item.code;
             saveCurrentJudgeCodeToLocal();
-            showLiveToast(`Đã khôi phục code bài ${list[index].probId} từ lịch sử!`);
+            showLiveToast(`Đã khôi phục code ${item.lang} của bài ${item.probId}!`);
           }
         }
       } catch (e) {}

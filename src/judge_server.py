@@ -48,16 +48,20 @@ def execute_test(language: str, code: str, stdin_data: str, time_limit: float = 
             with open(src_file, "w", encoding="utf-8") as f:
                 f.write(code)
 
-            # Compile step
-            compile_cmd = [GPP_CMD, "-O1", "-std=c++17", src_file, "-o", exe_file]
+            # Compile step with C++20 (fallback C++17) and -O2 optimization
+            compile_cmd = [GPP_CMD, "-O2", "-std=c++20", src_file, "-o", exe_file]
             compile_proc = subprocess.run(compile_cmd, capture_output=True, text=True, timeout=20)
             if compile_proc.returncode != 0:
-                err_msg = compile_proc.stderr or compile_proc.stdout or "Compilation Error"
-                return {
-                    "status": "CE",
-                    "error": err_msg,
-                    "compile_error": err_msg
-                }
+                # Try fallback to c++17 if c++20 flag is not supported
+                compile_cmd = [GPP_CMD, "-O2", "-std=c++17", src_file, "-o", exe_file]
+                compile_proc = subprocess.run(compile_cmd, capture_output=True, text=True, timeout=20)
+                if compile_proc.returncode != 0:
+                    err_msg = compile_proc.stderr or compile_proc.stdout or "Compilation Error"
+                    return {
+                        "status": "CE",
+                        "error": err_msg,
+                        "compile_error": err_msg
+                    }
 
             # Run step
             start_t = time.perf_counter()
@@ -99,14 +103,19 @@ def execute_test(language: str, code: str, stdin_data: str, time_limit: float = 
             with open(src_file, "w", encoding="utf-8") as f:
                 f.write(code)
 
+            # Python gets an adaptive multiplier (min 2.5s) to ensure fair grading
+            py_time_limit = max(float(time_limit) * 2.0, 2.5)
+            py_env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1"}
+
             start_t = time.perf_counter()
             try:
                 run_proc = subprocess.run(
-                    [PYTHON_CMD, src_file],
+                    [PYTHON_CMD, "-u", src_file],
                     input=stdin_data,
                     capture_output=True,
                     text=True,
-                    timeout=time_limit
+                    timeout=py_time_limit,
+                    env=py_env
                 )
                 dur = round(time.perf_counter() - start_t, 3)
                 if run_proc.returncode != 0:
@@ -128,9 +137,9 @@ def execute_test(language: str, code: str, stdin_data: str, time_limit: float = 
             except subprocess.TimeoutExpired:
                 return {
                     "status": "TLE",
-                    "error": f"Quá thời gian cho phép ({time_limit}s)",
-                    "time": time_limit,
-                    "execution_time": time_limit
+                    "error": f"Quá thời gian cho phép ({py_time_limit}s)",
+                    "time": py_time_limit,
+                    "execution_time": py_time_limit
                 }
 
         else:
