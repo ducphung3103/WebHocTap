@@ -739,7 +739,7 @@
           <!-- Problem Title & Badges -->
           <div class="space-y-2 border-b border-slate-800 pb-4">
             <div class="flex items-center justify-between gap-2">
-              <span id="judge-prob-id" class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">CB-01</span>
+              <span id="judge-prob-id" class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">CPP-EX-01</span>
               <div class="flex items-center gap-1.5">
                 <span id="judge-prob-time" class="text-[11px] font-mono text-amber-300 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">⏱️ 1.0s</span>
                 <span id="judge-prob-mem" class="text-[11px] font-mono text-purple-300 bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded">💾 256MB</span>
@@ -816,11 +816,8 @@
               </div>
 
               <div class="flex items-center gap-2">
-                <button onclick="insertJudgeStarterTemplate()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Lấy code mẫu cơ bản">
-                  <span>📄</span> Code mẫu
-                </button>
-                <button onclick="clearJudgeCode()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-rose-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Xóa trắng để tự viết code">
-                  <span>🗑️</span>
+                <button onclick="clearJudgeCode()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-rose-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Xóa trắng để tự viết code">
+                  <span>🗑️</span> Xóa trắng
                 </button>
               </div>
             </div>
@@ -1422,7 +1419,7 @@
 
             <!-- Problem meta info summary -->
             <div id="tc-manage-prob-info" class="text-xs text-slate-400 font-mono flex items-center gap-4">
-              <span>Mã: <strong id="tc-info-id" class="text-indigo-300">CB-01</strong></span>
+              <span>Mã: <strong id="tc-info-id" class="text-indigo-300">CPP-EX-01</strong></span>
               <span>Tổng số test: <strong id="tc-info-count" class="text-white">8</strong></span>
             </div>
 
@@ -1897,21 +1894,13 @@
 
         <!-- Mode 2: Tự luận / Lời giải chi tiết -->
         <div id="submit-mode-essay-box" class="space-y-2 text-xs hidden">
-          <div class="flex items-center justify-between">
-            <label class="font-semibold text-slate-300">
-              Nội dung lời giải / Mã nguồn:
-            </label>
-            <div class="flex items-center gap-1 text-[11px]">
-              <span class="text-slate-500">Mẫu nhanh:</span>
-              <button type="button" onclick="insertEssayTemplate('outline')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 transition">+ Dàn ý</button>
-              <button type="button" onclick="insertEssayTemplate('cpp')" class="px-2 py-0.5 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 transition">+ C++</button>
-              <button type="button" onclick="insertEssayTemplate('python')" class="px-2 py-0.5 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 transition">+ Python</button>
-            </div>
-          </div>
+          <label class="block font-semibold text-slate-300">
+            Nội dung lời giải / Mã nguồn:
+          </label>
           <textarea id="submit-essay-input" rows="8" placeholder="Trình bày giải thuật, các bước tư duy, chứng minh hoặc dán toàn bộ mã nguồn của bạn tại đây..."
             class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 whitespace-pre leading-relaxed"></textarea>
           <div class="flex items-center justify-between text-[11px] text-slate-500">
-            <span>Hỗ trợ cả lời văn tự luận và mã nguồn C++ / Python</span>
+            <span>Học sinh tự do trình bày tư duy hoặc dán mã nguồn</span>
             <span id="submit-essay-char-count">0 ký tự</span>
           </div>
         </div>
@@ -2253,6 +2242,18 @@
           } catch(e) {}
         }
       }
+
+      // Xóa sạch toàn bộ code mẫu / giải pháp cũ trong localStorage để học sinh tự do viết code
+      try {
+        if (localStorage.getItem('deruck_template_cleared_v2') !== 'true') {
+          Object.keys(localStorage).forEach(k => {
+            if (k.startsWith('deruck_code_')) {
+              localStorage.removeItem(k);
+            }
+          });
+          localStorage.setItem('deruck_template_cleared_v2', 'true');
+        }
+      } catch(e) {}
 
       renderMatrix();
       renderProblems();
@@ -5142,12 +5143,12 @@
     // ============================================================
     // 5. ONLINE JUDGE & TESTCASE GRADER ENGINE (DERUCKOJ)
     // ============================================================
-    let currentJudgeProbId = 'CB-01';
+    let currentJudgeProbId = 'CPP-EX-01';
     let currentJudgeLang = 'cpp';
     let isJudging = false;
     let localJudgeAvailable = null;
     let judgeSubmissionHistory = [];
-    let currentTestcaseEditingProbId = 'CB-01';
+    let currentTestcaseEditingProbId = 'CPP-EX-01';
 
     function getGraderProblems() {
       if (appData && Array.isArray(appData.grader_problems) && appData.grader_problems.length > 0) {
@@ -5443,14 +5444,7 @@
           langInfo.textContent = "g++ 13 / C++20 (O2)";
         }
         if (codeEditor) {
-          codeEditor.placeholder = `// Viết code C++ cơ bản tại đây...
-#include <iostream>
-using namespace std;
-
-int main() {
-    cout << "Hello World";
-    return 0;
-}`;
+          codeEditor.placeholder = `// Viết code C++ tại đây...`;
         }
         if (statusEl) {
           statusEl.textContent = "C++20 (Tối ưu -O2)";
@@ -5467,13 +5461,7 @@ int main() {
           langInfo.textContent = "Python 3.12 (Bù x2.0s)";
         }
         if (codeEditor) {
-          codeEditor.placeholder = `# Viết code Python cơ bản tự do tại đây...
-# Ví dụ in ra màn hình:
-print("abc")
-
-# Hoặc nhập dữ liệu cơ bản:
-# a, b = map(int, input().split())
-# print(a + b)`;
+          codeEditor.placeholder = `# Viết code Python tại đây...`;
         }
         if (statusEl) {
           statusEl.textContent = "Python 3 (Tự động bù thời gian)";
@@ -5482,178 +5470,7 @@ print("abc")
     }
 
     function getStarterTemplate(probId, lang) {
-      const allProbs = getGraderProblems();
-      const p = allProbs.find(x => x.id === probId);
-      if (p) {
-        if (lang === 'cpp' && p.starter_cpp) return p.starter_cpp;
-        if (lang === 'python' && p.starter_py) return p.starter_py;
-      }
-
-      if (lang === 'cpp') {
-        switch (probId) {
-          case 'CB-01':
-            return `#include <iostream>
-using namespace std;
-
-int main() {
-    int a, b;
-    cin >> a >> b;
-    cout << a + b;
-    return 0;
-}`;
-          case 'CB-02':
-            return `#include <iostream>
-using namespace std;
-
-int main() {
-    int n;
-    cin >> n;
-    if (n % 2 == 0) cout << "CHAN";
-    else cout << "LE";
-    return 0;
-}`;
-          case 'CB-03':
-            return `#include <iostream>
-using namespace std;
-
-int main() {
-    int a, b, c;
-    cin >> a >> b >> c;
-    int ans = a;
-    if (b > ans) ans = b;
-    if (c > ans) ans = c;
-    cout << ans;
-    return 0;
-}`;
-          case 'CB-04':
-            return `#include <iostream>
-using namespace std;
-
-int main() {
-    long long n;
-    cin >> n;
-    cout << n * (n + 1) / 2;
-    return 0;
-}`;
-          case 'CB-05':
-            return `#include <iostream>
-using namespace std;
-
-int main() {
-    int n;
-    cin >> n;
-    long long ans = 1;
-    for (int i = 1; i <= n; i++) ans *= i;
-    cout << ans;
-    return 0;
-}`;
-          case 'CB-06':
-            return `#include <iostream>
-using namespace std;
-
-int main() {
-    int n;
-    cin >> n;
-    if (n < 2) {
-        cout << "NO";
-        return 0;
-    }
-    for (int i = 2; i * i <= n; i++) {
-        if (n % i == 0) {
-            cout << "NO";
-            return 0;
-        }
-    }
-    cout << "YES";
-    return 0;
-}
-`;
-          case 'CB-07':
-            return `#include <iostream>
-#include <string>
-#include <algorithm>
-using namespace std;
-
-int main() {
-    string s;
-    cin >> s;
-    reverse(s.begin(), s.end());
-    cout << s;
-    return 0;
-}`;
-          case 'CB-08':
-            return `#include <iostream>
-using namespace std;
-
-int main() {
-    int n;
-    cin >> n;
-    int max_val = -1000000000;
-    for (int i = 0; i < n; i++) {
-        int x;
-        cin >> x;
-        if (x > max_val) max_val = x;
-    }
-    cout << max_val;
-    return 0;
-}`;
-          default:
-            return `#include <iostream>
-using namespace std;
-
-int main() {
-    // Viết code C++ cơ bản tại đây
-    cout << "Hello World";
-    return 0;
-}`;
-        }
-      } else {
-        // Python 3 templates - dạng cơ bản nhất, không cần khung hàm phức tạp
-        switch (probId) {
-          case 'CB-01':
-            return `a, b = map(int, input().split())
-print(a + b)`;
-          case 'CB-02':
-            return `n = int(input())
-if n % 2 == 0:
-    print("CHAN")
-else:
-    print("LE")`;
-          case 'CB-03':
-            return `a, b, c = map(int, input().split())
-print(max(a, b, c))`;
-          case 'CB-04':
-            return `n = int(input())
-print(n * (n + 1) // 2)`;
-          case 'CB-05':
-            return `n = int(input())
-ans = 1
-for i in range(1, n + 1):
-    ans *= i
-print(ans)`;
-          case 'CB-06':
-            return `n = int(input())
-if n < 2:
-    print("NO")
-else:
-    ok = True
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            ok = False
-            break
-    print("YES" if ok else "NO")`;
-          case 'CB-07':
-            return `s = input()
-print(s[::-1])`;
-          case 'CB-08':
-            return `n = int(input())
-a = list(map(int, input().split()))
-print(max(a))`;
-          default:
-            return `# Viết code Python tự do tại đây
-print("Hello World")`;
-        }
-      }
+      return "";
     }
 
     async function runJudgeCode() {
@@ -5755,9 +5572,8 @@ print("Hello World")`;
     function insertJudgeStarterTemplate() {
       const codeEditor = document.getElementById('judge-code-editor');
       if (codeEditor) {
-        codeEditor.value = getStarterTemplate(currentJudgeProbId, currentJudgeLang);
+        codeEditor.value = '';
         saveCurrentJudgeCodeToLocal();
-        showLiveToast("Đã chèn code mẫu cơ bản!");
       }
     }
 
@@ -7349,41 +7165,9 @@ OUTPUT:
     function insertEssayTemplate(type) {
       const ta = document.getElementById('submit-essay-input');
       if (!ta) return;
-      if (type === 'outline') {
-        ta.value = `1. Hướng tiếp cận & Ý tưởng:
-- 
-
-2. Phân tích độ phức tạp:
-- Thời gian: O(...)
-- Không gian: O(...)
-
-3. Trình bày lời giải chi tiết:
-- `;
-      } else if (type === 'cpp') {
-        ta.value = `#include <iostream>
-#include <vector>
-#include <algorithm>
-using namespace std;
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    // Lời giải C++
-    return 0;
-}`;
-      } else if (type === 'python') {
-        ta.value = `import sys
-
-def solve():
-    # Lời giải Python
-    pass
-
-if __name__ == '__main__':
-    solve()`;
-      }
+      ta.value = '';
       const charCountEl = document.getElementById('submit-essay-char-count');
-      if (charCountEl) charCountEl.textContent = `${ta.value.length} ký tự`;
+      if (charCountEl) charCountEl.textContent = `0 ký tự`;
       ta.focus();
     }
 

@@ -200,17 +200,9 @@
 
       <!-- Mode 2: Tự luận / Lời giải chi tiết -->
       <div id="submit-mode-essay-box" class="space-y-2 text-xs hidden">
-        <div class="flex items-center justify-between">
-          <label class="font-semibold text-slate-300">
-            Nội dung lời giải / Mã nguồn:
-          </label>
-          <div class="flex items-center gap-1 text-[11px]">
-            <span class="text-slate-500">Mẫu nhanh:</span>
-            <button type="button" onclick="insertStudentEssayTemplate('outline')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 transition">+ Dàn ý</button>
-            <button type="button" onclick="insertStudentEssayTemplate('cpp')" class="px-2 py-0.5 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 transition">+ C++</button>
-            <button type="button" onclick="insertStudentEssayTemplate('python')" class="px-2 py-0.5 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 transition">+ Python</button>
-          </div>
-        </div>
+        <label class="block font-semibold text-slate-300">
+          Nội dung lời giải / Mã nguồn:
+        </label>
         <textarea id="submit-essay-input" rows="8" placeholder="Trình bày giải thuật, các bước tư duy, chứng minh hoặc dán toàn bộ mã nguồn của bạn tại đây..."
           class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 whitespace-pre leading-relaxed"></textarea>
       </div>
@@ -1657,13 +1649,7 @@
     function insertStudentEssayTemplate(type) {
       const ta = document.getElementById('submit-essay-input');
       if (!ta) return;
-      if (type === 'outline') {
-        ta.value = `1. Ý tưởng & Hướng tiếp cận:\n- \n\n2. Độ phức tạp:\n- Thời gian: O(...)\n- Không gian: O(...)\n\n3. Lời giải chi tiết:\n- `;
-      } else if (type === 'cpp') {
-        ta.value = `#include <iostream>\nusing namespace std;\n\nint main() {\n    // Lời giải C++\n    return 0;\n}`;
-      } else if (type === 'python') {
-        ta.value = `# Lời giải Python\ndef solve():\n    pass\n\nif __name__ == '__main__':\n    solve()`;
-      }
+      ta.value = '';
       ta.focus();
     }
 
