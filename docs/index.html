@@ -974,7 +974,7 @@
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
             <span>📚</span> Trung Tâm Bài Giảng & Lý Thuyết (LMS)
           </h2>
-          <p class="text-xs text-slate-400">Tài liệu, giáo trình chuẩn hóa phân theo từng lớp học, liên kết trực tiếp Notion</p>
+          <p class="text-xs text-slate-400">Tài liệu, giáo trình chuẩn hóa phân theo từng lớp học (Google Docs, Slide, Web, Notion, PDF...)</p>
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
@@ -1223,8 +1223,8 @@
           </div>
 
           <div class="space-y-1">
-            <label class="text-xs font-semibold text-slate-300">Link Notion / Slide bài giảng:</label>
-            <input type="text" id="form-curr-url" placeholder="https://notion.so/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            <label class="text-xs font-semibold text-slate-300">Đường dẫn tài liệu / bài giảng (Docs, Slide, Web, Notion, PDF...):</label>
+            <input type="text" id="form-curr-url" placeholder="https://... (Dán link Google Docs, Slide, Notion, PDF, Web)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
           </div>
 
           <div class="space-y-1">
@@ -2737,6 +2737,32 @@
       renderCurriculum();
     }
 
+    function getCurriculumLinkInfo(url) {
+      if (!url || url === '#' || url === '') {
+        return { label: 'Xem Tài Liệu', icon: '📖', color: 'bg-indigo-600 hover:bg-indigo-500' };
+      }
+      const u = url.toLowerCase();
+      if (u.includes('docs.google.com/document') || u.includes('/document/')) {
+        return { label: 'Mở Google Docs', icon: '📘', color: 'bg-blue-600 hover:bg-blue-500' };
+      }
+      if (u.includes('docs.google.com/presentation') || u.includes('/presentation/')) {
+        return { label: 'Mở Google Slide', icon: '📊', color: 'bg-amber-600 hover:bg-amber-500' };
+      }
+      if (u.includes('drive.google.com')) {
+        return { label: 'Mở Google Drive', icon: '📁', color: 'bg-emerald-600 hover:bg-emerald-500' };
+      }
+      if (u.includes('notion.so') || u.includes('notion.site')) {
+        return { label: 'Mở Notion', icon: '📝', color: 'bg-slate-700 hover:bg-slate-600' };
+      }
+      if (u.includes('youtube.com') || u.includes('youtu.be')) {
+        return { label: 'Xem Video Giảng', icon: '▶️', color: 'bg-rose-600 hover:bg-rose-500' };
+      }
+      if (u.endsWith('.pdf') || u.includes('.pdf?')) {
+        return { label: 'Xem File PDF', icon: '📕', color: 'bg-rose-700 hover:bg-rose-600' };
+      }
+      return { label: 'Mở Bài Giảng', icon: '📖', color: 'bg-indigo-600 hover:bg-indigo-500' };
+    }
+
     function renderCurriculum() {
       const list = document.getElementById('curriculum-list');
       if (!list || !appData || !appData.curriculum) return;
@@ -2810,6 +2836,8 @@
           </div>
         ` : '';
 
+        const linkInfo = getCurriculumLinkInfo(c.url);
+
         item.innerHTML = `
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
             <div class="flex items-center gap-3">
@@ -2827,8 +2855,8 @@
             </div>
             <div class="flex items-center gap-2 flex-wrap shrink-0">
               <a href="${c.url || '#'}" target="_blank" 
-                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition">
-                <span>📄</span> Mở Bài Giảng (Notion) ↗
+                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow transition ${linkInfo.color}">
+                <span>${linkInfo.icon}</span> ${linkInfo.label} ↗
               </a>
               ${adminActions}
             </div>
@@ -4037,7 +4065,7 @@
       document.getElementById('form-curr-id').value = `LEC-${(appData.curriculum?.length || 0) + 1}`;
       document.getElementById('form-curr-chapter').value = 'Tuần 1';
       document.getElementById('form-curr-title').value = '';
-      document.getElementById('form-curr-url').value = 'https://notion.so';
+      document.getElementById('form-curr-url').value = '';
       document.getElementById('form-curr-summary').value = '';
       document.getElementById('curr-class-public').checked = true;
       document.getElementById('curr-class-cppnc').checked = false;
@@ -4327,7 +4355,7 @@
       XLSX.utils.book_append_sheet(wb, wsProb, "Bài Tập");
 
       // Sheet 4: Bài Giảng
-      const currHeaders = ["Mã bài giảng", "Chương / Tuần", "Tiêu đề bài giảng", "Lớp áp dụng", "Link bài giảng / Notion", "Tóm tắt kiến thức"];
+      const currHeaders = ["Mã bài giảng", "Chương / Tuần", "Tiêu đề bài giảng", "Lớp áp dụng", "Link tài liệu / bài giảng", "Tóm tắt kiến thức"];
       const currRows = [currHeaders];
       (appData.curriculum || []).forEach(c => {
         currRows.push([
