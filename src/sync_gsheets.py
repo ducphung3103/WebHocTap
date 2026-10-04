@@ -274,72 +274,95 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
             auth_tokens[hash_str("PYTHON2026")] = {"role": "class", "name": "Lớp Python", "class": "Python"}
             auth_tokens[hash_str("VIP11")] = {"role": "class", "name": "Lớp Python 1-1", "class": "Python 1-1"}
 
-    # 2. Parse Problems ("Bài Tập")
+    # 2. Parse Problems ("Bài Tập" & "Kho Bài Codeforces")
+    def parse_single_problem_row(r):
+        if len(r) < 3 or not r[0].strip() or not r[2].strip():
+            return None
+        pid = r[0].strip()
+        link = r[1].strip() if len(r) > 1 else ""
+        name = r[2].strip()
+        classes_str = r[3].strip() if len(r) > 3 and r[3].strip() else "Tất cả"
+        level = r[4].strip() if len(r) > 4 and r[4].strip() else "1"
+        tag = r[5].strip() if len(r) > 5 and r[5].strip() else "Brute Force"
+        platform = r[6].strip() if len(r) > 6 and r[6].strip() else "MarisaOJ"
+
+        c_list = []
+        if "Tất cả" in classes_str or "All" in classes_str:
+            c_list = ["C++", "Python", "Python 1-1"]
+        else:
+            if "C++" in classes_str:
+                c_list.append("C++")
+            if "Python 1-1" in classes_str or "1-1" in classes_str:
+                c_list.append("Python 1-1")
+            if "Python" in classes_str:
+                c_list.append("Python")
+
+        plat_lower = platform.lower()
+        norm_plat = platform
+        b_color = "blue"
+        if "chuyentin" in plat_lower or "ctoj" in plat_lower or "oj.chuyentin.pro" in plat_lower:
+            norm_plat = "ChuyenTinPro"
+            b_color = "teal"
+        elif "clue" in plat_lower:
+            norm_plat = "ClueOJ"
+            b_color = "cyan"
+        elif "deruck" in plat_lower or "judge" in plat_lower or "nội bộ" in plat_lower:
+            norm_plat = "DeruckOJ"
+            b_color = "indigo"
+        elif "codeforces" in plat_lower or "cf" == plat_lower:
+            norm_plat = "Codeforces"
+            b_color = "blue"
+        elif "vjudge" in plat_lower:
+            norm_plat = "VJudge"
+            b_color = "emerald"
+        elif "marisa" in plat_lower:
+            norm_plat = "MarisaOJ"
+            b_color = "purple"
+        elif "vnoi" in plat_lower:
+            norm_plat = "VNOI"
+            b_color = "amber"
+
+        return {
+            "id": pid,
+            "name": name,
+            "platform": norm_plat,
+            "url": link,
+            "badge_color": b_color,
+            "category": tag,
+            "difficulty": f"Level {level} • {tag}",
+            "classes": c_list
+        }
+
     problems = []
+    seen_pids = set()
     class_problems_map = {"C++": [], "Python": [], "Python 1-1": []}
+
+    # 2.1 Tab chính: "Bài Tập" (Curated homework tracked for students)
     ws_prob = get_worksheet_by_title(sh, ["Bài Tập", "Bai Tap", "Theo dõi Bài tập", "Problems"])
     if ws_prob:
         prob_rows = ws_prob.get_all_values()
         for r in prob_rows[1:]:
-            if len(r) >= 3 and r[0].strip() and r[2].strip():
-                pid = r[0].strip()
-                link = r[1].strip() if len(r) > 1 else ""
-                name = r[2].strip()
-                classes_str = r[3].strip() if len(r) > 3 and r[3].strip() else "Tất cả"
-                level = r[4].strip() if len(r) > 4 and r[4].strip() else "1"
-                tag = r[5].strip() if len(r) > 5 and r[5].strip() else "Brute Force"
-                platform = r[6].strip() if len(r) > 6 and r[6].strip() else "MarisaOJ"
-
-                c_list = []
-                if "Tất cả" in classes_str or "All" in classes_str:
-                    c_list = ["C++", "Python", "Python 1-1"]
-                else:
-                    if "C++" in classes_str:
-                        c_list.append("C++")
-                    if "Python 1-1" in classes_str or "1-1" in classes_str:
-                        c_list.append("Python 1-1")
-                    if "Python" in classes_str:
-                        c_list.append("Python")
-
-                plat_lower = platform.lower()
-                norm_plat = platform
-                b_color = "blue"
-                if "chuyentin" in plat_lower or "ctoj" in plat_lower or "oj.chuyentin.pro" in plat_lower:
-                    norm_plat = "ChuyenTinPro"
-                    b_color = "teal"
-                elif "clue" in plat_lower:
-                    norm_plat = "ClueOJ"
-                    b_color = "cyan"
-                elif "deruck" in plat_lower or "judge" in plat_lower or "nội bộ" in plat_lower:
-                    norm_plat = "DeruckOJ"
-                    b_color = "indigo"
-                elif "codeforces" in plat_lower or "cf" == plat_lower:
-                    norm_plat = "Codeforces"
-                    b_color = "blue"
-                elif "vjudge" in plat_lower:
-                    norm_plat = "VJudge"
-                    b_color = "emerald"
-                elif "marisa" in plat_lower:
-                    norm_plat = "MarisaOJ"
-                    b_color = "purple"
-                elif "vnoi" in plat_lower:
-                    norm_plat = "VNOI"
-                    b_color = "amber"
-
-                problems.append({
-                    "id": pid,
-                    "name": name,
-                    "platform": norm_plat,
-                    "url": link,
-                    "badge_color": b_color,
-                    "category": tag,
-                    "difficulty": f"Level {level} • {tag}",
-                    "classes": c_list
-                })
-
-                for c in c_list:
+            p_obj = parse_single_problem_row(r)
+            if p_obj and p_obj["id"] not in seen_pids:
+                seen_pids.add(p_obj["id"])
+                problems.append(p_obj)
+                for c in p_obj["classes"]:
                     if c in class_problems_map:
-                        class_problems_map[c].append(pid)
+                        class_problems_map[c].append(p_obj["id"])
+        logger.info(f"Loaded {len(problems)} curated homework problems from tab '{ws_prob.title}'")
+
+    # 2.2 Tab kho bài bổ sung: "Kho Bài Codeforces" (Question Bank from solved handles, keeping other tabs untouched)
+    ws_cf = get_worksheet_by_title(sh, ["Kho Bài Codeforces", "Kho Bài Tập", "Bài Tập Codeforces", "Bài Tập Đã Giải", "Codeforces"])
+    if ws_cf:
+        cf_rows = ws_cf.get_all_values()
+        cf_count = 0
+        for r in cf_rows[1:]:
+            p_obj = parse_single_problem_row(r)
+            if p_obj and p_obj["id"] not in seen_pids:
+                seen_pids.add(p_obj["id"])
+                problems.append(p_obj)
+                cf_count += 1
+        logger.info(f"Loaded {cf_count} supplementary problems from question bank tab '{ws_cf.title}'")
 
     # Preserve existing DeruckOJ internal grader problems & testcases
     sheet_pids = {p["id"] for p in problems}
