@@ -263,6 +263,73 @@ function doPost(e) {
       response = { status: "success", action: "save_curriculum", lecture_id: lid };
     }
 
+    // 6. NỘP BÀI TẬP (ĐIỀN ĐÁP ÁN HOẶC TỰ LUẬN)
+    else if (action === "submit_answer") {
+      var sub = data.submission || data;
+      var sheetSub = ss.getSheetByName("Bài Nộp");
+      if (!sheetSub) {
+        sheetSub = ss.insertSheet("Bài Nộp");
+        sheetSub.appendRow(["Mã bài nộp", "Thời gian", "Họ và tên", "Lớp", "Mã bài", "Tên bài", "Hình thức", "Bài làm / Đáp án", "Trạng thái", "Điểm", "Nhận xét của Thầy"]);
+      }
+
+      var subId = sub.id || ("SUB-" + new Date().getTime());
+      var subTime = sub.submitted_at || Utilities.formatDate(new Date(), "GMT+7", "dd/MM/yyyy HH:mm:ss");
+      var subType = sub.submission_type_display || (sub.type === "essay" ? "Tự luận" : "Điền đáp án");
+      var rowData = [
+        subId,
+        subTime,
+        sub.student_name || "",
+        sub.class_name || "",
+        sub.problem_id || "",
+        sub.problem_name || "",
+        subType,
+        sub.answer || "",
+        sub.status || "Đã nộp",
+        sub.score || "",
+        sub.feedback || ""
+      ];
+
+      var values = sheetSub.getDataRange().getValues();
+      var foundRow = -1;
+      for (var r = 1; r < values.length; r++) {
+        if (String(values[r][0]).trim() === subId) {
+          foundRow = r;
+          break;
+        }
+      }
+
+      if (foundRow !== -1) {
+        sheetSub.getRange(foundRow + 1, 1, 1, rowData.length).setValues([rowData]);
+      } else {
+        sheetSub.appendRow(rowData);
+      }
+      response = { status: "success", action: "submit_answer", id: subId };
+    }
+
+    // 7. CHẤM BÀI NỘP (CẬP NHẬT ĐIỂM & NHẬN XÉT)
+    else if (action === "grade_submission") {
+      var subId = data.id || data.submission_id;
+      var sheetSub = ss.getSheetByName("Bài Nộp");
+      if (!sheetSub) throw new Error("Chưa có tab 'Bài Nộp'");
+
+      var values = sheetSub.getDataRange().getValues();
+      var foundRow = -1;
+      for (var r = 1; r < values.length; r++) {
+        if (String(values[r][0]).trim() === subId) {
+          foundRow = r;
+          break;
+        }
+      }
+      if (foundRow === -1) throw new Error("Không tìm thấy bài nộp " + subId);
+
+      var newStatus = data.status || "Đã chấm";
+      var newScore = data.score !== undefined ? String(data.score) : "";
+      var newFeedback = data.feedback || "";
+
+      sheetSub.getRange(foundRow + 1, 9, 1, 3).setValues([[newStatus, newScore, newFeedback]]);
+      response = { status: "success", action: "grade_submission", id: subId };
+    }
+
   } catch (err) {
     response = { status: "error", message: err.toString() };
   } finally {

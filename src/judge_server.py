@@ -258,6 +258,52 @@ class JudgeHandler(BaseHTTPRequestHandler):
                     c_data = req_data.get("lecture") or req_data.get("curriculum") or req_data
                     res = sync_to_gsheet.save_curriculum_to_sheet(c_data)
 
+                elif api_path == "/api/submit_answer":
+                    sub_data = req_data.get("submission") or req_data
+                    # Update local data.json
+                    json_p = os.path.join(_root, "docs", "data.json")
+                    if os.path.exists(json_p):
+                        try:
+                            with open(json_p, "r", encoding="utf-8") as f:
+                                d = json.load(f)
+                            if "submissions" not in d:
+                                d["submissions"] = []
+                            # Prepend new submission
+                            d["submissions"].insert(0, sub_data)
+                            with open(json_p, "w", encoding="utf-8") as f:
+                                json.dump(d, f, ensure_ascii=False, indent=2)
+                        except Exception as j_err:
+                            print(f"Warning: could not update local data.json: {j_err}")
+                    
+                    # Push to Google Sheet
+                    res = sync_to_gsheet.save_submission_to_sheet(sub_data)
+
+                elif api_path == "/api/grade_submission":
+                    sub_id = req_data.get("id") or req_data.get("submission_id")
+                    status_val = req_data.get("status", "Đã chấm")
+                    score_val = str(req_data.get("score", ""))
+                    fb_val = req_data.get("feedback", "")
+                    
+                    # Update local data.json
+                    json_p = os.path.join(_root, "docs", "data.json")
+                    if os.path.exists(json_p):
+                        try:
+                            with open(json_p, "r", encoding="utf-8") as f:
+                                d = json.load(f)
+                            for s in d.get("submissions", []):
+                                if s.get("id") == sub_id:
+                                    s["status"] = status_val
+                                    s["score"] = score_val
+                                    s["feedback"] = fb_val
+                                    break
+                            with open(json_p, "w", encoding="utf-8") as f:
+                                json.dump(d, f, ensure_ascii=False, indent=2)
+                        except Exception as j_err:
+                            print(f"Warning: could not update local data.json: {j_err}")
+
+                    # Push to Google Sheet
+                    res = sync_to_gsheet.grade_submission_in_sheet(sub_id, status_val, score_val, fb_val)
+
                 elif api_path == "/api/sync_two_way":
                     reconcile_res = sync_to_gsheet.sync_all_from_local_json()
                     sync_pull = sync_gsheets(no_push=True)

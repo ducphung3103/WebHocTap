@@ -383,13 +383,15 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
     else:
         problems = existing_data.get("problems", [])
 
-    # Preserve testcases for curated DeruckOJ problems if defined
+    # Preserve testcases & rich problem details for curated DeruckOJ problems if defined
     sheet_pids = {p["id"] for p in problems}
     for ep in existing_data.get("problems", []):
-        if ep.get("id") in sheet_pids and "testcases" in ep:
+        if ep.get("id") in sheet_pids:
             for p in problems:
-                if p["id"] == ep["id"] and "testcases" not in p:
-                    p["testcases"] = ep["testcases"]
+                if p["id"] == ep["id"]:
+                    for field in ["testcases", "sample_tests", "description", "input_format", "output_format", "starter_cpp", "starter_py", "time_limit", "memory_limit"]:
+                        if field in ep and field not in p:
+                            p[field] = ep[field]
 
     # 3. Parse Lectures ("Bài Giảng")
     curriculum = []
@@ -622,23 +624,76 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
         elif not class_config[c_key].get("total_problems"):
             class_config[c_key]["total_problems"] = max(1, len(pids))
 
-    final_data = existing_data if existing_data else {}
-    grader_problems = existing_data.get("grader_problems", [])
-    final_data["grader_problems"] = grader_problems
+    # 5. Parse Submissions ("Bài Nộp")
+    submissions = list(existing_data.get("submissions", []))
+    ws_sub = get_worksheet_by_title(sh, ["Bài Nộp", "Bai Nop", "Nộp Bài", "Nop Bai", "Submissions", "Bài Làm"])
+    if ws_sub:
+        sub_rows = ws_sub.get_all_values()
+        if len(sub_rows) > 1:
+            existing_sub_ids = {s.get("id") for s in submissions if s.get("id")}
+            for idx, r in enumerate(sub_rows[1:], 1):
+                if len(r) >= 5 and (r[2].strip() or r[4].strip()):
+                    sub_id = r[0].strip() if r[0].strip() else f"SUB-{idx}"
+                    sub_time = r[1].strip() if len(r) > 1 else ""
+                    stu_name = r[2].strip() if len(r) > 2 else ""
+                    cls_name = r[3].strip() if len(r) > 3 else ""
+                    prob_id = r[4].strip() if len(r) > 4 else ""
+                    prob_name = r[5].strip() if len(r) > 5 else ""
+                    sub_type = r[6].strip() if len(r) > 6 else "Điền đáp án"
+                    answer = r[7].strip() if len(r) > 7 else ""
+                    status = r[8].strip() if len(r) > 8 else "Đã nộp"
+                    score = r[9].strip() if len(r) > 9 else ""
+                    feedback = r[10].strip() if len(r) > 10 else ""
 
+                    norm_type = "essay" if any(k in sub_type.lower() for k in ["tự luận", "tu luan", "essay"]) else "short_answer"
+
+                    sub_obj = {
+                        "id": sub_id,
+                        "submitted_at": sub_time,
+                        "student_name": stu_name,
+                        "class_name": cls_name,
+                        "problem_id": prob_id,
+                        "problem_name": prob_name,
+                        "type": norm_type,
+                        "submission_type_display": sub_type,
+                        "answer": answer,
+                        "status": status,
+                        "score": score,
+                        "feedback": feedback
+                    }
+
+                    if sub_id not in existing_sub_ids:
+                        submissions.append(sub_obj)
+                        existing_sub_ids.add(sub_id)
+                    else:
+                        for s_idx, cur_s in enumerate(submissions):
+                            if cur_s.get("id") == sub_id:
+                                submissions[s_idx] = sub_obj
+                                break
+            logger.info(f"Loaded {len(submissions)} student submissions from tab '{ws_sub.title}'")
+
+    final_data = existing_data if existing_data else {}
+    
+    # DeruckOJ grader problems: all problems that have testcases
+    grader_problems = [p for p in problems if p.get("testcases")]
+    if not grader_problems and existing_data.get("grader_problems"):
+        grader_problems = existing_data.get("grader_problems", [])
+
+    final_data["grader_problems"] = grader_problems
     final_data["students"] = students
     final_data["problems"] = problems
     final_data["curriculum"] = curriculum
     final_data["class_config"] = class_config
     final_data["auth_tokens"] = auth_tokens
     final_data["tuition_months"] = tuition_months
+    final_data["submissions"] = submissions
     final_data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(final_data, f, ensure_ascii=False, indent=2)
 
-    logger.info(f"Google Sheets sync complete! Updated {json_path} with {len(students)} students, {len(problems)} problems, and {len(auth_tokens)} auth tokens.")
-    print(f"✅ [THÀNH CÔNG] Đã đồng bộ Google Sheets sang {json_path} ({len(students)} học sinh, {len(problems)} bài tập, {len(curriculum)} bài giảng)!")
+    logger.info(f"Google Sheets sync complete! Updated {json_path} with {len(students)} students, {len(problems)} problems ({len(grader_problems)} with DeruckOJ tests), {len(submissions)} submissions, and {len(auth_tokens)} auth tokens.")
+    print(f"✅ [THÀNH CÔNG] Đã đồng bộ Google Sheets sang {json_path} ({len(students)} học sinh, {len(problems)} bài tập [DeruckOJ: {len(grader_problems)} bài], {len(curriculum)} bài giảng, {len(submissions)} bài nộp)!")
     return True
 
 

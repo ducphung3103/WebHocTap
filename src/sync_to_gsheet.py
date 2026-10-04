@@ -14,6 +14,7 @@ import os
 import sys
 import json
 import time
+from datetime import datetime
 from typing import Dict, Any, Optional, List, Tuple
 
 # Reconfigure stdout for utf-8 on Windows
@@ -411,6 +412,89 @@ def sync_all_from_local_json(json_path: str = "docs/data.json") -> Dict[str, Any
         }
     except Exception as e:
         logger.error(f"Error during two-way sync: {e}")
+        return {"status": "error", "message": str(e)}
+
+
+def get_worksheet_by_title(sh, titles: List[str]):
+    for t in titles:
+        try:
+            return sh.worksheet(t)
+        except Exception:
+            continue
+    return None
+
+
+def save_submission_to_sheet(sub_data: Dict[str, Any]) -> Dict[str, Any]:
+    """Appends or updates a student submission in worksheet 'Bài Nộp'."""
+    try:
+        sh = get_spreadsheet()
+        ws_sub = get_worksheet_by_title(sh, ["Bài Nộp", "Bai Nop", "Nộp Bài", "Nop Bai", "Submissions", "Bài Làm"])
+        
+        headers = ["Mã bài nộp", "Thời gian", "Họ và tên", "Lớp", "Mã bài", "Tên bài", "Hình thức", "Bài làm / Đáp án", "Trạng thái", "Điểm", "Nhận xét của Thầy"]
+        
+        if not ws_sub:
+            ws_sub = sh.add_worksheet(title="Bài Nộp", rows=500, cols=11)
+            ws_sub.append_row(headers, value_input_option="USER_ENTERED")
+
+        sub_id = sub_data.get("id") or f"SUB-{int(time.time() * 1000)}"
+        sub_time = sub_data.get("submitted_at") or datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        stu_name = sub_data.get("student_name", "").strip()
+        cls_name = sub_data.get("class_name", "").strip()
+        prob_id = sub_data.get("problem_id", "").strip()
+        prob_name = sub_data.get("problem_name", "").strip()
+        sub_type = sub_data.get("submission_type_display") or ("Tự luận" if sub_data.get("type") == "essay" else "Điền đáp án")
+        answer = sub_data.get("answer", "").strip()
+        status = sub_data.get("status", "Đã nộp")
+        score = str(sub_data.get("score", ""))
+        feedback = sub_data.get("feedback", "")
+
+        row_vals = [sub_id, sub_time, stu_name, cls_name, prob_id, prob_name, sub_type, answer, status, score, feedback]
+
+        rows = ws_sub.get_all_values()
+        found_idx = -1
+        for r_idx in range(1, len(rows)):
+            if len(rows[r_idx]) > 0 and rows[r_idx][0].strip() == sub_id:
+                found_idx = r_idx + 1
+                break
+
+        if found_idx != -1:
+            ws_sub.update(f"A{found_idx}:K{found_idx}", [row_vals], value_input_option="USER_ENTERED")
+            action = "updated"
+        else:
+            ws_sub.append_row(row_vals, value_input_option="USER_ENTERED")
+            action = "created"
+
+        logger.info(f"Submission {sub_id} by '{stu_name}' for '{prob_id}' {action} in 'Bài Nộp'.")
+        return {"status": "success", "action": action, "id": sub_id}
+    except Exception as e:
+        logger.error(f"Error saving submission to sheet: {e}")
+        return {"status": "error", "message": str(e)}
+
+
+def grade_submission_in_sheet(sub_id: str, status: str, score: str = "", feedback: str = "") -> Dict[str, Any]:
+    """Updates grading result (status, score, feedback) for a submission in 'Bài Nộp'."""
+    try:
+        sh = get_spreadsheet()
+        ws_sub = get_worksheet_by_title(sh, ["Bài Nộp", "Bai Nop", "Nộp Bài", "Nop Bai", "Submissions", "Bài Làm"])
+        if not ws_sub:
+            return {"status": "error", "message": "Không tìm thấy tab 'Bài Nộp'"}
+
+        rows = ws_sub.get_all_values()
+        found_idx = -1
+        for r_idx in range(1, len(rows)):
+            if len(rows[r_idx]) > 0 and rows[r_idx][0].strip() == sub_id:
+                found_idx = r_idx + 1
+                break
+
+        if found_idx == -1:
+            return {"status": "error", "message": f"Không tìm thấy bài nộp có mã {sub_id}"}
+
+        # Columns: I = Status (col 9), J = Score (col 10), K = Feedback (col 11)
+        ws_sub.update(f"I{found_idx}:K{found_idx}", [[status, score, feedback]], value_input_option="USER_ENTERED")
+        logger.info(f"Graded submission {sub_id} in sheet: status={status}, score={score}")
+        return {"status": "success", "id": sub_id, "status_val": status, "score": score, "feedback": feedback}
+    except Exception as e:
+        logger.error(f"Error grading submission in sheet: {e}")
         return {"status": "error", "message": str(e)}
 
 
