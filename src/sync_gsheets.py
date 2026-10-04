@@ -274,7 +274,29 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
             auth_tokens[hash_str("PYTHON2026")] = {"role": "class", "name": "Lớp Python", "class": "Python"}
             auth_tokens[hash_str("VIP11")] = {"role": "class", "name": "Lớp Python 1-1", "class": "Python 1-1"}
 
-    # 2. Parse Problems ("Bài Tập" & "Kho Bài Codeforces")
+    def parse_classes_string(classes_str: str) -> List[str]:
+        s = classes_str.strip()
+        if not s or "Tất cả" in s or "All" in s or "Public" in s:
+            return ["C++ nâng cao", "C++ cơ bản", "Python cơ bản", "Python 1-1"]
+
+        c_list = []
+        if "C++ nâng cao" in s or "26TI" in s:
+            c_list.append("C++ nâng cao")
+        if "C++ cơ bản" in s:
+            c_list.append("C++ cơ bản")
+        elif "C++" in s and "C++ nâng cao" not in s and "C++ cơ bản" not in s:
+            c_list.extend(["C++ nâng cao", "C++ cơ bản"])
+
+        if "Python 1-1" in s or "1-1" in s:
+            c_list.append("Python 1-1")
+        if "Python cơ bản" in s:
+            c_list.append("Python cơ bản")
+        elif "Python" in s and "Python 1-1" not in s and "Python cơ bản" not in s:
+            c_list.append("Python cơ bản")
+
+        return c_list if c_list else ["C++ cơ bản", "Python cơ bản"]
+
+    # 2. Parse Problems ("Bài Tập")
     def parse_single_problem_row(r):
         if len(r) < 3 or not r[0].strip() or not r[2].strip():
             return None
@@ -286,16 +308,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
         tag = r[5].strip() if len(r) > 5 and r[5].strip() else "Brute Force"
         platform = r[6].strip() if len(r) > 6 and r[6].strip() else "MarisaOJ"
 
-        c_list = []
-        if "Tất cả" in classes_str or "All" in classes_str:
-            c_list = ["C++", "Python", "Python 1-1"]
-        else:
-            if "C++" in classes_str:
-                c_list.append("C++")
-            if "Python 1-1" in classes_str or "1-1" in classes_str:
-                c_list.append("Python 1-1")
-            if "Python" in classes_str:
-                c_list.append("Python")
+        c_list = parse_classes_string(classes_str)
 
         plat_lower = platform.lower()
         norm_plat = platform
@@ -347,7 +360,12 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
 
     problems = []
     seen_pids = set()
-    class_problems_map = {"C++": [], "Python": [], "Python 1-1": []}
+    class_problems_map = {
+        "C++ nâng cao": [],
+        "C++ cơ bản": [],
+        "Python cơ bản": [],
+        "Python 1-1": []
+    }
 
     # 2.1 Tab chính: "Bài Tập" (Curated homework tracked for students)
     ws_prob = get_worksheet_by_title(sh, ["Bài Tập", "Bai Tap", "Theo dõi Bài tập", "Problems"])
@@ -387,16 +405,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                 link = r[4].strip() if len(r) > 4 and r[4].strip() else "#"
                 summary = r[5].strip() if len(r) > 5 else ""
 
-                c_list = []
-                if "Tất cả" in classes_str or "All" in classes_str:
-                    c_list = ["C++", "Python", "Python 1-1"]
-                else:
-                    if "C++" in classes_str:
-                        c_list.append("C++")
-                    if "Python 1-1" in classes_str or "1-1" in classes_str:
-                        c_list.append("Python 1-1")
-                    if "Python" in classes_str:
-                        c_list.append("Python")
+                c_list = parse_classes_string(classes_str)
 
                 curriculum.append({
                     "id": lid,
@@ -598,8 +607,9 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
 
     class_config = dict(existing_data.get("class_config", {}))
     default_classes = {
-        "C++": {"name": "Lớp C++", "badge_color": "bg-blue-500/15 text-blue-300 border-blue-500/30"},
-        "Python": {"name": "Lớp Python", "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"},
+        "C++ nâng cao": {"name": "Lớp C++ nâng cao", "badge_color": "bg-blue-500/15 text-blue-300 border-blue-500/30"},
+        "C++ cơ bản": {"name": "Lớp C++ cơ bản", "badge_color": "bg-cyan-500/15 text-cyan-300 border-cyan-500/30"},
+        "Python cơ bản": {"name": "Lớp Python cơ bản", "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"},
         "Python 1-1": {"name": "Lớp Python 1-1", "badge_color": "bg-purple-500/15 text-purple-300 border-purple-500/30"}
     }
     for c_key, c_info in default_classes.items():
@@ -609,12 +619,8 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
         if pids:
             class_config[c_key]["problem_ids"] = pids
             class_config[c_key]["total_problems"] = len(pids)
-        elif not class_config[c_key].get("problem_ids"):
-            if c_key == "Python" and class_problems_map.get("Python 1-1"):
-                class_config[c_key]["problem_ids"] = class_problems_map.get("Python 1-1")
-                class_config[c_key]["total_problems"] = len(class_problems_map.get("Python 1-1"))
-            elif not class_config[c_key].get("total_problems"):
-                class_config[c_key]["total_problems"] = 8
+        elif not class_config[c_key].get("total_problems"):
+            class_config[c_key]["total_problems"] = max(1, len(pids))
 
     final_data = existing_data if existing_data else {}
     grader_problems = existing_data.get("grader_problems", [])
