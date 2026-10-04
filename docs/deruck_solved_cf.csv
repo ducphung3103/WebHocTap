@@ -1,0 +1,580 @@
+﻿Mã bài,Link bài tập,Tên bài tập,Class,Level,Dạng bài,Nền tảng,Ghi chú
+CF-439D,https://codeforces.com/problemset/problem/439/D,Devu and his Brother,Tất cả,4,Chặt nhị phân,Codeforces,"Rating 1700 • binary search, sortings, ternary search"
+CF-283A,https://codeforces.com/problemset/problem/283/A,Cows and Sequence,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,"Rating 1600 • constructive algorithms, data structures, implementation"
+CF-540C,https://codeforces.com/problemset/problem/540/C,Ice Cave,Tất cả,5,Duyệt đồ thị (DFS/BFS),Codeforces,Rating 2000 • dfs and similar
+CF-459D,https://codeforces.com/problemset/problem/459/D,Pashmak and Parmida's problem,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,"Rating 1800 • data structures, divide and conquer, sortings"
+CF-359D,https://codeforces.com/problemset/problem/359/D,Pair of Numbers,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2000 • binary search, brute force, data structures"
+CF-264B,https://codeforces.com/problemset/problem/264/B,Good Sequences,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1500 • dp, number theory"
+CF-2260C,https://codeforces.com/problemset/problem/2260/C,"Maximize XOR, Minimize Operations",Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1300 • bitmasks, greedy"
+CF-358D,https://codeforces.com/problemset/problem/358/D,Dima and Hares,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1800 • dp, greedy"
+CF-269B,https://codeforces.com/problemset/problem/269/B,Greenhouse Effect,Tất cả,4,Quy hoạch động,Codeforces,Rating 1700 • dp
+CF-287B,https://codeforces.com/problemset/problem/287/B,Pipeline,Tất cả,4,Chặt nhị phân,Codeforces,"Rating 1700 • binary search, math"
+CF-2268B,https://codeforces.com/problemset/problem/2268/B,What a SauSaGe! It's All Meat,Tất cả,3,Cấu trúc Dữ liệu,Codeforces,"Rating 1500 • bitmasks, brute force, data structures"
+CF-2268A,https://codeforces.com/problemset/problem/2268/A,K Is Important,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1200 • constructive algorithms, greedy"
+CF-2260B,https://codeforces.com/problemset/problem/2260/B,Monocarp and Projects,Tất cả,1,Số học & Ước số,Codeforces,"Rating 900 • brute force, math, number theory"
+CF-600C,https://codeforces.com/problemset/problem/600/C,Make Palindrome,Tất cả,4,Xử lý chuỗi,Codeforces,"Rating 1800 • constructive algorithms, greedy, strings"
+CF-274B,https://codeforces.com/problemset/problem/274/B,Zero Tree,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1800 • dfs and similar, dp, greedy"
+CF-105484E,https://codeforces.com/problemset/problem/105484/E,Left Shifting 3,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105484B,https://codeforces.com/problemset/problem/105484/B,Birthday Gift,Tất cả,2,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105484G,https://codeforces.com/problemset/problem/105484/G,Binary Tree,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105484K,https://codeforces.com/problemset/problem/105484/K,Strips,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105484J,https://codeforces.com/problemset/problem/105484/J,Social Media,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-294B,https://codeforces.com/problemset/problem/294/B,Shaass and Bookshelf,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • dp, greedy"
+CF-214B,https://codeforces.com/problemset/problem/214/B,Hometask,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1600 • brute force, constructive algorithms, greedy"
+CF-182D,https://codeforces.com/problemset/problem/182/D,Common Divisors,Tất cả,3,Xử lý chuỗi,Codeforces,"Rating 1400 • brute force, hashing, implementation"
+CF-313C,https://codeforces.com/problemset/problem/313/C,Ilya and Matrix,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1400 • constructive algorithms, greedy, implementation"
+CF-255C,https://codeforces.com/problemset/problem/255/C,Almost Arithmetical Progression,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1500 • brute force, dp"
+CF-348A,https://codeforces.com/problemset/problem/348/A,Mafia,Tất cả,4,Chặt nhị phân,Codeforces,"Rating 1600 • binary search, math, sortings"
+CF-446A,https://codeforces.com/problemset/problem/446/A,DZY Loves Sequences,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1600 • dp, implementation, two pointers"
+CF-75C,https://codeforces.com/problemset/problem/75/C,Modified GCD,Tất cả,4,Số học & Ước số,Codeforces,"Rating 1600 • binary search, number theory"
+CF-340D,https://codeforces.com/problemset/problem/340/D,Bubble Sort Graph,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1500 • binary search, data structures, dp"
+CF-1066182N,https://codeforces.com/problemset/problem/106618/2N,지그재그,Tất cả,2,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-295A,https://codeforces.com/problemset/problem/295/A,Greg and Array,Tất cả,3,Cấu trúc Dữ liệu,Codeforces,"Rating 1400 • data structures, implementation"
+CF-344A,https://codeforces.com/problemset/problem/344/A,Magnets,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-448D,https://codeforces.com/problemset/problem/448/D,Multiplication Table,Tất cả,4,Chặt nhị phân,Codeforces,"Rating 1800 • binary search, brute force"
+CF-404C,https://codeforces.com/problemset/problem/404/C,Restore Graph,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1800 • dfs and similar, graphs, sortings"
+CF-448C,https://codeforces.com/problemset/problem/448/C,Painting Fence,Tất cả,5,Quy hoạch động,Codeforces,"Rating 1900 • divide and conquer, dp, greedy"
+CF-385C,https://codeforces.com/problemset/problem/385/C,Bear and Prime Numbers,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • binary search, brute force, data structures"
+CF-460C,https://codeforces.com/problemset/problem/460/C,Present,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,"Rating 1700 • binary search, data structures, greedy"
+CF-466B,https://codeforces.com/problemset/problem/466/B,Wonder Room,Tất cả,5,Toán học,Codeforces,"Rating 2000 • brute force, math"
+CF-271D,https://codeforces.com/problemset/problem/271/D,Good Substrings,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,"Rating 1800 • data structures, strings"
+CF-439C,https://codeforces.com/problemset/problem/439/C,Devu and Partitioning of the Array,Tất cả,4,Số học & Ước số,Codeforces,"Rating 1700 • brute force, constructive algorithms, implementation"
+CF-486D,https://codeforces.com/problemset/problem/486/D,Valid Sets,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2100 • dfs and similar, dp, math"
+CF-519D,https://codeforces.com/problemset/problem/519/D,A and B and Interesting Substrings,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1800 • data structures, dp, two pointers"
+CF-479D,https://codeforces.com/problemset/problem/479/D,Long Jumps,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1700 • binary search, greedy, implementation"
+CF-225C,https://codeforces.com/problemset/problem/225/C,Barcode,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • dp, matrices"
+CF-483B,https://codeforces.com/problemset/problem/483/B,Friends and Presents,Tất cả,4,Chặt nhị phân,Codeforces,"Rating 1800 • binary search, math"
+CF-382C,https://codeforces.com/problemset/problem/382/C,Arithmetic Progression,Tất cả,4,Sắp xếp,Codeforces,"Rating 1700 • implementation, sortings"
+CF-276D,https://codeforces.com/problemset/problem/276/D,Little Girl and Maximum XOR,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • bitmasks, dp, greedy"
+CF-231C,https://codeforces.com/problemset/problem/231/C,To Add or Not to Add,Tất cả,4,Chặt nhị phân,Codeforces,"Rating 1600 • binary search, sortings, two pointers"
+CF-246D,https://codeforces.com/problemset/problem/246/D,Colorful Graph,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1600 • brute force, dfs and similar, graphs"
+CF-268C,https://codeforces.com/problemset/problem/268/C,Beautiful Sets of Points,Tất cả,3,Thuật toán Xây dựng,Codeforces,"Rating 1500 • constructive algorithms, implementation"
+CF-478C,https://codeforces.com/problemset/problem/478/C,Table Decorations,Tất cả,4,Tham lam (Greedy),Codeforces,Rating 1800 • greedy
+CF-369C,https://codeforces.com/problemset/problem/369/C,Valera and Elections,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1600 • dfs and similar, graphs, trees"
+CF-493D,https://codeforces.com/problemset/problem/493/D,Vasya and Chess,Tất cả,4,Lý thuyết trò chơi,Codeforces,"Rating 1700 • constructive algorithms, games, math"
+CF-300C,https://codeforces.com/problemset/problem/300/C,Beautiful Numbers,Tất cả,4,Toán tổ hợp,Codeforces,"Rating 1800 • brute force, combinatorics"
+CF-496C,https://codeforces.com/problemset/problem/496/C,Removing Columns,Tất cả,3,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 1500 • brute force, constructive algorithms, implementation"
+CF-508C,https://codeforces.com/problemset/problem/508/C,Anya and Ghosts,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1600 • constructive algorithms, greedy"
+CF-501C,https://codeforces.com/problemset/problem/501/C,Misha and Forest,Tất cả,3,Cây & Cấu trúc Cây,Codeforces,"Rating 1500 • constructive algorithms, data structures, greedy"
+CF-443B,https://codeforces.com/problemset/problem/443/B,Kolya and Tandem Repeat,Tất cả,3,Xử lý chuỗi,Codeforces,"Rating 1500 • brute force, implementation, strings"
+CF-427C,https://codeforces.com/problemset/problem/427/C,Checkposts,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1700 • dfs and similar, graphs, two pointers"
+CF-505C,https://codeforces.com/problemset/problem/505/C,"Mr. Kitayuta, the Treasure Hunter",Tất cả,5,Quy hoạch động,Codeforces,"Rating 1900 • dfs and similar, dp, two pointers"
+CF-257C,https://codeforces.com/problemset/problem/257/C,View Angle,Tất cả,4,Hình học tính toán,Codeforces,"Rating 1800 • brute force, geometry, math"
+CF-275B,https://codeforces.com/problemset/problem/275/B,Convex Shape,Tất cả,4,Thuật toán Xây dựng,Codeforces,"Rating 1700 • constructive algorithms, implementation"
+CF-220A,https://codeforces.com/problemset/problem/220/A,Little Elephant and Problem,Tất cả,3,Sắp xếp,Codeforces,"Rating 1300 • implementation, sortings"
+CF-550C,https://codeforces.com/problemset/problem/550/C,Divisibility by Eight,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1500 • brute force, dp, math"
+CF-279C,https://codeforces.com/problemset/problem/279/C,Ladder,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • dp, implementation, two pointers"
+CF-152C,https://codeforces.com/problemset/problem/152/C,Pocket Book,Tất cả,3,Toán tổ hợp,Codeforces,Rating 1400 • combinatorics
+CF-510B,https://codeforces.com/problemset/problem/510/B,Fox And Two Dots,Tất cả,3,Duyệt đồ thị (DFS/BFS),Codeforces,Rating 1500 • dfs and similar
+CF-416C,https://codeforces.com/problemset/problem/416/C,Booking System,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1600 • binary search, dp, greedy"
+CF-264A,https://codeforces.com/problemset/problem/264/A,Escape from Stones,Tất cả,2,Cấu trúc Dữ liệu,Codeforces,"Rating 1200 • constructive algorithms, data structures, implementation"
+CF-388A,https://codeforces.com/problemset/problem/388/A,Fox and Box Accumulation,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1400 • greedy, sortings"
+CF-115A,https://codeforces.com/problemset/problem/115/A,Party,Tất cả,1,Thuật toán Đồ thị,Codeforces,"Rating 900 • dfs and similar, graphs, trees"
+CF-501A,https://codeforces.com/problemset/problem/501/A,Contest,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 900 • implementation
+CF-463B,https://codeforces.com/problemset/problem/463/B,Caisa and Pylons,Tất cả,2,Toán học,Codeforces,"Rating 1100 • brute force, implementation, math"
+CF-463C,https://codeforces.com/problemset/problem/463/C,Gargari and Bishops,Tất cả,5,Tham lam (Greedy),Codeforces,"Rating 1900 • greedy, hashing, implementation"
+CF-493C,https://codeforces.com/problemset/problem/493/C,Vasya and Basketball,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,"Rating 1600 • binary search, brute force, data structures"
+CF-349B,https://codeforces.com/problemset/problem/349/B,Color the Fence,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • data structures, dp, greedy"
+CF-165C,https://codeforces.com/problemset/problem/165/C,Another Problem on Strings,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1600 • binary search, brute force, dp"
+CF-401C,https://codeforces.com/problemset/problem/401/C,Team,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1400 • constructive algorithms, greedy, implementation"
+CF-466C,https://codeforces.com/problemset/problem/466/C,Number of Ways,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • binary search, brute force, data structures"
+CF-350C,https://codeforces.com/problemset/problem/350/C,Bombs,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1600 • greedy, implementation, sortings"
+CF-454B,https://codeforces.com/problemset/problem/454/B,Little Pony and Sort by Shift,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1200 • implementation
+CF-253B,https://codeforces.com/problemset/problem/253/B,Physics Practical,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1400 • binary search, dp, sortings"
+CF-339C,https://codeforces.com/problemset/problem/339/C,Xenia and Weights,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • constructive algorithms, dfs and similar, dp"
+CF-192A,https://codeforces.com/problemset/problem/192/A,Funky Numbers,Tất cả,3,Chặt nhị phân,Codeforces,"Rating 1300 • binary search, brute force, implementation"
+CF-441C,https://codeforces.com/problemset/problem/441/C,Valera and Tubes ,Tất cả,3,Thuật toán Xây dựng,Codeforces,"Rating 1500 • constructive algorithms, dfs and similar, implementation"
+CF-377A,https://codeforces.com/problemset/problem/377/A,Maze,Tất cả,4,Duyệt đồ thị (DFS/BFS),Codeforces,Rating 1600 • dfs and similar
+CF-340C,https://codeforces.com/problemset/problem/340/C,Tourist Problem,Tất cả,4,Toán tổ hợp,Codeforces,"Rating 1600 • combinatorics, implementation, math"
+CF-219C,https://codeforces.com/problemset/problem/219/C,Color Stripe,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1600 • brute force, dp, greedy"
+CF-320B,https://codeforces.com/problemset/problem/320/B,Ping-Pong (Easy Version),Tất cả,3,Thuật toán Đồ thị,Codeforces,"Rating 1500 • dfs and similar, graphs"
+CF-485A,https://codeforces.com/problemset/problem/485/A,Factory,Tất cả,3,Ma trận & Lũy thừa ma trận,Codeforces,"Rating 1400 • implementation, math, matrices"
+CF-224B,https://codeforces.com/problemset/problem/224/B,Array,Tất cả,3,Kỹ thuật Hai con trỏ,Codeforces,"Rating 1500 • bitmasks, implementation, two pointers"
+CF-486C,https://codeforces.com/problemset/problem/486/C,Palindrome Transformation,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1700 • brute force, greedy, implementation"
+CF-1354D,https://codeforces.com/problemset/problem/1354/D,Multiset,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 1900 • binary search, data structures"
+CF-1234D,https://codeforces.com/problemset/problem/1234/D,Distinct Characters Queries,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,Rating 1600 • data structures
+CF-61E,https://codeforces.com/problemset/problem/61/E,Enemy is weak,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 1900 • data structures, trees"
+CF-598E,https://codeforces.com/problemset/problem/598/E,Chocolate Bar,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2000 • brute force, dp"
+CF-598D,https://codeforces.com/problemset/problem/598/D,Igor In the Museum,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1700 • dfs and similar, graphs, shortest paths"
+CF-339D,https://codeforces.com/problemset/problem/339/D,Xenia and Bit Operations,Tất cả,4,Cây & Cấu trúc Cây,Codeforces,"Rating 1700 • data structures, trees"
+CF-118D,https://codeforces.com/problemset/problem/118/D,Caesar's Legions,Tất cả,4,Quy hoạch động,Codeforces,Rating 1700 • dp
+CF-235A,https://codeforces.com/problemset/problem/235/A,LCM Challenge,Tất cả,4,Số học & Ước số,Codeforces,Rating 1600 • number theory
+CF-492C,https://codeforces.com/problemset/problem/492/C,Vanya and Exams,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1400 • greedy, sortings"
+CF-166C,https://codeforces.com/problemset/problem/166/C,Median,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1500 • greedy, math, sortings"
+CF-372A,https://codeforces.com/problemset/problem/372/A,Counting Kangaroos is Fun,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1600 • binary search, greedy, sortings"
+CF-414B,https://codeforces.com/problemset/problem/414/B,Mashmokh and ACM,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1400 • combinatorics, dp, number theory"
+CF-109A,https://codeforces.com/problemset/problem/109/A,Lucky Sum of Digits,Tất cả,2,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 1000 • brute force, implementation"
+CF-217A,https://codeforces.com/problemset/problem/217/A,Ice Skating,Tất cả,2,Thuật toán Đồ thị,Codeforces,"Rating 1200 • brute force, dfs and similar, dsu"
+CF-222B,https://codeforces.com/problemset/problem/222/B,Cosmic Tables,Tất cả,3,Cấu trúc Dữ liệu,Codeforces,"Rating 1300 • data structures, implementation"
+CF-453A,https://codeforces.com/problemset/problem/453/A,Little Pony and Expected Maximum,Tất cả,4,Xác suất & Kỳ vọng,Codeforces,Rating 1600 • probabilities
+CF-251A,https://codeforces.com/problemset/problem/251/A,Points on Line,Tất cả,3,Toán tổ hợp,Codeforces,"Rating 1300 • binary search, combinatorics, two pointers"
+CF-257B,https://codeforces.com/problemset/problem/257/B,Playing Cubes,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1300 • games, greedy, implementation"
+CF-313A,https://codeforces.com/problemset/problem/313/A,Ilya and Bank Account,Tất cả,1,Số học & Ước số,Codeforces,"Rating 900 • implementation, number theory"
+CF-152A,https://codeforces.com/problemset/problem/152/A,Marks,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 900 • implementation
+CF-160A,https://codeforces.com/problemset/problem/160/A,Twins,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 900 • greedy, sortings"
+CF-242A,https://codeforces.com/problemset/problem/242/A,Heads or Tails,Tất cả,2,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 1100 • brute force, implementation"
+CF-137B,https://codeforces.com/problemset/problem/137/B,Permutation,Tất cả,2,Tham lam (Greedy),Codeforces,Rating 1000 • greedy
+CF-259A,https://codeforces.com/problemset/problem/259/A,Little Elephant and Chess,Tất cả,2,Xử lý chuỗi,Codeforces,"Rating 1000 • brute force, strings"
+CF-401A,https://codeforces.com/problemset/problem/401/A,Vanya and Cards,Tất cả,1,Toán học,Codeforces,"Rating 800 • implementation, math"
+CF-244A,https://codeforces.com/problemset/problem/244/A,Dividing Orange,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 900 • implementation
+CF-136A,https://codeforces.com/problemset/problem/136/A,Presents,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-432A,https://codeforces.com/problemset/problem/432/A,Choosing Teams,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • greedy, implementation, sortings"
+CF-282B,https://codeforces.com/problemset/problem/282/B,Painting Eggs,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1500 • greedy, math"
+CF-282C,https://codeforces.com/problemset/problem/282/C,XOR and OR,Tất cả,3,Toán học,Codeforces,"Rating 1500 • constructive algorithms, implementation, math"
+CF-166E,https://codeforces.com/problemset/problem/166/E,Tetrahedron,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1500 • dp, math, matrices"
+CF-276C,https://codeforces.com/problemset/problem/276/C,Little Girl and Maximum Sum,Tất cả,3,Cấu trúc Dữ liệu,Codeforces,"Rating 1500 • data structures, greedy, implementation"
+CF-279B,https://codeforces.com/problemset/problem/279/B,Books,Tất cả,3,Chặt nhị phân,Codeforces,"Rating 1400 • binary search, brute force, implementation"
+CF-455A,https://codeforces.com/problemset/problem/455/A,Boredom,Tất cả,3,Quy hoạch động,Codeforces,Rating 1500 • dp
+CF-479C,https://codeforces.com/problemset/problem/479/C,Exams,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1400 • greedy, sortings"
+CF-363C,https://codeforces.com/problemset/problem/363/C,Fixing Typos,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1400 • greedy, implementation"
+CF-332B,https://codeforces.com/problemset/problem/332/B,Maximum Absurdity,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1500 • data structures, dp, implementation"
+CF-431C,https://codeforces.com/problemset/problem/431/C,k-Tree,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1600 • dp, implementation, trees"
+CF-106677E,https://codeforces.com/problemset/problem/106677/E,Shopping Master,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106677D,https://codeforces.com/problemset/problem/106677/D,Frequency Sequence,Tất cả,4,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106677C,https://codeforces.com/problemset/problem/106677/C,Water Remaining,Tất cả,3,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-322B,https://codeforces.com/problemset/problem/322/B,Ciel and Flowers,Tất cả,4,Toán tổ hợp,Codeforces,"Rating 1600 • combinatorics, math"
+CF-300B,https://codeforces.com/problemset/problem/300/B,Coach,Tất cả,3,Thuật toán Đồ thị,Codeforces,"Rating 1500 • brute force, dfs and similar, graphs"
+CF-96B,https://codeforces.com/problemset/problem/96/B,Lucky Numbers (easy),Tất cả,3,Chặt nhị phân,Codeforces,"Rating 1300 • binary search, bitmasks, brute force"
+CF-358A,https://codeforces.com/problemset/problem/358/A,Dima and Continuous Line,Tất cả,3,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 1400 • brute force, implementation"
+CF-371B,https://codeforces.com/problemset/problem/371/B,Fox Dividing Cheese,Tất cả,3,Số học & Ước số,Codeforces,"Rating 1300 • math, number theory"
+CF-441B,https://codeforces.com/problemset/problem/441/B,Valera and Fruits,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1400 • greedy, implementation"
+CF-357B,https://codeforces.com/problemset/problem/357/B,Flag Day,Tất cả,3,Thuật toán Xây dựng,Codeforces,"Rating 1400 • constructive algorithms, implementation"
+CF-371C,https://codeforces.com/problemset/problem/371/C,Hamburgers,Tất cả,4,Chặt nhị phân,Codeforces,"Rating 1600 • binary search, brute force"
+CF-337B,https://codeforces.com/problemset/problem/337/B,Routine Problem,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1400 • greedy, math, number theory"
+CF-467C,https://codeforces.com/problemset/problem/467/C,George and Job,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • dp, implementation"
+CF-460B,https://codeforces.com/problemset/problem/460/B,Little Dima and Equation,Tất cả,3,Số học & Ước số,Codeforces,"Rating 1500 • brute force, implementation, math"
+CF-313B,https://codeforces.com/problemset/problem/313/B,Ilya and Queries,Tất cả,2,Quy hoạch động,Codeforces,"Rating 1100 • dp, implementation"
+CF-330B,https://codeforces.com/problemset/problem/330/B,Road Construction,Tất cả,3,Thuật toán Đồ thị,Codeforces,"Rating 1300 • constructive algorithms, graphs"
+CF-347B,https://codeforces.com/problemset/problem/347/B,Fixed Points,Tất cả,2,Toán học,Codeforces,"Rating 1100 • brute force, implementation, math"
+CF-344B,https://codeforces.com/problemset/problem/344/B,Simple Molecules,Tất cả,2,Thuật toán Đồ thị,Codeforces,"Rating 1200 • brute force, graphs, math"
+CF-315B,https://codeforces.com/problemset/problem/315/B,Sereja and Array,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1200 • implementation
+CF-272C,https://codeforces.com/problemset/problem/272/C,Dima and Staircase,Tất cả,3,Cấu trúc Dữ liệu,Codeforces,"Rating 1500 • data structures, implementation"
+CF-476B,https://codeforces.com/problemset/problem/476/B,Dreamoon and WiFi,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1300 • bitmasks, brute force, combinatorics"
+CF-262B,https://codeforces.com/problemset/problem/262/B,Roma and Changing Signs,Tất cả,2,Tham lam (Greedy),Codeforces,Rating 1200 • greedy
+CF-285B,https://codeforces.com/problemset/problem/285/B,Find Marble,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1200 • implementation
+CF-437C,https://codeforces.com/problemset/problem/437/C,The Child and Toy,Tất cả,3,Thuật toán Đồ thị,Codeforces,"Rating 1400 • graphs, greedy, sortings"
+CF-277A,https://codeforces.com/problemset/problem/277/A,Learning Languages,Tất cả,3,Cấu trúc DSU,Codeforces,"Rating 1400 • dfs and similar, dsu"
+CF-116B,https://codeforces.com/problemset/problem/116/B,Little Pigs and Wolves,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • greedy, implementation"
+CF-347A,https://codeforces.com/problemset/problem/347/A,Difference Row,Tất cả,3,Sắp xếp,Codeforces,"Rating 1300 • constructive algorithms, implementation, sortings"
+CF-365B,https://codeforces.com/problemset/problem/365/B,The Fibonacci Segment,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1100 • implementation
+CF-121A,https://codeforces.com/problemset/problem/121/A,Lucky Sum,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1100 • implementation
+CF-459A,https://codeforces.com/problemset/problem/459/A,Pashmak and Garden,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1200 • implementation
+CF-456A,https://codeforces.com/problemset/problem/456/A,Laptops,Tất cả,2,Sắp xếp,Codeforces,Rating 1100 • sortings
+CF-27A,https://codeforces.com/problemset/problem/27/A,Next Test,Tất cả,2,Sắp xếp,Codeforces,"Rating 1200 • implementation, sortings"
+CF-102B,https://codeforces.com/problemset/problem/102/B,Sum of Digits,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1000 • implementation
+CF-300A,https://codeforces.com/problemset/problem/300/A,Array,Tất cả,2,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 1100 • brute force, constructive algorithms, implementation"
+CF-122A,https://codeforces.com/problemset/problem/122/A,Lucky Division,Tất cả,2,Số học & Ước số,Codeforces,"Rating 1000 • brute force, number theory"
+CF-75A,https://codeforces.com/problemset/problem/75/A,Life Without Zeros,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1000 • implementation
+CF-168A,https://codeforces.com/problemset/problem/168/A,Wizards and Demonstration,Tất cả,1,Toán học,Codeforces,"Rating 900 • implementation, math"
+CF-285A,https://codeforces.com/problemset/problem/285/A,Slightly Decreasing Permutations,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • greedy, implementation"
+CF-270A,https://codeforces.com/problemset/problem/270/A,Fancy Fence,Tất cả,2,Hình học tính toán,Codeforces,"Rating 1100 • geometry, implementation, math"
+CF-92A,https://codeforces.com/problemset/problem/92/A,Chips,Tất cả,1,Toán học,Codeforces,"Rating 800 • implementation, math"
+CF-361A,https://codeforces.com/problemset/problem/361/A,Levko and Table,Tất cả,1,Thuật toán Xây dựng,Codeforces,"Rating 800 • constructive algorithms, implementation"
+CF-336A,https://codeforces.com/problemset/problem/336/A,Vasily the Bear and Triangle,Tất cả,2,Toán học,Codeforces,"Rating 1000 • implementation, math"
+CF-330A,https://codeforces.com/problemset/problem/330/A,Cakeminator,Tất cả,1,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 800 • brute force, implementation"
+CF-276A,https://codeforces.com/problemset/problem/276/A,Lunch Rush,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 900 • implementation
+CF-334A,https://codeforces.com/problemset/problem/334/A,Candy Bags,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1000 • implementation
+CF-129A,https://codeforces.com/problemset/problem/129/A,Cookies,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 900 • implementation
+CF-104A,https://codeforces.com/problemset/problem/104/A,Blackjack,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-260A,https://codeforces.com/problemset/problem/260/A,Adding Digits,Tất cả,3,Toán học,Codeforces,"Rating 1400 • implementation, math"
+CF-315A,https://codeforces.com/problemset/problem/315/A,Sereja and Bottles,Tất cả,3,Vét cạn / Duyệt toàn bộ,Codeforces,Rating 1400 • brute force
+CF-451B,https://codeforces.com/problemset/problem/451/B,Sort the Array,Tất cả,3,Sắp xếp,Codeforces,"Rating 1300 • implementation, sortings"
+CF-462B,https://codeforces.com/problemset/problem/462/B,Appleman and Card Game,Tất cả,3,Tham lam (Greedy),Codeforces,Rating 1300 • greedy
+CF-450B,https://codeforces.com/problemset/problem/450/B,Jzzhu and Sequences,Tất cả,3,Toán học,Codeforces,"Rating 1300 • implementation, math"
+CF-289B,https://codeforces.com/problemset/problem/289/B,Polo the Penguin and Matrix,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1400 • brute force, dp, implementation"
+CF-237A,https://codeforces.com/problemset/problem/237/A,Free Cash,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1000 • implementation
+CF-327A,https://codeforces.com/problemset/problem/327/A,Flipping Game,Tất cả,2,Quy hoạch động,Codeforces,"Rating 1200 • brute force, dp, implementation"
+CF-230B,https://codeforces.com/problemset/problem/230/B,T-primes,Tất cả,3,Số học & Ước số,Codeforces,"Rating 1300 • binary search, implementation, math"
+CF-368B,https://codeforces.com/problemset/problem/368/B,Sereja and Suffixes,Tất cả,2,Quy hoạch động,Codeforces,"Rating 1100 • data structures, dp"
+CF-433B,https://codeforces.com/problemset/problem/433/B,Kuriyama Mirai's Stones,Tất cả,2,Quy hoạch động,Codeforces,"Rating 1200 • dp, implementation, sortings"
+CF-287A,https://codeforces.com/problemset/problem/287/A,IQ Test,Tất cả,2,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 1100 • brute force, implementation"
+CF-285C,https://codeforces.com/problemset/problem/285/C,Building Permutation,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1200 • greedy, implementation, sortings"
+CF-349A,https://codeforces.com/problemset/problem/349/A,Cinema Line,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • greedy, implementation"
+CF-189A,https://codeforces.com/problemset/problem/189/A,Cut Ribbon,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1300 • brute force, dp"
+CF-166A,https://codeforces.com/problemset/problem/166/A,Rank List,Tất cả,2,Chặt nhị phân,Codeforces,"Rating 1100 • binary search, implementation, sortings"
+CF-353A,https://codeforces.com/problemset/problem/353/A,Domino,Tất cả,2,Toán học,Codeforces,"Rating 1200 • implementation, math"
+CF-254A,https://codeforces.com/problemset/problem/254/A,Cards with Numbers,Tất cả,2,Sắp xếp,Codeforces,"Rating 1200 • constructive algorithms, sortings"
+CF-304A,https://codeforces.com/problemset/problem/304/A,Pythagorean Theorem II,Tất cả,2,Toán học,Codeforces,"Rating 1200 • brute force, math"
+CF-236B,https://codeforces.com/problemset/problem/236/B,Easy Number Challenge,Tất cả,3,Số học & Ước số,Codeforces,"Rating 1300 • implementation, number theory"
+CF-253A,https://codeforces.com/problemset/problem/253/A,Boys and Girls,Tất cả,2,Tham lam (Greedy),Codeforces,Rating 1100 • greedy
+CF-160B,https://codeforces.com/problemset/problem/160/B,Unlucky Ticket,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • greedy, sortings"
+CF-239A,https://codeforces.com/problemset/problem/239/A,Two Bags of Potatoes,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1200 • greedy, implementation, math"
+CF-246B,https://codeforces.com/problemset/problem/246/B,Increase and Decrease,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1300 • greedy, math"
+CF-350A,https://codeforces.com/problemset/problem/350/A,TL,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1200 • brute force, greedy, implementation"
+CF-363B,https://codeforces.com/problemset/problem/363/B,Fence,Tất cả,2,Quy hoạch động,Codeforces,"Rating 1100 • brute force, dp"
+CF-296A,https://codeforces.com/problemset/problem/296/A,Yaroslav and Permutations,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • greedy, math"
+CF-258A,https://codeforces.com/problemset/problem/258/A,Little Elephant and Bits,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • greedy, math"
+CF-242B,https://codeforces.com/problemset/problem/242/B,Big Segment,Tất cả,2,Sắp xếp,Codeforces,"Rating 1100 • implementation, sortings"
+CF-327B,https://codeforces.com/problemset/problem/327/B,Hungry Sequence,Tất cả,2,Toán học,Codeforces,Rating 1200 • math
+CF-186A,https://codeforces.com/problemset/problem/186/A,Comparing Strings,Tất cả,2,Xử lý chuỗi,Codeforces,"Rating 1100 • implementation, strings"
+CF-433A,https://codeforces.com/problemset/problem/433/A,Kitahara Haruki's Gift,Tất cả,2,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 1100 • brute force, implementation"
+CF-43B,https://codeforces.com/problemset/problem/43/B,Letter,Tất cả,2,Xử lý chuỗi,Codeforces,"Rating 1100 • implementation, strings"
+CF-342A,https://codeforces.com/problemset/problem/342/A,Xenia and Divisors,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1200 • greedy, implementation"
+CF-222A,https://codeforces.com/problemset/problem/222/A,Shooshuns and Sequence ,Tất cả,2,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 1200 • brute force, implementation"
+CF-431B,https://codeforces.com/problemset/problem/431/B,Shower Line,Tất cả,2,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 1200 • brute force, implementation"
+CF-298B,https://codeforces.com/problemset/problem/298/B,Sail,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1200 • brute force, greedy, implementation"
+CF-276B,https://codeforces.com/problemset/problem/276/B,Little Girl and Game,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1300 • games, greedy"
+CF-352B,https://codeforces.com/problemset/problem/352/B,Jeff and Periods,Tất cả,3,Sắp xếp,Codeforces,"Rating 1300 • implementation, sortings"
+CF-459B,https://codeforces.com/problemset/problem/459/B,Pashmak and Flowers,Tất cả,3,Toán tổ hợp,Codeforces,"Rating 1300 • combinatorics, implementation, sortings"
+CF-445A,https://codeforces.com/problemset/problem/445/A,DZY Loves Chessboard,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,"Rating 1200 • dfs and similar, implementation"
+CF-218B,https://codeforces.com/problemset/problem/218/B,Airport,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1100 • implementation
+CF-58A,https://codeforces.com/problemset/problem/58/A,Chat room,Tất cả,2,Xử lý chuỗi,Codeforces,"Rating 1000 • greedy, strings"
+CF-337A,https://codeforces.com/problemset/problem/337/A,Puzzles,Tất cả,1,Tham lam (Greedy),Codeforces,Rating 900 • greedy
+CF-230A,https://codeforces.com/problemset/problem/230/A,Dragons,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1000 • greedy, sortings"
+CF-118B,https://codeforces.com/problemset/problem/118/B,Present from Lena,Tất cả,2,Thuật toán Xây dựng,Codeforces,"Rating 1000 • constructive algorithms, implementation"
+CF-221A,https://codeforces.com/problemset/problem/221/A,Little Elephant and Function,Tất cả,2,Toán học,Codeforces,"Rating 1000 • implementation, math"
+CF-118A,https://codeforces.com/problemset/problem/118/A,String Task,Tất cả,2,Xử lý chuỗi,Codeforces,"Rating 1000 • implementation, strings"
+CF-96A,https://codeforces.com/problemset/problem/96/A,Football,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 900 • implementation, strings"
+CF-124A,https://codeforces.com/problemset/problem/124/A,The number of positions,Tất cả,2,Toán học,Codeforces,Rating 1000 • math
+CF-219A,https://codeforces.com/problemset/problem/219/A,k-String,Tất cả,2,Xử lý chuỗi,Codeforces,"Rating 1000 • implementation, strings"
+CF-208A,https://codeforces.com/problemset/problem/208/A,Dubstep,Tất cả,1,Xử lý chuỗi,Codeforces,Rating 900 • strings
+CF-149A,https://codeforces.com/problemset/problem/149/A,Business trip,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 900 • greedy, implementation, sortings"
+CF-214A,https://codeforces.com/problemset/problem/214/A,System of Equations,Tất cả,1,Vét cạn / Duyệt toàn bộ,Codeforces,Rating 800 • brute force
+CF-34B,https://codeforces.com/problemset/problem/34/B,Sale,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 900 • greedy, sortings"
+CF-215A,https://codeforces.com/problemset/problem/215/A,Bicycle Chain,Tất cả,1,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 900 • brute force, implementation"
+CF-43A,https://codeforces.com/problemset/problem/43/A,Football,Tất cả,2,Xử lý chuỗi,Codeforces,Rating 1000 • strings
+CF-41A,https://codeforces.com/problemset/problem/41/A,Translation,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • implementation, strings"
+CF-320A,https://codeforces.com/problemset/problem/320/A,Magic Numbers,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 900 • brute force, greedy"
+CF-339B,https://codeforces.com/problemset/problem/339/B,Xenia and Ringroad,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1000 • implementation
+CF-352A,https://codeforces.com/problemset/problem/352/A,Jeff and Digits,Tất cả,2,Toán học,Codeforces,"Rating 1000 • brute force, implementation, math"
+CF-199A,https://codeforces.com/problemset/problem/199/A,Hexadecimal's theorem,Tất cả,1,Số học & Ước số,Codeforces,"Rating 900 • brute force, constructive algorithms, implementation"
+CF-205A,https://codeforces.com/problemset/problem/205/A,Little Elephant and Rozdil,Tất cả,1,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 900 • brute force, implementation"
+CF-318A,https://codeforces.com/problemset/problem/318/A,Even Odds,Tất cả,1,Toán học,Codeforces,Rating 900 • math
+CF-34A,https://codeforces.com/problemset/problem/34/A,Reconnaissance 2,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-224A,https://codeforces.com/problemset/problem/224/A,Parallelepiped,Tất cả,2,Hình học tính toán,Codeforces,"Rating 1100 • brute force, geometry, math"
+CF-139A,https://codeforces.com/problemset/problem/139/A,Petr and Book,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1000 • implementation
+CF-165A,https://codeforces.com/problemset/problem/165/A,Supercentral Point,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1000 • implementation
+CF-450A,https://codeforces.com/problemset/problem/450/A,Jzzhu and Children,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1000 • implementation
+CF-272A,https://codeforces.com/problemset/problem/272/A,Dima and Friends,Tất cả,2,Toán học,Codeforces,"Rating 1000 • implementation, math"
+CF-227B,https://codeforces.com/problemset/problem/227/B,Effective Approach,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1100 • implementation
+CF-282A,https://codeforces.com/problemset/problem/282/A,Bit++,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-231A,https://codeforces.com/problemset/problem/231/A,Team,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • brute force, greedy"
+CF-112A,https://codeforces.com/problemset/problem/112/A,Petya and Strings,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • implementation, strings"
+CF-133A,https://codeforces.com/problemset/problem/133/A,HQ9+,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 900 • implementation
+CF-151A,https://codeforces.com/problemset/problem/151/A,Soft Drinking,Tất cả,1,Toán học,Codeforces,"Rating 800 • implementation, math"
+CF-141A,https://codeforces.com/problemset/problem/141/A,Amusing Joke,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • implementation, sortings, strings"
+CF-236A,https://codeforces.com/problemset/problem/236/A,Boy or Girl,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • brute force, implementation, strings"
+CF-71A,https://codeforces.com/problemset/problem/71/A,Way Too Long Words,Tất cả,1,Xử lý chuỗi,Codeforces,Rating 800 • strings
+CF-228A,https://codeforces.com/problemset/problem/228/A,Is your horseshoe on the other hoof?,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-339A,https://codeforces.com/problemset/problem/339/A,Helpful Maths,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • greedy, implementation, sortings"
+CF-116A,https://codeforces.com/problemset/problem/116/A,Tram,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-155A,https://codeforces.com/problemset/problem/155/A,I_love_\%username\%,Tất cả,1,Vét cạn / Duyệt toàn bộ,Codeforces,Rating 800 • brute force
+CF-248A,https://codeforces.com/problemset/problem/248/A,Cupboards,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-148A,https://codeforces.com/problemset/problem/148/A,Insomnia cure,Tất cả,1,Toán học,Codeforces,"Rating 800 • constructive algorithms, implementation, math"
+CF-200B,https://codeforces.com/problemset/problem/200/B,Drinks,Tất cả,1,Toán học,Codeforces,"Rating 800 • implementation, math"
+CF-144A,https://codeforces.com/problemset/problem/144/A,Arrival of the General,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-233A,https://codeforces.com/problemset/problem/233/A,Perfect Permutation,Tất cả,1,Toán học,Codeforces,"Rating 800 • implementation, math"
+CF-61A,https://codeforces.com/problemset/problem/61/A,Ultra-Fast Mathematician,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-80A,https://codeforces.com/problemset/problem/80/A,Panoramix's Prediction,Tất cả,1,Vét cạn / Duyệt toàn bộ,Codeforces,Rating 800 • brute force
+CF-266A,https://codeforces.com/problemset/problem/266/A,Stones on the Table,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-110A,https://codeforces.com/problemset/problem/110/A,Nearly Lucky Number,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-281A,https://codeforces.com/problemset/problem/281/A,Word Capitalization,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • implementation, strings"
+CF-59A,https://codeforces.com/problemset/problem/59/A,Word,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • implementation, strings"
+CF-275A,https://codeforces.com/problemset/problem/275/A,Lights Out,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 900 • implementation
+CF-271A,https://codeforces.com/problemset/problem/271/A,Beautiful Year,Tất cả,1,Vét cạn / Duyệt toàn bộ,Codeforces,Rating 800 • brute force
+CF-32B,https://codeforces.com/problemset/problem/32/B,Borze,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,"Rating 800 • expression parsing, implementation"
+CF-266B,https://codeforces.com/problemset/problem/266/B,Queue at the School,Tất cả,1,Đường đi ngắn nhất,Codeforces,"Rating 800 • constructive algorithms, graph matchings, implementation"
+CF-263A,https://codeforces.com/problemset/problem/263/A,Beautiful Matrix,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-69A,https://codeforces.com/problemset/problem/69/A,Young Physicist,Tất cả,2,Toán học,Codeforces,"Rating 1000 • implementation, math"
+CF-106144B,https://codeforces.com/problemset/problem/106144/B,Convex Interval,Tất cả,2,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106144C,https://codeforces.com/problemset/problem/106144/C,"Monocarp, Polycarp and Brackets",Tất cả,3,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106144E,https://codeforces.com/problemset/problem/106144/E,Limousine Rally,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106144G,https://codeforces.com/problemset/problem/106144/G,String Transformation,Tất cả,5,Xử lý chuỗi,Codeforces,Rating Chưa rank • Cơ bản
+CF-106144F,https://codeforces.com/problemset/problem/106144/F,Jenga,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106144J,https://codeforces.com/problemset/problem/106144/J,Shift the Number,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106144A,https://codeforces.com/problemset/problem/106144/A,Delete the Array,Tất cả,1,Mảng 1 chiều,Codeforces,Rating Chưa rank • Cơ bản
+CF-106144M,https://codeforces.com/problemset/problem/106144/M,Tactical Game,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-2181D,https://codeforces.com/problemset/problem/2181/D,Doorway,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2000 • binary search, data structures, sortings"
+CF-2181F,https://codeforces.com/problemset/problem/2181/F,Fragmented Nim,Tất cả,4,Lý thuyết trò chơi,Codeforces,Rating 1600 • games
+CF-2181M,https://codeforces.com/problemset/problem/2181/M,Medical Parity,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • dp, strings"
+CF-2181A,https://codeforces.com/problemset/problem/2181/A,Alphabet City,Tất cả,3,Xử lý chuỗi,Codeforces,"Rating 1300 • binary search, math, strings"
+CF-2181H,https://codeforces.com/problemset/problem/2181/H,Honey Cake,Tất cả,2,Số học & Ước số,Codeforces,"Rating 1200 • brute force, math, number theory"
+CF-2181B,https://codeforces.com/problemset/problem/2181/B,Battle of Arrays,Tất cả,3,Cấu trúc Dữ liệu,Codeforces,"Rating 1400 • data structures, games, greedy"
+CF-106353A,https://codeforces.com/problemset/problem/106353/A,Arcade Crane,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106353J,https://codeforces.com/problemset/problem/106353/J,Juggling Keys,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106353E,https://codeforces.com/problemset/problem/106353/E,Erratic Lights,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106353K,https://codeforces.com/problemset/problem/106353/K,KIT Finding,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106353D,https://codeforces.com/problemset/problem/106353/D,Dreamcatcher,Tất cả,4,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106353L,https://codeforces.com/problemset/problem/106353/L,Last Christmas,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106353F,https://codeforces.com/problemset/problem/106353/F,Fair Share,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106268I,https://codeforces.com/problemset/problem/106268/I,Game of Names,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619A,https://codeforces.com/problemset/problem/104619/A,Advance to Taoyuan Regional,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619J,https://codeforces.com/problemset/problem/104619/J,Java Warriors,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619K,https://codeforces.com/problemset/problem/104619/K,Kick,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619L,https://codeforces.com/problemset/problem/104619/L,"Location, Location, Location",Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619B,https://codeforces.com/problemset/problem/104619/B,Better Chance,Tất cả,2,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619E,https://codeforces.com/problemset/problem/104619/E,Exponentiation,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619C,https://codeforces.com/problemset/problem/104619/C,Cutting into Monotone Increasing Sequence,Tất cả,3,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619H,https://codeforces.com/problemset/problem/104619/H,Heap Structure,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619I,https://codeforces.com/problemset/problem/104619/I,Introversion,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104619F,https://codeforces.com/problemset/problem/104619/F,Finding Bridges,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106268E,https://codeforces.com/problemset/problem/106268/E,Cutting Tofu,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106268D,https://codeforces.com/problemset/problem/106268/D,Decompose and Concatenate,Tất cả,4,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-2172B,https://codeforces.com/problemset/problem/2172/B,Buses,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1800 • greedy, sortings"
+CF-2172K,https://codeforces.com/problemset/problem/2172/K,Kindergarten Homework,Tất cả,5,Xử lý chuỗi,Codeforces,"Rating 2100 • implementation, strings"
+CF-2238D,https://codeforces.com/problemset/problem/2238/D,Storming Arasaka,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1500 • greedy, math, number theory"
+CF-2239B,https://codeforces.com/problemset/problem/2239/B,Decidophobia,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1600 • greedy, math, sortings"
+CF-106262I,https://codeforces.com/problemset/problem/106262/I,Stone Steps,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-2231D,https://codeforces.com/problemset/problem/2231/D,Maximum Prefix Sums,Tất cả,5,Tham lam (Greedy),Codeforces,"Rating 1900 • constructive algorithms, greedy, implementation"
+CF-2231C,https://codeforces.com/problemset/problem/2231/C,Chipmunk Theo and Equality,Tất cả,3,Sắp xếp,Codeforces,"Rating 1400 • implementation, sortings"
+CF-2231B,https://codeforces.com/problemset/problem/2231/B,Another Sorting Problem,Tất cả,2,Thuật toán Xây dựng,Codeforces,Rating 1100 • constructive algorithms
+CF-2231A,https://codeforces.com/problemset/problem/2231/A,Construct an Array,Tất cả,1,Thuật toán Xây dựng,Codeforces,Rating 800 • constructive algorithms
+CF-106262M,https://codeforces.com/problemset/problem/106262/M,Web Delivery,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106262J,https://codeforces.com/problemset/problem/106262/J,Tic-Tac-Toe on a Graph,Tất cả,1,Thuật toán Đồ thị,Codeforces,Rating Chưa rank • Cơ bản
+CF-106262H,https://codeforces.com/problemset/problem/106262/H,Prime Topology,Tất cả,1,Số học & Ước số,Codeforces,Rating Chưa rank • Cơ bản
+CF-106262E,https://codeforces.com/problemset/problem/106262/E,Long Distance Examination,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106262L,https://codeforces.com/problemset/problem/106262/L,Trace of Product of Sparse Square Matrices,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106262G,https://codeforces.com/problemset/problem/106262/G,Max Cut Min Flow,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106262A,https://codeforces.com/problemset/problem/106262/A,Alphabet Chocolate,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-4A,https://codeforces.com/problemset/problem/4/A,Watermelon,Tất cả,1,Toán học,Codeforces,"Rating 800 • brute force, math"
+CF-106225F,https://codeforces.com/problemset/problem/106225/F,Factory Table,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-2041I,https://codeforces.com/problemset/problem/2041/I,Auto Complete,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2300 • binary search, data structures, hashing"
+CF-2030E,https://codeforces.com/problemset/problem/2030/E,MEXimize the Score,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2200 • combinatorics, data structures, dp"
+CF-2041E,https://codeforces.com/problemset/problem/2041/E,Beautiful Array,Tất cả,2,Toán học,Codeforces,"Rating 1200 • constructive algorithms, math"
+CF-2041A,https://codeforces.com/problemset/problem/2041/A,The Bento Box Adventure,Tất cả,3,Sắp xếp,Codeforces,"Rating 1300 • implementation, sortings"
+CF-2041H,https://codeforces.com/problemset/problem/2041/H,Sheet Music,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2300 • combinatorics, dp, math"
+CF-2041M,https://codeforces.com/problemset/problem/2041/M,Selection Sort,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2000 • binary search, data structures, greedy"
+CF-2041C,https://codeforces.com/problemset/problem/2041/C,Cube,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2000 • bitmasks, dfs and similar, dp"
+CF-2041D,https://codeforces.com/problemset/problem/2041/D,Drunken Maze,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1700 • brute force, dfs and similar, graphs"
+CF-2172I,https://codeforces.com/problemset/problem/2172/I,Birthday,Tất cả,5,Hình học tính toán,Codeforces,Rating 2000 • geometry
+CF-2172E,https://codeforces.com/problemset/problem/2172/E,Number Maze,Tất cả,2,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 1200 • implementation
+CF-2172M,https://codeforces.com/problemset/problem/2172/M,Maximum Distance To Port,Tất cả,3,Thuật toán Đồ thị,Codeforces,"Rating 1400 • graphs, shortest paths"
+CF-2172F,https://codeforces.com/problemset/problem/2172/F,Cluster Computing System,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1600 • graphs, greedy, math"
+CF-2172A,https://codeforces.com/problemset/problem/2172/A,ASCII Art Contest,Tất cả,1,Căn bản & Kỹ thuật lập trình,Codeforces,Rating 800 • implementation
+CF-105657M,https://codeforces.com/problemset/problem/105657/M,Make It Divisible,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105657E,https://codeforces.com/problemset/problem/105657/E,Elevator II,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105657K,https://codeforces.com/problemset/problem/105657/K,Kind of Bingo,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105657A,https://codeforces.com/problemset/problem/105657/A,AUS,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105544C,https://codeforces.com/problemset/problem/105544/C,Where the Lantern Lights are Dimming,Tất cả,3,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105544L,https://codeforces.com/problemset/problem/105544/L,Nine Never,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105544D,https://codeforces.com/problemset/problem/105544/D,Quarantine Policy,Tất cả,4,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105544F,https://codeforces.com/problemset/problem/105544/F,Baker's Dilemma,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105544B,https://codeforces.com/problemset/problem/105544/B,Recurring Decimal to Fractions,Tất cả,2,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105544H,https://codeforces.com/problemset/problem/105544/H,Bank Deposit Challenge,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105544M,https://codeforces.com/problemset/problem/105544/M,Task scheduler,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105544A,https://codeforces.com/problemset/problem/105544/A,Counterfeit Money,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105901G,https://codeforces.com/problemset/problem/105901/G,Path Summing Problem,Tất cả,5,Nhập xuất & Phép toán,Codeforces,Rating Chưa rank • Cơ bản
+CF-105901F,https://codeforces.com/problemset/problem/105901/F,Knapsack,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105901I,https://codeforces.com/problemset/problem/105901/I,Bingo 3,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105901L,https://codeforces.com/problemset/problem/105901/L,Subsequence,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105901A,https://codeforces.com/problemset/problem/105901/A,Problem Setting,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106161B,https://codeforces.com/problemset/problem/106161/B,Blood Memories,Tất cả,2,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106161L,https://codeforces.com/problemset/problem/106161/L,Label Matching,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106161A,https://codeforces.com/problemset/problem/106161/A,A Lot of Paintings,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106161G,https://codeforces.com/problemset/problem/106161/G,GCD of Subsets,Tất cả,5,Số học & Ước số,Codeforces,Rating Chưa rank • Cơ bản
+CF-106161J,https://codeforces.com/problemset/problem/106161/J,Judging Papers,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105637K,https://codeforces.com/problemset/problem/105637/K,Iranian Hazfi Cup,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105637C,https://codeforces.com/problemset/problem/105637/C,Simplification,Tất cả,3,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105637J,https://codeforces.com/problemset/problem/105637/J,Magic with Cards,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105637E,https://codeforces.com/problemset/problem/105637/E,Parking Party,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105637F,https://codeforces.com/problemset/problem/105637/F,Ammunition Storage,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105637B,https://codeforces.com/problemset/problem/105637/B,Flower Festival,Tất cả,2,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105637A,https://codeforces.com/problemset/problem/105637/A,Final Price,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104118H,https://codeforces.com/problemset/problem/104118/H,HIIT,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104118F,https://codeforces.com/problemset/problem/104118/F,Factions vs The Hegemon,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104118G,https://codeforces.com/problemset/problem/104118/G,Gallivanting Merchant,Tất cả,5,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104118J,https://codeforces.com/problemset/problem/104118/J,Junior Steiner Three,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104118C,https://codeforces.com/problemset/problem/104118/C,Conform Conforme,Tất cả,3,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104118K,https://codeforces.com/problemset/problem/104118/K,Kapitan Amazing,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104118I,https://codeforces.com/problemset/problem/104118/I,Item Crafting,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-104118A,https://codeforces.com/problemset/problem/104118/A,An Easy Calculus Problem,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-1906E,https://codeforces.com/problemset/problem/1906/E,Merge Not Sort,Tất cả,5,Quy hoạch động,Codeforces,"Rating 1900 • constructive algorithms, dp"
+CF-1906F,https://codeforces.com/problemset/problem/1906/F,Maximize The Value,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2100 • data structures, sortings"
+CF-1906M,https://codeforces.com/problemset/problem/1906/M,Triangle Construction,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1700 • greedy, math"
+CF-1906A,https://codeforces.com/problemset/problem/1906/A,Easy As ABC,Tất cả,2,Vét cạn / Duyệt toàn bộ,Codeforces,Rating 1000 • brute force
+CF-2045H,https://codeforces.com/problemset/problem/2045/H,Missing Separators,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2200 • dp, sortings, string suffix structures"
+CF-2045M,https://codeforces.com/problemset/problem/2045/M,Mirror Maze,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1800 • brute force, dfs and similar, graphs"
+CF-2045B,https://codeforces.com/problemset/problem/2045/B,ICPC Square,Tất cả,5,Số học & Ước số,Codeforces,"Rating 2000 • math, number theory"
+CF-2045A,https://codeforces.com/problemset/problem/2045/A,Scrambled Scrabble,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1700 • brute force, greedy"
+CF-2045I,https://codeforces.com/problemset/problem/2045/I,Microwavable Subsequence,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,Rating 2100 • data structures
+CF-2045C,https://codeforces.com/problemset/problem/2045/C,Saraga,Tất cả,3,Xử lý chuỗi,Codeforces,"Rating 1400 • greedy, strings"
+CF-337E,https://codeforces.com/problemset/problem/337/E,Divisor Tree,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2200 • brute force, number theory, trees"
+CF-106084L,https://codeforces.com/problemset/problem/106084/L,Stapler,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106084C,https://codeforces.com/problemset/problem/106084/C,One-Way Abyss,Tất cả,3,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106084D,https://codeforces.com/problemset/problem/106084/D,Palindromic Distance,Tất cả,4,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106084B,https://codeforces.com/problemset/problem/106084/B,Twin Guardians,Tất cả,2,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-106084A,https://codeforces.com/problemset/problem/106084/A,Take It or Double It,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-105741C,https://codeforces.com/problemset/problem/105741/C,Porridge Chef,Tất cả,3,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-1215E,https://codeforces.com/problemset/problem/1215/E,Marbles,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2200 • bitmasks, dp"
+CF-375C,https://codeforces.com/problemset/problem/375/C,Circling Round Treasures,Tất cả,5,Đường đi ngắn nhất,Codeforces,"Rating 2600 • bitmasks, shortest paths"
+CF-63E,https://codeforces.com/problemset/problem/63/E,Sweets Game,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2000 • bitmasks, dfs and similar, dp"
+CF-840C,https://codeforces.com/problemset/problem/840/C,On the Bench,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2500 • combinatorics, dp"
+CF-1957F1,https://codeforces.com/problemset/problem/1957/F1,Frequency Mismatch (Easy Version),Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2600 • binary search, data structures, divide and conquer"
+CF-1856E1,https://codeforces.com/problemset/problem/1856/E1,PermuTree (easy version),Tất cả,4,Quy hoạch động,Codeforces,"Rating 1800 • dfs and similar, dp, trees"
+CF-1856E2,https://codeforces.com/problemset/problem/1856/E2,PermuTree (hard version),Tất cả,5,Quy hoạch động,Codeforces,"Rating 2700 • bitmasks, dfs and similar, dp"
+CF-2003D1,https://codeforces.com/problemset/problem/2003/D1,Turtle and a MEX Problem (Easy Version),Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1500 • greedy, math"
+CF-1292D,https://codeforces.com/problemset/problem/1292/D,Chaotic V.,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2700 • dp, graphs, greedy"
+CF-2001D,https://codeforces.com/problemset/problem/2001/D,Longest Max Min Subsequence,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 1900 • brute force, constructive algorithms, data structures"
+CF-2001E1,https://codeforces.com/problemset/problem/2001/E1,Deterministic Heap (Easy Version),Tất cả,5,Quy hoạch động,Codeforces,"Rating 2400 • combinatorics, dp, math"
+CF-2001C,https://codeforces.com/problemset/problem/2001/C,Guess The Tree,Tất cả,3,Cây & Cấu trúc Cây,Codeforces,"Rating 1500 • binary search, brute force, dfs and similar"
+CF-2001B,https://codeforces.com/problemset/problem/2001/B,Generate Permutation,Tất cả,1,Thuật toán Xây dựng,Codeforces,Rating 800 • constructive algorithms
+CF-2001A,https://codeforces.com/problemset/problem/2001/A,Make All Equal,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • greedy, implementation"
+CF-1748E,https://codeforces.com/problemset/problem/1748/E,Yet Another Array Counting Problem,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2300 • binary search, data structures, divide and conquer"
+CF-1120D,https://codeforces.com/problemset/problem/1120/D,Power Tree,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2500 • dfs and similar, dp, dsu"
+CF-2004F,https://codeforces.com/problemset/problem/2004/F,Make a Palindrome,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2600 • binary search, brute force, data structures"
+CF-2004C,https://codeforces.com/problemset/problem/2004/C,Splitting Items,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • games, greedy, sortings"
+CF-2004E,https://codeforces.com/problemset/problem/2004/E,Not a Nim Problem,Tất cả,5,Số học & Ước số,Codeforces,"Rating 2100 • brute force, games, math"
+CF-2004D,https://codeforces.com/problemset/problem/2004/D,Colored Portals,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1600 • binary search, brute force, data structures"
+CF-2004B,https://codeforces.com/problemset/problem/2004/B,Game with Doors,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1000 • brute force, greedy"
+CF-2004A,https://codeforces.com/problemset/problem/2004/A,Closest Point,Tất cả,1,Toán học,Codeforces,"Rating 800 • implementation, math"
+CF-2000F,https://codeforces.com/problemset/problem/2000/F,Color Rows and Columns,Tất cả,5,Quy hoạch động,Codeforces,"Rating 1900 • dp, greedy, implementation"
+CF-2000C,https://codeforces.com/problemset/problem/2000/C,Numeric String Template,Tất cả,2,Cấu trúc Dữ liệu,Codeforces,"Rating 1000 • data structures, strings"
+CF-1824B2,https://codeforces.com/problemset/problem/1824/B2,LuoTianyi and the Floating Islands (Hard Version),Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2300 • combinatorics, dfs and similar, math"
+CF-1998E1,https://codeforces.com/problemset/problem/1998/E1,Eliminating Balls With Merging (Easy Version),Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2200 • binary search, brute force, data structures"
+CF-1998C,https://codeforces.com/problemset/problem/1998/C,Perform Operations to Maximize Score,Tất cả,5,Tham lam (Greedy),Codeforces,"Rating 1900 • binary search, brute force, constructive algorithms"
+CF-1998D,https://codeforces.com/problemset/problem/1998/D,Determine Winning Islands in Race,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2100 • data structures, dp, graphs"
+CF-1998B,https://codeforces.com/problemset/problem/1998/B,Minimize Equal Sum Subarrays,Tất cả,2,Số học & Ước số,Codeforces,"Rating 1000 • constructive algorithms, math, number theory"
+CF-1998A,https://codeforces.com/problemset/problem/1998/A,Find K Distinct Points with Fixed Center,Tất cả,1,Toán học,Codeforces,"Rating 800 • constructive algorithms, implementation, math"
+CF-1062E,https://codeforces.com/problemset/problem/1062/E,Company,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2300 • binary search, data structures, dfs and similar"
+CF-1251C,https://codeforces.com/problemset/problem/1251/C,Minimize The Integer,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1600 • greedy, two pointers"
+CF-1833E,https://codeforces.com/problemset/problem/1833/E,Round Dance,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1600 • dfs and similar, dsu, graphs"
+CF-1827B1,https://codeforces.com/problemset/problem/1827/B1,Range Sorting (Easy Version),Tất cả,5,Quy hoạch động,Codeforces,"Rating 2000 • binary search, dp, dsu"
+CF-1832D1,https://codeforces.com/problemset/problem/1832/D1,Red-Blue Operations (Easy Version),Tất cả,5,Tham lam (Greedy),Codeforces,"Rating 2100 • binary search, greedy, implementation"
+CF-510C,https://codeforces.com/problemset/problem/510/C,Fox And Names,Tất cả,4,Thuật toán Đồ thị,Codeforces,"Rating 1600 • dfs and similar, graphs, sortings"
+CF-706D,https://codeforces.com/problemset/problem/706/D,Vasiliy's Multiset,Tất cả,4,Cây & Cấu trúc Cây,Codeforces,"Rating 1800 • binary search, bitmasks, data structures"
+CF-1316E,https://codeforces.com/problemset/problem/1316/E,Team Building,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2300 • bitmasks, dp, greedy"
+CF-1824B1,https://codeforces.com/problemset/problem/1824/B1,LuoTianyi and the Floating Islands (Easy Version),Tất cả,4,Cây & Cấu trúc Cây,Codeforces,"Rating 1800 • combinatorics, math, probabilities"
+CF-1832D2,https://codeforces.com/problemset/problem/1832/D2,Red-Blue Operations (Hard Version),Tất cả,5,Tham lam (Greedy),Codeforces,"Rating 2400 • binary search, constructive algorithms, greedy"
+CF-1827B2,https://codeforces.com/problemset/problem/1827/B2,Range Sorting (Hard Version),Tất cả,5,Quy hoạch động,Codeforces,"Rating 2400 • binary search, data structures, dp"
+CF-842D,https://codeforces.com/problemset/problem/842/D,Vitya and Strange Lesson,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2000 • binary search, data structures"
+CF-319C,https://codeforces.com/problemset/problem/319/C,Kalila and Dimna in the Logging Industry,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2100 • dp, geometry"
+CF-1833F,https://codeforces.com/problemset/problem/1833/F,Ira and Flamenco,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,"Rating 1700 • combinatorics, constructive algorithms, data structures"
+CF-271B,https://codeforces.com/problemset/problem/271/B,Prime Matrix,Tất cả,3,Số học & Ước số,Codeforces,"Rating 1300 • binary search, brute force, math"
+CF-1861C,https://codeforces.com/problemset/problem/1861/C,Queries for the Array,Tất cả,4,Cây & Cấu trúc Cây,Codeforces,"Rating 1600 • data structures, dfs and similar, implementation"
+CF-1872G,https://codeforces.com/problemset/problem/1872/G,Replace With Product,Tất cả,5,Tham lam (Greedy),Codeforces,"Rating 2000 • brute force, greedy, math"
+CF-1861E,https://codeforces.com/problemset/problem/1861/E,Non-Intersecting Subpermutations,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2300 • combinatorics, dp, implementation"
+CF-600E,https://codeforces.com/problemset/problem/600/E,Lomsat gelral,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2300 • data structures, dfs and similar, dsu"
+CF-95E,https://codeforces.com/problemset/problem/95/E,Lucky Country,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2500 • dp, dsu, graphs"
+CF-1884D,https://codeforces.com/problemset/problem/1884/D,Counting Rhyme,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2100 • dp, math, number theory"
+CF-570D,https://codeforces.com/problemset/problem/570/D,Tree Requests,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 2200 • binary search, bitmasks, constructive algorithms"
+CF-1895D,https://codeforces.com/problemset/problem/1895/D,XOR Construction,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 1900 • bitmasks, constructive algorithms, data structures"
+CF-438D,https://codeforces.com/problemset/problem/438/D,The Child and Sequence,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2300 • data structures, math"
+CF-1899G,https://codeforces.com/problemset/problem/1899/G,Unusual Entertainment,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 1900 • data structures, dfs and similar, dsu"
+CF-558E,https://codeforces.com/problemset/problem/558/E,A Simple Task,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2300 • data structures, sortings, strings"
+CF-13E,https://codeforces.com/problemset/problem/13/E,Holes,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2700 • data structures, dsu"
+CF-1896D,https://codeforces.com/problemset/problem/1896/D,Ones and Twos,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,"Rating 1700 • binary search, data structures, divide and conquer"
+CF-613D,https://codeforces.com/problemset/problem/613/D,Kingdom and its Cities,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2800 • dfs and similar, divide and conquer, dp"
+CF-354C,https://codeforces.com/problemset/problem/354/C,Vasya and Beautiful Arrays,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2100 • brute force, dp, number theory"
+CF-104454L,https://codeforces.com/problemset/problem/104454/L,Permutations and sums,Tất cả,1,Nhập xuất & Phép toán,Codeforces,Rating Chưa rank • Cơ bản
+CF-449D,https://codeforces.com/problemset/problem/449/D,Jzzhu and Numbers,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2400 • bitmasks, combinatorics, dp"
+CF-1000F,https://codeforces.com/problemset/problem/1000/F,One Occurrence,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2400 • data structures, divide and conquer"
+CF-1900E,https://codeforces.com/problemset/problem/1900/E,Transitive Graph,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2100 • dfs and similar, dp, dsu"
+CF-868F,https://codeforces.com/problemset/problem/868/F,Yet Another Minimization Problem,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2500 • divide and conquer, dp"
+CF-915F,https://codeforces.com/problemset/problem/915/F,Imbalance Value of a Tree,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 2400 • data structures, dsu, graphs"
+CF-1900C,https://codeforces.com/problemset/problem/1900/C,Anji's Binary Tree,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1300 • dfs and similar, dp, trees"
+CF-1709E,https://codeforces.com/problemset/problem/1709/E,XOR Tree,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2400 • bitmasks, data structures, dfs and similar"
+CF-1305F,https://codeforces.com/problemset/problem/1305/F,Kuroni and the Punishment,Tất cả,5,Số học & Ước số,Codeforces,"Rating 2500 • math, number theory, probabilities"
+CF-1916E,https://codeforces.com/problemset/problem/1916/E,Happy Life in University,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2300 • data structures, dfs and similar, greedy"
+CF-1923E,https://codeforces.com/problemset/problem/1923/E,Count Paths,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2000 • data structures, dfs and similar, dp"
+CF-1993D,https://codeforces.com/problemset/problem/1993/D,Med-imize,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2200 • binary search, dp, greedy"
+CF-1993C,https://codeforces.com/problemset/problem/1993/C,Light Switches,Tất cả,3,Toán học,Codeforces,"Rating 1400 • implementation, math"
+CF-1993B,https://codeforces.com/problemset/problem/1993/B,Parity and Sum,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • constructive algorithms, greedy"
+CF-1993A,https://codeforces.com/problemset/problem/1993/A,Question Marks,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • greedy, implementation"
+CF-1997D,https://codeforces.com/problemset/problem/1997/D,Maximize the Root,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1500 • binary search, dfs and similar, dp"
+CF-1997B,https://codeforces.com/problemset/problem/1997/B,Make Three Regions,Tất cả,2,Kỹ thuật Hai con trỏ,Codeforces,"Rating 1100 • constructive algorithms, two pointers"
+CF-1997C,https://codeforces.com/problemset/problem/1997/C,Even Positions,Tất cả,2,Cấu trúc Dữ liệu,Codeforces,"Rating 1100 • constructive algorithms, data structures, greedy"
+CF-1997A,https://codeforces.com/problemset/problem/1997/A,Strong Password,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • brute force, implementation, strings"
+CF-1991E,https://codeforces.com/problemset/problem/1991/E,Coloring Game,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 1900 • constructive algorithms, dfs and similar, games"
+CF-1991D,https://codeforces.com/problemset/problem/1991/D,Prime XOR Coloring,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 1900 • bitmasks, constructive algorithms, graphs"
+CF-1991C,https://codeforces.com/problemset/problem/1991/C,Absolute Zero,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1300 • constructive algorithms, greedy, math"
+CF-1991B,https://codeforces.com/problemset/problem/1991/B,AND Reconstruction,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • bitmasks, constructive algorithms, greedy"
+CF-1991A,https://codeforces.com/problemset/problem/1991/A,Maximize the Last Element,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • greedy, implementation"
+CF-1995C,https://codeforces.com/problemset/problem/1995/C,Squaring,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1800 • brute force, constructive algorithms, greedy"
+CF-1995B2,https://codeforces.com/problemset/problem/1995/B2,Bouquet (Hard Version),Tất cả,4,Cấu trúc Dữ liệu,Codeforces,"Rating 1700 • binary search, data structures, greedy"
+CF-1995B1,https://codeforces.com/problemset/problem/1995/B1,Bouquet (Easy Version),Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • binary search, brute force, greedy"
+CF-1995A,https://codeforces.com/problemset/problem/1995/A,Diagonals,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • brute force, greedy, implementation"
+CF-1990D,https://codeforces.com/problemset/problem/1990/D,Grid Puzzle,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1800 • bitmasks, brute force, dp"
+CF-1990C,https://codeforces.com/problemset/problem/1990/C,Mad MAD Sum,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1500 • brute force, greedy, math"
+CF-1990B,https://codeforces.com/problemset/problem/1990/B,Array Craft,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1200 • constructive algorithms, greedy"
+CF-1990A,https://codeforces.com/problemset/problem/1990/A,Submission Bait,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 900 • brute force, games, greedy"
+CF-1994D,https://codeforces.com/problemset/problem/1994/D,Funny Game,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 1900 • constructive algorithms, dsu, graphs"
+CF-1994C,https://codeforces.com/problemset/problem/1994/C,Hungry Games,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1600 • binary search, dp, two pointers"
+CF-1994B,https://codeforces.com/problemset/problem/1994/B,Fun Game,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • bitmasks, constructive algorithms, greedy"
+CF-1994A,https://codeforces.com/problemset/problem/1994/A,Diverse Game,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • constructive algorithms, greedy, implementation"
+CF-160D,https://codeforces.com/problemset/problem/160/D,Edges in MST,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 2300 • dfs and similar, dsu, graphs"
+CF-1986G2,https://codeforces.com/problemset/problem/1986/G2,Permutation Problem (Hard Version),Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2500 • brute force, data structures, hashing"
+CF-1986F,https://codeforces.com/problemset/problem/1986/F,Non-academic Problem,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 1900 • dfs and similar, graphs, trees"
+CF-1986E,https://codeforces.com/problemset/problem/1986/E,Beautiful Array,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1700 • greedy, math, number theory"
+CF-1986D,https://codeforces.com/problemset/problem/1986/D,Mathematical Problem,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1400 • brute force, dp, greedy"
+CF-1986C,https://codeforces.com/problemset/problem/1986/C,Update Queries,Tất cả,2,Cấu trúc Dữ liệu,Codeforces,"Rating 1100 • data structures, greedy, sortings"
+CF-1986B,https://codeforces.com/problemset/problem/1986/B,Matrix Stabilization,Tất cả,2,Cấu trúc Dữ liệu,Codeforces,"Rating 1000 • brute force, data structures, greedy"
+CF-1986A,https://codeforces.com/problemset/problem/1986/A,X Axis,Tất cả,1,Hình học tính toán,Codeforces,"Rating 800 • brute force, geometry, math"
+CF-1016D,https://codeforces.com/problemset/problem/1016/D,Vasya And The Matrix,Tất cả,4,Luồng cực đại & Lát cắt,Codeforces,"Rating 1800 • constructive algorithms, flows, math"
+CF-346B,https://codeforces.com/problemset/problem/346/B,Lucky Common Subsequence,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2000 • dp, strings"
+CF-432D,https://codeforces.com/problemset/problem/432/D,Prefixes and Suffixes,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2000 • dp, string suffix structures, strings"
+CF-126B,https://codeforces.com/problemset/problem/126/B,Password,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • binary search, dp, hashing"
+CF-471D,https://codeforces.com/problemset/problem/471/D,MUH and Cube Walls,Tất cả,4,Cấu trúc xâu nâng cao,Codeforces,"Rating 1800 • string suffix structures, strings"
+CF-808G,https://codeforces.com/problemset/problem/808/G,Anthem of Berland,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2300 • dp, strings"
+CF-979D,https://codeforces.com/problemset/problem/979/D,Kuro and GCD and XOR and SUM,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2200 • binary search, bitmasks, brute force"
+CF-1976D,https://codeforces.com/problemset/problem/1976/D,Invertible Bracket Sequences,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2000 • binary search, combinatorics, data structures"
+CF-1976B,https://codeforces.com/problemset/problem/1976/B,Increase/Decrease/Copy,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • greedy, implementation"
+CF-1976A,https://codeforces.com/problemset/problem/1976/A,Verify Password,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • implementation, sortings, strings"
+CF-1977C,https://codeforces.com/problemset/problem/1977/C,Nikita and LCM,Tất cả,5,Quy hoạch động,Codeforces,"Rating 1900 • brute force, data structures, dp"
+CF-1977B,https://codeforces.com/problemset/problem/1977/B,Binary Colouring,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • bitmasks, constructive algorithms, greedy"
+CF-1977A,https://codeforces.com/problemset/problem/1977/A,Little Nikita,Tất cả,1,Toán học,Codeforces,Rating 800 • math
+CF-1975D,https://codeforces.com/problemset/problem/1975/D,Paint the Tree,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • brute force, dfs and similar, dp"
+CF-1975C,https://codeforces.com/problemset/problem/1975/C,Chamo and Mocha's Array,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1200 • binary search, brute force, greedy"
+CF-1975B,https://codeforces.com/problemset/problem/1975/B,378QAQ and Mocha's Array,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1000 • brute force, greedy, math"
+CF-1975A,https://codeforces.com/problemset/problem/1975/A,Bazoka and Mocha's Array,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • brute force, greedy, implementation"
+CF-697D,https://codeforces.com/problemset/problem/697/D,Puzzles,Tất cả,4,Căn bản & Duyệt vết,Codeforces,Rating 1700 • Cơ bản
+CF-986E,https://codeforces.com/problemset/problem/986/E,Prince's Problem,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2800 • brute force, data structures, math"
+CF-1966D,https://codeforces.com/problemset/problem/1966/D,Missing Subsequence Sum,Tất cả,4,Tham lam (Greedy),Codeforces,"Rating 1800 • constructive algorithms, greedy, math"
+CF-1966C,https://codeforces.com/problemset/problem/1966/C,Everything Nim,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1400 • games, greedy"
+CF-1966B,https://codeforces.com/problemset/problem/1966/B,Rectangle Filling,Tất cả,2,Thuật toán Xây dựng,Codeforces,"Rating 1100 • constructive algorithms, implementation"
+CF-1966A,https://codeforces.com/problemset/problem/1966/A,Card Exchange,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • constructive algorithms, games, greedy"
+CF-1192B,https://codeforces.com/problemset/problem/1192/B,Dynamic Diameter,Tất cả,2,Cây & Cấu trúc Cây,Codeforces,"Rating Chưa rank • *special, data structures, dfs and similar"
+CF-916E,https://codeforces.com/problemset/problem/916/E,Jamie and Tree,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2400 • data structures, trees"
+CF-165E,https://codeforces.com/problemset/problem/165/E,Compatible Numbers,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2200 • bitmasks, brute force, dfs and similar"
+CF-451E,https://codeforces.com/problemset/problem/451/E,Devu and Flowers,Tất cả,5,Số học & Ước số,Codeforces,"Rating 2300 • bitmasks, combinatorics, number theory"
+CF-1913D,https://codeforces.com/problemset/problem/1913/D,Array Collapse,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2100 • data structures, divide and conquer, dp"
+CF-825E,https://codeforces.com/problemset/problem/825/E,Minimal Labels,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 2300 • data structures, dfs and similar, graphs"
+CF-1198D,https://codeforces.com/problemset/problem/1198/D,Rectangle Painting 1,Tất cả,5,Quy hoạch động,Codeforces,Rating 2300 • dp
+CF-1699D,https://codeforces.com/problemset/problem/1699/D,Almost Triple Deletions,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2300 • data structures, dp, greedy"
+CF-342E,https://codeforces.com/problemset/problem/342/E,Xenia and Tree,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2400 • data structures, divide and conquer, trees"
+CF-1902E,https://codeforces.com/problemset/problem/1902/E,Collapsing Strings,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 1900 • data structures, strings, trees"
+CF-1902D,https://codeforces.com/problemset/problem/1902/D,Robot Queries,Tất cả,5,Quy hoạch động,Codeforces,"Rating 1900 • binary search, data structures, dp"
+CF-1902C,https://codeforces.com/problemset/problem/1902/C,Insert and Equalize,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1300 • brute force, constructive algorithms, greedy"
+CF-1902B,https://codeforces.com/problemset/problem/1902/B,Getting Points,Tất cả,2,Tham lam (Greedy),Codeforces,"Rating 1100 • binary search, brute force, greedy"
+CF-1902A,https://codeforces.com/problemset/problem/1902/A,Binary Imbalance,Tất cả,1,Thuật toán Xây dựng,Codeforces,Rating 800 • constructive algorithms
+CF-1010211,https://codeforces.com/problemset/problem/101021/1,Guess the Number,Tất cả,1,Căn bản & Duyệt vết,Codeforces,Rating Chưa rank • Cơ bản
+CF-295B,https://codeforces.com/problemset/problem/295/B,Greg and Graph,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1700 • dp, graphs, shortest paths"
+CF-888G,https://codeforces.com/problemset/problem/888/G,Xor-MST,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2300 • bitmasks, constructive algorithms, data structures"
+CF-1894D,https://codeforces.com/problemset/problem/1894/D,Neutral Tonality,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,"Rating 1700 • constructive algorithms, data structures, sortings"
+CF-1894C,https://codeforces.com/problemset/problem/1894/C,Anonymous Informant,Tất cả,3,Thuật toán Đồ thị,Codeforces,"Rating 1400 • constructive algorithms, graphs, implementation"
+CF-1894B,https://codeforces.com/problemset/problem/1894/B,Two Out of Three,Tất cả,2,Thuật toán Xây dựng,Codeforces,Rating 1000 • constructive algorithms
+CF-1894A,https://codeforces.com/problemset/problem/1894/A,Secret Sport,Tất cả,1,Xử lý chuỗi,Codeforces,"Rating 800 • implementation, strings"
+CF-1895C,https://codeforces.com/problemset/problem/1895/C,Torn Lucky Ticket,Tất cả,3,Quy hoạch động,Codeforces,"Rating 1400 • brute force, dp, hashing"
+CF-1895B,https://codeforces.com/problemset/problem/1895/B,Points and Minimum Distance,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • greedy, math, sortings"
+CF-1895A,https://codeforces.com/problemset/problem/1895/A,Treasure Chest,Tất cả,1,Toán học,Codeforces,Rating 800 • math
+CF-1891D,https://codeforces.com/problemset/problem/1891/D,Suspicious logarithms,Tất cả,5,Chặt nhị phân,Codeforces,"Rating 1900 • binary search, brute force, math"
+CF-1891B,https://codeforces.com/problemset/problem/1891/B,Deja Vu,Tất cả,2,Toán học,Codeforces,"Rating 1100 • brute force, math, sortings"
+CF-1891A,https://codeforces.com/problemset/problem/1891/A,Sorting with Twos,Tất cả,1,Sắp xếp,Codeforces,"Rating 800 • constructive algorithms, sortings"
+CF-1891C,https://codeforces.com/problemset/problem/1891/C,Smilo and Monsters,Tất cả,3,Tham lam (Greedy),Codeforces,"Rating 1500 • binary search, constructive algorithms, greedy"
+CF-1886C,https://codeforces.com/problemset/problem/1886/C,Decreasing String,Tất cả,4,Xử lý chuỗi,Codeforces,"Rating 1600 • implementation, strings"
+CF-1886B,https://codeforces.com/problemset/problem/1886/B,Fear of the Dark,Tất cả,2,Chặt nhị phân,Codeforces,"Rating 1200 • binary search, geometry, math"
+CF-1886A,https://codeforces.com/problemset/problem/1886/A,Sum of Three,Tất cả,1,Toán học,Codeforces,"Rating 800 • brute force, constructive algorithms, math"
+CF-1858E1,https://codeforces.com/problemset/problem/1858/E1,Rollbacks (Easy Version),Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2500 • brute force, data structures, dfs and similar"
+CF-1859D,https://codeforces.com/problemset/problem/1859/D,Andrey and Escape from Capygrad,Tất cả,4,Quy hoạch động,Codeforces,"Rating 1800 • binary search, data structures, dp"
+CF-1859E,https://codeforces.com/problemset/problem/1859/E,Maximum Monogonosity,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2500 • brute force, dp, math"
+CF-1857G,https://codeforces.com/problemset/problem/1857/G,Counting Graphs,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 2000 • combinatorics, divide and conquer, dsu"
+CF-1857E,https://codeforces.com/problemset/problem/1857/E,Power of Points,Tất cả,3,Toán học,Codeforces,"Rating 1500 • math, sortings"
+CF-1051F,https://codeforces.com/problemset/problem/1051/F,The Shortest Statement,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 2400 • graphs, shortest paths, trees"
+CF-375D,https://codeforces.com/problemset/problem/375/D,Tree and Queries,Tất cả,5,Cây & Cấu trúc Cây,Codeforces,"Rating 2400 • data structures, dfs and similar, trees"
+CF-86D,https://codeforces.com/problemset/problem/86/D,Powerful array,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,"Rating 2200 • data structures, implementation, math"
+CF-617E,https://codeforces.com/problemset/problem/617/E,XOR and Favorite Number,Tất cả,5,Cấu trúc Dữ liệu,Codeforces,Rating 2200 • data structures
+CF-221D,https://codeforces.com/problemset/problem/221/D,Little Elephant and Array,Tất cả,4,Cấu trúc Dữ liệu,Codeforces,Rating 1800 • data structures
+CF-786B,https://codeforces.com/problemset/problem/786/B,Legacy,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 2300 • data structures, graphs, shortest paths"
+CF-1828B,https://codeforces.com/problemset/problem/1828/B,Permutation Swap,Tất cả,1,Số học & Ước số,Codeforces,"Rating 900 • math, number theory"
+CF-1822D,https://codeforces.com/problemset/problem/1822/D,Super-Permutation,Tất cả,2,Toán học,Codeforces,"Rating 1200 • constructive algorithms, math"
+CF-1822B,https://codeforces.com/problemset/problem/1822/B,Karina and Array,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • greedy, math, sortings"
+CF-1822C,https://codeforces.com/problemset/problem/1822/C,Bun Lover,Tất cả,1,Toán học,Codeforces,Rating 800 • math
+CF-1822A,https://codeforces.com/problemset/problem/1822/A,TubeTube Feed,Tất cả,1,Vét cạn / Duyệt toàn bộ,Codeforces,"Rating 800 • brute force, implementation"
+CF-623B,https://codeforces.com/problemset/problem/623/B,Array GCD,Tất cả,5,Quy hoạch động,Codeforces,"Rating 2300 • dp, greedy, number theory"
+CF-920E,https://codeforces.com/problemset/problem/920/E,Connected Components?,Tất cả,5,Thuật toán Đồ thị,Codeforces,"Rating 2100 • data structures, dfs and similar, dsu"
+CF-475B,https://codeforces.com/problemset/problem/475/B,Strongly Connected City,Tất cả,3,Thuật toán Đồ thị,Codeforces,"Rating 1400 • brute force, dfs and similar, graphs"
+CF-1768B,https://codeforces.com/problemset/problem/1768/B,Quick Sort,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 900 • greedy, math"
+CF-1768A,https://codeforces.com/problemset/problem/1768/A,Greatest Convex,Tất cả,1,Tham lam (Greedy),Codeforces,"Rating 800 • greedy, math, number theory"
+CF-1771A,https://codeforces.com/problemset/problem/1771/A,Hossam and Combinatorics,Tất cả,1,Toán tổ hợp,Codeforces,"Rating 900 • combinatorics, math, sortings"
+CF-1311D,https://codeforces.com/problemset/problem/1311/D,Three Integers,Tất cả,5,Toán học,Codeforces,"Rating 2000 • brute force, math"
+CF-1238D,https://codeforces.com/problemset/problem/1238/D,AB-string,Tất cả,5,Quy hoạch động,Codeforces,"Rating 1900 • binary search, combinatorics, dp"
+CF-1096D,https://codeforces.com/problemset/problem/1096/D,Easy Problem,Tất cả,4,Quy hoạch động,Codeforces,Rating 1800 • dp

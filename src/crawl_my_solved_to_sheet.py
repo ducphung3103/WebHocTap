@@ -407,13 +407,25 @@ def append_problems_to_google_sheet(
             print("\n⚠️ Chế độ xem trước (--dry-run): Không ghi vào Google Sheet.")
             return len(new_rows)
 
-        print("\n⏳ Đang ghi vào Google Sheet...")
-        ws.append_rows(new_rows, value_input_option="USER_ENTERED")
-        print(f"🎉 THÀNH CÔNG! Đã tự động thêm {len(new_rows)} bài tập vào tab 'Bài Tập' trên Google Sheet!")
+        print(f"\n⏳ Đang ghi {len(new_rows)} bài tập vào Google Sheet theo từng đợt (100 bài/lần)...")
+        batch_size = 100
+        for i in range(0, len(new_rows), batch_size):
+            chunk = new_rows[i:i + batch_size]
+            ws.append_rows(chunk, value_input_option="USER_ENTERED")
+            print(f"   ✅ Đã nạp thành công {min(i + batch_size, len(new_rows))}/{len(new_rows)} bài vào Sheet...")
+        print(f"🎉 THÀNH CÔNG! Đã tự động ghi nhận {len(new_rows)} bài tập vào tab 'Bài Tập' trên Google Sheet!")
         return len(new_rows)
 
     except Exception as exc:
-        print(f"❌ Lỗi khi ghi vào Google Sheet: {exc}")
+        print(f"\n❌ Lỗi khi ghi vào Google Sheet: {exc}")
+        if "403" in str(exc) or "permission" in str(exc).lower():
+            print("\n💡 HƯỚNG DẪN KHẮC PHỤC QUYỀN GHI TRÊN GOOGLE SHEET:")
+            print("   Tài khoản dịch vụ (Service Account) hiện tại chỉ được cấp quyền 'Người xem' (Viewer).")
+            print("   👉 Thầy chỉ cần mở Google Sheet 'Quản lý học sinh' trên trình duyệt.")
+            print("   👉 Bấm nút 'Chia sẻ' (Share) ở góc trên bên phải.")
+            print("   👉 Đổi quyền của email sau từ 'Người xem' thành 'Người chỉnh sửa' (Editor):")
+            print("      sheet-sync@webhoctap-510409.iam.gserviceaccount.com")
+            print("   👉 Bấm 'Lưu' (Save) rồi chạy lại lệnh, toàn bộ bài tập sẽ được tự động ghi vào Sheet!")
         return 0
 
 
@@ -422,12 +434,16 @@ def append_problems_to_google_sheet(
 # ==============================================================================
 
 def main():
+    default_cf = os.getenv("TEACHER_CF_HANDLE", "DeruckLoveNewTechnology").strip()
+    default_clue = os.getenv("TEACHER_CLUE_HANDLE", "phungduc3103").strip()
+    default_marisa = os.getenv("TEACHER_MARISA_HANDLE", "ducdacoder3103").strip()
+
     parser = argparse.ArgumentParser(
         description="Crawl bài tập đã giải và phân loại vào Google Sheet hoàn toàn MIỄN PHÍ KHÔNG TỐN TOKEN AI."
     )
-    parser.add_argument("--cf", type=str, default="", help="Handle trên Codeforces của bạn (vd: tourist, Radewoosh)")
-    parser.add_argument("--marisa", type=str, default="", help="Handle trên MarisaOJ của bạn")
-    parser.add_argument("--clue", type=str, default="", help="Handle trên ClueOJ của bạn")
+    parser.add_argument("--cf", type=str, default=default_cf, help=f"Handle Codeforces của bạn [Mặc định: {default_cf}]")
+    parser.add_argument("--marisa", type=str, default="", help=f"Handle MarisaOJ của bạn (vd: {default_marisa})")
+    parser.add_argument("--clue", type=str, default="", help=f"Handle ClueOJ của bạn (vd: {default_clue})")
     parser.add_argument("--class", dest="target_class", type=str, default="Tất cả", help="Lớp áp dụng (vd: 'Tất cả', 'C++ nâng cao', 'Python cơ bản')")
     parser.add_argument("--sheet-id", type=str, default="", help="Mã Google Sheet ID (nếu khác trong .env)")
     parser.add_argument("--dry-run", action="store_true", help="Chỉ xem trước kết quả phân loại, không ghi vào Sheet")
