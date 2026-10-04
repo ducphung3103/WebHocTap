@@ -4642,7 +4642,16 @@ print("Hello World")`;
       saveCurrentJudgeCodeToLocal();
 
       const customInputEl = document.getElementById('judge-custom-input');
-      const customInput = customInputEl ? customInputEl.value : '';
+      let customInput = customInputEl ? customInputEl.value : '';
+
+      // Tự động nạp input ví dụ nếu ô Input để trống mà code cần input
+      const prob = getGraderProblems().find(p => p.id === currentJudgeProbId);
+      if (!customInput.trim() && prob && prob.testcases && prob.testcases.length > 0) {
+        if (code.includes('input(') || code.includes('cin')) {
+          customInput = prob.testcases[0].input || '';
+          if (customInputEl) customInputEl.value = customInput;
+        }
+      }
 
       isJudging = true;
       const btnCustom = document.getElementById('btn-judge-run-custom');
@@ -4687,7 +4696,13 @@ print("Hello World")`;
           if (res.stderr && res.stderr.trim()) {
             if (resStderrBox && resStderr) {
               resStderrBox.classList.remove('hidden');
-              resStderr.textContent = res.stderr;
+              let errMsg = res.stderr;
+              if (errMsg.includes('EOFError')) {
+                errMsg += '\n\n💡 MẸO GỠ LỖI: Lỗi EOFError xảy ra khi gọi int(input()) mà hết dữ liệu đầu vào. Hãy bấm nút "Nhập Input" để nhập dữ liệu cần thiết nhé!';
+              } else if (errMsg.includes('ValueError: invalid literal for int()')) {
+                errMsg += '\n\n💡 MẸO GỠ LỖI: Lỗi ValueError khi int(input()) thường do dữ liệu vào có nhiều số trên 1 dòng (ví dụ "2 3"). Trong Python, hãy dùng: a, b = map(int, input().split())';
+              }
+              resStderr.textContent = errMsg;
             }
           } else {
             if (resStderrBox) resStderrBox.classList.add('hidden');
@@ -5199,6 +5214,19 @@ print("Hello World")`;
       box.classList.remove('hidden');
 
       const isAC = (verdict === 'AC');
+      let displayOutput = actual || '';
+      if (!displayOutput && stderr) {
+        let errHint = stderr;
+        if (stderr.includes('EOFError')) {
+          errHint += '\n\n💡 MẸO GỠ LỖI: Lỗi EOFError xảy ra do gọi int(input()) quá số dòng dữ liệu đề bài cung cấp.';
+        } else if (stderr.includes('ValueError: invalid literal for int()')) {
+          errHint += '\n\n💡 MẸO GỠ LỖI: Lỗi ValueError khi int(input()) thường do dữ liệu vào có nhiều số trên 1 dòng (ví dụ: "2 3"). Trong Python, hãy dùng: a, b = map(int, input().split())';
+        }
+        displayOutput = `[LỖI CHƯƠNG TRÌNH - STDERR]\n${errHint}`;
+      } else if (!displayOutput) {
+        displayOutput = '(Không có đầu ra)';
+      }
+
       box.innerHTML = `
         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
           <span class="font-bold text-slate-200">Chi tiết Test #${testNum} (${verdict})</span>
@@ -5215,7 +5243,7 @@ print("Hello World")`;
           </div>
           <div class="md:col-span-2">
             <div class="text-[11px] font-bold mb-1 ${isAC ? 'text-emerald-400' : 'text-rose-400'}">Kết quả chạy của bạn (Your Output):</div>
-            <pre class="bg-slate-900 border ${isAC ? 'border-emerald-500/30' : 'border-rose-500/30'} p-2 rounded-lg ${isAC ? 'text-emerald-200' : 'text-rose-200'} max-h-40 overflow-y-auto whitespace-pre-wrap">${escapeHtml(actual || (stderr ? `[STDERR]\n${stderr}` : '(Không có đầu ra)'))}</pre>
+            <pre class="bg-slate-900 border ${isAC ? 'border-emerald-500/30' : 'border-rose-500/30'} p-2 rounded-lg ${isAC ? 'text-emerald-200' : 'text-rose-200'} max-h-40 overflow-y-auto whitespace-pre-wrap">${escapeHtml(displayOutput)}</pre>
           </div>
         </div>
       `;
