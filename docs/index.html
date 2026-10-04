@@ -815,39 +815,62 @@
               ></textarea>
             </div>
 
-            <!-- Optional Custom Input Box (Collapsible) -->
-            <div id="judge-custom-input-box" class="hidden px-4 py-2.5 bg-slate-950/95 border-t border-slate-800 space-y-1.5">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-bold flex items-center gap-1.5 text-indigo-300">
-                  <span>⌨️</span> Dữ liệu đầu vào tự do (Custom Input):
-                </span>
-                <span class="text-[11px] text-slate-500 italic">Để trống nếu code không cần input (ví dụ: print("abc"))</span>
+            <!-- Input & Output Section (Always Visible) -->
+            <div class="border-t border-slate-800 bg-slate-950/90 p-4 space-y-3">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <!-- Input Box -->
+                <div class="space-y-1.5 flex flex-col">
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-400">
+                    <span class="flex items-center gap-1.5 text-indigo-300">
+                      <span>⌨️</span> Dữ liệu vào (Input):
+                    </span>
+                    <button type="button" onclick="resetInputToSample()" class="text-[11px] text-slate-500 hover:text-indigo-400 font-normal cursor-pointer transition" title="Đặt lại về dữ liệu ví dụ của bài toán">Lấy input ví dụ</button>
+                  </div>
+                  <textarea 
+                    id="judge-custom-input" 
+                    rows="3" 
+                    placeholder="Nhập dữ liệu đầu vào (hoặc để trống nếu code không cần input, ví dụ: print('abc'))..."
+                    class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 font-mono text-xs text-slate-200 focus:outline-none focus:border-indigo-500 resize-y"
+                  ></textarea>
+                </div>
+
+                <!-- Output Box -->
+                <div class="space-y-1.5 flex flex-col">
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-400">
+                    <span class="flex items-center gap-1.5 text-emerald-400">
+                      <span>🖥️</span> Kết quả xuất (Output):
+                    </span>
+                    <span id="judge-custom-run-meta" class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">
+                      Chưa chạy
+                    </span>
+                  </div>
+                  <div class="relative flex-1 min-h-[76px]">
+                    <pre id="judge-custom-run-stdout" class="w-full h-full min-h-[76px] bg-slate-900 border border-slate-700 rounded-xl p-2.5 font-mono text-xs text-slate-400 whitespace-pre-wrap overflow-y-auto max-h-36 selection:bg-emerald-600/30">Bấm "▶️ Chạy Thử" để xem kết quả xuất ra màn hình tại đây.</pre>
+                  </div>
+                </div>
               </div>
-              <textarea 
-                id="judge-custom-input" 
-                rows="2" 
-                placeholder="Nhập dữ liệu test tự do tại đây (nếu có)..."
-                class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 font-mono text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
-              ></textarea>
+
+              <!-- STDERR Warning/Error Box (Hidden by default, shown if error occurs) -->
+              <div id="judge-custom-run-stderr-box" class="space-y-1 hidden">
+                <div class="text-[11px] text-rose-400 font-semibold flex items-center justify-between">
+                  <span>Thông báo lỗi / cảnh báo (STDERR):</span>
+                  <button type="button" onclick="document.getElementById('judge-custom-run-stderr-box').classList.add('hidden')" class="text-slate-500 hover:text-slate-300 text-[10px] cursor-pointer">✕ Đóng</button>
+                </div>
+                <pre id="judge-custom-run-stderr" class="bg-rose-950/40 border border-rose-500/30 p-2.5 rounded-xl text-rose-200 whitespace-pre-wrap max-h-32 overflow-y-auto font-mono text-xs"></pre>
+              </div>
             </div>
 
-            <!-- Actions Bar -->
-            <div class="bg-slate-950/80 px-4 py-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
+            <!-- Actions Bar: Only 2 Buttons (Chạy Thử & Chấm Điểm) -->
+            <div class="bg-slate-950 px-4 py-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
               <div class="text-xs text-slate-500 flex items-center gap-2">
                 <span id="judge-editor-status">Sẵn sàng chạy</span>
               </div>
 
-              <div class="flex items-center flex-wrap gap-2">
-                <button type="button" onclick="toggleCustomInputBox()" id="btn-toggle-custom-input" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Bật/Tắt nhập dữ liệu thử nghiệm">
-                  <span>⌨️</span> Nhập Input
+              <div class="flex items-center gap-3">
+                <button type="button" onclick="runJudgeCode()" id="btn-judge-run" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
+                  <span>▶️</span> Chạy Thử
                 </button>
-                <button type="button" onclick="runJudgeCustomCode()" id="btn-judge-run-custom" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer active:scale-95" title="Chạy thử code tự do (ví dụ print('abc'))">
-                  <span>⚡</span> Chạy Tự Do
-                </button>
-                <button type="button" onclick="runJudgeSampleOnly()" id="btn-judge-run-sample" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer shadow">
-                  <span>▶️</span> Thử Ví Dụ
-                </button>
-                <button type="button" onclick="submitJudgeAllTests()" id="btn-judge-submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
+                <button type="button" onclick="submitJudgeAllTests()" id="btn-judge-submit" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
                   <span>🚀</span> Chấm Điểm
                 </button>
               </div>
@@ -858,29 +881,6 @@
           <!-- Live Grading Result Console -->
           <div id="judge-console-card" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
             
-            <!-- Custom Run Output Box (Live Free Execution) -->
-            <div id="judge-custom-run-container" class="hidden bg-slate-950 border border-indigo-500/40 rounded-xl p-4 space-y-2.5 font-mono text-xs">
-              <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="font-bold text-indigo-300 flex items-center gap-1.5 text-sm">
-                  <span>⚡</span> Kết Quả Chạy Thử Tự Do:
-                </span>
-                <div class="flex items-center gap-2">
-                  <span id="judge-custom-run-meta" class="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
-                    0.0s | OK
-                  </span>
-                  <button type="button" onclick="document.getElementById('judge-custom-run-container').classList.add('hidden')" class="text-slate-500 hover:text-white text-xs cursor-pointer ml-1">✕ Đóng</button>
-                </div>
-              </div>
-              <div class="space-y-1">
-                <div class="text-[11px] text-slate-400 font-semibold">Đầu ra màn hình (Output / STDOUT):</div>
-                <pre id="judge-custom-run-stdout" class="bg-slate-900 border border-slate-800 p-3 rounded-lg text-emerald-300 whitespace-pre-wrap max-h-56 overflow-y-auto font-mono text-xs sm:text-sm"></pre>
-              </div>
-              <div id="judge-custom-run-stderr-box" class="space-y-1 hidden">
-                <div class="text-[11px] text-rose-400 font-semibold">Thông báo lỗi / cảnh báo (STDERR):</div>
-                <pre id="judge-custom-run-stderr" class="bg-rose-950/40 border border-rose-500/30 p-2.5 rounded-lg text-rose-200 whitespace-pre-wrap max-h-48 overflow-y-auto font-mono text-xs"></pre>
-              </div>
-            </div>
-
             <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-3">
               <h4 class="text-sm font-bold text-white flex items-center gap-2">
                 <span>📊</span> Kết Quả Chấm Bài
@@ -4346,7 +4346,42 @@
         }
       }
 
+      // Reset / Pre-fill Input & Output boxes for current problem
+      const customInputEl = document.getElementById('judge-custom-input');
+      if (customInputEl) {
+        if (prob && prob.testcases && prob.testcases.length > 0) {
+          customInputEl.value = prob.testcases[0].input || '';
+        } else {
+          customInputEl.value = '';
+        }
+      }
+      const resStdout = document.getElementById('judge-custom-run-stdout');
+      if (resStdout) {
+        resStdout.className = "w-full h-full min-h-[76px] bg-slate-900 border border-slate-700 rounded-xl p-2.5 font-mono text-xs text-slate-400 whitespace-pre-wrap overflow-y-auto max-h-36";
+        resStdout.textContent = 'Bấm "▶️ Chạy Thử" để xem kết quả xuất ra màn hình tại đây.';
+      }
+      const resMeta = document.getElementById('judge-custom-run-meta');
+      if (resMeta) {
+        resMeta.className = "text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-400";
+        resMeta.textContent = "Chưa chạy";
+      }
+      const resStderrBox = document.getElementById('judge-custom-run-stderr-box');
+      if (resStderrBox) resStderrBox.classList.add('hidden');
+
       renderJudgeSubmissionHistory();
+    }
+
+    function resetInputToSample() {
+      const prob = getGraderProblems().find(p => p.id === currentJudgeProbId);
+      const customInputEl = document.getElementById('judge-custom-input');
+      if (customInputEl) {
+        if (prob && prob.testcases && prob.testcases.length > 0) {
+          customInputEl.value = prob.testcases[0].input || '';
+          showLiveToast("Đã tải lại dữ liệu ví dụ của bài!");
+        } else {
+          customInputEl.value = '';
+        }
+      }
     }
 
     function selectJudgeProblem(probId) {
@@ -4615,22 +4650,7 @@ print("Hello World")`;
       }
     }
 
-    function toggleCustomInputBox() {
-      const box = document.getElementById('judge-custom-input-box');
-      const btn = document.getElementById('btn-toggle-custom-input');
-      if (!box) return;
-      if (box.classList.contains('hidden')) {
-        box.classList.remove('hidden');
-        if (btn) btn.className = "px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-600/30 text-indigo-300 border border-indigo-500/50 transition flex items-center gap-1 cursor-pointer";
-        const ta = document.getElementById('judge-custom-input');
-        if (ta) ta.focus();
-      } else {
-        box.classList.add('hidden');
-        if (btn) btn.className = "px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer";
-      }
-    }
-
-    async function runJudgeCustomCode() {
+    async function runJudgeCode() {
       if (isJudging) return;
       const codeEditor = document.getElementById('judge-code-editor');
       const code = codeEditor ? codeEditor.value : '';
@@ -4644,38 +4664,34 @@ print("Hello World")`;
       const customInputEl = document.getElementById('judge-custom-input');
       let customInput = customInputEl ? customInputEl.value : '';
 
-      // Tự động nạp input ví dụ nếu ô Input để trống mà code cần input
-      const prob = getGraderProblems().find(p => p.id === currentJudgeProbId);
-      if (!customInput.trim() && prob && prob.testcases && prob.testcases.length > 0) {
-        if (code.includes('input(') || code.includes('cin')) {
-          customInput = prob.testcases[0].input || '';
-          if (customInputEl) customInputEl.value = customInput;
-        }
-      }
-
       isJudging = true;
-      const btnCustom = document.getElementById('btn-judge-run-custom');
-      if (btnCustom) {
-        btnCustom.disabled = true;
-        btnCustom.innerHTML = '<span>⏳</span> Đang chạy...';
+      const btnRun = document.getElementById('btn-judge-run');
+      const btnSubmit = document.getElementById('btn-judge-submit');
+      if (btnRun) {
+        btnRun.disabled = true;
+        btnRun.innerHTML = '<span>⏳</span> Đang chạy...';
       }
+      if (btnSubmit) btnSubmit.disabled = true;
 
-      const resBox = document.getElementById('judge-custom-run-container');
       const resStdout = document.getElementById('judge-custom-run-stdout');
       const resStderr = document.getElementById('judge-custom-run-stderr');
       const resStderrBox = document.getElementById('judge-custom-run-stderr-box');
       const resMeta = document.getElementById('judge-custom-run-meta');
 
-      if (resBox) resBox.classList.remove('hidden');
-      if (resStdout) resStdout.textContent = 'Đang thực thi mã nguồn...';
+      if (resStdout) {
+        resStdout.className = "w-full h-full min-h-[76px] bg-slate-900 border border-slate-700 rounded-xl p-2.5 font-mono text-xs text-slate-400 whitespace-pre-wrap overflow-y-auto max-h-36";
+        resStdout.textContent = 'Đang thực thi mã nguồn...';
+      }
       if (resStderrBox) resStderrBox.classList.add('hidden');
 
       try {
-        const res = await executeCode(currentJudgeLang, code, customInput, 2.0);
+        const prob = getGraderProblems().find(p => p.id === currentJudgeProbId);
+        const timeLimit = (prob && prob.time_limit) ? prob.time_limit : 1.0;
+        const res = await executeCode(currentJudgeLang, code, customInput, timeLimit);
 
         if (resMeta) {
           const isOK = (res.status === 'OK');
-          resMeta.className = `text-[11px] font-mono font-bold px-2 py-0.5 rounded ${
+          resMeta.className = `text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
             isOK 
               ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' 
               : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
@@ -4684,13 +4700,18 @@ print("Hello World")`;
         }
 
         if (res.status === 'CE') {
-          if (resStdout) resStdout.textContent = '(Không có đầu ra do lỗi biên dịch)';
+          if (resStdout) {
+            resStdout.className = "w-full h-full min-h-[76px] bg-slate-900 border border-amber-500/40 rounded-xl p-2.5 font-mono text-xs text-amber-300 whitespace-pre-wrap overflow-y-auto max-h-36";
+            resStdout.textContent = '(Không có đầu ra do lỗi biên dịch)';
+          }
           if (resStderrBox && resStderr) {
             resStderrBox.classList.remove('hidden');
             resStderr.textContent = res.compile_error || 'Compilation Error';
           }
         } else {
           if (resStdout) {
+            const isSuccess = (res.status === 'OK');
+            resStdout.className = `w-full h-full min-h-[76px] bg-slate-900 border ${isSuccess ? 'border-emerald-500/40 text-emerald-300' : 'border-rose-500/40 text-rose-300'} rounded-xl p-2.5 font-mono text-xs whitespace-pre-wrap overflow-y-auto max-h-36`;
             resStdout.textContent = res.stdout ? res.stdout : '(Chương trình chạy xong nhưng không in gì ra màn hình)';
           }
           if (res.stderr && res.stderr.trim()) {
@@ -4698,7 +4719,7 @@ print("Hello World")`;
               resStderrBox.classList.remove('hidden');
               let errMsg = res.stderr;
               if (errMsg.includes('EOFError')) {
-                errMsg += '\n\n💡 MẸO GỠ LỖI: Lỗi EOFError xảy ra khi gọi int(input()) mà hết dữ liệu đầu vào. Hãy bấm nút "Nhập Input" để nhập dữ liệu cần thiết nhé!';
+                errMsg += '\n\n💡 MẸO GỠ LỖI: Lỗi EOFError xảy ra khi gọi int(input()) mà hết dữ liệu đầu vào. Bạn hãy nhập thêm dữ liệu vào ô "Dữ liệu vào (Input)" ở bên trái nhé!';
               } else if (errMsg.includes('ValueError: invalid literal for int()')) {
                 errMsg += '\n\n💡 MẸO GỠ LỖI: Lỗi ValueError khi int(input()) thường do dữ liệu vào có nhiều số trên 1 dòng (ví dụ "2 3"). Trong Python, hãy dùng: a, b = map(int, input().split())';
               }
@@ -4709,19 +4730,21 @@ print("Hello World")`;
           }
         }
       } catch (err) {
-        if (resStdout) resStdout.textContent = 'Lỗi thực thi: ' + err.message;
+        if (resStdout) {
+          resStdout.className = "w-full h-full min-h-[76px] bg-slate-900 border border-rose-500/40 rounded-xl p-2.5 font-mono text-xs text-rose-300 whitespace-pre-wrap overflow-y-auto max-h-36";
+          resStdout.textContent = 'Lỗi thực thi: ' + err.message;
+        }
       } finally {
         isJudging = false;
-        if (btnCustom) {
-          btnCustom.disabled = false;
-          btnCustom.innerHTML = '<span>⚡</span> Chạy Tự Do';
+        if (btnRun) {
+          btnRun.disabled = false;
+          btnRun.innerHTML = '<span>▶️</span> Chạy Thử';
         }
-      }
-
-      if (resBox) {
-        resBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (btnSubmit) btnSubmit.disabled = false;
       }
     }
+    const runJudgeCustomCode = runJudgeCode;
+    const runJudgeSampleOnly = runJudgeCode;
 
     function insertJudgeStarterTemplate() {
       const codeEditor = document.getElementById('judge-code-editor');
@@ -4868,138 +4891,6 @@ print("Hello World")`;
       }
     }
 
-    // RUN SAMPLE TESTS ONLY
-    async function runJudgeSampleOnly() {
-      if (isJudging) return;
-      const prob = getGraderProblems().find(p => p.id === currentJudgeProbId);
-      if (!prob) return;
-
-      const codeEditor = document.getElementById('judge-code-editor');
-      const code = codeEditor ? codeEditor.value : '';
-      if (!code.trim()) {
-        alert("Vui lòng viết code trước khi chạy thử!");
-        return;
-      }
-
-      saveCurrentJudgeCodeToLocal();
-      const tests = prob.testcases || [];
-      const samples = tests.filter(t => t.sample);
-      const testList = (samples.length > 0) ? samples : tests.slice(0, 2);
-
-      if (testList.length === 0) {
-        alert("Bài tập này chưa có bộ test ví dụ!");
-        return;
-      }
-
-      isJudging = true;
-      const btnSample = document.getElementById('btn-judge-run-sample');
-      const btnSubmit = document.getElementById('btn-judge-submit');
-      if (btnSample) {
-        btnSample.disabled = true;
-        btnSample.innerHTML = '<span>⏳</span> Đang chạy...';
-      }
-      if (btnSubmit) btnSubmit.disabled = true;
-
-      const progressContainer = document.getElementById('judge-progress-container');
-      const progressBar = document.getElementById('judge-progress-bar');
-      const progressText = document.getElementById('judge-progress-text');
-      const progressPct = document.getElementById('judge-progress-pct');
-      const banner = document.getElementById('judge-verdict-banner');
-      const ceBox = document.getElementById('judge-ce-container');
-      const ceText = document.getElementById('judge-ce-text');
-      const matrix = document.getElementById('judge-test-matrix');
-      const detailBox = document.getElementById('judge-test-detail-box');
-
-      if (progressContainer) progressContainer.classList.remove('hidden');
-      if (banner) banner.classList.add('hidden');
-      if (ceBox) ceBox.classList.add('hidden');
-      if (detailBox) detailBox.classList.add('hidden');
-      if (matrix) matrix.innerHTML = '';
-
-      let passedCount = 0;
-      let firstTestDetail = null;
-
-      for (let i = 0; i < testList.length; i++) {
-        const tc = testList[i];
-        const pct = Math.round(((i + 1) / testList.length) * 100);
-        if (progressText) progressText.textContent = `Đang chạy test ví dụ ${i + 1}/${testList.length}...`;
-        if (progressPct) progressPct.textContent = `${pct}%`;
-        if (progressBar) progressBar.style.width = `${pct}%`;
-
-        const res = await executeCode(currentJudgeLang, code, tc.input, prob.time_limit || 1.0);
-
-        if (res.status === 'CE') {
-          if (ceBox && ceText) {
-            ceBox.classList.remove('hidden');
-            ceText.textContent = res.compile_error || 'Compilation Error';
-          }
-          if (banner) {
-            banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-rose-950/70 border border-rose-500/40 text-rose-300";
-            banner.innerHTML = `<div><span class="text-lg">❌</span> <strong>LỖI BIÊN DỊCH (Compilation Error)</strong></div>`;
-            banner.classList.remove('hidden');
-          }
-          break;
-        }
-
-        const normActual = normalizeOutput(res.stdout);
-        const normExpected = normalizeOutput(tc.output);
-        const isMatch = (normActual === normExpected);
-        if (isMatch) passedCount++;
-
-        if (i === 0) {
-          firstTestDetail = {
-            input: tc.input,
-            output: tc.output,
-            stdout: res.stdout,
-            stderr: res.stderr,
-            verdict: isMatch ? 'AC' : 'WA'
-          };
-        }
-
-        const cell = document.createElement('div');
-        cell.className = `p-2.5 rounded-xl border text-xs font-mono flex flex-col justify-between cursor-pointer transition ${
-          isMatch 
-            ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/40' 
-            : 'bg-rose-950/50 border-rose-500/40 text-rose-300 hover:bg-rose-900/40'
-        }`;
-        cell.innerHTML = `
-          <div class="flex items-center justify-between">
-            <span class="font-bold">Ví dụ #${i + 1}</span>
-            <span>${isMatch ? '✅ AC' : '❌ WA'}</span>
-          </div>
-          <div class="text-[10px] text-slate-400 mt-1">${res.execution_time ? (res.execution_time + 's') : 'OK'}</div>
-        `;
-        cell.onclick = () => showJudgeTestDetail(i + 1, tc.input, tc.output, res.stdout, res.stderr, isMatch ? 'AC' : 'WA');
-        matrix.appendChild(cell);
-      }
-
-      if (progressContainer) progressContainer.classList.add('hidden');
-      if (passedCount === testList.length) {
-        if (banner) {
-          banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-emerald-950/70 border border-emerald-500/40 text-emerald-300";
-          banner.innerHTML = `<div><span class="text-lg">🎉</span> <strong>CHÍNH XÁC TOÀN BỘ VÍ DỤ!</strong> (${passedCount}/${testList.length} test ví dụ trùng khớp)</div>`;
-          banner.classList.remove('hidden');
-        }
-      } else {
-        if (banner) {
-          banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-amber-950/70 border border-amber-500/40 text-amber-300";
-          banner.innerHTML = `<div><span class="text-lg">⚠️</span> <strong>KẾT QUẢ CHƯA KHỚP</strong> (${passedCount}/${testList.length} ví dụ). Xem chi tiết bên dưới.</div>`;
-          banner.classList.remove('hidden');
-        }
-      }
-
-      if (firstTestDetail) {
-        showJudgeTestDetail(1, firstTestDetail.input, firstTestDetail.output, firstTestDetail.stdout, firstTestDetail.stderr, firstTestDetail.verdict);
-      }
-
-      isJudging = false;
-      if (btnSample) {
-        btnSample.disabled = false;
-        btnSample.innerHTML = '<span>▶️</span> Thử Ví Dụ';
-      }
-      if (btnSubmit) btnSubmit.disabled = false;
-    }
-
     // SUBMIT ALL TESTS & FULL JUDGING
     async function submitJudgeAllTests() {
       if (isJudging) return;
@@ -5021,13 +4912,13 @@ print("Hello World")`;
       }
 
       isJudging = true;
-      const btnSample = document.getElementById('btn-judge-run-sample');
+      const btnRun = document.getElementById('btn-judge-run');
       const btnSubmit = document.getElementById('btn-judge-submit');
       if (btnSubmit) {
         btnSubmit.disabled = true;
         btnSubmit.innerHTML = '<span>⏳</span> Đang chấm bài...';
       }
-      if (btnSample) btnSample.disabled = true;
+      if (btnRun) btnRun.disabled = true;
 
       const progressContainer = document.getElementById('judge-progress-container');
       const progressBar = document.getElementById('judge-progress-bar');
@@ -5205,7 +5096,7 @@ print("Hello World")`;
         btnSubmit.disabled = false;
         btnSubmit.innerHTML = '<span>🚀</span> Chấm Điểm';
       }
-      if (btnSample) btnSample.disabled = false;
+      if (btnRun) btnRun.disabled = false;
     }
 
     function showJudgeTestDetail(testNum, input, expected, actual, stderr, verdict) {
