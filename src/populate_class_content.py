@@ -65,7 +65,12 @@ lectures_data = [
     # --- Bài giảng Lớp Python 1-1 ---
     ["PY11-01", "Chuyên đề", "Buổi 1: Khái niệm biến, số âm & Công thức tính hình học", "Python 1-1", "https://drive.google.com/file/d/1exJ_NqOYLqEkIcEFXai7cjQCh_KkZKA6/view?usp=sharing", "Quy tắc dấu số âm, biến x, y và tính diện tích hình chữ nhật."],
     ["PY11-02", "Chuyên đề", "Buổi 2: Tính chất giao hoán, kết hợp & Định dạng số thực f-string", "Python 1-1", "https://youtu.be/10j8WdUEHkM", "Giao hoán phép cộng/nhân, định dạng chữ số thập phân f'{a/b:.3f}'."],
-    ["PY11-03", "Chuyên đề", "Buổi 3: Chữa bài tập MarisaOJ & Kỹ thuật lập trình cơ bản", "Python 1-1", "https://youtu.be/gRztmoQym7g", "Chữa các bài toán gấp giấy, chia kẹo, đổi tiền, bài toán nấm."]
+    ["PY11-03", "Chuyên đề", "Buổi 3: Chữa bài tập MarisaOJ & Kỹ thuật lập trình cơ bản", "Python 1-1", "https://youtu.be/gRztmoQym7g", "Chữa các bài toán gấp giấy, chia kẹo, đổi tiền, bài toán nấm."],
+
+    # --- Bài giảng Lớp C++ nâng cao (26TI) ---
+    ["CPPNC-01", "Chuyên đề 1", "Buổi 1: Template thi HSG, Fast I/O & Cấu trúc dữ liệu STL (Stack, Queue, Deque, Map, Set)", "C++ nâng cao", "https://youtu.be/4eWCk6m1ZVw", "Khai báo nhập xuất file (freopen, fast I/O), cấu trúc dữ liệu STL (Stack đơn điệu, Queue hai con trỏ, Deque cửa sổ trượt, Map, Set), tìm kiếm nhị phân lower_bound, đệ quy & quy hoạch động cơ bản."],
+    ["CPPNC-02", "Chuyên đề 2", "Buổi 2: Chữa Contest 26TI - Biến đổi Palindrome, Số học chia hết & Kỹ thuật Hai con trỏ", "C++ nâng cao", "https://youtu.be/PvLadoW3VrY", "Chữa chi tiết contest 26TI: Bài A (Khởi động), Bài B (Biến đổi xâu đối xứng tối thiểu thao tác - CF 486C), Bài C (Tạo số lớn nhất chia hết cho 2, 3, 5 - CF 214B), Bài D (Tăng mảng bằng nhau tối đa k thao tác - CF 231C - Kỹ thuật Hai con trỏ Two Pointers)."],
+    ["CPPNC-03", "Chuyên đề 3", "Buổi 3: Đệ quy, Nhánh cận & Kỹ thuật Gặp nhau ở giữa (Meet-in-the-middle N <= 40)", "C++ nâng cao", "https://docs.google.com/document/d/19LI2lWWo1HNQNPWdlRCEpEwImGOXfwns_nE9T-Zup0c/edit", "Đệ quy sinh dãy nhị phân, sinh tập con mảng, phương pháp quay lui có nhánh cận và kỹ thuật Gặp nhau ở giữa (Meet-in-the-middle) giải bài toán tổng tập con với N lên tới 40."]
 ]
 
 # ==============================================================================
@@ -277,16 +282,59 @@ raw_problems = [
         "name": "Hệ thập phân & Đổi cơ số",
         "classes": "C++ cơ bản",
         "notes": "Chuyển đổi số nguyên giữa hệ thập phân và nhị phân"
+    },
+
+    # --- Bài tập Lớp C++ nâng cao (26TI) ---
+    {
+        "id": "26TI-A",
+        "url": "https://youtu.be/PvLadoW3VrY",
+        "name": "Khởi động Contest 26TI",
+        "classes": "C++ nâng cao",
+        "platform": "26TI",
+        "notes": "Bài toán khởi động kiểm tra kỹ năng tư duy và cài đặt cơ bản (Chữa trong video Buổi 2)"
+    },
+    {
+        "id": "CF-486C",
+        "url": "https://codeforces.com/problemset/problem/486/C",
+        "name": "Palindromic Transformation",
+        "classes": "C++ nâng cao",
+        "platform": "Codeforces",
+        "notes": "Biến đổi xâu đối xứng với số thao tác đổi ký tự và di chuyển con trỏ ít nhất"
+    },
+    {
+        "id": "CF-214B",
+        "url": "https://codeforces.com/problemset/problem/214/B",
+        "name": "Hometask",
+        "classes": "C++ nâng cao",
+        "platform": "Codeforces",
+        "notes": "Tạo số lớn nhất chia hết cho 2, 3, 5 từ tập các chữ số cho trước"
+    },
+    {
+        "id": "CF-231C",
+        "url": "https://codeforces.com/problemset/problem/231/C",
+        "name": "To Add or Not to Add",
+        "classes": "C++ nâng cao",
+        "platform": "Codeforces",
+        "notes": "Tăng mảng tối đa k thao tác để số phần tử bằng nhau nhiều nhất (Hai con trỏ sliding window)"
+    },
+    {
+        "id": "CSES-1628",
+        "url": "https://cses.fi/problemset/task/1628",
+        "name": "Meet in the Middle",
+        "classes": "C++ nâng cao",
+        "platform": "CSES",
+        "notes": "Đếm số tập con có tổng bằng M với N <= 40 bằng kỹ thuật Meet-in-the-middle"
     }
 ]
 
 # Process and classify each problem
 problems_rows = []
 for p in raw_problems:
+    platform = p.get("platform", "MarisaOJ")
     res = classify_problem({
         "id": p["id"],
         "name": p["name"],
-        "platform": "MarisaOJ",
+        "platform": platform,
         "notes": p["notes"]
     })
     problems_rows.append([
@@ -296,7 +344,7 @@ for p in raw_problems:
         p["classes"],
         str(res.level),
         res.main_topic,
-        "MarisaOJ",
+        platform,
         p["notes"]
     ])
 
