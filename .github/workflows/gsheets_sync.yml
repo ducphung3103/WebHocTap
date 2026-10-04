@@ -39,11 +39,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Sync from Google Sheets
+      - name: Sync Two-Way with Google Sheets
         env:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
-        run: python -m src.sync_gsheets --no-push
+        run: python -m src.sync_gsheets --two-way --no-push
 
       - name: Commit and Push Changes
         run: |

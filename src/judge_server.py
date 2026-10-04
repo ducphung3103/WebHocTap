@@ -176,9 +176,22 @@ class JudgeHandler(BaseHTTPRequestHandler):
                 "gpp": bool(GPP_CMD),
                 "python": bool(PYTHON_CMD),
                 "gpp_path": GPP_CMD,
-                "python_path": PYTHON_CMD
+                "python_path": PYTHON_CMD,
+                "sync_enabled": True
             }
             self.wfile.write(json.dumps(data).encode("utf-8"))
+        elif self.path == "/api/sheet_status":
+            self.send_response(200)
+            self._set_cors()
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.end_headers()
+            try:
+                from src.sync_to_gsheet import get_spreadsheet
+                sh = get_spreadsheet()
+                res = {"status": "ok", "spreadsheet_title": sh.title, "worksheets": [w.title for w in sh.worksheets()]}
+            except Exception as e:
+                res = {"status": "error", "message": str(e)}
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
         else:
             self.send_response(404)
             self._set_cors()
@@ -209,6 +222,63 @@ class JudgeHandler(BaseHTTPRequestHandler):
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "RTE", "error": str(e)}).encode("utf-8"))
+
+        elif self.path.startswith("/api/"):
+            try:
+                length = int(self.headers.get("Content-Length", 0))
+                body = self.rfile.read(length).decode("utf-8") if length > 0 else "{}"
+                req_data = json.loads(body) if body.strip() else {}
+
+                from src import sync_to_gsheet
+                from src.sync_gsheets import sync_gsheets
+
+                api_path = self.path.split("?")[0]
+                res = {"status": "error", "message": f"Endpoint không hợp lệ: {api_path}"}
+
+                if api_path == "/api/update_tuition":
+                    name = req_data.get("name") or req_data.get("student")
+                    month = req_data.get("month")
+                    is_paid = bool(req_data.get("is_paid") or req_data.get("paid"))
+                    res = sync_to_gsheet.update_tuition_in_sheet(name, month, is_paid)
+
+                elif api_path == "/api/update_student_status":
+                    name = req_data.get("name") or req_data.get("student")
+                    status = req_data.get("status") or req_data.get("new_status")
+                    res = sync_to_gsheet.update_student_status_in_sheet(name, status)
+
+                elif api_path == "/api/save_student":
+                    st_data = req_data.get("student") or req_data
+                    res = sync_to_gsheet.save_student_to_sheet(st_data)
+
+                elif api_path == "/api/save_problem":
+                    p_data = req_data.get("problem") or req_data
+                    res = sync_to_gsheet.save_problem_to_sheet(p_data)
+
+                elif api_path == "/api/save_curriculum":
+                    c_data = req_data.get("lecture") or req_data.get("curriculum") or req_data
+                    res = sync_to_gsheet.save_curriculum_to_sheet(c_data)
+
+                elif api_path == "/api/sync_two_way":
+                    reconcile_res = sync_to_gsheet.sync_all_from_local_json()
+                    sync_pull = sync_gsheets(no_push=True)
+                    res = {
+                        "status": "success",
+                        "reconcile": reconcile_res,
+                        "pull_success": sync_pull,
+                        "message": "Đã hoàn thành đồng bộ 2 chiều (Web ⇄ Google Sheet)!"
+                    }
+
+                self.send_response(200)
+                self._set_cors()
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            except Exception as e:
+                self.send_response(500)
+                self._set_cors()
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"status": "error", "message": str(e)}, ensure_ascii=False).encode("utf-8"))
         else:
             self.send_response(404)
             self._set_cors()

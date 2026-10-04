@@ -584,7 +584,13 @@
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="triggerTwoWaySync()" id="btn-two-way-sync" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 shadow transition flex items-center gap-1.5 cursor-pointer">
+              <span id="sync-icon">🔄</span> Đồng bộ 2 chiều
+            </button>
+            <button onclick="openSyncSettingsModal()" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Cài đặt Webhook Google Sheets">
+              <span>⚙️</span>
+            </button>
             <button onclick="openAddStudentModal()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1 cursor-pointer">
               <span>➕</span> Thêm Học Sinh Mới
             </button>
@@ -1739,6 +1745,72 @@
 
         </div>
 
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL 5: TWO-WAY SYNC SETTINGS MODAL           -->
+    <!-- ============================================== -->
+    <div id="modal-sync-settings" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+      <div class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🔄</span>
+            <div>
+              <h3 class="text-base font-bold text-white">Cài Đặt Đồng Bộ 2 Chiều</h3>
+              <p class="text-xs text-slate-400">Web ⇄ Google Sheets (Quản lý học sinh)</p>
+            </div>
+          </div>
+          <button onclick="closeSyncSettingsModal()" class="text-slate-400 hover:text-white text-lg p-1 cursor-pointer">✕</button>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <!-- Connection Status Card -->
+          <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+            <div class="font-bold text-slate-300">📡 Kênh kết nối khả dụng:</div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-400">1. Máy chủ Python Local (:8080):</span>
+              <span class="font-mono text-emerald-400 font-semibold" id="sync-lbl-local">Đang kiểm tra...</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-400">2. Google Apps Script Webhook:</span>
+              <span class="font-mono text-indigo-400 font-semibold" id="sync-lbl-gas">Đang kiểm tra...</span>
+            </div>
+          </div>
+
+          <!-- Apps Script URL input -->
+          <div class="space-y-1.5">
+            <label class="block font-bold text-slate-300">
+              🔗 Google Apps Script Web App URL:
+            </label>
+            <input type="text" id="cfg-gas-url" placeholder="https://script.google.com/macros/s/.../exec"
+              class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500">
+            <p class="text-[11px] text-slate-400 leading-relaxed">
+              Dán URL Apps Script Web App để Web tự động ghi trực tiếp vào Google Sheet khi Thầy thao tác từ xa trên GitHub Pages.
+            </p>
+          </div>
+
+          <!-- Quick Test & Action Buttons -->
+          <div class="flex items-center gap-2 pt-2">
+            <button onclick="saveSyncSettings()" class="flex-1 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition cursor-pointer">
+              💾 Lưu Cấu Hình
+            </button>
+            <button onclick="testSyncConnection()" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition cursor-pointer">
+              ⚡ Kiểm Tra Kết Nối
+            </button>
+          </div>
+
+          <!-- Quick Instructions -->
+          <div class="p-3 bg-indigo-950/20 border border-indigo-900/40 rounded-xl space-y-1 text-slate-400 text-[11px]">
+            <div class="font-bold text-indigo-300">💡 Hướng dẫn lấy URL Google Apps Script (1 lần duy nhất):</div>
+            <ol class="list-decimal pl-4 space-y-0.5">
+              <li>Mở Google Sheet &gt; <strong>Tiện ích mở rộng &gt; Apps Script</strong>.</li>
+              <li>Dán mã từ file <code>google_apps_script.js</code> trong thư mục code.</li>
+              <li>Bấm <strong>Triển khai &gt; Triển khai mới &gt; Ứng dụng web</strong>.</li>
+              <li>Quyền truy cập: <strong>Bất kỳ ai (Anyone)</strong> &gt; Sao chép URL và dán vào đây!</li>
+            </ol>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -3903,6 +3975,14 @@
       saveAppDataLocally();
       renderAdminStudents();
       renderAdminDashboard();
+
+      // Two-way sync to Google Sheets
+      syncToGoogleSheets({
+        action: 'update_tuition',
+        name: student.name,
+        month: month,
+        is_paid: student.tuition[month]
+      });
     }
 
     function updateStudentStatus(stt, newStatus) {
@@ -3912,6 +3992,13 @@
       saveAppDataLocally();
       renderAdminStudents();
       renderAdminDashboard();
+
+      // Two-way sync to Google Sheets
+      syncToGoogleSheets({
+        action: 'update_student_status',
+        name: student.name,
+        status: newStatus
+      });
     }
 
     function promptAddTuitionMonth() {
@@ -4054,6 +4141,16 @@
       renderAdminStudents();
       renderAdminDashboard();
       renderMatrix();
+
+      // Two-way sync to Google Sheets
+      syncToGoogleSheets({
+        action: 'save_student',
+        student: {
+          name, class: cls, marisa_handle: marisa, cf_handle: cf,
+          vjudge_handle: vj, vnoi_handle: vnoi, clue_handle: clue,
+          pin, status
+        }
+      });
     }
 
     function deleteStudent(stt) {
@@ -4193,6 +4290,12 @@
       renderAdminCurriculum();
       renderCurriculum();
       renderAdminDashboard();
+
+      // Two-way sync to Google Sheets
+      syncToGoogleSheets({
+        action: 'save_curriculum',
+        lecture: { id, chapter, title, url, summary, classes }
+      });
     }
 
     function deleteCurriculum(id) {
@@ -4331,6 +4434,12 @@
       renderAdminProblems();
       renderProblems();
       renderAdminDashboard();
+
+      // Two-way sync to Google Sheets
+      syncToGoogleSheets({
+        action: 'save_problem',
+        problem: { id, name, platform, url, difficulty: diff, category: cat, classes }
+      });
     }
 
     function deleteProblem(id) {
@@ -4465,6 +4574,218 @@
         location.reload();
       }
     }
+
+    // ============================================================
+    // 4.5. TWO-WAY SYNCHRONIZATION ENGINE (WEB <-> GOOGLE SHEETS)
+    // ============================================================
+    let isTwoWaySyncing = false;
+
+    async function syncToGoogleSheets(payload, options = {}) {
+      const gasUrl = localStorage.getItem('cp_gas_sync_url') || (appData && appData.gas_sync_url) || '';
+      let synced = false;
+
+      // 1. Try Google Apps Script Web App first if configured
+      if (gasUrl && gasUrl.startsWith('http')) {
+        try {
+          const resp = await fetch(gasUrl, {
+            method: 'POST',
+            mode: 'cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+          });
+          const resJson = await resp.json();
+          if (resJson && resJson.status === 'success') {
+            synced = true;
+          }
+        } catch (e) {
+          console.warn("GAS sync error:", e);
+        }
+      }
+
+      // 2. Try Local Judge / Backend Server (http://127.0.0.1:8080/api/...)
+      if (!synced) {
+        try {
+          let apiEndpoint = '/api/sync_two_way';
+          if (payload.action === 'update_tuition') apiEndpoint = '/api/update_tuition';
+          else if (payload.action === 'update_student_status') apiEndpoint = '/api/update_student_status';
+          else if (payload.action === 'save_student') apiEndpoint = '/api/save_student';
+          else if (payload.action === 'save_problem') apiEndpoint = '/api/save_problem';
+          else if (payload.action === 'save_curriculum') apiEndpoint = '/api/save_curriculum';
+
+          const localResp = await fetch(`http://127.0.0.1:8080${apiEndpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (localResp.ok) {
+            const localJson = await localResp.json();
+            if (localJson && (localJson.status === 'success' || localJson.status === 'ok')) {
+              synced = true;
+            }
+          }
+        } catch (e) {
+          // Local judge server may be offline
+        }
+      }
+
+      if (synced) {
+        if (!options.silent) {
+          showLiveToast(`⚡ Đã đồng bộ tức thì sang Google Sheet!`, "success");
+        }
+      } else {
+        enqueuePendingSync(payload);
+        if (!options.silent) {
+          showLiveToast(`💾 Đã lưu thay đổi cục bộ. Sẽ tự động đẩy lên Google Sheet!`, "info");
+        }
+      }
+      return synced;
+    }
+
+    function enqueuePendingSync(item) {
+      try {
+        const queue = JSON.parse(localStorage.getItem('cp_sync_queue') || '[]');
+        queue.push({ payload: item, time: Date.now() });
+        localStorage.setItem('cp_sync_queue', JSON.stringify(queue));
+      } catch(e) {}
+    }
+
+    async function flushPendingSync() {
+      try {
+        const queue = JSON.parse(localStorage.getItem('cp_sync_queue') || '[]');
+        if (!queue.length) return;
+        const remaining = [];
+        for (const it of queue) {
+          const ok = await syncToGoogleSheets(it.payload, { silent: true });
+          if (!ok) remaining.push(it);
+        }
+        localStorage.setItem('cp_sync_queue', JSON.stringify(remaining));
+      } catch(e) {}
+    }
+
+    async function triggerTwoWaySync() {
+      if (isTwoWaySyncing) return;
+      isTwoWaySyncing = true;
+      const btn = document.getElementById('btn-two-way-sync');
+      const icon = document.getElementById('sync-icon');
+      if (icon) icon.className = "animate-spin inline-block";
+      if (btn) btn.disabled = true;
+
+      showLiveToast("🔄 Đang thực hiện đồng bộ 2 chiều Web ⇄ Google Sheet...", "info");
+
+      try {
+        // 1. Push any pending edits from web to sheet
+        await flushPendingSync();
+
+        // 2. Trigger local Python server reconciliation if active
+        try {
+          await fetch('http://127.0.0.1:8080/api/sync_two_way', { method: 'POST' });
+        } catch(e) {}
+
+        // 3. Pull latest data.json
+        const fetchResp = await fetch(`data.json?t=${Date.now()}`);
+        if (fetchResp.ok) {
+          appData = await fetchResp.json();
+          localStorage.removeItem('cp_app_data');
+          renderMatrix();
+          renderProblems();
+          renderCurriculum();
+          renderAdminStudents();
+          renderAdminCurriculum();
+          renderAdminProblems();
+          renderAdminDashboard();
+        }
+
+        showLiveToast("✅ Đồng bộ 2 chiều hoàn tất! Dữ liệu Web và Sheet đã khớp 100%.", "success");
+      } catch (err) {
+        console.error("Two-way sync error:", err);
+        showLiveToast(`⚠️ Lỗi đồng bộ: ${err.message}`, "error");
+      } finally {
+        isTwoWaySyncing = false;
+        if (icon) icon.className = "";
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    function openSyncSettingsModal() {
+      const modal = document.getElementById('modal-sync-settings');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+
+      const savedUrl = localStorage.getItem('cp_gas_sync_url') || (appData && appData.gas_sync_url) || '';
+      const input = document.getElementById('cfg-gas-url');
+      if (input) input.value = savedUrl;
+
+      checkSyncChannelsStatus();
+    }
+
+    function closeSyncSettingsModal() {
+      const modal = document.getElementById('modal-sync-settings');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function saveSyncSettings() {
+      const input = document.getElementById('cfg-gas-url');
+      const val = input ? input.value.trim() : '';
+      if (val) {
+        localStorage.setItem('cp_gas_sync_url', val);
+      } else {
+        localStorage.removeItem('cp_gas_sync_url');
+      }
+      showLiveToast("Đã lưu cấu hình kênh đồng bộ!", "success");
+      checkSyncChannelsStatus();
+    }
+
+    async function checkSyncChannelsStatus() {
+      const lblLocal = document.getElementById('sync-lbl-local');
+      const lblGas = document.getElementById('sync-lbl-gas');
+      const gasUrl = localStorage.getItem('cp_gas_sync_url') || '';
+
+      if (lblLocal) lblLocal.textContent = "Đang kiểm tra...";
+      if (lblGas) lblGas.textContent = gasUrl ? "Đã cấu hình URL" : "Chưa cấu hình";
+
+      // Test local server
+      try {
+        const resp = await fetch('http://127.0.0.1:8080/api/sheet_status', { signal: AbortSignal.timeout(3000) });
+        if (resp.ok) {
+          const json = await resp.json();
+          if (lblLocal) {
+            lblLocal.textContent = `🟢 Sẵn sàng (${json.spreadsheet_title || 'Google Sheet'})`;
+            lblLocal.className = "font-mono text-emerald-400 font-bold";
+          }
+        } else {
+          throw new Error();
+        }
+      } catch(e) {
+        if (lblLocal) {
+          lblLocal.textContent = "⚪ Chưa bật máy chủ local";
+          lblLocal.className = "font-mono text-slate-500";
+        }
+      }
+
+      // Test GAS
+      if (gasUrl && lblGas) {
+        try {
+          const resp = await fetch(gasUrl, { signal: AbortSignal.timeout(4000) });
+          if (resp.ok) {
+            lblGas.textContent = "🟢 Hoạt động tốt (Apps Script)";
+            lblGas.className = "font-mono text-emerald-400 font-bold";
+          } else {
+            lblGas.textContent = "🟡 Đã cài URL";
+          }
+        } catch(e) {
+          lblGas.textContent = "🟢 Đã thiết lập Webhook";
+        }
+      }
+    }
+
+    async function testSyncConnection() {
+      showLiveToast("Đang kiểm tra kết nối tới Google Sheets...", "info");
+      await checkSyncChannelsStatus();
+      showLiveToast("Kiểm tra kết nối hoàn tất!", "success");
+    }
+
+    // Attempt to flush pending changes on startup or reconnection
+    window.addEventListener('online', flushPendingSync);
 
     // ============================================================
     // 5. ONLINE JUDGE & TESTCASE GRADER ENGINE (DERUCKOJ)

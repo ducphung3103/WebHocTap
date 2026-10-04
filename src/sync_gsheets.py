@@ -666,8 +666,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Sync Google Sheets to Web")
     parser.add_argument("--push", action="store_true", help="Auto push to GitHub")
     parser.add_argument("--no-push", action="store_true", help="Skip push")
+    parser.add_argument("--two-way", action="store_true", help="Perform two-way sync (push local edits to Google Sheet, then pull)")
     parser.add_argument("sheet_id", nargs="?", default=None, help="Google Spreadsheet ID")
     args = parser.parse_args()
+
+    if args.two_way:
+        try:
+            from src.sync_to_gsheet import sync_all_from_local_json
+            print("🔄 [2-WAY SYNC] Đang đối soát và cập nhật dữ liệu từ Web lên Google Sheet...")
+            sync_all_from_local_json()
+        except Exception as e:
+            print(f"⚠️ Cảnh báo 2-way sync: {e}")
 
     ok = sync_gsheets(args.sheet_id)
     if ok:
