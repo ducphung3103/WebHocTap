@@ -625,13 +625,13 @@
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
-          <!-- View Mode Switcher: Danh Sách vs Phòng Chấm -->
+          <!-- View Mode Switcher: Danh Sách vs DeruckOJ -->
           <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold shadow-inner">
             <button onclick="toggleProblemViewMode('list')" id="btn-prob-view-list" class="px-3.5 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer flex items-center gap-1.5 shadow">
               <span>📚</span> Danh Sách Bài Tập
             </button>
             <button onclick="toggleProblemViewMode('judge')" id="btn-prob-view-judge" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5">
-              <span>⚡</span> Phòng Chấm Điểm
+              <span>⚡</span> DeruckOJ
             </button>
           </div>
 
@@ -665,7 +665,7 @@
           <!-- Platform / Source Filter -->
           <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl text-xs border border-slate-800/80 flex-wrap">
             <button onclick="filterProblemPlatform('all')" id="prob-filter-all" class="px-2.5 py-1 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition cursor-pointer">Tất cả</button>
-            <button onclick="filterProblemPlatform('DeruckOJ')" id="prob-filter-DeruckOJ" class="px-2.5 py-1 rounded-lg text-emerald-400 hover:bg-emerald-500/10 font-bold transition cursor-pointer">⚡ Giáo Viên Chấm</button>
+            <button onclick="filterProblemPlatform('DeruckOJ')" id="prob-filter-DeruckOJ" class="px-2.5 py-1 rounded-lg text-emerald-400 hover:bg-emerald-500/10 font-bold transition cursor-pointer">⚡ DeruckOJ</button>
             <button onclick="filterProblemPlatform('Codeforces')" id="prob-filter-Codeforces" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-blue-300 transition cursor-pointer">🔵 Codeforces</button>
             <button onclick="filterProblemPlatform('MarisaOJ')" id="prob-filter-MarisaOJ" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-purple-300 transition cursor-pointer">🟣 MarisaOJ</button>
             <button onclick="filterProblemPlatform('VJudge')" id="prob-filter-VJudge" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-emerald-300 transition cursor-pointer">🟢 VJudge</button>
@@ -678,7 +678,7 @@
       </div>
 
       <!-- ============================================== -->
-      <!-- VIEW 2: ONLINE JUDGE WORKSPACE (PHÒNG CHẤM)   -->
+      <!-- VIEW 2: ONLINE JUDGE WORKSPACE (DERUCKOJ)      -->
       <!-- ============================================== -->
       <div id="problems-view-judge" class="space-y-6 hidden">
         <!-- Sub-header for Judge with quick return button & Engine Pill -->
