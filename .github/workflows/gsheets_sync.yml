@@ -7,7 +7,7 @@ on:
       - ".github/workflows/gsheets_sync.yml"
       - "src/sync_gsheets.py"
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/15 * * * *'
   repository_dispatch:
     types: [gsheets_updated]
   workflow_dispatch:

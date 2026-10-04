@@ -341,6 +341,16 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     if c in class_problems_map:
                         class_problems_map[c].append(pid)
 
+    # Preserve existing DeruckOJ internal grader problems & testcases
+    sheet_pids = {p["id"] for p in problems}
+    for ep in existing_data.get("problems", []):
+        if ep.get("id") not in sheet_pids and (ep.get("platform") == "DeruckOJ" or "testcases" in ep or ep.get("id", "").startswith("CB-")):
+            problems.append(ep)
+        elif ep.get("id") in sheet_pids and "testcases" in ep:
+            for p in problems:
+                if p["id"] == ep["id"] and "testcases" not in p:
+                    p["testcases"] = ep["testcases"]
+
     if not problems:
         problems = existing_data.get("problems", [])
 
@@ -377,6 +387,12 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     "url": link,
                     "summary": summary
                 })
+
+    # Preserve existing curriculum items if not in Google Sheet
+    sheet_cids = {c["id"] for c in curriculum}
+    for ec in existing_data.get("curriculum", []):
+        if ec.get("id") not in sheet_cids:
+            curriculum.append(ec)
 
     if not curriculum:
         curriculum = existing_data.get("curriculum", [])

@@ -642,9 +642,6 @@
           <button onclick="openTestcaseManagerModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 transition flex items-center gap-1.5 cursor-pointer">
             <span>⚙️</span> Quản Lý Bộ Test
           </button>
-          <button onclick="openGoogleSheetSyncModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow-lg shadow-teal-600/20 transition flex items-center gap-1.5 cursor-pointer">
-            <span>📊</span> Đồng Bộ Google Sheet
-          </button>
         </div>
       </div>
 
@@ -983,9 +980,6 @@
         <div class="flex items-center gap-2 flex-wrap">
           <button onclick="triggerAddCurriculum()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
             <span>➕</span> Thêm Bài Giảng Mới
-          </button>
-          <button onclick="openGoogleSheetSyncModal('curriculum')" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow-lg shadow-teal-600/20 transition flex items-center gap-1.5 cursor-pointer">
-            <span>📊</span> Đồng Bộ Google Sheet
           </button>
         </div>
       </div>
@@ -1381,7 +1375,7 @@
             📥 Import Hàng Loạt Test
           </button>
           <button id="tc-tab-btn-export" onclick="switchTestcaseTab('export')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer whitespace-nowrap">
-            💾 Sao Lưu / Đồng Bộ
+            💾 Sao Lưu / File JSON
           </button>
         </div>
 
@@ -1727,178 +1721,14 @@
               </div>
             </div>
 
-            <div class="p-4 bg-slate-950/70 border border-slate-800 rounded-xl space-y-3">
-              <h4 class="text-xs font-bold text-teal-300 uppercase tracking-wider">📊 Đồng bộ từ Google Sheet</h4>
-              <p class="text-xs text-slate-400">Đồng bộ trực tiếp danh sách bài tập từ Google Sheet của Thầy vào web (hỗ trợ cả các sàn Codeforces, VJudge, MarisaOJ, oj.chuyentin.pro, ClueOJ, DeruckOJ).</p>
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="closeTestcaseManagerModal(); openGoogleSheetSyncModal();" class="px-4 py-2 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
-                  <span>📊</span> Mở Trình Đồng Bộ Google Sheet
-                </button>
-              </div>
+            <div class="p-4 bg-slate-950/70 border border-slate-800 rounded-xl space-y-2">
+              <h4 class="text-xs font-bold text-teal-300 uppercase tracking-wider flex items-center gap-1.5"><span>⚡</span> Tự Động Đồng Bộ Liên Tục</h4>
+              <p class="text-xs text-slate-400">Hệ thống tự động đồng bộ bài tập và bài giảng từ Google Sheet định kỳ trên đám mây và cập nhật tức thì về website theo thời gian thực (không cần bấm nút thủ công).</p>
             </div>
           </div>
 
         </div>
 
-      </div>
-    </div>
-
-    <!-- ============================================== -->
-    <!-- MODAL 5: GOOGLE SHEET PROBLEM & CURRICULUM SYNC -->
-    <!-- ============================================== -->
-    <div id="modal-gsheet-sync" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
-      <div class="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 space-y-5 max-h-[90vh] flex flex-col overflow-hidden">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3 flex-shrink-0">
-          <div class="flex items-center gap-2">
-            <span class="text-2xl">📊</span>
-            <div>
-              <h3 class="text-lg font-bold text-white">Đồng Bộ Dữ Liệu Từ Google Sheet</h3>
-              <p class="text-xs text-slate-400">Tải và cập nhật danh sách Bài Tập & Bài Giảng trực tiếp từ Google Trang Tính của Thầy</p>
-            </div>
-          </div>
-          <button onclick="closeGoogleSheetSyncModal()" class="text-slate-400 hover:text-white text-lg p-1 cursor-pointer">✕</button>
-        </div>
-
-        <div class="flex-1 overflow-y-auto pr-1 space-y-4 text-xs">
-          <!-- Target Data to Sync -->
-          <div class="flex items-center gap-3 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 flex-wrap">
-            <span class="text-slate-300 font-bold">Dữ liệu đồng bộ:</span>
-            <label class="flex items-center gap-1.5 cursor-pointer text-slate-200">
-              <input type="radio" name="gsheet-sync-target" value="both" checked onchange="handleSyncTargetChange()" class="text-teal-500 focus:ring-0">
-              <span class="font-semibold text-teal-300">📦 Cả Bài Tập & Bài Giảng</span>
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer text-slate-200">
-              <input type="radio" name="gsheet-sync-target" value="problems" onchange="handleSyncTargetChange()" class="text-teal-500 focus:ring-0">
-              <span>📝 Chỉ Bài Tập</span>
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer text-slate-200">
-              <input type="radio" name="gsheet-sync-target" value="curriculum" onchange="handleSyncTargetChange()" class="text-teal-500 focus:ring-0">
-              <span>📚 Chỉ Bài Giảng</span>
-            </label>
-          </div>
-
-          <!-- Input URL -->
-          <div class="space-y-1">
-            <label class="font-semibold text-slate-300">Đường link Google Sheet (*):</label>
-            <input type="text" id="gsheet-sync-url" placeholder="https://docs.google.com/spreadsheets/d/.../edit" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500 font-mono">
-          </div>
-
-          <!-- Sheet Names -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="gsheet-sheet-names-container">
-            <div class="space-y-1" id="gsheet-prob-sheet-group">
-              <label class="font-semibold text-slate-300">Tên Tab Bài Tập:</label>
-              <input type="text" id="gsheet-sync-sheet-name" value="Bài Tập" placeholder="Bài Tập" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500">
-            </div>
-            <div class="space-y-1" id="gsheet-curr-sheet-group">
-              <label class="font-semibold text-slate-300">Tên Tab Bài Giảng:</label>
-              <input type="text" id="gsheet-sync-curr-sheet-name" value="Bài Giảng" placeholder="Bài Giảng" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500">
-            </div>
-          </div>
-
-          <!-- Sync Mode: Merge vs Replace -->
-          <div class="flex items-center gap-4 bg-slate-950/60 p-3 rounded-xl border border-slate-800">
-            <span class="text-slate-300 font-semibold">Chế độ đồng bộ:</span>
-            <label class="flex items-center gap-1.5 cursor-pointer text-slate-200">
-              <input type="radio" name="gsheet-sync-mode" value="merge" checked class="text-teal-500 focus:ring-0">
-              <span>Gộp và cập nhật mục cũ</span>
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer text-slate-200">
-              <input type="radio" name="gsheet-sync-mode" value="replace" class="text-teal-500 focus:ring-0">
-              <span>Thay thế toàn bộ danh sách</span>
-            </label>
-          </div>
-
-          <!-- Quick Guide Box -->
-          <div class="p-3 bg-teal-950/30 border border-teal-500/30 rounded-xl space-y-1.5 text-teal-200">
-            <div class="font-bold flex items-center gap-1.5">
-              <span>💡</span> Hướng dẫn thiết lập Google Sheet:
-            </div>
-            <ul class="list-disc list-inside space-y-1 text-slate-300 text-[11px] leading-relaxed">
-              <li>Trên Google Sheet, bấm nút <strong>"Chia sẻ" (Share)</strong> ở góc trên bên phải &rarr; Đặt quyền thành <strong>"Bất kỳ ai có đường liên kết đều có thể xem"</strong> (Viewer).</li>
-              <li>Tab <strong>Bài Tập</strong>: <code>Mã bài</code> | <code>Link bài tập</code> | <code>Tên bài tập</code> | <code>Lớp áp dụng</code> | <code>Level</code> | <code>Dạng bài</code> | <code>Nền tảng</code>.</li>
-              <li>Tab <strong>Bài Giảng</strong>: <code>Mã bài giảng</code> | <code>Chương / Tuần</code> | <code>Tiêu đề bài giảng</code> | <code>Lớp áp dụng</code> | <code>Link Notion / Slide</code> | <code>Tóm tắt kiến thức</code>.</li>
-            </ul>
-          </div>
-
-          <!-- Direct Paste Fallback Details Toggle -->
-          <details class="group bg-slate-950/60 rounded-xl border border-slate-800 p-3">
-            <summary class="font-semibold text-slate-400 cursor-pointer hover:text-white flex items-center justify-between">
-              <span>📋 Hoặc Dán Dữ Liệu Bảng Trực Tiếp Từ Google Sheet / Excel (Không cần mở Share link)</span>
-              <span class="text-xs group-open:rotate-180 transition-transform">▼</span>
-            </summary>
-            <div class="pt-3 space-y-2">
-              <p class="text-[11px] text-slate-400">Bôi đen các dòng trong Google Sheet &rarr; Bấm <code>Ctrl+C</code> &rarr; Dán vào ô bên dưới:</p>
-              <textarea id="gsheet-sync-paste" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-mono text-[11px] text-slate-300 focus:outline-none focus:border-teal-500 resize-none" placeholder="Dán các dòng copy từ Google Sheet tại đây..."></textarea>
-            </div>
-          </details>
-
-          <!-- Action Buttons: Preview -->
-          <div class="flex items-center justify-between gap-3 pt-1">
-            <div id="gsheet-sync-status" class="text-xs font-mono text-slate-400">
-              Chưa nạp dữ liệu.
-            </div>
-            <button type="button" onclick="previewGoogleSheetSync()" class="px-5 py-2 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow-lg shadow-teal-600/30 transition flex items-center gap-1.5 cursor-pointer">
-              <span>🔍</span> Tải & Xem Trước Dữ Liệu
-            </button>
-          </div>
-
-          <!-- Preview Table Container -->
-          <div id="gsheet-sync-preview-container" class="hidden space-y-4">
-            <!-- Problems Preview -->
-            <div id="gsheet-preview-problems-card" class="space-y-2 bg-slate-950 p-3 rounded-xl border border-slate-800">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-white flex items-center gap-1.5"><span>📝</span> Bài Tập (<span id="gsheet-preview-count" class="text-teal-400">0</span> bài):</span>
-                <span class="text-[11px] text-slate-500">Hiển thị tối đa 5 bài</span>
-              </div>
-              <div class="overflow-x-auto max-h-40 overflow-y-auto">
-                <table class="w-full text-left text-[11px] text-slate-300 border-collapse">
-                  <thead class="text-slate-500 uppercase border-b border-slate-800 bg-slate-900/80 sticky top-0">
-                    <tr>
-                      <th class="py-1.5 px-2">Mã bài</th>
-                      <th class="py-1.5 px-2">Tên bài</th>
-                      <th class="py-1.5 px-2">Nền tảng</th>
-                      <th class="py-1.5 px-2">Lớp</th>
-                    </tr>
-                  </thead>
-                  <tbody id="gsheet-preview-tbody" class="divide-y divide-slate-800/60 font-mono">
-                    <!-- Populated rows -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Curriculum Preview -->
-            <div id="gsheet-preview-curriculum-card" class="space-y-2 bg-slate-950 p-3 rounded-xl border border-slate-800">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-white flex items-center gap-1.5"><span>📚</span> Bài Giảng (<span id="gsheet-preview-curr-count" class="text-teal-400">0</span> bài giảng):</span>
-                <span class="text-[11px] text-slate-500">Hiển thị tối đa 5 bài</span>
-              </div>
-              <div class="overflow-x-auto max-h-40 overflow-y-auto">
-                <table class="w-full text-left text-[11px] text-slate-300 border-collapse">
-                  <thead class="text-slate-500 uppercase border-b border-slate-800 bg-slate-900/80 sticky top-0">
-                    <tr>
-                      <th class="py-1.5 px-2">Mã bài giảng</th>
-                      <th class="py-1.5 px-2">Chương / Tuần</th>
-                      <th class="py-1.5 px-2">Tiêu đề bài giảng</th>
-                      <th class="py-1.5 px-2">Lớp</th>
-                    </tr>
-                  </thead>
-                  <tbody id="gsheet-preview-curr-tbody" class="divide-y divide-slate-800/60 font-mono">
-                    <!-- Populated rows -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Modal Footer Actions -->
-        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800 flex-shrink-0">
-          <button type="button" onclick="closeGoogleSheetSyncModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition cursor-pointer">Hủy</button>
-          <button type="button" id="btn-apply-gsheet-sync" onclick="applyGoogleSheetSync()" disabled class="px-5 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed transition shadow cursor-pointer flex items-center gap-1.5">
-            <span>🚀</span> Xác Nhận Cập Nhật Vào Web
-          </button>
-        </div>
       </div>
     </div>
 
@@ -2050,7 +1880,11 @@
         }
       }
 
-      // Start continuous background auto-refresh for newly submitted student problems
+      if (appData && appData.last_updated) {
+        lastKnownUpdateTime = appData.last_updated;
+      }
+
+      // Start continuous background auto-refresh for problems, curriculum, and student submissions
       startLiveAutoRefresh();
     }
 
@@ -2067,7 +1901,7 @@
 
     let lastKnownUpdateTime = null;
     function startLiveAutoRefresh() {
-      // Poll every 25s for new student submissions
+      // Poll every 20s for continuous background auto-synchronization
       setInterval(async () => {
         try {
           const res = await fetch('data.json?v=' + Date.now());
@@ -2076,9 +1910,25 @@
           if (!freshData || !freshData.last_updated) return;
 
           if (lastKnownUpdateTime && freshData.last_updated !== lastKnownUpdateTime) {
-            console.log('⚡ Phát hiện bài nộp mới từ học sinh:', freshData.last_updated);
+            console.log('⚡ Tự động đồng bộ dữ liệu mới:', freshData.last_updated);
+            const prevProbCount = (appData && appData.problems) ? appData.problems.length : 0;
+            const newProbCount = (freshData.problems) ? freshData.problems.length : 0;
+            const prevCurrCount = (appData && appData.curriculum) ? appData.curriculum.length : 0;
+            const newCurrCount = (freshData.curriculum) ? freshData.curriculum.length : 0;
+
             appData = freshData;
             lastKnownUpdateTime = freshData.last_updated;
+
+            // Clear any stale local overrides so client stays strictly synchronized with server/sheet
+            try {
+              localStorage.removeItem('cp_app_data');
+            } catch(e) {}
+
+            // Update header counts
+            const statS = document.getElementById('stat-students');
+            if (statS && appData.students) statS.textContent = appData.students.length;
+            const statP = document.getElementById('stat-problems');
+            if (statP && appData.problems) statP.textContent = appData.problems.length;
 
             if (appData.last_updated) {
               try {
@@ -2092,15 +1942,30 @@
               } catch(e) {}
             }
 
+            // Live re-render all views
             renderMatrix();
             renderProblems();
             renderCurriculum();
-            showLiveToast('⚡ Bảng xếp hạng vừa tự động cập nhật bài nộp mới!');
+            renderContests();
+            if (typeof renderJudgeWorkspace === 'function' && currentProblemViewMode === 'judge') {
+              renderJudgeWorkspace();
+            }
+            if (typeof populateTestcaseProblemDropdowns === 'function') {
+              populateTestcaseProblemDropdowns();
+            }
+
+            let toastMsg = '⚡ Dữ liệu vừa tự động đồng bộ từ Google Sheet & Hệ thống!';
+            if (newProbCount !== prevProbCount || newCurrCount !== prevCurrCount) {
+              toastMsg = `⚡ Đã tự động cập nhật ${newProbCount} bài tập & ${newCurrCount} bài giảng mới nhất!`;
+            } else {
+              toastMsg = '⚡ Bảng xếp hạng vừa tự động cập nhật bài nộp mới!';
+            }
+            showLiveToast(toastMsg);
           } else if (!lastKnownUpdateTime) {
             lastKnownUpdateTime = freshData.last_updated;
           }
         } catch(e) {}
-      }, 25000);
+      }, 20000);
     }
 
     // TAB SWITCHING & HASH ROUTING (INCLUDES RETURN HOME)
@@ -6544,394 +6409,6 @@ OUTPUT:
       if (studLangEl) {
         studLangEl.value = judgeSelectedLang || 'cpp';
       }
-    }
-
-    // ============================================================
-    // 8. GOOGLE SHEET PROBLEM SYNC
-    // ============================================================
-    let gsheetParsedProblems = [];
-    let gsheetParsedCurriculum = [];
-
-    function handleSyncTargetChange() {
-      const target = document.querySelector('input[name="gsheet-sync-target"]:checked')?.value || 'both';
-      const probGroup = document.getElementById('gsheet-prob-sheet-group');
-      const currGroup = document.getElementById('gsheet-curr-sheet-group');
-
-      if (target === 'problems') {
-        if (probGroup) probGroup.classList.remove('hidden');
-        if (currGroup) currGroup.classList.add('hidden');
-      } else if (target === 'curriculum') {
-        if (probGroup) probGroup.classList.add('hidden');
-        if (currGroup) currGroup.classList.remove('hidden');
-      } else {
-        if (probGroup) probGroup.classList.remove('hidden');
-        if (currGroup) currGroup.classList.remove('hidden');
-      }
-    }
-
-    function openGoogleSheetSyncModal(target = 'both') {
-      const modal = document.getElementById('modal-gsheet-sync');
-      if (!modal) return;
-      
-      const savedUrl = localStorage.getItem('deruck_gsheet_url') || '';
-      const urlInput = document.getElementById('gsheet-sync-url');
-      if (urlInput && savedUrl) {
-        urlInput.value = savedUrl;
-      }
-
-      const radio = document.querySelector(`input[name="gsheet-sync-target"][value="${target}"]`);
-      if (radio) radio.checked = true;
-      handleSyncTargetChange();
-
-      modal.classList.remove('hidden');
-    }
-
-    function closeGoogleSheetSyncModal() {
-      const modal = document.getElementById('modal-gsheet-sync');
-      if (modal) modal.classList.add('hidden');
-    }
-
-    async function fetchGoogleSheetCsv(sheetId, sheetName) {
-      const gvizUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
-      try {
-        const resp = await fetch(gvizUrl);
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        return await resp.text();
-      } catch (e1) {
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(gvizUrl)}`;
-        const proxyResp = await fetch(proxyUrl);
-        if (!proxyResp.ok) throw new Error("CORS Proxy error");
-        return await proxyResp.text();
-      }
-    }
-
-    async function previewGoogleSheetSync() {
-      const urlInput = document.getElementById('gsheet-sync-url');
-      const sheetNameInput = document.getElementById('gsheet-sync-sheet-name');
-      const currSheetNameInput = document.getElementById('gsheet-sync-curr-sheet-name');
-      const pasteInput = document.getElementById('gsheet-sync-paste');
-      const statusEl = document.getElementById('gsheet-sync-status');
-      const previewContainer = document.getElementById('gsheet-sync-preview-container');
-      const probCard = document.getElementById('gsheet-preview-problems-card');
-      const currCard = document.getElementById('gsheet-preview-curriculum-card');
-      const probCountEl = document.getElementById('gsheet-preview-count');
-      const currCountEl = document.getElementById('gsheet-preview-curr-count');
-      const probTbody = document.getElementById('gsheet-preview-tbody');
-      const currTbody = document.getElementById('gsheet-preview-curr-tbody');
-      const applyBtn = document.getElementById('btn-apply-gsheet-sync');
-
-      const url = urlInput?.value.trim() || '';
-      const probSheetName = sheetNameInput?.value.trim() || 'Bài Tập';
-      const currSheetName = currSheetNameInput?.value.trim() || 'Bài Giảng';
-      const pastedData = pasteInput?.value.trim() || '';
-      const syncTarget = document.querySelector('input[name="gsheet-sync-target"]:checked')?.value || 'both';
-
-      if (!url && !pastedData) {
-        alert("Vui lòng dán đường link Google Sheet hoặc dán dữ liệu bảng từ Google Sheet!");
-        return;
-      }
-
-      statusEl.innerHTML = `<span class="animate-pulse text-indigo-400">⏳ Đang tải và phân tích dữ liệu Google Sheet...</span>`;
-      applyBtn.disabled = true;
-      gsheetParsedProblems = [];
-      gsheetParsedCurriculum = [];
-
-      try {
-        let sheetId = "";
-        if (url) {
-          if (url.includes('/d/')) {
-            sheetId = url.split('/d/')[1].split('/')[0];
-          } else {
-            sheetId = url;
-          }
-          if (sheetId) localStorage.setItem('deruck_gsheet_url', url);
-        }
-
-        // 1. PROCESS PROBLEMS (if target is 'both' or 'problems')
-        if (syncTarget === 'both' || syncTarget === 'problems') {
-          let rawProbText = "";
-          if (pastedData && syncTarget === 'problems') {
-            rawProbText = pastedData;
-          } else if (sheetId) {
-            try {
-              rawProbText = await fetchGoogleSheetCsv(sheetId, probSheetName);
-            } catch (e) {
-              console.warn("Could not fetch problem sheet:", e);
-            }
-          }
-
-          if (rawProbText && rawProbText.trim()) {
-            const wb = XLSX.read(rawProbText, { type: 'string' });
-            const sheet = wb.Sheets[wb.SheetNames[0]];
-            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-            if (rows && rows.length >= 2) {
-              let headerRowIdx = 0;
-              for (let r = 0; r < Math.min(5, rows.length); r++) {
-                const rowStr = (rows[r] || []).join(' ').toLowerCase();
-                if (rowStr.includes('mã') || rowStr.includes('tên') || rowStr.includes('link') || rowStr.includes('name') || rowStr.includes('id')) {
-                  headerRowIdx = r;
-                  break;
-                }
-              }
-
-              const headers = (rows[headerRowIdx] || []).map(c => String(c || '').toLowerCase().trim());
-              let colId = headers.findIndex(h => h.includes('mã') || h === 'id' || h.includes('code'));
-              let colUrl = headers.findIndex(h => h.includes('link') || h.includes('url') || h.includes('đường dẫn'));
-              let colName = headers.findIndex(h => h.includes('tên') || h.includes('tiêu đề') || h.includes('name') || h.includes('title'));
-              let colClasses = headers.findIndex(h => h.includes('lớp') || h.includes('class') || h.includes('phân quyền') || h.includes('áp dụng'));
-              let colLevel = headers.findIndex(h => h.includes('level') || h.includes('mức') || h.includes('độ khó'));
-              let colCat = headers.findIndex(h => h.includes('dạng') || h.includes('chủ đề') || h.includes('tag') || h.includes('category'));
-              let colPlat = headers.findIndex(h => h.includes('sàn') || h.includes('nền tảng') || h.includes('platform'));
-
-              if (colId === -1) colId = 0;
-              if (colUrl === -1) colUrl = 1;
-              if (colName === -1) colName = 2;
-              if (colClasses === -1) colClasses = 3;
-              if (colLevel === -1) colLevel = 4;
-              if (colCat === -1) colCat = 5;
-              if (colPlat === -1) colPlat = 6;
-
-              for (let i = headerRowIdx + 1; i < rows.length; i++) {
-                const row = rows[i];
-                if (!row || row.length === 0) continue;
-                const pid = String(row[colId] || '').trim();
-                const pName = String(row[colName] || '').trim();
-                const pUrl = String(row[colUrl] || '').trim();
-                if (!pid || !pName) continue;
-
-                const rawClass = String(row[colClasses] || '').trim();
-                let cList = [];
-                if (!rawClass || rawClass.toLowerCase().includes('tất cả') || rawClass.toLowerCase().includes('public') || rawClass.toLowerCase().includes('all')) {
-                  cList = ['Public'];
-                } else {
-                  rawClass.split(/[,;\n]/).forEach(item => {
-                    const cl = item.trim();
-                    if (cl) cList.push(cl);
-                  });
-                  if (cList.length === 0) cList = ['Public'];
-                }
-
-                const rawLevel = String(row[colLevel] || '1').trim();
-                const rawCat = String(row[colCat] || 'Căn bản').trim();
-                const rawPlat = String(row[colPlat] || '').trim();
-                const normPlat = getPlatformName(rawPlat || pid || pUrl);
-
-                let bColor = 'indigo';
-                if (normPlat === 'Codeforces') bColor = 'blue';
-                else if (normPlat === 'VJudge') bColor = 'emerald';
-                else if (normPlat === 'MarisaOJ') bColor = 'purple';
-                else if (normPlat === 'ChuyenTinPro') bColor = 'teal';
-                else if (normPlat === 'ClueOJ') bColor = 'cyan';
-
-                gsheetParsedProblems.push({
-                  id: pid,
-                  name: pName,
-                  url: pUrl || '#',
-                  classes: cList,
-                  difficulty: `Level ${rawLevel} • ${rawCat}`,
-                  category: rawCat,
-                  platform: normPlat,
-                  badge_color: bColor
-                });
-              }
-            }
-          }
-        }
-
-        // 2. PROCESS CURRICULUM (if target is 'both' or 'curriculum')
-        if (syncTarget === 'both' || syncTarget === 'curriculum') {
-          let rawCurrText = "";
-          if (pastedData && syncTarget === 'curriculum') {
-            rawCurrText = pastedData;
-          } else if (sheetId) {
-            try {
-              rawCurrText = await fetchGoogleSheetCsv(sheetId, currSheetName);
-            } catch (e) {
-              console.warn("Could not fetch curriculum sheet:", e);
-            }
-          }
-
-          if (rawCurrText && rawCurrText.trim()) {
-            const wb = XLSX.read(rawCurrText, { type: 'string' });
-            const sheet = wb.Sheets[wb.SheetNames[0]];
-            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-            if (rows && rows.length >= 2) {
-              let headerRowIdx = 0;
-              for (let r = 0; r < Math.min(5, rows.length); r++) {
-                const rowStr = (rows[r] || []).join(' ').toLowerCase();
-                if (rowStr.includes('bài giảng') || rowStr.includes('tiêu đề') || rowStr.includes('chương') || rowStr.includes('tuần') || rowStr.includes('notion')) {
-                  headerRowIdx = r;
-                  break;
-                }
-              }
-
-              const headers = (rows[headerRowIdx] || []).map(c => String(c || '').toLowerCase().trim());
-              let colId = headers.findIndex(h => h.includes('mã') || h === 'id');
-              let colChapter = headers.findIndex(h => h.includes('chương') || h.includes('tuần') || h.includes('chapter') || h.includes('week'));
-              let colTitle = headers.findIndex(h => h.includes('tiêu đề') || h.includes('tên bài') || h.includes('title') || h.includes('bài giảng'));
-              let colClasses = headers.findIndex(h => h.includes('lớp') || h.includes('class') || h.includes('áp dụng'));
-              let colUrl = headers.findIndex(h => h.includes('link') || h.includes('url') || h.includes('notion') || h.includes('slide'));
-              let colSummary = headers.findIndex(h => h.includes('tóm tắt') || h.includes('nội dung') || h.includes('summary') || h.includes('ghi chú'));
-
-              if (colId === -1) colId = 0;
-              if (colChapter === -1) colChapter = 1;
-              if (colTitle === -1) colTitle = 2;
-              if (colClasses === -1) colClasses = 3;
-              if (colUrl === -1) colUrl = 4;
-              if (colSummary === -1) colSummary = 5;
-
-              for (let i = headerRowIdx + 1; i < rows.length; i++) {
-                const row = rows[i];
-                if (!row || row.length === 0) continue;
-                const cid = String(row[colId] || `LEC-${i}`).trim();
-                const cTitle = String(row[colTitle] || '').trim();
-                if (!cTitle) continue;
-
-                const cChapter = String(row[colChapter] || '').trim();
-                const cUrl = String(row[colUrl] || '#').trim();
-                const cSummary = String(row[colSummary] || '').trim();
-
-                const rawClass = String(row[colClasses] || '').trim();
-                let cList = [];
-                if (!rawClass || rawClass.toLowerCase().includes('tất cả') || rawClass.toLowerCase().includes('public') || rawClass.toLowerCase().includes('all')) {
-                  cList = ['Public'];
-                } else {
-                  rawClass.split(/[,;\n]/).forEach(item => {
-                    const cl = item.trim();
-                    if (cl) cList.push(cl);
-                  });
-                  if (cList.length === 0) cList = ['Public'];
-                }
-
-                gsheetParsedCurriculum.push({
-                  id: cid,
-                  chapter: cChapter,
-                  title: cTitle,
-                  classes: cList,
-                  url: cUrl,
-                  summary: cSummary
-                });
-              }
-            }
-          }
-        }
-
-        const totalFound = gsheetParsedProblems.length + gsheetParsedCurriculum.length;
-        if (totalFound === 0) {
-          throw new Error("Không tìm thấy dữ liệu hợp lệ trong các tab Google Sheet đã chọn! Vui lòng kiểm tra lại đường link và quyền chia sẻ.");
-        }
-
-        statusEl.innerHTML = `<span class="text-emerald-400 font-bold">✅ Đã đọc thành công ${gsheetParsedProblems.length} bài tập và ${gsheetParsedCurriculum.length} bài giảng!</span>`;
-        previewContainer.classList.remove('hidden');
-        applyBtn.disabled = false;
-
-        // Render Problems preview
-        if (probCard && probTbody) {
-          if (gsheetParsedProblems.length > 0) {
-            probCard.classList.remove('hidden');
-            if (probCountEl) probCountEl.textContent = gsheetParsedProblems.length;
-            probTbody.innerHTML = '';
-            gsheetParsedProblems.slice(0, 5).forEach(p => {
-              const tr = document.createElement('tr');
-              tr.innerHTML = `
-                <td class="py-1.5 px-2 font-bold text-white">${p.id}</td>
-                <td class="py-1.5 px-2 text-slate-200">${p.name}</td>
-                <td class="py-1.5 px-2 text-teal-300 font-semibold">${p.platform}</td>
-                <td class="py-1.5 px-2 text-slate-400">${p.classes.join(', ')}</td>
-              `;
-              probTbody.appendChild(tr);
-            });
-          } else {
-            probCard.classList.add('hidden');
-          }
-        }
-
-        // Render Curriculum preview
-        if (currCard && currTbody) {
-          if (gsheetParsedCurriculum.length > 0) {
-            currCard.classList.remove('hidden');
-            if (currCountEl) currCountEl.textContent = gsheetParsedCurriculum.length;
-            currTbody.innerHTML = '';
-            gsheetParsedCurriculum.slice(0, 5).forEach(c => {
-              const tr = document.createElement('tr');
-              tr.innerHTML = `
-                <td class="py-1.5 px-2 font-bold text-white">${c.id}</td>
-                <td class="py-1.5 px-2 text-indigo-300">${c.chapter}</td>
-                <td class="py-1.5 px-2 text-slate-200">${c.title}</td>
-                <td class="py-1.5 px-2 text-slate-400">${c.classes.join(', ')}</td>
-              `;
-              currTbody.appendChild(tr);
-            });
-          } else {
-            currCard.classList.add('hidden');
-          }
-        }
-
-      } catch (err) {
-        statusEl.innerHTML = `<span class="text-rose-400 font-bold">❌ ${err.message}</span>`;
-        alert("Lỗi khi tải dữ liệu từ Google Sheet:\n" + err.message);
-      }
-    }
-
-    function applyGoogleSheetSync() {
-      const syncMode = document.querySelector('input[name="gsheet-sync-mode"]:checked')?.value || 'merge';
-      let probCount = 0;
-      let currCount = 0;
-
-      // 1. Apply Problems
-      if (gsheetParsedProblems.length > 0) {
-        if (!appData.problems) appData.problems = [];
-        if (syncMode === 'replace') {
-          appData.problems = [...gsheetParsedProblems];
-        } else {
-          gsheetParsedProblems.forEach(pNew => {
-            const idx = appData.problems.findIndex(p => p.id === pNew.id);
-            if (idx >= 0) {
-              appData.problems[idx] = Object.assign({}, appData.problems[idx], pNew);
-            } else {
-              appData.problems.push(pNew);
-            }
-          });
-        }
-        probCount = gsheetParsedProblems.length;
-      }
-
-      // 2. Apply Curriculum
-      if (gsheetParsedCurriculum.length > 0) {
-        if (!appData.curriculum) appData.curriculum = [];
-        if (syncMode === 'replace') {
-          appData.curriculum = [...gsheetParsedCurriculum];
-        } else {
-          gsheetParsedCurriculum.forEach(cNew => {
-            const idx = appData.curriculum.findIndex(c => c.id === cNew.id);
-            if (idx >= 0) {
-              appData.curriculum[idx] = Object.assign({}, appData.curriculum[idx], cNew);
-            } else {
-              appData.curriculum.push(cNew);
-            }
-          });
-        }
-        currCount = gsheetParsedCurriculum.length;
-      }
-
-      saveAppDataLocally();
-      populateTestcaseProblemDropdowns();
-      renderProblems();
-      renderJudgeWorkspace();
-      renderCurriculum();
-      closeGoogleSheetSyncModal();
-
-      let msg = "🎉 Đã đồng bộ thành công!";
-      if (probCount > 0 && currCount > 0) {
-        msg = `🎉 Đã đồng bộ thành công ${probCount} bài tập và ${currCount} bài giảng từ Google Sheet!`;
-      } else if (probCount > 0) {
-        msg = `🎉 Đã đồng bộ thành công ${probCount} bài tập từ Google Sheet!`;
-      } else if (currCount > 0) {
-        msg = `🎉 Đã đồng bộ thành công ${currCount} bài giảng từ Google Sheet!`;
-      }
-      showLiveToast(msg);
     }
 
     function escapeHtml(str) {
