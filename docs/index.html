@@ -795,10 +795,10 @@
               </div>
 
               <div class="flex items-center gap-2">
-                <button onclick="insertJudgeStarterTemplate()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Lấy code khung mẫu theo ngôn ngữ đang chọn">
-                  <span>📄</span> Khung code mẫu
+                <button onclick="insertJudgeStarterTemplate()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Lấy code mẫu cơ bản">
+                  <span>📄</span> Code mẫu
                 </button>
-                <button onclick="clearJudgeCode()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-rose-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Xóa trắng code">
+                <button onclick="clearJudgeCode()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-rose-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Xóa trắng để tự viết code">
                   <span>🗑️</span>
                 </button>
               </div>
@@ -815,18 +815,40 @@
               ></textarea>
             </div>
 
+            <!-- Optional Custom Input Box (Collapsible) -->
+            <div id="judge-custom-input-box" class="hidden px-4 py-2.5 bg-slate-950/95 border-t border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-bold flex items-center gap-1.5 text-indigo-300">
+                  <span>⌨️</span> Dữ liệu đầu vào tự do (Custom Input):
+                </span>
+                <span class="text-[11px] text-slate-500 italic">Để trống nếu code không cần input (ví dụ: print("abc"))</span>
+              </div>
+              <textarea 
+                id="judge-custom-input" 
+                rows="2" 
+                placeholder="Nhập dữ liệu test tự do tại đây (nếu có)..."
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 font-mono text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+              ></textarea>
+            </div>
+
             <!-- Actions Bar -->
             <div class="bg-slate-950/80 px-4 py-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
               <div class="text-xs text-slate-500 flex items-center gap-2">
-                <span id="judge-editor-status">Sẵn sàng nộp bài</span>
+                <span id="judge-editor-status">Sẵn sàng chạy</span>
               </div>
 
-              <div class="flex items-center gap-2">
-                <button onclick="runJudgeSampleOnly()" id="btn-judge-run-sample" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer shadow">
-                  <span>▶️</span> Chạy Thử Ví Dụ
+              <div class="flex items-center flex-wrap gap-2">
+                <button type="button" onclick="toggleCustomInputBox()" id="btn-toggle-custom-input" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Bật/Tắt nhập dữ liệu thử nghiệm">
+                  <span>⌨️</span> Nhập Input
                 </button>
-                <button onclick="submitJudgeAllTests()" id="btn-judge-submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
-                  <span>🚀</span> Nộp Bài & Chấm Điểm
+                <button type="button" onclick="runJudgeCustomCode()" id="btn-judge-run-custom" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer active:scale-95" title="Chạy thử code tự do (ví dụ print('abc'))">
+                  <span>⚡</span> Chạy Tự Do
+                </button>
+                <button type="button" onclick="runJudgeSampleOnly()" id="btn-judge-run-sample" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer shadow">
+                  <span>▶️</span> Thử Ví Dụ
+                </button>
+                <button type="button" onclick="submitJudgeAllTests()" id="btn-judge-submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
+                  <span>🚀</span> Chấm Điểm
                 </button>
               </div>
             </div>
@@ -836,6 +858,29 @@
           <!-- Live Grading Result Console -->
           <div id="judge-console-card" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
             
+            <!-- Custom Run Output Box (Live Free Execution) -->
+            <div id="judge-custom-run-container" class="hidden bg-slate-950 border border-indigo-500/40 rounded-xl p-4 space-y-2.5 font-mono text-xs">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <span class="font-bold text-indigo-300 flex items-center gap-1.5 text-sm">
+                  <span>⚡</span> Kết Quả Chạy Thử Tự Do:
+                </span>
+                <div class="flex items-center gap-2">
+                  <span id="judge-custom-run-meta" class="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                    0.0s | OK
+                  </span>
+                  <button type="button" onclick="document.getElementById('judge-custom-run-container').classList.add('hidden')" class="text-slate-500 hover:text-white text-xs cursor-pointer ml-1">✕ Đóng</button>
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div class="text-[11px] text-slate-400 font-semibold">Đầu ra màn hình (Output / STDOUT):</div>
+                <pre id="judge-custom-run-stdout" class="bg-slate-900 border border-slate-800 p-3 rounded-lg text-emerald-300 whitespace-pre-wrap max-h-56 overflow-y-auto font-mono text-xs sm:text-sm"></pre>
+              </div>
+              <div id="judge-custom-run-stderr-box" class="space-y-1 hidden">
+                <div class="text-[11px] text-rose-400 font-semibold">Thông báo lỗi / cảnh báo (STDERR):</div>
+                <pre id="judge-custom-run-stderr" class="bg-rose-950/40 border border-rose-500/30 p-2.5 rounded-lg text-rose-200 whitespace-pre-wrap max-h-48 overflow-y-auto font-mono text-xs"></pre>
+              </div>
+            </div>
+
             <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-3">
               <h4 class="text-sm font-bold text-white flex items-center gap-2">
                 <span>📊</span> Kết Quả Chấm Bài
@@ -4294,7 +4339,7 @@
       const codeEditor = document.getElementById('judge-code-editor');
       if (codeEditor) {
         const savedCode = localStorage.getItem(`deruck_code_${currentJudgeProbId}_${currentJudgeLang}`);
-        if (savedCode && savedCode.trim()) {
+        if (savedCode !== null) {
           codeEditor.value = savedCode;
         } else {
           codeEditor.value = getStarterTemplate(currentJudgeProbId, currentJudgeLang);
@@ -4336,7 +4381,7 @@
       const codeEditor = document.getElementById('judge-code-editor');
       if (codeEditor) {
         const savedCode = localStorage.getItem(`deruck_code_${currentJudgeProbId}_${currentJudgeLang}`);
-        if (savedCode && savedCode.trim()) {
+        if (savedCode !== null) {
           codeEditor.value = savedCode;
         } else {
           codeEditor.value = getStarterTemplate(currentJudgeProbId, currentJudgeLang);
@@ -4364,7 +4409,14 @@
           langInfo.textContent = "g++ 13 / C++20 (O2)";
         }
         if (codeEditor) {
-          codeEditor.placeholder = "// Viết code C++ (C++20) tại đây...\n#include <iostream>\nusing namespace std;\n\nint main() {\n    return 0;\n}";
+          codeEditor.placeholder = `// Viết code C++ cơ bản tại đây...
+#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello World";
+    return 0;
+}`;
         }
         if (statusEl) {
           statusEl.textContent = "C++20 (Tối ưu -O2)";
@@ -4381,7 +4433,13 @@
           langInfo.textContent = "Python 3.12 (Bù x2.0s)";
         }
         if (codeEditor) {
-          codeEditor.placeholder = "# Viết code Python 3 tại đây...\nimport sys\n\ndef main():\n    pass\n\nif __name__ == '__main__':\n    main()";
+          codeEditor.placeholder = `# Viết code Python cơ bản tự do tại đây...
+# Ví dụ in ra màn hình:
+print("abc")
+
+# Hoặc nhập dữ liệu cơ bản:
+# a, b = map(int, input().split())
+# print(a + b)`;
         }
         if (statusEl) {
           statusEl.textContent = "Python 3 (Tự động bù thời gian)";
@@ -4397,13 +4455,9 @@
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    long long a, b;
-    if (cin >> a >> b) {
-        cout << a + b << "\\n";
-    }
+    int a, b;
+    cin >> a >> b;
+    cout << a + b;
     return 0;
 }`;
           case 'CB-02':
@@ -4411,29 +4465,23 @@ int main() {
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    long long n;
-    if (cin >> n) {
-        if (n % 2 == 0) cout << "CHAN\\n";
-        else cout << "LE\\n";
-    }
+    int n;
+    cin >> n;
+    if (n % 2 == 0) cout << "CHAN";
+    else cout << "LE";
     return 0;
 }`;
           case 'CB-03':
             return `#include <iostream>
-#include <algorithm>
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    long long a, b, c;
-    if (cin >> a >> b >> c) {
-        cout << max({a, b, c}) << "\\n";
-    }
+    int a, b, c;
+    cin >> a >> b >> c;
+    int ans = a;
+    if (b > ans) ans = b;
+    if (c > ans) ans = c;
+    cout << ans;
     return 0;
 }`;
           case 'CB-04':
@@ -4441,14 +4489,9 @@ int main() {
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
     long long n;
-    if (cin >> n) {
-        long long sum = n * (n + 1) / 2;
-        cout << sum << "\\n";
-    }
+    cin >> n;
+    cout << n * (n + 1) / 2;
     return 0;
 }`;
           case 'CB-05':
@@ -4456,39 +4499,34 @@ int main() {
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
     int n;
-    if (cin >> n) {
-        long long ans = 1;
-        for (int i = 1; i <= n; i++) ans *= i;
-        cout << ans << "\\n";
-    }
+    cin >> n;
+    long long ans = 1;
+    for (int i = 1; i <= n; i++) ans *= i;
+    cout << ans;
     return 0;
 }`;
           case 'CB-06':
             return `#include <iostream>
 using namespace std;
 
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    for (long long i = 2; i * i <= n; i++) {
-        if (n % i == 0) return false;
-    }
-    return true;
-}
-
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    long long n;
-    if (cin >> n) {
-        cout << (isPrime(n) ? "YES" : "NO") << "\\n";
+    int n;
+    cin >> n;
+    if (n < 2) {
+        cout << "NO";
+        return 0;
     }
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            cout << "NO";
+            return 0;
+        }
+    }
+    cout << "YES";
     return 0;
-}`;
+}
+`;
           case 'CB-07':
             return `#include <iostream>
 #include <string>
@@ -4496,167 +4534,177 @@ int main() {
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
     string s;
-    if (cin >> s) {
-        reverse(s.begin(), s.end());
-        cout << s << "\\n";
-    }
+    cin >> s;
+    reverse(s.begin(), s.end());
+    cout << s;
     return 0;
 }`;
           case 'CB-08':
             return `#include <iostream>
-#include <vector>
-#include <algorithm>
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
     int n;
-    if (cin >> n) {
-        vector<long long> a(n);
-        for (int i = 0; i < n; i++) cin >> a[i];
-        long long max_val = *max_element(a.begin(), a.end());
-        cout << max_val << "\\n";
+    cin >> n;
+    int max_val = -1000000000;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        if (x > max_val) max_val = x;
     }
+    cout << max_val;
     return 0;
 }`;
           default:
             return `#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    // Viết code giải bài tại đây
-
+    // Viết code C++ cơ bản tại đây
+    cout << "Hello World";
     return 0;
 }`;
         }
       } else {
-        // Python 3 templates
+        // Python 3 templates - dạng cơ bản nhất, không cần khung hàm phức tạp
         switch (probId) {
           case 'CB-01':
-            return `import sys
-
-def main():
-    tokens = sys.stdin.read().split()
-    if len(tokens) >= 2:
-        a = int(tokens[0])
-        b = int(tokens[1])
-        print(a + b)
-
-if __name__ == '__main__':
-    main()`;
+            return `a, b = map(int, input().split())
+print(a + b)`;
           case 'CB-02':
-            return `import sys
-
-def main():
-    tokens = sys.stdin.read().split()
-    if tokens:
-        n = int(tokens[0])
-        print("CHAN" if n % 2 == 0 else "LE")
-
-if __name__ == '__main__':
-    main()`;
+            return `n = int(input())
+if n % 2 == 0:
+    print("CHAN")
+else:
+    print("LE")`;
           case 'CB-03':
-            return `import sys
-
-def main():
-    tokens = sys.stdin.read().split()
-    if len(tokens) >= 3:
-        a, b, c = int(tokens[0]), int(tokens[1]), int(tokens[2])
-        print(max(a, b, c))
-
-if __name__ == '__main__':
-    main()`;
+            return `a, b, c = map(int, input().split())
+print(max(a, b, c))`;
           case 'CB-04':
-            return `import sys
-
-def main():
-    tokens = sys.stdin.read().split()
-    if tokens:
-        n = int(tokens[0])
-        print(n * (n + 1) // 2)
-
-if __name__ == '__main__':
-    main()`;
+            return `n = int(input())
+print(n * (n + 1) // 2)`;
           case 'CB-05':
-            return `import sys
-import math
-
-def main():
-    tokens = sys.stdin.read().split()
-    if tokens:
-        n = int(tokens[0])
-        print(math.factorial(n))
-
-if __name__ == '__main__':
-    main()`;
+            return `n = int(input())
+ans = 1
+for i in range(1, n + 1):
+    ans *= i
+print(ans)`;
           case 'CB-06':
-            return `import sys
-
-def is_prime(n):
-    if n < 2:
-        return False
-    i = 2
-    while i * i <= n:
+            return `n = int(input())
+if n < 2:
+    print("NO")
+else:
+    ok = True
+    for i in range(2, int(n**0.5) + 1):
         if n % i == 0:
-            return False
-        i += 1
-    return True
-
-def main():
-    tokens = sys.stdin.read().split()
-    if tokens:
-        n = int(tokens[0])
-        print("YES" if is_prime(n) else "NO")
-
-if __name__ == '__main__':
-    main()`;
+            ok = False
+            break
+    print("YES" if ok else "NO")`;
           case 'CB-07':
-            return `import sys
-
-def main():
-    s = sys.stdin.read().strip()
-    if s:
-        print(s[::-1])
-
-if __name__ == '__main__':
-    main()`;
+            return `s = input()
+print(s[::-1])`;
           case 'CB-08':
-            return `import sys
-
-def main():
-    tokens = sys.stdin.read().split()
-    if tokens:
-        n = int(tokens[0])
-        arr = [int(x) for x in tokens[1:1+n]]
-        print(max(arr))
-
-if __name__ == '__main__':
-    main()`;
+            return `n = int(input())
+a = list(map(int, input().split()))
+print(max(a))`;
           default:
-            return `import sys
-
-def solve():
-    tokens = sys.stdin.read().split()
-    if not tokens:
-        return
-    # Viết code giải bài tại đây
-    pass
-
-if __name__ == '__main__':
-    solve()`;
+            return `# Viết code Python tự do tại đây
+print("Hello World")`;
         }
+      }
+    }
+
+    function toggleCustomInputBox() {
+      const box = document.getElementById('judge-custom-input-box');
+      const btn = document.getElementById('btn-toggle-custom-input');
+      if (!box) return;
+      if (box.classList.contains('hidden')) {
+        box.classList.remove('hidden');
+        if (btn) btn.className = "px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-600/30 text-indigo-300 border border-indigo-500/50 transition flex items-center gap-1 cursor-pointer";
+        const ta = document.getElementById('judge-custom-input');
+        if (ta) ta.focus();
+      } else {
+        box.classList.add('hidden');
+        if (btn) btn.className = "px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer";
+      }
+    }
+
+    async function runJudgeCustomCode() {
+      if (isJudging) return;
+      const codeEditor = document.getElementById('judge-code-editor');
+      const code = codeEditor ? codeEditor.value : '';
+      if (!code.trim()) {
+        alert("Vui lòng viết code trước khi chạy thử!");
+        return;
+      }
+
+      saveCurrentJudgeCodeToLocal();
+
+      const customInputEl = document.getElementById('judge-custom-input');
+      const customInput = customInputEl ? customInputEl.value : '';
+
+      isJudging = true;
+      const btnCustom = document.getElementById('btn-judge-run-custom');
+      if (btnCustom) {
+        btnCustom.disabled = true;
+        btnCustom.innerHTML = '<span>⏳</span> Đang chạy...';
+      }
+
+      const resBox = document.getElementById('judge-custom-run-container');
+      const resStdout = document.getElementById('judge-custom-run-stdout');
+      const resStderr = document.getElementById('judge-custom-run-stderr');
+      const resStderrBox = document.getElementById('judge-custom-run-stderr-box');
+      const resMeta = document.getElementById('judge-custom-run-meta');
+
+      if (resBox) resBox.classList.remove('hidden');
+      if (resStdout) resStdout.textContent = 'Đang thực thi mã nguồn...';
+      if (resStderrBox) resStderrBox.classList.add('hidden');
+
+      try {
+        const res = await executeCode(currentJudgeLang, code, customInput, 2.0);
+
+        if (resMeta) {
+          const isOK = (res.status === 'OK');
+          resMeta.className = `text-[11px] font-mono font-bold px-2 py-0.5 rounded ${
+            isOK 
+              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' 
+              : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+          }`;
+          resMeta.textContent = `${res.status} | ${res.execution_time ? (res.execution_time + 's') : '0.05s'}`;
+        }
+
+        if (res.status === 'CE') {
+          if (resStdout) resStdout.textContent = '(Không có đầu ra do lỗi biên dịch)';
+          if (resStderrBox && resStderr) {
+            resStderrBox.classList.remove('hidden');
+            resStderr.textContent = res.compile_error || 'Compilation Error';
+          }
+        } else {
+          if (resStdout) {
+            resStdout.textContent = res.stdout ? res.stdout : '(Chương trình chạy xong nhưng không in gì ra màn hình)';
+          }
+          if (res.stderr && res.stderr.trim()) {
+            if (resStderrBox && resStderr) {
+              resStderrBox.classList.remove('hidden');
+              resStderr.textContent = res.stderr;
+            }
+          } else {
+            if (resStderrBox) resStderrBox.classList.add('hidden');
+          }
+        }
+      } catch (err) {
+        if (resStdout) resStdout.textContent = 'Lỗi thực thi: ' + err.message;
+      } finally {
+        isJudging = false;
+        if (btnCustom) {
+          btnCustom.disabled = false;
+          btnCustom.innerHTML = '<span>⚡</span> Chạy Tự Do';
+        }
+      }
+
+      if (resBox) {
+        resBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     }
 
@@ -4665,16 +4713,17 @@ if __name__ == '__main__':
       if (codeEditor) {
         codeEditor.value = getStarterTemplate(currentJudgeProbId, currentJudgeLang);
         saveCurrentJudgeCodeToLocal();
-        showLiveToast("Đã chèn khung code mẫu!");
+        showLiveToast("Đã chèn code mẫu cơ bản!");
       }
     }
 
     function clearJudgeCode() {
-      if (confirm("Bạn có chắc chắn muốn xóa trắng code hiện tại không?")) {
+      if (confirm("Bạn có chắc chắn muốn xóa trắng code hiện tại để tự viết không?")) {
         const codeEditor = document.getElementById('judge-code-editor');
         if (codeEditor) {
           codeEditor.value = '';
           saveCurrentJudgeCodeToLocal();
+          showLiveToast("Đã xóa trắng code!");
         }
       }
     }
@@ -4853,6 +4902,7 @@ if __name__ == '__main__':
       if (matrix) matrix.innerHTML = '';
 
       let passedCount = 0;
+      let firstTestDetail = null;
 
       for (let i = 0; i < testList.length; i++) {
         const tc = testList[i];
@@ -4881,6 +4931,16 @@ if __name__ == '__main__':
         const isMatch = (normActual === normExpected);
         if (isMatch) passedCount++;
 
+        if (i === 0) {
+          firstTestDetail = {
+            input: tc.input,
+            output: tc.output,
+            stdout: res.stdout,
+            stderr: res.stderr,
+            verdict: isMatch ? 'AC' : 'WA'
+          };
+        }
+
         const cell = document.createElement('div');
         cell.className = `p-2.5 rounded-xl border text-xs font-mono flex flex-col justify-between cursor-pointer transition ${
           isMatch 
@@ -4908,15 +4968,19 @@ if __name__ == '__main__':
       } else {
         if (banner) {
           banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-amber-950/70 border border-amber-500/40 text-amber-300";
-          banner.innerHTML = `<div><span class="text-lg">⚠️</span> <strong>KẾT QUẢ CHƯA KHỚP</strong> (${passedCount}/${testList.length} ví dụ). Bấm vào ô test để xem khác biệt input/output.</div>`;
+          banner.innerHTML = `<div><span class="text-lg">⚠️</span> <strong>KẾT QUẢ CHƯA KHỚP</strong> (${passedCount}/${testList.length} ví dụ). Xem chi tiết bên dưới.</div>`;
           banner.classList.remove('hidden');
         }
+      }
+
+      if (firstTestDetail) {
+        showJudgeTestDetail(1, firstTestDetail.input, firstTestDetail.output, firstTestDetail.stdout, firstTestDetail.stderr, firstTestDetail.verdict);
       }
 
       isJudging = false;
       if (btnSample) {
         btnSample.disabled = false;
-        btnSample.innerHTML = '<span>▶️</span> Chạy Thử Ví Dụ';
+        btnSample.innerHTML = '<span>▶️</span> Thử Ví Dụ';
       }
       if (btnSubmit) btnSubmit.disabled = false;
     }
@@ -5124,7 +5188,7 @@ if __name__ == '__main__':
       isJudging = false;
       if (btnSubmit) {
         btnSubmit.disabled = false;
-        btnSubmit.innerHTML = '<span>🚀</span> Nộp Bài & Chấm Điểm';
+        btnSubmit.innerHTML = '<span>🚀</span> Chấm Điểm';
       }
       if (btnSample) btnSample.disabled = false;
     }
