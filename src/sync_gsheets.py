@@ -7,6 +7,11 @@ import re
 from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional, Tuple
 
+# Ensure root is in sys.path
+_root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _root_dir not in sys.path:
+    sys.path.insert(0, _root_dir)
+
 # Ensure SSLKEYLOGFILE is safe
 _sslkeylogfile = os.environ.get("SSLKEYLOGFILE")
 if _sslkeylogfile and not os.path.exists(_sslkeylogfile):
