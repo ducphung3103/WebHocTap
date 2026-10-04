@@ -297,11 +297,34 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                         c_list.append("Python")
 
                 plat_lower = platform.lower()
-                b_color = "purple" if "marisa" in plat_lower else ("amber" if "vnoi" in plat_lower else ("cyan" if "clue" in plat_lower else ("teal" if "chuyentin" in plat_lower or "ctoj" in plat_lower else ("emerald" if "vjudge" in plat_lower else "blue"))))
+                norm_plat = platform
+                b_color = "blue"
+                if "chuyentin" in plat_lower or "ctoj" in plat_lower or "oj.chuyentin.pro" in plat_lower:
+                    norm_plat = "ChuyenTinPro"
+                    b_color = "teal"
+                elif "clue" in plat_lower:
+                    norm_plat = "ClueOJ"
+                    b_color = "cyan"
+                elif "deruck" in plat_lower or "judge" in plat_lower or "nội bộ" in plat_lower:
+                    norm_plat = "DeruckOJ"
+                    b_color = "indigo"
+                elif "codeforces" in plat_lower or "cf" == plat_lower:
+                    norm_plat = "Codeforces"
+                    b_color = "blue"
+                elif "vjudge" in plat_lower:
+                    norm_plat = "VJudge"
+                    b_color = "emerald"
+                elif "marisa" in plat_lower:
+                    norm_plat = "MarisaOJ"
+                    b_color = "purple"
+                elif "vnoi" in plat_lower:
+                    norm_plat = "VNOI"
+                    b_color = "amber"
+
                 problems.append({
                     "id": pid,
                     "name": name,
-                    "platform": platform,
+                    "platform": norm_plat,
                     "url": link,
                     "badge_color": b_color,
                     "category": tag,

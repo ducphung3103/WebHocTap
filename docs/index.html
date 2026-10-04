@@ -642,6 +642,9 @@
           <button onclick="openTestcaseManagerModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 transition flex items-center gap-1.5 cursor-pointer">
             <span>⚙️</span> Quản Lý Bộ Test
           </button>
+          <button onclick="openGoogleSheetSyncModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow-lg shadow-teal-600/20 transition flex items-center gap-1.5 cursor-pointer">
+            <span>📊</span> Đồng Bộ Google Sheet
+          </button>
         </div>
       </div>
 
@@ -669,6 +672,8 @@
             <button onclick="filterProblemPlatform('Codeforces')" id="prob-filter-Codeforces" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-blue-300 transition cursor-pointer">🔵 Codeforces</button>
             <button onclick="filterProblemPlatform('MarisaOJ')" id="prob-filter-MarisaOJ" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-purple-300 transition cursor-pointer">🟣 MarisaOJ</button>
             <button onclick="filterProblemPlatform('VJudge')" id="prob-filter-VJudge" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-emerald-300 transition cursor-pointer">🟢 VJudge</button>
+            <button onclick="filterProblemPlatform('ChuyenTinPro')" id="prob-filter-ChuyenTinPro" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-teal-300 transition cursor-pointer">🌐 Chuyên Tin</button>
+            <button onclick="filterProblemPlatform('ClueOJ')" id="prob-filter-ClueOJ" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-cyan-300 transition cursor-pointer">🧩 ClueOJ</button>
           </div>
         </div>
 
@@ -867,6 +872,9 @@
               </div>
 
               <div class="flex items-center gap-3">
+                <button type="button" onclick="openStressTestFromJudge()" class="admin-only-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-amber-600/25 hover:bg-amber-600/40 text-amber-300 border border-amber-500/30 transition flex items-center gap-1.5 cursor-pointer active:scale-95" title="Đối chiếu và chấm điểm với code mẫu của thầy">
+                  <span>🤖</span> Chấm Bằng Code
+                </button>
                 <button type="button" onclick="runJudgeCode()" id="btn-judge-run" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
                   <span>▶️</span> Chạy Thử
                 </button>
@@ -1259,6 +1267,9 @@
                 <option value="MarisaOJ">MarisaOJ</option>
                 <option value="Codeforces">Codeforces</option>
                 <option value="VJudge">VJudge</option>
+                <option value="ChuyenTinPro">oj.chuyentin.pro</option>
+                <option value="ClueOJ">ClueOJ</option>
+                <option value="DeruckOJ">DeruckOJ (Chấm trên web)</option>
               </select>
             </div>
           </div>
@@ -1353,17 +1364,20 @@
         </div>
 
         <!-- Navigation Tabs inside Modal -->
-        <div class="flex items-center gap-2 border-b border-slate-800 pb-2 text-xs flex-shrink-0">
-          <button id="tc-tab-btn-manage" onclick="switchTestcaseTab('manage')" class="px-3 py-1.5 rounded-lg font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition cursor-pointer">
+        <div class="flex items-center gap-2 border-b border-slate-800 pb-2 text-xs flex-shrink-0 overflow-x-auto">
+          <button id="tc-tab-btn-manage" onclick="switchTestcaseTab('manage')" class="px-3 py-1.5 rounded-lg font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition cursor-pointer whitespace-nowrap">
             🧪 Bộ Test Bài Hiện Tại
           </button>
-          <button id="tc-tab-btn-create" onclick="switchTestcaseTab('create')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
+          <button id="tc-tab-btn-create" onclick="switchTestcaseTab('create')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer whitespace-nowrap">
             ➕ Thêm Bài Tập Mới
           </button>
-          <button id="tc-tab-btn-batch" onclick="switchTestcaseTab('batch')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
+          <button id="tc-tab-btn-auto" onclick="switchTestcaseTab('auto')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer whitespace-nowrap">
+            🤖 Sinh Test & Chấm Bằng Code
+          </button>
+          <button id="tc-tab-btn-batch" onclick="switchTestcaseTab('batch')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer whitespace-nowrap">
             📥 Import Hàng Loạt Test
           </button>
-          <button id="tc-tab-btn-export" onclick="switchTestcaseTab('export')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
+          <button id="tc-tab-btn-export" onclick="switchTestcaseTab('export')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer whitespace-nowrap">
             💾 Sao Lưu / Đồng Bộ
           </button>
         </div>
@@ -1470,6 +1484,194 @@
             </form>
           </div>
 
+          <!-- TAB AUTO: GENERATOR & CODE CHECKER -->
+          <div id="tc-tab-content-auto" class="space-y-4 hidden">
+            <!-- Mode switcher: 1. Tạo test tự động | 2. Chấm điểm bằng code mẫu -->
+            <div class="flex items-center gap-2 bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-xs">
+              <button type="button" id="tc-auto-mode-gen-btn" onclick="switchAutoSubMode('gen')" class="flex-1 py-1.5 px-3 rounded-lg font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition cursor-pointer">
+                ⚡ 1. Tạo Bộ Test Tự Động (Generator + Solution)
+              </button>
+              <button type="button" id="tc-auto-mode-stress-btn" onclick="switchAutoSubMode('stress')" class="flex-1 py-1.5 px-3 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
+                ⚖️ 2. Chấm Điểm Bằng Code (Stress Test / Đối Chiếu)
+              </button>
+            </div>
+
+            <!-- SUBMODE 1: AUTO TESTCASE GENERATOR -->
+            <div id="tc-auto-submode-gen" class="space-y-4">
+              <div class="p-3 bg-slate-950/60 border border-slate-800 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-2">
+                  <label class="font-semibold text-slate-300 whitespace-nowrap">Chọn bài đích:</label>
+                  <select id="tc-auto-prob-select" class="bg-slate-900 border border-slate-700 text-xs font-bold text-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-slate-400 font-semibold">Số test:</span>
+                  <select id="tc-auto-gen-count" class="bg-slate-900 border border-slate-700 text-xs font-bold text-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                    <option value="3">3 test</option>
+                    <option value="5" selected>5 test</option>
+                    <option value="10">10 test</option>
+                    <option value="15">15 test</option>
+                  </select>
+                  <label class="flex items-center gap-1.5 text-slate-400 text-xs cursor-pointer ml-1">
+                    <input type="checkbox" id="tc-auto-gen-sample" checked class="rounded bg-slate-900 border-slate-700 text-indigo-500">
+                    <span>Test 1 là Ví dụ</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Generator & Solution Code Dual Editors -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Left: Generator Code -->
+                <div class="space-y-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800 flex flex-col">
+                  <div class="flex items-center justify-between flex-wrap gap-1">
+                    <label class="text-xs font-bold text-indigo-300 flex items-center gap-1.5">
+                      <span>🎲</span> Mã Sinh Test (Generator):
+                    </label>
+                    <div class="flex items-center gap-1.5">
+                      <select id="tc-auto-gen-lang" onchange="updateGenCodeTemplate()" class="bg-slate-900 border border-slate-700 text-[11px] font-semibold text-slate-300 rounded px-2 py-0.5 focus:outline-none cursor-pointer">
+                        <option value="python">Python 3</option>
+                        <option value="cpp">C++20</option>
+                      </select>
+                      <select id="tc-auto-gen-preset" onchange="applyGenPreset(this.value)" class="bg-slate-900 border border-slate-700 text-[11px] font-semibold text-slate-300 rounded px-2 py-0.5 focus:outline-none cursor-pointer">
+                        <option value="two_int">Mẫu: 2 số A, B</option>
+                        <option value="array_n">Mẫu: Mảng N phần tử</option>
+                        <option value="array_large">Mẫu: Mảng số lớn (10⁹)</option>
+                        <option value="string">Mẫu: Xâu ký tự</option>
+                        <option value="matrix">Mẫu: Ma trận N x M</option>
+                      </select>
+                    </div>
+                  </div>
+                  <textarea id="tc-auto-gen-code" rows="8" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 font-mono text-xs text-slate-200 focus:outline-none focus:border-indigo-500 leading-relaxed resize-none" placeholder="Viết mã sinh input ngẫu nhiên..."></textarea>
+                  <p class="text-[10px] text-slate-500 italic">💡 In ra màn hình chuẩn (stdout) dữ liệu đầu vào cho bài toán.</p>
+                </div>
+
+                <!-- Right: Solution AC Code -->
+                <div class="space-y-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800 flex flex-col">
+                  <div class="flex items-center justify-between">
+                    <label class="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+                      <span>✅</span> Lời Giải Chuẩn (AC Code của Thầy):
+                    </label>
+                    <select id="tc-auto-sol-lang" class="bg-slate-900 border border-slate-700 text-[11px] font-semibold text-slate-300 rounded px-2 py-0.5 focus:outline-none cursor-pointer">
+                      <option value="python">Python 3</option>
+                      <option value="cpp">C++20</option>
+                    </select>
+                  </div>
+                  <textarea id="tc-auto-sol-code" rows="8" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 font-mono text-xs text-slate-200 focus:outline-none focus:border-emerald-500 leading-relaxed resize-none" placeholder="Nhập code giải chuẩn 100% của Thầy để tính output tương ứng..."></textarea>
+                  <p class="text-[10px] text-slate-500 italic">💡 Đọc input từ Generator và in ra đáp án chuẩn (expected output).</p>
+                </div>
+              </div>
+
+              <!-- Action Run Generator Button & Progress -->
+              <div class="flex items-center justify-between gap-3 pt-1">
+                <div id="tc-auto-gen-status" class="text-xs font-mono text-slate-400">
+                  Sẵn sàng sinh test.
+                </div>
+                <button type="button" id="tc-btn-run-auto-gen" onclick="runAutoTestGenerator()" class="px-5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition flex items-center gap-2 cursor-pointer active:scale-95">
+                  <span>🚀</span> Chạy Sinh Test Tự Động
+                </button>
+              </div>
+
+              <!-- Results Container for Generated Tests -->
+              <div id="tc-auto-gen-results-card" class="hidden space-y-3 bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2">
+                  <div class="text-xs font-bold text-white flex items-center gap-2">
+                    <span>📦</span> Kết quả sinh bộ test (<span id="tc-auto-gen-count-badge" class="text-emerald-400">0 test</span>):
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="applyGeneratedTests('append')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition cursor-pointer flex items-center gap-1">
+                      <span>➕</span> Thêm Nối Tiếp Vào Bài
+                    </button>
+                    <button type="button" onclick="applyGeneratedTests('overwrite')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition cursor-pointer flex items-center gap-1">
+                      <span>🔄</span> Thay Thế Toàn Bộ Bộ Test
+                    </button>
+                  </div>
+                </div>
+                <div id="tc-auto-gen-tests-list" class="space-y-2.5 max-h-72 overflow-y-auto pr-1 font-mono text-xs">
+                  <!-- Rendered generated test rows -->
+                </div>
+              </div>
+            </div>
+
+            <!-- SUBMODE 2: STRESS TEST / DUAL CODE CHECKER -->
+            <div id="tc-auto-submode-stress" class="space-y-4 hidden">
+              <div class="p-3 bg-slate-950/60 border border-slate-800 rounded-xl space-y-1">
+                <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5">
+                  <span>⚖️</span> Chấm Điểm & Tìm Test Sai Lệch (Stress Testing)
+                </h4>
+                <p class="text-xs text-slate-400">
+                  Hệ thống chạy liên tục nhiều testcase ngẫu nhiên để so sánh kết quả giữa <strong>Code Cần Chấm</strong> (học sinh) và <strong>Code Mẫu Chuẩn</strong> (giáo viên). Nếu kết quả khác nhau, hệ thống lập tức dừng lại và báo chi tiết testcase gây lỗi!
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Candidate Code (Student) -->
+                <div class="space-y-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+                  <div class="flex items-center justify-between">
+                    <label class="text-xs font-bold text-amber-300">👨‍🎓 Code Cần Chấm (Học Sinh):</label>
+                    <select id="tc-stress-stud-lang" class="bg-slate-900 border border-slate-700 text-[11px] font-semibold text-slate-300 rounded px-2 py-0.5 cursor-pointer">
+                      <option value="python">Python 3</option>
+                      <option value="cpp">C++20</option>
+                    </select>
+                  </div>
+                  <textarea id="tc-stress-stud-code" rows="8" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 font-mono text-xs text-slate-200 focus:outline-none focus:border-amber-500 resize-none" placeholder="Dán mã nguồn của học sinh vào đây..."></textarea>
+                </div>
+
+                <!-- Reference Code (Teacher) -->
+                <div class="space-y-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+                  <div class="flex items-center justify-between">
+                    <label class="text-xs font-bold text-emerald-300">👨‍🏫 Code Mẫu Chuẩn (Giáo Viên / AC):</label>
+                    <select id="tc-stress-teach-lang" class="bg-slate-900 border border-slate-700 text-[11px] font-semibold text-slate-300 rounded px-2 py-0.5 cursor-pointer">
+                      <option value="python">Python 3</option>
+                      <option value="cpp">C++20</option>
+                    </select>
+                  </div>
+                  <textarea id="tc-stress-teach-code" rows="8" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 font-mono text-xs text-slate-200 focus:outline-none focus:border-emerald-500 resize-none" placeholder="Dán mã giải đúng 100% của Thầy..."></textarea>
+                </div>
+              </div>
+
+              <!-- Generator for Stress Test -->
+              <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-2">
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                  <label class="text-xs font-bold text-indigo-300">🎲 Mã Sinh Test Ngẫu Nhiên (Generator):</label>
+                  <div class="flex items-center gap-2">
+                    <select id="tc-stress-gen-preset" onchange="applyStressGenPreset(this.value)" class="bg-slate-900 border border-slate-700 text-[11px] font-semibold text-slate-300 rounded px-2 py-0.5 cursor-pointer">
+                      <option value="two_int">Mẫu: 2 số A, B</option>
+                      <option value="array_n">Mẫu: Mảng N phần tử</option>
+                      <option value="array_large">Mẫu: Mảng số lớn (10⁹)</option>
+                      <option value="string">Mẫu: Xâu ký tự</option>
+                      <option value="matrix">Mẫu: Ma trận N x M</option>
+                    </select>
+                    <div class="flex items-center gap-1 text-xs">
+                      <span class="text-slate-400">Số test:</span>
+                      <select id="tc-stress-count" class="bg-slate-900 border border-slate-700 text-xs font-bold text-slate-200 rounded px-2 py-0.5 cursor-pointer">
+                        <option value="5" selected>5 test</option>
+                        <option value="10">10 test</option>
+                        <option value="20">20 test</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <textarea id="tc-stress-gen-code" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-mono text-xs text-slate-200 focus:outline-none focus:border-indigo-500 resize-none" placeholder="Code sinh dữ liệu test ngẫu nhiên..."></textarea>
+              </div>
+
+              <!-- Action Run Stress Test -->
+              <div class="flex items-center justify-between gap-3 pt-1">
+                <div id="tc-stress-status" class="text-xs font-mono text-slate-400">
+                  Sẵn sàng chấm đối chiếu.
+                </div>
+                <button type="button" id="tc-btn-run-stress" onclick="runStressTesting()" class="px-5 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/30 transition flex items-center gap-2 cursor-pointer active:scale-95">
+                  <span>⚖️</span> Bắt Đầu Chấm Điểm Bằng Code
+                </button>
+              </div>
+
+              <!-- Stress Test Result Banner & Detail -->
+              <div id="tc-stress-result-card" class="hidden space-y-3 bg-slate-950/90 p-4 rounded-xl border border-slate-800">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+
           <!-- TAB 3: BATCH IMPORT TESTCASES -->
           <div id="tc-tab-content-batch" class="space-y-4 hidden">
             <div class="space-y-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800">
@@ -1521,10 +1723,131 @@
                 </button>
               </div>
             </div>
+
+            <div class="p-4 bg-slate-950/70 border border-slate-800 rounded-xl space-y-3">
+              <h4 class="text-xs font-bold text-teal-300 uppercase tracking-wider">📊 Đồng bộ từ Google Sheet</h4>
+              <p class="text-xs text-slate-400">Đồng bộ trực tiếp danh sách bài tập từ Google Sheet của Thầy vào web (hỗ trợ cả các sàn Codeforces, VJudge, MarisaOJ, oj.chuyentin.pro, ClueOJ, DeruckOJ).</p>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="closeTestcaseManagerModal(); openGoogleSheetSyncModal();" class="px-4 py-2 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
+                  <span>📊</span> Mở Trình Đồng Bộ Google Sheet
+                </button>
+              </div>
+            </div>
           </div>
 
         </div>
 
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL 5: GOOGLE SHEET PROBLEM SYNC -->
+    <!-- ============================================== -->
+    <div id="modal-gsheet-sync" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+      <div class="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 space-y-5 max-h-[90vh] flex flex-col overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 flex-shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">📊</span>
+            <div>
+              <h3 class="text-lg font-bold text-white">Đồng Bộ Bài Tập Từ Google Sheet</h3>
+              <p class="text-xs text-slate-400">Tải và cập nhật danh sách bài tập trực tiếp từ bảng tính Google Trang Tính của Thầy</p>
+            </div>
+          </div>
+          <button onclick="closeGoogleSheetSyncModal()" class="text-slate-400 hover:text-white text-lg p-1 cursor-pointer">✕</button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto pr-1 space-y-4 text-xs">
+          <!-- Input URL & Sheet Name -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="sm:col-span-2 space-y-1">
+              <label class="font-semibold text-slate-300">Đường link Google Sheet (*):</label>
+              <input type="text" id="gsheet-sync-url" placeholder="https://docs.google.com/spreadsheets/d/.../edit" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500 font-mono">
+            </div>
+            <div class="space-y-1">
+              <label class="font-semibold text-slate-300">Tên Tab / Sheet:</label>
+              <input type="text" id="gsheet-sync-sheet-name" value="Bài Tập" placeholder="Bài Tập" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500">
+            </div>
+          </div>
+
+          <!-- Sync Mode: Merge vs Replace -->
+          <div class="flex items-center gap-4 bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+            <span class="text-slate-300 font-semibold">Chế độ đồng bộ:</span>
+            <label class="flex items-center gap-1.5 cursor-pointer text-slate-200">
+              <input type="radio" name="gsheet-sync-mode" value="merge" checked class="text-teal-500 focus:ring-0">
+              <span>Gộp và cập nhật bài cũ</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer text-slate-200">
+              <input type="radio" name="gsheet-sync-mode" value="replace" class="text-teal-500 focus:ring-0">
+              <span>Thay thế toàn bộ danh sách</span>
+            </label>
+          </div>
+
+          <!-- Quick Guide Box -->
+          <div class="p-3 bg-teal-950/30 border border-teal-500/30 rounded-xl space-y-1.5 text-teal-200">
+            <div class="font-bold flex items-center gap-1.5">
+              <span>💡</span> Hướng dẫn thiết lập Google Sheet:
+            </div>
+            <ul class="list-disc list-inside space-y-1 text-slate-300 text-[11px] leading-relaxed">
+              <li>Trên Google Sheet, bấm nút <strong>"Chia sẻ" (Share)</strong> ở góc trên bên phải &rarr; Đặt quyền thành <strong>"Bất kỳ ai có đường liên kết đều có thể xem"</strong> (Viewer).</li>
+              <li>Thứ tự các cột chuẩn được hỗ trợ: <code>Mã bài</code> | <code>Link bài tập</code> | <code>Tên bài tập</code> | <code>Lớp áp dụng</code> | <code>Level</code> | <code>Dạng bài</code> | <code>Nền tảng</code>.</li>
+              <li>Hỗ trợ mọi nền tảng: <strong>DeruckOJ, Codeforces, MarisaOJ, VJudge, oj.chuyentin.pro, ClueOJ</strong>.</li>
+            </ul>
+          </div>
+
+          <!-- Direct Paste Fallback Details Toggle -->
+          <details class="group bg-slate-950/60 rounded-xl border border-slate-800 p-3">
+            <summary class="font-semibold text-slate-400 cursor-pointer hover:text-white flex items-center justify-between">
+              <span>📋 Hoặc Dán Dữ Liệu Bảng Trực Tiếp Từ Google Sheet / Excel (Không cần mở Share link)</span>
+              <span class="text-xs group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div class="pt-3 space-y-2">
+              <p class="text-[11px] text-slate-400">Chỉ cần bôi đen các dòng bài tập trong Google Sheet &rarr; Bấm <code>Ctrl+C</code> &rarr; Dán vào ô bên dưới:</p>
+              <textarea id="gsheet-sync-paste" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-mono text-[11px] text-slate-300 focus:outline-none focus:border-teal-500 resize-none" placeholder="Dán các dòng copy từ Google Sheet tại đây..."></textarea>
+            </div>
+          </details>
+
+          <!-- Action Buttons: Preview -->
+          <div class="flex items-center justify-between gap-3 pt-1">
+            <div id="gsheet-sync-status" class="text-xs font-mono text-slate-400">
+              Chưa nạp dữ liệu.
+            </div>
+            <button type="button" onclick="previewGoogleSheetSync()" class="px-5 py-2 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow-lg shadow-teal-600/30 transition flex items-center gap-1.5 cursor-pointer">
+              <span>🔍</span> Tải & Xem Trước Bài Tập
+            </button>
+          </div>
+
+          <!-- Preview Table Container -->
+          <div id="gsheet-sync-preview-container" class="hidden space-y-3 bg-slate-950 p-3 rounded-xl border border-slate-800">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-white">Xem trước bài tập (<span id="gsheet-preview-count" class="text-teal-400">0</span> bài):</span>
+              <span class="text-[11px] text-slate-500">Hiển thị tối đa 10 dòng đầu</span>
+            </div>
+            <div class="overflow-x-auto max-h-48 overflow-y-auto">
+              <table class="w-full text-left text-[11px] text-slate-300 border-collapse">
+                <thead class="text-slate-500 uppercase border-b border-slate-800 bg-slate-900/80 sticky top-0">
+                  <tr>
+                    <th class="py-1.5 px-2">Mã bài</th>
+                    <th class="py-1.5 px-2">Tên bài</th>
+                    <th class="py-1.5 px-2">Nền tảng</th>
+                    <th class="py-1.5 px-2">Lớp</th>
+                    <th class="py-1.5 px-2">Link</th>
+                  </tr>
+                </thead>
+                <tbody id="gsheet-preview-tbody" class="divide-y divide-slate-800/60 font-mono">
+                  <!-- Populated rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800 flex-shrink-0">
+          <button type="button" onclick="closeGoogleSheetSyncModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition cursor-pointer">Hủy</button>
+          <button type="button" id="btn-apply-gsheet-sync" onclick="applyGoogleSheetSync()" disabled class="px-5 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed transition shadow cursor-pointer flex items-center gap-1.5">
+            <span>🚀</span> Xác Nhận Cập Nhật Vào Web
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1534,10 +1857,12 @@
   <footer class="border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div>© 2026 Deruck's Competitive Programming • Tự động hóa với Python & GitHub Actions <span id="sync-last-updated" class="ml-2 text-indigo-400 font-mono"></span></div>
-      <div class="flex items-center gap-4 text-slate-400">
+      <div class="flex items-center gap-4 text-slate-400 flex-wrap justify-center">
         <a href="https://codeforces.com" target="_blank" class="hover:text-indigo-400 transition">Codeforces</a>
         <a href="https://vjudge.net" target="_blank" class="hover:text-emerald-400 transition">VJudge</a>
         <a href="https://marisaoj.com" target="_blank" class="hover:text-purple-400 transition">MarisaOJ</a>
+        <a href="https://oj.chuyentin.pro" target="_blank" class="hover:text-teal-400 transition">oj.chuyentin.pro</a>
+        <a href="https://oj.clue.edu.vn" target="_blank" class="hover:text-cyan-400 transition">ClueOJ</a>
       </div>
     </div>
   </footer>
@@ -2310,13 +2635,13 @@
 
     function filterProblems(filter = currentProblemFilter) {
       currentProblemFilter = filter;
-      ['all', 'DeruckOJ', 'MarisaOJ', 'VJudge', 'Codeforces'].forEach(f => {
+      ['all', 'DeruckOJ', 'MarisaOJ', 'VJudge', 'Codeforces', 'ChuyenTinPro', 'ClueOJ'].forEach(f => {
         const btn = document.getElementById(`prob-filter-${f}`);
         if (btn) {
           if (f === filter) {
-            btn.className = "px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition";
+            btn.className = "px-2.5 py-1 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer";
           } else {
-            btn.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition";
+            btn.className = "px-2.5 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition cursor-pointer";
           }
         }
       });
@@ -2329,6 +2654,8 @@
       if (p.includes('codeforces') || p.includes('cf')) return 'Codeforces';
       if (p.includes('marisa')) return 'MarisaOJ';
       if (p.includes('deruck') || p.includes('judge') || p.includes('nội bộ')) return 'DeruckOJ';
+      if (p.includes('chuyentin') || p.includes('ctoj') || p.includes('oj.chuyentin.pro')) return 'ChuyenTinPro';
+      if (p.includes('clue') || p.includes('clueoj') || p.includes('oj.clue.edu.vn')) return 'ClueOJ';
       return 'VJudge';
     }
 
@@ -2400,6 +2727,10 @@
           platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">VJudge</span>`;
         } else if (plat === "DeruckOJ" || p.platform === "DeruckOJ") {
           platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">⚡ DeruckOJ</span>`;
+        } else if (plat === "ChuyenTinPro") {
+          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-teal-500/15 text-teal-300 border border-teal-500/30">🌐 oj.chuyentin.pro</span>`;
+        } else if (plat === "ClueOJ") {
+          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">🧩 ClueOJ</span>`;
         } else {
           platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-purple-500/10 text-purple-300 border border-purple-500/20">MarisaOJ</span>`;
         }
@@ -5280,23 +5611,28 @@ print("Hello World")`;
     }
 
     function switchTestcaseTab(tabName) {
-      const tabs = ['manage', 'create', 'batch', 'export'];
+      const tabs = ['manage', 'create', 'auto', 'batch', 'export'];
       tabs.forEach(t => {
         const btn = document.getElementById(`tc-tab-btn-${t}`);
         const content = document.getElementById(`tc-tab-content-${t}`);
         if (t === tabName) {
-          if (btn) btn.className = "px-3 py-1.5 rounded-lg font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition cursor-pointer";
+          if (btn) btn.className = "px-3 py-1.5 rounded-lg font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition cursor-pointer whitespace-nowrap";
           if (content) content.classList.remove('hidden');
         } else {
-          if (btn) btn.className = "px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer";
+          if (btn) btn.className = "px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer whitespace-nowrap";
           if (content) content.classList.add('hidden');
         }
       });
+
+      if (tabName === 'auto') {
+        initAutoTestcaseUI();
+      }
     }
 
     function populateTestcaseProblemDropdowns() {
       const selectManage = document.getElementById('tc-manage-prob-select');
       const selectBatch = document.getElementById('tc-batch-prob-select');
+      const selectAuto = document.getElementById('tc-auto-prob-select');
       const probs = getGraderProblems();
 
       const optionsHtml = probs.map(p => `<option value="${p.id}">${p.id} - ${p.name}</option>`).join('');
@@ -5308,6 +5644,10 @@ print("Hello World")`;
       if (selectBatch) {
         selectBatch.innerHTML = optionsHtml;
         selectBatch.value = currentJudgeProbId;
+      }
+      if (selectAuto) {
+        selectAuto.innerHTML = optionsHtml;
+        selectAuto.value = currentJudgeProbId;
       }
     }
 
@@ -5681,6 +6021,720 @@ OUTPUT:
         }
       };
       reader.readAsText(file);
+    }
+
+    // ============================================================
+    // 7. AUTO TEST GENERATOR & STRESS TESTING / CODE CHECKER
+    // ============================================================
+    const GENERATOR_PRESETS = {
+      two_int: {
+        python: `# Sinh 2 số nguyên A, B ngẫu nhiên trong khoảng [1, 1000]\nimport random\na = random.randint(1, 1000)\nb = random.randint(1, 1000)\nprint(f"{a} {b}")\n`,
+        cpp: `#include <iostream>\n#include <random>\nusing namespace std;\n\nint main() {\n    random_device rd;\n    mt19937 gen(rd());\n    uniform_int_distribution<int> dis(1, 1000);\n    cout << dis(gen) << " " << dis(gen) << "\\n";\n    return 0;\n}\n`
+      },
+      array_n: {
+        python: `# Sinh mảng N số nguyên\nimport random\nn = random.randint(5, 15)\narr = [random.randint(1, 100) for _ in range(n)]\nprint(n)\nprint(*arr)\n`,
+        cpp: `#include <iostream>\n#include <vector>\n#include <random>\nusing namespace std;\n\nint main() {\n    random_device rd;\n    mt19937 gen(rd());\n    int n = uniform_int_distribution<int>(5, 15)(gen);\n    cout << n << "\\n";\n    for (int i = 0; i < n; ++i) {\n        cout << uniform_int_distribution<int>(1, 100)(gen) << (i == n - 1 ? "" : " ");\n    }\n    cout << "\\n";\n    return 0;\n}\n`
+      },
+      array_large: {
+        python: `# Sinh mảng số lớn tới 10^9\nimport random\nn = random.randint(10, 20)\narr = [random.randint(1, 10**9) for _ in range(n)]\nprint(n)\nprint(*arr)\n`,
+        cpp: `#include <iostream>\n#include <random>\nusing namespace std;\n\nint main() {\n    random_device rd;\n    mt19937_64 gen(rd());\n    int n = uniform_int_distribution<int>(10, 20)(gen);\n    cout << n << "\\n";\n    for (int i = 0; i < n; ++i) {\n        cout << uniform_int_distribution<long long>(1, 1000000000LL)(gen) << " ";\n    }\n    cout << "\\n";\n    return 0;\n}\n`
+      },
+      string: {
+        python: `# Sinh xâu ký tự ngẫu nhiên độ dài N\nimport random, string\nn = random.randint(5, 15)\ns = ''.join(random.choices(string.ascii_lowercase, k=n))\nprint(s)\n`,
+        cpp: `#include <iostream>\n#include <string>\n#include <random>\nusing namespace std;\n\nint main() {\n    random_device rd;\n    mt19937 gen(rd());\n    int n = uniform_int_distribution<int>(5, 15)(gen);\n    string s = "";\n    for (int i = 0; i < n; ++i) s += (char)('a' + uniform_int_distribution<int>(0, 25)(gen));\n    cout << s << "\\n";\n    return 0;\n}\n`
+      },
+      matrix: {
+        python: `# Sinh ma trận kích thước N x M\nimport random\nn, m = random.randint(2, 4), random.randint(2, 4)\nprint(f"{n} {m}")\nfor _ in range(n):\n    print(*(random.randint(1, 50) for _ in range(m)))\n`,
+        cpp: `#include <iostream>\n#include <random>\nusing namespace std;\n\nint main() {\n    random_device rd;\n    mt19937 gen(rd());\n    int n = uniform_int_distribution<int>(2, 4)(gen);\n    int m = uniform_int_distribution<int>(2, 4)(gen);\n    cout << n << " " << m << "\\n";\n    for (int i = 0; i < n; ++i) {\n        for (int j = 0; j < m; ++j) cout << uniform_int_distribution<int>(1, 50)(gen) << " ";\n        cout << "\\n";\n    }\n    return 0;\n}\n`
+      }
+    };
+
+    let generatedTestsCache = [];
+    let lastStressFailedTest = null;
+
+    function initAutoTestcaseUI() {
+      const genCodeEl = document.getElementById('tc-auto-gen-code');
+      const solCodeEl = document.getElementById('tc-auto-sol-code');
+      const stressGenCodeEl = document.getElementById('tc-stress-gen-code');
+
+      if (genCodeEl && !genCodeEl.value.trim()) {
+        applyGenPreset('two_int');
+      }
+      if (solCodeEl && !solCodeEl.value.trim()) {
+        solCodeEl.value = `# Lời giải chuẩn của Thầy (AC Solution)\na, b = map(int, input().split())\nprint(a + b)\n`;
+      }
+      if (stressGenCodeEl && !stressGenCodeEl.value.trim()) {
+        applyStressGenPreset('two_int');
+      }
+    }
+
+    function switchAutoSubMode(mode) {
+      const genBtn = document.getElementById('tc-auto-mode-gen-btn');
+      const stressBtn = document.getElementById('tc-auto-mode-stress-btn');
+      const genView = document.getElementById('tc-auto-submode-gen');
+      const stressView = document.getElementById('tc-auto-submode-stress');
+
+      if (mode === 'gen') {
+        if (genBtn) genBtn.className = "flex-1 py-1.5 px-3 rounded-lg font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition cursor-pointer";
+        if (stressBtn) stressBtn.className = "flex-1 py-1.5 px-3 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer";
+        if (genView) genView.classList.remove('hidden');
+        if (stressView) stressView.classList.add('hidden');
+      } else {
+        if (genBtn) genBtn.className = "flex-1 py-1.5 px-3 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer";
+        if (stressBtn) stressBtn.className = "flex-1 py-1.5 px-3 rounded-lg font-bold bg-amber-600/30 text-amber-300 border border-amber-500/40 transition cursor-pointer";
+        if (genView) genView.classList.add('hidden');
+        if (stressView) stressView.classList.remove('hidden');
+      }
+    }
+
+    function applyGenPreset(presetKey) {
+      const langEl = document.getElementById('tc-auto-gen-lang');
+      const lang = langEl ? langEl.value : 'python';
+      const codeEl = document.getElementById('tc-auto-gen-code');
+      if (codeEl && GENERATOR_PRESETS[presetKey]) {
+        codeEl.value = GENERATOR_PRESETS[presetKey][lang] || GENERATOR_PRESETS[presetKey]['python'];
+      }
+    }
+
+    function updateGenCodeTemplate() {
+      const presetEl = document.getElementById('tc-auto-gen-preset');
+      const presetKey = presetEl ? presetEl.value : 'two_int';
+      applyGenPreset(presetKey);
+    }
+
+    function applyStressGenPreset(presetKey) {
+      const codeEl = document.getElementById('tc-stress-gen-code');
+      if (codeEl && GENERATOR_PRESETS[presetKey]) {
+        codeEl.value = GENERATOR_PRESETS[presetKey]['python'];
+      }
+    }
+
+    async function runAutoTestGenerator() {
+      const btn = document.getElementById('tc-btn-run-auto-gen');
+      const statusEl = document.getElementById('tc-auto-gen-status');
+      const probSelect = document.getElementById('tc-auto-prob-select');
+      const countEl = document.getElementById('tc-auto-gen-count');
+      const sampleCheck = document.getElementById('tc-auto-gen-sample');
+      const genCode = document.getElementById('tc-auto-gen-code')?.value || '';
+      const genLang = document.getElementById('tc-auto-gen-lang')?.value || 'python';
+      const solCode = document.getElementById('tc-auto-sol-code')?.value || '';
+      const solLang = document.getElementById('tc-auto-sol-lang')?.value || 'python';
+
+      if (!genCode.trim()) {
+        alert("Vui lòng nhập mã sinh test (Generator)!");
+        return;
+      }
+      if (!solCode.trim()) {
+        alert("Vui lòng nhập mã lời giải chuẩn (AC Solution) của Thầy!");
+        return;
+      }
+
+      const totalTests = parseInt(countEl?.value || '5', 10);
+      const isSample = !!sampleCheck?.checked;
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="animate-spin">⏳</span> Đang sinh test...`;
+      generatedTestsCache = [];
+
+      try {
+        for (let i = 0; i < totalTests; i++) {
+          statusEl.textContent = `Đang chạy Generator sinh input test ${i + 1}/${totalTests}...`;
+          
+          // 1. Run Generator to get stdin
+          const genRes = await executeCode(genLang, genCode, "");
+          if (genRes.status === 'CE') {
+            throw new Error(`Lỗi biên dịch Generator: ${genRes.compile_error || genRes.error}`);
+          }
+          if (genRes.status === 'RTE') {
+            throw new Error(`Lỗi chạy Generator (Runtime Error): ${genRes.error || genRes.stderr}`);
+          }
+          const generatedInput = (genRes.stdout || '').trimEnd() + '\n';
+
+          // 2. Run Solution on generatedInput to get expected stdout
+          statusEl.textContent = `Đang chạy Solution tính output chuẩn cho test ${i + 1}/${totalTests}...`;
+          const solRes = await executeCode(solLang, solCode, generatedInput);
+          if (solRes.status === 'CE') {
+            throw new Error(`Lỗi biên dịch Solution của Thầy: ${solRes.compile_error || solRes.error}`);
+          }
+          if (solRes.status === 'RTE') {
+            throw new Error(`Lỗi chạy Solution (Runtime Error): ${solRes.error || solRes.stderr}`);
+          }
+          const expectedOutput = (solRes.stdout || '').trimEnd() + '\n';
+
+          generatedTestsCache.push({
+            input: generatedInput,
+            output: expectedOutput,
+            sample: (i === 0 && isSample)
+          });
+        }
+
+        statusEl.innerHTML = `<span class="text-emerald-400 font-bold">✅ Đã sinh thành công ${generatedTestsCache.length} testcase hoàn chỉnh!</span>`;
+        renderGeneratedTestsList();
+
+      } catch (err) {
+        statusEl.innerHTML = `<span class="text-rose-400 font-bold">❌ ${err.message}</span>`;
+        alert("Quá trình sinh test gặp lỗi:\n" + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>🚀</span> Chạy Sinh Test Tự Động`;
+      }
+    }
+
+    function renderGeneratedTestsList() {
+      const card = document.getElementById('tc-auto-gen-results-card');
+      const listEl = document.getElementById('tc-auto-gen-tests-list');
+      const badgeEl = document.getElementById('tc-auto-gen-count-badge');
+      if (!card || !listEl) return;
+
+      if (generatedTestsCache.length === 0) {
+        card.classList.add('hidden');
+        return;
+      }
+
+      card.classList.remove('hidden');
+      if (badgeEl) badgeEl.textContent = `${generatedTestsCache.length} test`;
+      listEl.innerHTML = '';
+
+      generatedTestsCache.forEach((tc, idx) => {
+        const item = document.createElement('div');
+        item.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-2";
+        item.innerHTML = `
+          <div class="flex items-center justify-between text-xs text-slate-300 font-bold">
+            <span class="flex items-center gap-1.5">
+              <span class="text-indigo-400 font-mono">#${idx + 1}</span>
+              ${tc.sample ? '<span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Ví dụ</span>' : ''}
+            </span>
+            <button type="button" onclick="removeGeneratedTest(${idx})" class="text-rose-400 hover:text-rose-300 text-[11px] cursor-pointer">Xóa test này</button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div>
+              <div class="text-[10px] text-slate-400 font-sans pb-1 font-semibold">Input:</div>
+              <textarea onchange="updateGeneratedTestInput(${idx}, this.value)" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 font-mono text-xs text-slate-200 focus:outline-none focus:border-indigo-500">${escapeHtml(tc.input)}</textarea>
+            </div>
+            <div>
+              <div class="text-[10px] text-slate-400 font-sans pb-1 font-semibold">Output chuẩn:</div>
+              <textarea onchange="updateGeneratedTestOutput(${idx}, this.value)" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 font-mono text-xs text-emerald-300 focus:outline-none focus:border-emerald-500">${escapeHtml(tc.output)}</textarea>
+            </div>
+          </div>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    function removeGeneratedTest(idx) {
+      generatedTestsCache.splice(idx, 1);
+      renderGeneratedTestsList();
+    }
+
+    function updateGeneratedTestInput(idx, val) {
+      if (generatedTestsCache[idx]) generatedTestsCache[idx].input = val;
+    }
+
+    function updateGeneratedTestOutput(idx, val) {
+      if (generatedTestsCache[idx]) generatedTestsCache[idx].output = val;
+    }
+
+    function applyGeneratedTests(action = 'append') {
+      const probSelect = document.getElementById('tc-auto-prob-select');
+      const targetProbId = probSelect?.value || currentJudgeProbId;
+      const prob = getGraderProblems().find(p => p.id === targetProbId);
+
+      if (!prob) {
+        alert("Không tìm thấy bài tập đích!");
+        return;
+      }
+      if (generatedTestsCache.length === 0) {
+        alert("Chưa có testcase nào được sinh ra!");
+        return;
+      }
+
+      if (!prob.testcases) prob.testcases = [];
+
+      if (action === 'overwrite') {
+        prob.testcases = [...generatedTestsCache];
+      } else {
+        prob.testcases = prob.testcases.concat(generatedTestsCache);
+      }
+
+      // Update in appData.grader_problems
+      if (!appData.grader_problems) appData.grader_problems = [];
+      const gIdx = appData.grader_problems.findIndex(p => p.id === prob.id);
+      if (gIdx >= 0) appData.grader_problems[gIdx] = prob;
+      else appData.grader_problems.push(prob);
+
+      // Update in appData.problems
+      if (appData.problems) {
+        const pIdx = appData.problems.findIndex(p => p.id === prob.id);
+        if (pIdx >= 0) appData.problems[pIdx] = Object.assign({}, appData.problems[pIdx], prob);
+      }
+
+      saveAppDataLocally();
+      loadProblemIntoTestcaseManager(prob.id);
+      renderJudgeWorkspace();
+      renderProblems();
+
+      showLiveToast(`Đã lưu thành công ${prob.testcases.length} testcase cho bài ${prob.id}!`);
+      switchTestcaseTab('manage');
+    }
+
+    // STRESS TESTING / DUAL CODE CHECKER
+    async function runStressTesting() {
+      const btn = document.getElementById('tc-btn-run-stress');
+      const statusEl = document.getElementById('tc-stress-status');
+      const resultCard = document.getElementById('tc-stress-result-card');
+
+      const studCode = document.getElementById('tc-stress-stud-code')?.value || '';
+      const studLang = document.getElementById('tc-stress-stud-lang')?.value || 'python';
+      const teachCode = document.getElementById('tc-stress-teach-code')?.value || '';
+      const teachLang = document.getElementById('tc-stress-teach-lang')?.value || 'python';
+      const genCode = document.getElementById('tc-stress-gen-code')?.value || '';
+      const genCount = parseInt(document.getElementById('tc-stress-count')?.value || '5', 10);
+
+      if (!studCode.trim()) {
+        alert("Vui lòng nhập code của học sinh cần chấm!");
+        return;
+      }
+      if (!teachCode.trim()) {
+        alert("Vui lòng nhập code mẫu chuẩn của Thầy!");
+        return;
+      }
+      if (!genCode.trim()) {
+        alert("Vui lòng nhập code sinh test (Generator)!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="animate-spin">⏳</span> Đang chấm đối chiếu...`;
+      resultCard.classList.add('hidden');
+      lastStressFailedTest = null;
+
+      try {
+        let passedCount = 0;
+
+        for (let i = 0; i < genCount; i++) {
+          statusEl.textContent = `Đang sinh và chấm đối chiếu test ${i + 1}/${genCount}...`;
+
+          // 1. Generate Input
+          const genRes = await executeCode('python', genCode, "");
+          if (genRes.status === 'CE' || genRes.status === 'RTE') {
+            throw new Error(`Generator gặp lỗi: ${genRes.error || genRes.compile_error}`);
+          }
+          const testIn = (genRes.stdout || '').trimEnd() + '\n';
+
+          // 2. Run Teacher's Reference AC code
+          const tRes = await executeCode(teachLang, teachCode, testIn);
+          if (tRes.status === 'CE') {
+            throw new Error(`Code của Thầy bị lỗi biên dịch: ${tRes.compile_error || tRes.error}`);
+          }
+          if (tRes.status === 'RTE') {
+            throw new Error(`Code của Thầy bị lỗi chạy (RTE): ${tRes.error}`);
+          }
+          const tOut = normalizeOutput(tRes.stdout || '');
+
+          // 3. Run Student's Candidate code
+          const sRes = await executeCode(studLang, studCode, testIn);
+          if (sRes.status === 'CE') {
+            throw new Error(`Code học sinh bị lỗi biên dịch (CE): ${sRes.compile_error || sRes.error}`);
+          }
+          if (sRes.status === 'RTE') {
+            lastStressFailedTest = {
+              input: testIn,
+              studentOut: `[Runtime Error]: ${sRes.error || sRes.stderr}`,
+              expectedOut: tOut,
+              verdict: 'RTE',
+              testIndex: i + 1
+            };
+            displayStressResult(false, i, genCount);
+            return;
+          }
+
+          const sOut = normalizeOutput(sRes.stdout || '');
+
+          // 4. Compare outputs
+          if (sOut !== tOut) {
+            lastStressFailedTest = {
+              input: testIn,
+              studentOut: sOut,
+              expectedOut: tOut,
+              verdict: 'WA',
+              testIndex: i + 1
+            };
+            displayStressResult(false, i, genCount);
+            return;
+          }
+
+          passedCount++;
+        }
+
+        // All tests passed!
+        displayStressResult(true, passedCount, genCount);
+
+      } catch (err) {
+        statusEl.innerHTML = `<span class="text-rose-400 font-bold">❌ ${err.message}</span>`;
+        alert("Lỗi trong quá trình chấm stress test:\n" + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>⚖️</span> Bắt Đầu Chấm Điểm Bằng Code`;
+      }
+    }
+
+    function displayStressResult(allPassed, passedCount, totalCount) {
+      const card = document.getElementById('tc-stress-result-card');
+      const statusEl = document.getElementById('tc-stress-status');
+      if (!card) return;
+
+      card.classList.remove('hidden');
+
+      if (allPassed) {
+        statusEl.innerHTML = `<span class="text-emerald-400 font-bold">✅ Đã hoàn tất chấm điểm: 100/100 Điểm!</span>`;
+        card.innerHTML = `
+          <div class="p-4 bg-emerald-950/60 border border-emerald-500/40 rounded-xl space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-emerald-300 flex items-center gap-2">
+                <span>🎉</span> CHẤM ĐIỂM: 100/100 ĐIỂM (CHÍNH XÁC TUYỆT ĐỐI)
+              </span>
+              <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-bold font-mono">AC • ${totalCount}/${totalCount} tests</span>
+            </div>
+            <p class="text-slate-300 leading-relaxed">
+              Code của học sinh đã vượt qua toàn bộ <strong>${totalCount} bộ test ngẫu nhiên</strong> do Generator sinh ra, cho kết quả hoàn toàn trùng khớp với Lời giải chuẩn của Thầy!
+            </p>
+          </div>
+        `;
+      } else {
+        const failed = lastStressFailedTest;
+        const score = Math.round((passedCount / totalCount) * 100);
+        statusEl.innerHTML = `<span class="text-rose-400 font-bold">❌ Phát hiện sai lệch ở test #${failed.testIndex}</span>`;
+
+        card.innerHTML = `
+          <div class="p-4 bg-rose-950/60 border border-rose-500/40 rounded-xl space-y-3 text-xs">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <span class="text-sm font-bold text-rose-300 flex items-center gap-2">
+                <span>❌</span> PHÁT HIỆN SAI LỆCH Ở TEST #${failed.testIndex}
+              </span>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold font-mono">Điểm: ${score}/100</span>
+                <button type="button" onclick="addStressFailedTestToProblem()" class="px-3 py-1 rounded-lg text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white transition cursor-pointer flex items-center gap-1 shadow">
+                  <span>➕</span> Bổ Sung Test Này Vào Bài Tập
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono">
+              <div class="space-y-1">
+                <div class="text-[11px] text-slate-400 font-sans font-semibold">📥 Input gây lỗi:</div>
+                <pre class="p-2.5 bg-slate-950 rounded-lg text-slate-200 border border-slate-800 overflow-x-auto whitespace-pre-wrap">${escapeHtml(failed.input)}</pre>
+              </div>
+              <div class="space-y-1">
+                <div class="text-[11px] text-rose-400 font-sans font-semibold">🔴 Kết quả của học sinh:</div>
+                <pre class="p-2.5 bg-slate-950 rounded-lg text-rose-300 border border-rose-900/50 overflow-x-auto whitespace-pre-wrap">${escapeHtml(failed.studentOut)}</pre>
+              </div>
+              <div class="space-y-1">
+                <div class="text-[11px] text-emerald-400 font-sans font-semibold">🟢 Đáp án chuẩn của Thầy:</div>
+                <pre class="p-2.5 bg-slate-950 rounded-lg text-emerald-300 border border-emerald-900/50 overflow-x-auto whitespace-pre-wrap">${escapeHtml(failed.expectedOut)}</pre>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function addStressFailedTestToProblem() {
+      if (!lastStressFailedTest) return;
+      const probSelect = document.getElementById('tc-auto-prob-select');
+      const targetProbId = probSelect?.value || currentJudgeProbId;
+      const prob = getGraderProblems().find(p => p.id === targetProbId);
+
+      if (!prob) {
+        alert("Không tìm thấy bài tập!");
+        return;
+      }
+
+      if (!prob.testcases) prob.testcases = [];
+      prob.testcases.push({
+        input: lastStressFailedTest.input,
+        output: lastStressFailedTest.expectedOut + '\n',
+        sample: false
+      });
+
+      // Update in appData.grader_problems
+      if (!appData.grader_problems) appData.grader_problems = [];
+      const gIdx = appData.grader_problems.findIndex(p => p.id === prob.id);
+      if (gIdx >= 0) appData.grader_problems[gIdx] = prob;
+      else appData.grader_problems.push(prob);
+
+      // Update in appData.problems
+      if (appData.problems) {
+        const pIdx = appData.problems.findIndex(p => p.id === prob.id);
+        if (pIdx >= 0) appData.problems[pIdx] = Object.assign({}, appData.problems[pIdx], prob);
+      }
+
+      saveAppDataLocally();
+      loadProblemIntoTestcaseManager(prob.id);
+      renderJudgeWorkspace();
+      renderProblems();
+
+      showLiveToast(`Đã bổ sung test lỗi vào bộ test của bài ${prob.id}! (Hiện có ${prob.testcases.length} test)`);
+      switchTestcaseTab('manage');
+    }
+
+    function openStressTestFromJudge() {
+      openTestcaseManagerModal();
+      switchTestcaseTab('auto');
+      switchAutoSubMode('stress');
+
+      // Preload student code from current judge editor
+      const editorCode = document.getElementById('judge-code-editor')?.value || '';
+      const studCodeEl = document.getElementById('tc-stress-stud-code');
+      const studLangEl = document.getElementById('tc-stress-stud-lang');
+
+      if (studCodeEl && editorCode) {
+        studCodeEl.value = editorCode;
+      }
+      if (studLangEl) {
+        studLangEl.value = judgeSelectedLang || 'cpp';
+      }
+    }
+
+    // ============================================================
+    // 8. GOOGLE SHEET PROBLEM SYNC
+    // ============================================================
+    let gsheetParsedProblems = [];
+
+    function openGoogleSheetSyncModal() {
+      const modal = document.getElementById('modal-gsheet-sync');
+      if (!modal) return;
+      
+      const savedUrl = localStorage.getItem('deruck_gsheet_url') || '';
+      const urlInput = document.getElementById('gsheet-sync-url');
+      if (urlInput && savedUrl) {
+        urlInput.value = savedUrl;
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeGoogleSheetSyncModal() {
+      const modal = document.getElementById('modal-gsheet-sync');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function previewGoogleSheetSync() {
+      const urlInput = document.getElementById('gsheet-sync-url');
+      const sheetNameInput = document.getElementById('gsheet-sync-sheet-name');
+      const pasteInput = document.getElementById('gsheet-sync-paste');
+      const statusEl = document.getElementById('gsheet-sync-status');
+      const previewCard = document.getElementById('gsheet-sync-preview-container');
+      const previewCountEl = document.getElementById('gsheet-preview-count');
+      const tbody = document.getElementById('gsheet-preview-tbody');
+      const applyBtn = document.getElementById('btn-apply-gsheet-sync');
+
+      const url = urlInput?.value.trim() || '';
+      const sheetName = sheetNameInput?.value.trim() || 'Bài Tập';
+      const pastedData = pasteInput?.value.trim() || '';
+
+      if (!url && !pastedData) {
+        alert("Vui lòng dán đường link Google Sheet hoặc dán dữ liệu bảng từ Google Sheet!");
+        return;
+      }
+
+      statusEl.innerHTML = `<span class="animate-pulse text-indigo-400">⏳ Đang tải và phân tích dữ liệu Google Sheet...</span>`;
+      applyBtn.disabled = true;
+
+      try {
+        let rawTableText = "";
+
+        if (pastedData) {
+          rawTableText = pastedData;
+        } else {
+          // Extract Spreadsheet ID
+          let sheetId = "";
+          if (url.includes('/d/')) {
+            sheetId = url.split('/d/')[1].split('/')[0];
+          } else {
+            sheetId = url;
+          }
+
+          if (!sheetId) {
+            throw new Error("Không trích xuất được ID bảng tính từ link. Vui lòng kiểm tra lại đường link!");
+          }
+
+          // Remember URL in localStorage
+          localStorage.setItem('deruck_gsheet_url', url);
+
+          // Build GViz CSV export URL
+          const gvizUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+
+          try {
+            const resp = await fetch(gvizUrl);
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            rawTableText = await resp.text();
+          } catch (e1) {
+            // Fallback via CORS proxy
+            try {
+              const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(gvizUrl)}`;
+              const proxyResp = await fetch(proxyUrl);
+              if (!proxyResp.ok) throw new Error("CORS Proxy error");
+              rawTableText = await proxyResp.text();
+            } catch (e2) {
+              throw new Error("Không thể tải Google Sheet trực tiếp (quyền riêng tư hoặc mạng). Thầy hãy đảm bảo link đã được 'Chia sẻ' với quyền 'Bất kỳ ai có đường liên kết đều có thể xem', hoặc dùng ô 'Dán Dữ Liệu Bảng' bên dưới!");
+            }
+          }
+        }
+
+        if (!rawTableText || rawTableText.trim().length === 0) {
+          throw new Error("Dữ liệu bảng tính trống!");
+        }
+
+        // Parse with SheetJS
+        if (typeof XLSX === 'undefined') {
+          throw new Error("Thư viện xử lý bảng tính XLSX chưa sẵn sàng. Vui lòng thử lại sau vài giây!");
+        }
+
+        const wb = XLSX.read(rawTableText, { type: 'string' });
+        const sheet = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        if (!rows || rows.length < 2) {
+          throw new Error("Bảng tính không có đủ dữ liệu bài tập (cần ít nhất 1 dòng tiêu đề và 1 dòng bài tập).");
+        }
+
+        // Detect header row
+        let headerRowIdx = 0;
+        for (let r = 0; r < Math.min(5, rows.length); r++) {
+          const rowStr = (rows[r] || []).join(' ').toLowerCase();
+          if (rowStr.includes('mã') || rowStr.includes('tên') || rowStr.includes('link') || rowStr.includes('name') || rowStr.includes('id')) {
+            headerRowIdx = r;
+            break;
+          }
+        }
+
+        const headers = (rows[headerRowIdx] || []).map(c => String(c || '').toLowerCase().trim());
+        let colId = headers.findIndex(h => h.includes('mã') || h === 'id' || h.includes('code'));
+        let colUrl = headers.findIndex(h => h.includes('link') || h.includes('url') || h.includes('đường dẫn'));
+        let colName = headers.findIndex(h => h.includes('tên') || h.includes('tiêu đề') || h.includes('name') || h.includes('title'));
+        let colClasses = headers.findIndex(h => h.includes('lớp') || h.includes('class') || h.includes('phân quyền') || h.includes('áp dụng'));
+        let colLevel = headers.findIndex(h => h.includes('level') || h.includes('mức') || h.includes('độ khó'));
+        let colCat = headers.findIndex(h => h.includes('dạng') || h.includes('chủ đề') || h.includes('tag') || h.includes('category'));
+        let colPlat = headers.findIndex(h => h.includes('sàn') || h.includes('nền tảng') || h.includes('platform'));
+
+        // Position fallbacks: Mã bài | Link | Tên bài | Lớp | Level | Dạng | Nền tảng
+        if (colId === -1) colId = 0;
+        if (colUrl === -1) colUrl = 1;
+        if (colName === -1) colName = 2;
+        if (colClasses === -1) colClasses = 3;
+        if (colLevel === -1) colLevel = 4;
+        if (colCat === -1) colCat = 5;
+        if (colPlat === -1) colPlat = 6;
+
+        gsheetParsedProblems = [];
+
+        for (let i = headerRowIdx + 1; i < rows.length; i++) {
+          const row = rows[i];
+          if (!row || row.length === 0) continue;
+
+          const pid = String(row[colId] || '').trim();
+          const pName = String(row[colName] || '').trim();
+          const pUrl = String(row[colUrl] || '').trim();
+
+          if (!pid || !pName) continue;
+
+          const rawClass = String(row[colClasses] || '').trim();
+          let cList = [];
+          if (!rawClass || rawClass.toLowerCase().includes('tất cả') || rawClass.toLowerCase().includes('public') || rawClass.toLowerCase().includes('all')) {
+            cList = ['Public'];
+          } else {
+            rawClass.split(/[,;\n]/).forEach(item => {
+              const cl = item.trim();
+              if (cl) cList.push(cl);
+            });
+            if (cList.length === 0) cList = ['Public'];
+          }
+
+          const rawLevel = String(row[colLevel] || '1').trim();
+          const rawCat = String(row[colCat] || 'Căn bản').trim();
+          const rawPlat = String(row[colPlat] || '').trim();
+          const normPlat = getPlatformName(rawPlat || pid || pUrl);
+
+          let bColor = 'indigo';
+          if (normPlat === 'Codeforces') bColor = 'blue';
+          else if (normPlat === 'VJudge') bColor = 'emerald';
+          else if (normPlat === 'MarisaOJ') bColor = 'purple';
+          else if (normPlat === 'ChuyenTinPro') bColor = 'teal';
+          else if (normPlat === 'ClueOJ') bColor = 'cyan';
+
+          gsheetParsedProblems.push({
+            id: pid,
+            name: pName,
+            url: pUrl || '#',
+            classes: cList,
+            difficulty: `Level ${rawLevel} • ${rawCat}`,
+            category: rawCat,
+            platform: normPlat,
+            badge_color: bColor
+          });
+        }
+
+        if (gsheetParsedProblems.length === 0) {
+          throw new Error("Không đọc được bài tập nào từ các dòng của bảng tính. Vui lòng kiểm tra lại cấu trúc các cột!");
+        }
+
+        statusEl.innerHTML = `<span class="text-emerald-400 font-bold">✅ Đã đọc thành công ${gsheetParsedProblems.length} bài tập từ Google Sheet!</span>`;
+        previewCountEl.textContent = gsheetParsedProblems.length;
+        previewCard.classList.remove('hidden');
+        applyBtn.disabled = false;
+
+        // Render preview table (up to 10 rows)
+        tbody.innerHTML = '';
+        gsheetParsedProblems.slice(0, 10).forEach(p => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="py-1.5 px-2 font-bold text-white">${p.id}</td>
+            <td class="py-1.5 px-2 text-slate-200">${p.name}</td>
+            <td class="py-1.5 px-2 text-teal-300 font-semibold">${p.platform}</td>
+            <td class="py-1.5 px-2 text-slate-400">${p.classes.join(', ')}</td>
+            <td class="py-1.5 px-2 text-slate-500 truncate max-w-[120px]"><a href="${p.url}" target="_blank" class="hover:underline">${p.url}</a></td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+      } catch (err) {
+        statusEl.innerHTML = `<span class="text-rose-400 font-bold">❌ ${err.message}</span>`;
+        alert("Lỗi khi tải dữ liệu từ Google Sheet:\n" + err.message);
+      }
+    }
+
+    function applyGoogleSheetSync() {
+      if (gsheetParsedProblems.length === 0) {
+        alert("Chưa có danh sách bài tập nào để đồng bộ!");
+        return;
+      }
+
+      const syncMode = document.querySelector('input[name="gsheet-sync-mode"]:checked')?.value || 'merge';
+
+      if (!appData.problems) appData.problems = [];
+
+      if (syncMode === 'replace') {
+        appData.problems = [...gsheetParsedProblems];
+      } else {
+        // Merge: update existing, add new
+        gsheetParsedProblems.forEach(pNew => {
+          const idx = appData.problems.findIndex(p => p.id === pNew.id);
+          if (idx >= 0) {
+            // Keep existing testcases or metadata if any
+            appData.problems[idx] = Object.assign({}, appData.problems[idx], pNew);
+          } else {
+            appData.problems.push(pNew);
+          }
+        });
+      }
+
+      saveAppDataLocally();
+      populateTestcaseProblemDropdowns();
+      renderProblems();
+      renderJudgeWorkspace();
+      closeGoogleSheetSyncModal();
+
+      showLiveToast(`🎉 Đã đồng bộ thành công ${gsheetParsedProblems.length} bài tập từ Google Sheet!`);
     }
 
     function escapeHtml(str) {

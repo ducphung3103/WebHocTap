@@ -10,6 +10,34 @@
   },
   "problems": [
     {
+      "id": "CTOJ-FIBO",
+      "name": "Dãy số Fibonacci",
+      "platform": "ChuyenTinPro",
+      "url": "https://oj.chuyentin.pro/problem/fibonacci",
+      "badge_color": "teal",
+      "category": "Quy hoạch động",
+      "difficulty": "Level 1 • Quy hoạch động",
+      "classes": [
+        "Public",
+        "C++",
+        "Python"
+      ]
+    },
+    {
+      "id": "CLUE-SUMK",
+      "name": "Tìm cặp số có tổng bằng K",
+      "platform": "ClueOJ",
+      "url": "https://oj.clue.edu.vn/problem/sumk",
+      "badge_color": "cyan",
+      "category": "Mảng & Hai con trỏ",
+      "difficulty": "Level 2 • Two Pointers",
+      "classes": [
+        "Public",
+        "C++",
+        "Python"
+      ]
+    },
+    {
       "id": "MARISA-1",
       "name": "A + B",
       "platform": "MarisaOJ",
