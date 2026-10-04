@@ -318,9 +318,21 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
         elif "marisa" in plat_lower:
             norm_plat = "MarisaOJ"
             b_color = "purple"
-        elif "vnoi" in plat_lower:
+        elif "vnoi" in plat_lower or "vnoj" in plat_lower:
             norm_plat = "VNOI"
             b_color = "amber"
+        elif "atcoder" in plat_lower:
+            norm_plat = "AtCoder"
+            b_color = "rose"
+        elif "cses" in plat_lower:
+            norm_plat = "CSES"
+            b_color = "violet"
+        elif "kattis" in plat_lower:
+            norm_plat = "Kattis"
+            b_color = "pink"
+        elif "spoj" in plat_lower:
+            norm_plat = "SPOJ"
+            b_color = "sky"
 
         return {
             "id": pid,
@@ -350,32 +362,16 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     if c in class_problems_map:
                         class_problems_map[c].append(p_obj["id"])
         logger.info(f"Loaded {len(problems)} curated homework problems from tab '{ws_prob.title}'")
+    else:
+        problems = existing_data.get("problems", [])
 
-    # 2.2 Tab kho bài bổ sung: "Kho Bài Codeforces" (Question Bank from solved handles, keeping other tabs untouched)
-    ws_cf = get_worksheet_by_title(sh, ["Kho Bài Codeforces", "Kho Bài Tập", "Bài Tập Codeforces", "Bài Tập Đã Giải", "Codeforces"])
-    if ws_cf:
-        cf_rows = ws_cf.get_all_values()
-        cf_count = 0
-        for r in cf_rows[1:]:
-            p_obj = parse_single_problem_row(r)
-            if p_obj and p_obj["id"] not in seen_pids:
-                seen_pids.add(p_obj["id"])
-                problems.append(p_obj)
-                cf_count += 1
-        logger.info(f"Loaded {cf_count} supplementary problems from question bank tab '{ws_cf.title}'")
-
-    # Preserve existing DeruckOJ internal grader problems & testcases
+    # Preserve testcases for curated DeruckOJ problems if defined
     sheet_pids = {p["id"] for p in problems}
     for ep in existing_data.get("problems", []):
-        if ep.get("id") not in sheet_pids and (ep.get("platform") == "DeruckOJ" or "testcases" in ep or ep.get("id", "").startswith("CB-")):
-            problems.append(ep)
-        elif ep.get("id") in sheet_pids and "testcases" in ep:
+        if ep.get("id") in sheet_pids and "testcases" in ep:
             for p in problems:
                 if p["id"] == ep["id"] and "testcases" not in p:
                     p["testcases"] = ep["testcases"]
-
-    if not problems:
-        problems = existing_data.get("problems", [])
 
     # 3. Parse Lectures ("Bài Giảng")
     curriculum = []
@@ -410,14 +406,8 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     "url": link,
                     "summary": summary
                 })
-
-    # Preserve existing curriculum items if not in Google Sheet
-    sheet_cids = {c["id"] for c in curriculum}
-    for ec in existing_data.get("curriculum", []):
-        if ec.get("id") not in sheet_cids:
-            curriculum.append(ec)
-
-    if not curriculum:
+        logger.info(f"Loaded {len(curriculum)} curriculum lectures from tab '{ws_lec.title}'")
+    else:
         curriculum = existing_data.get("curriculum", [])
 
     # 4. Parse Tuition Fees ("Học Phí")
@@ -629,21 +619,6 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
     final_data = existing_data if existing_data else {}
     grader_problems = existing_data.get("grader_problems", [])
     final_data["grader_problems"] = grader_problems
-
-    # Merge grader problems into problems list if not already present
-    prob_id_set = {p["id"] for p in problems}
-    for gp in grader_problems:
-        if gp["id"] not in prob_id_set:
-            problems.append({
-                "id": gp["id"],
-                "name": gp["name"],
-                "platform": "DeruckOJ",
-                "url": f'#judge-{gp["id"]}',
-                "badge_color": gp.get("badge_color", "indigo"),
-                "category": gp.get("category", "Cơ bản"),
-                "difficulty": gp.get("difficulty", "Level 1 • Cơ bản"),
-                "classes": gp.get("classes", ["Public"])
-            })
 
     final_data["students"] = students
     final_data["problems"] = problems
