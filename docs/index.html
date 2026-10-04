@@ -157,9 +157,6 @@
           <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
             📝 Bài Tập
           </button>
-          <button onclick="switchTab('judge')" id="tab-btn-judge" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
-            ⚡ Chấm Bài Online
-          </button>
           <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
             📚 Bài Giảng
           </button>
@@ -187,7 +184,6 @@
         <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">🏆 BXH</button>
         <button onclick="switchTab('contests')" id="tab-btn-contests-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
         <button onclick="switchTab('problems')" id="tab-btn-problems-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
-        <button onclick="switchTab('judge')" id="tab-btn-judge-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">⚡ Chấm bài</button>
         <button onclick="switchTab('curriculum')" id="tab-btn-curriculum-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</button>
         <a href="student.html" id="tab-btn-student-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
       </div>
@@ -613,80 +609,92 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- TAB 3: DANH SÁCH BÀI TẬP & ĐỀ THI -->
+    <!-- ========================================== -->
+    <!-- TAB 3: BÀI TẬP (GỒM BÀI NGOÀI & CHẤM NỘI BỘ) -->
     <!-- ========================================== -->
     <section id="section-problems" class="space-y-6 hidden">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            <span>📝</span> Kho Bài Tập & Đề Thi Phân Lớp
-          </h2>
-          <p class="text-xs text-slate-400">Bài tập phân theo từng lớp học. Bấm vào bài để chuyển trực tiếp đến trang nộp bài</p>
-        </div>
-
-        <div class="flex items-center gap-2 flex-wrap">
-          <button onclick="triggerAddProblem()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
-            <span>➕</span> Thêm Bài Tập Mới
-          </button>
-        </div>
-      </div>
-
-      <!-- Filters: Class & Platform -->
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-3 rounded-2xl">
-        <!-- Class Filter -->
-        <div class="flex items-center gap-1.5 flex-wrap text-xs" id="prob-class-filter-container">
-          <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>👥</span> Xem bài tập:</span>
-          <button onclick="filterProblemClass('all')" id="prob-class-filter-all" class="prob-class-btn px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/40 transition">Tất cả bài tập</button>
-          <button onclick="filterProblemClass('Public')" id="prob-class-filter-Public" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🌐 Public</button>
-          <button onclick="filterProblemClass('C++ nâng cao')" id="prob-class-filter-cppnc" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-blue-300 hover:bg-slate-800 transition">🟦 C++ nâng cao</button>
-          <button onclick="filterProblemClass('C++ cơ bản')" id="prob-class-filter-cppcb" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-800 transition">🔷 C++ cơ bản</button>
-          <button onclick="filterProblemClass('Python cơ bản')" id="prob-class-filter-pythoncb" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🟩 Python cơ bản</button>
-          <button onclick="filterProblemClass('Python 1-1')" id="prob-class-filter-python11" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-purple-300 hover:bg-slate-800 transition">🟪 Python 1-1</button>
-        </div>
-
-        <!-- Platform Filter -->
-        <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl text-xs border border-slate-800/80">
-          <button onclick="filterProblemPlatform('all')" id="prob-filter-all" class="px-2.5 py-1 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition">Tất cả sàn</button>
-          <button onclick="filterProblemPlatform('DeruckOJ')" id="prob-filter-DeruckOJ" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-emerald-300 transition">⚡ Chấm Nội Bộ</button>
-          <button onclick="filterProblemPlatform('MarisaOJ')" id="prob-filter-MarisaOJ" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-purple-300 transition">🟣 Marisa</button>
-          <button onclick="filterProblemPlatform('VJudge')" id="prob-filter-VJudge" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-emerald-300 transition">🟢 VJudge</button>
-          <button onclick="filterProblemPlatform('Codeforces')" id="prob-filter-Codeforces" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-blue-300 transition">🔵 CF</button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="problems-grid">
-        <!-- Dynamically populated -->
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- TAB: CHẤM BÀI TRỰC TUYẾN (ONLINE JUDGE) -->
-    <!-- ========================================== -->
-    <section id="section-judge" class="space-y-6 hidden">
-      <!-- Header Banner & Controls -->
+      <!-- Header Banner & View Mode Switcher -->
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
         <div class="space-y-1">
           <div class="flex items-center gap-2">
-            <span class="text-2xl">⚡</span>
-            <h2 class="text-xl font-bold text-white tracking-tight">Hệ Thống Chấm Bài Trực Tuyến (Online Judge)</h2>
-            <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">C++20 & Python 3</span>
+            <span class="text-2xl">📝</span>
+            <h2 class="text-xl font-bold text-white tracking-tight">Trung Tâm Bài Tập & Chấm Điểm</h2>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Hợp nhất 2 trong 1</span>
           </div>
-          <p class="text-xs text-slate-400">Chấm tự động theo thời gian thực với bộ test của giáo viên. Hỗ trợ chấm trực tuyến (Wandbox API) và chấm cục bộ siêu tốc (Local Judge Server).</p>
+          <p class="text-xs text-slate-400">Gồm bài tập từ các sàn thi đấu quốc tế (Codeforces, VJudge, MarisaOJ) và các bài tập cơ bản tự động chấm điểm trên web theo bộ test của giáo viên.</p>
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
-          <!-- Engine Status Pill -->
-          <div id="judge-engine-pill" class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span id="judge-engine-text">Wandbox API Online</span>
+          <!-- View Mode Switcher: Danh Sách vs Phòng Chấm -->
+          <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold shadow-inner">
+            <button onclick="toggleProblemViewMode('list')" id="btn-prob-view-list" class="px-3.5 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer flex items-center gap-1.5 shadow">
+              <span>📚</span> Danh Sách Bài Tập
+            </button>
+            <button onclick="toggleProblemViewMode('judge')" id="btn-prob-view-judge" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5">
+              <span>⚡</span> Phòng Chấm Điểm
+            </button>
           </div>
 
-          <!-- Teacher testcase manager trigger -->
-          <button onclick="openTestcaseManagerModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
-            <span>⚙️</span> Quản Lý Bộ Test & Thêm Bài
+          <!-- Teacher Actions -->
+          <button onclick="triggerAddProblem()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
+            <span>➕</span> Thêm Bài
+          </button>
+          <button onclick="openTestcaseManagerModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 transition flex items-center gap-1.5 cursor-pointer">
+            <span>⚙️</span> Quản Lý Bộ Test
           </button>
         </div>
       </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 1: PROBLEM CATALOG (DANH SÁCH BÀI TẬP)   -->
+      <!-- ============================================== -->
+      <div id="problems-view-list" class="space-y-4">
+        <!-- Filters: Class & Platform/Source -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-3 rounded-2xl">
+          <!-- Class Filter -->
+          <div class="flex items-center gap-1.5 flex-wrap text-xs" id="prob-class-filter-container">
+            <span class="text-slate-400 font-semibold mr-1 flex items-center gap-1"><span>👥</span> Xem bài tập:</span>
+            <button onclick="filterProblemClass('all')" id="prob-class-filter-all" class="prob-class-btn px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/40 transition">Tất cả bài tập</button>
+            <button onclick="filterProblemClass('Public')" id="prob-class-filter-Public" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🌐 Public</button>
+            <button onclick="filterProblemClass('C++ nâng cao')" id="prob-class-filter-cppnc" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-blue-300 hover:bg-slate-800 transition">🟦 C++ nâng cao</button>
+            <button onclick="filterProblemClass('C++ cơ bản')" id="prob-class-filter-cppcb" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-800 transition">🔷 C++ cơ bản</button>
+            <button onclick="filterProblemClass('Python cơ bản')" id="prob-class-filter-pythoncb" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition">🟩 Python cơ bản</button>
+            <button onclick="filterProblemClass('Python 1-1')" id="prob-class-filter-python11" class="prob-class-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-purple-300 hover:bg-slate-800 transition">🟪 Python 1-1</button>
+          </div>
+
+          <!-- Platform / Source Filter -->
+          <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl text-xs border border-slate-800/80 flex-wrap">
+            <button onclick="filterProblemPlatform('all')" id="prob-filter-all" class="px-2.5 py-1 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition cursor-pointer">Tất cả</button>
+            <button onclick="filterProblemPlatform('DeruckOJ')" id="prob-filter-DeruckOJ" class="px-2.5 py-1 rounded-lg text-emerald-400 hover:bg-emerald-500/10 font-bold transition cursor-pointer">⚡ Giáo Viên Chấm</button>
+            <button onclick="filterProblemPlatform('Codeforces')" id="prob-filter-Codeforces" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-blue-300 transition cursor-pointer">🔵 Codeforces</button>
+            <button onclick="filterProblemPlatform('MarisaOJ')" id="prob-filter-MarisaOJ" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-purple-300 transition cursor-pointer">🟣 MarisaOJ</button>
+            <button onclick="filterProblemPlatform('VJudge')" id="prob-filter-VJudge" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-emerald-300 transition cursor-pointer">🟢 VJudge</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="problems-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 2: ONLINE JUDGE WORKSPACE (PHÒNG CHẤM)   -->
+      <!-- ============================================== -->
+      <div id="problems-view-judge" class="space-y-6 hidden">
+        <!-- Sub-header for Judge with quick return button & Engine Pill -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/60 border border-slate-800 p-3.5 rounded-2xl">
+          <button onclick="toggleProblemViewMode('list')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer w-fit shadow">
+            <span>←</span> Quay lại danh sách bài tập
+          </button>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-400 font-medium hidden sm:inline">Máy chủ chấm:</span>
+            <!-- Engine Status Pill -->
+            <div id="judge-engine-pill" class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="judge-engine-text">Wandbox API Online</span>
+            </div>
+          </div>
+        </div>
 
       <!-- Problem Selector Carousel / Pills -->
       <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-2xl space-y-3">
@@ -896,6 +904,7 @@
 
         </div>
 
+      </div>
       </div>
     </section>
 
@@ -1598,9 +1607,13 @@
         const hashRaw = window.location.hash.replace('#', '');
         if (hashRaw.startsWith('judge-')) {
           const probId = hashRaw.replace('judge-', '');
-          switchTab('judge');
+          switchTab('problems');
+          toggleProblemViewMode('judge');
           setTimeout(() => selectJudgeProblem(probId), 80);
-        } else if (['home', 'leaderboard', 'contests', 'problems', 'judge', 'curriculum', 'admin'].includes(hashRaw)) {
+        } else if (hashRaw === 'judge') {
+          switchTab('problems');
+          toggleProblemViewMode('judge');
+        } else if (['home', 'leaderboard', 'contests', 'problems', 'curriculum', 'admin'].includes(hashRaw)) {
           if (currentAuth || hashRaw === 'home') {
             switchTab(hashRaw);
           } else {
@@ -1681,9 +1694,14 @@
         }
       }
 
+      if (tabName === 'judge') {
+        tabName = 'problems';
+        setTimeout(() => toggleProblemViewMode('judge'), 30);
+      }
+
       window.location.hash = tabName;
 
-      const sections = ['home', 'leaderboard', 'contests', 'problems', 'judge', 'curriculum'];
+      const sections = ['home', 'leaderboard', 'contests', 'problems', 'curriculum'];
       sections.forEach(s => {
         const el = document.getElementById(`section-${s}`);
         const btn = document.getElementById(`tab-btn-${s}`);
@@ -1703,8 +1721,36 @@
         }
       });
 
-      if (tabName === 'judge') {
+      if (tabName === 'problems') {
+        if (currentProblemViewMode === 'judge') {
+          renderJudgeWorkspace();
+        } else {
+          renderProblems();
+        }
+      }
+    }
+
+    // TOGGLE PROBLEM VIEW MODE: 'list' (Catalog) vs 'judge' (Online Judge Workspace)
+    let currentProblemViewMode = 'list'; // 'list' | 'judge'
+    function toggleProblemViewMode(mode) {
+      currentProblemViewMode = mode;
+      const listEl = document.getElementById('problems-view-list');
+      const judgeEl = document.getElementById('problems-view-judge');
+      const btnList = document.getElementById('btn-prob-view-list');
+      const btnJudge = document.getElementById('btn-prob-view-judge');
+
+      if (mode === 'judge') {
+        if (listEl) listEl.classList.add('hidden');
+        if (judgeEl) judgeEl.classList.remove('hidden');
+        if (btnList) btnList.className = "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5";
+        if (btnJudge) btnJudge.className = "px-3.5 py-1.5 rounded-lg bg-emerald-600/30 text-emerald-300 font-bold border border-emerald-500/40 transition cursor-pointer flex items-center gap-1.5 shadow";
         renderJudgeWorkspace();
+      } else {
+        if (listEl) listEl.classList.remove('hidden');
+        if (judgeEl) judgeEl.classList.add('hidden');
+        if (btnList) btnList.className = "px-3.5 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer flex items-center gap-1.5 shadow";
+        if (btnJudge) btnJudge.className = "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5";
+        renderProblems();
       }
     }
 
@@ -4260,7 +4306,8 @@
 
     function openJudgeWithProblem(probId) {
       currentJudgeProbId = probId;
-      switchTab('judge');
+      switchTab('problems');
+      toggleProblemViewMode('judge');
       setTimeout(() => {
         selectJudgeProblem(probId);
         window.scrollTo({ top: 0, behavior: 'smooth' });
