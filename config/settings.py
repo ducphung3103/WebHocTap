@@ -6,13 +6,11 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 from dotenv import load_dotenv
 
-# Automatically sanitize SSLKEYLOGFILE if pointing to non-existent folder
+# Automatically sanitize SSLKEYLOGFILE if pointing to non-existent file
 # (Avoids fatal Windows socket/ssl crash when SSLKEYLOGFILE env is stale)
 _sslkeylogfile = os.environ.get("SSLKEYLOGFILE")
-if _sslkeylogfile:
-    _ssl_dir = os.path.dirname(_sslkeylogfile)
-    if _ssl_dir and not os.path.exists(_ssl_dir):
-        del os.environ["SSLKEYLOGFILE"]
+if _sslkeylogfile and not os.path.exists(_sslkeylogfile):
+    del os.environ["SSLKEYLOGFILE"]
 
 # Load .env file from project root if present
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent

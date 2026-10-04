@@ -8,7 +8,7 @@ from typing import List, Dict
 
 # Ensure SSLKEYLOGFILE is safe
 _sslkeylogfile = os.environ.get("SSLKEYLOGFILE")
-if _sslkeylogfile and not os.path.exists(os.path.dirname(_sslkeylogfile)):
+if _sslkeylogfile and not os.path.exists(_sslkeylogfile):
     del os.environ["SSLKEYLOGFILE"]
 
 from src.utils.logger import get_logger
@@ -228,7 +228,8 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
             st_fee_map = {}
             for idx, m in enumerate(tuition_months, 3):
                 cell_val = ws_fee.cell(r, idx).value
-                st_fee_map[m] = True if cell_val and str(cell_val).strip().lower() == "x" else False
+                val_str = str(cell_val).strip().lower() if cell_val else ""
+                st_fee_map[m] = True if val_str in ["x", "true", "1", "v", "✓", "yes", "co"] else False
             tuition_data[fee_name_clean] = st_fee_map
 
     # 5. Parse Students
@@ -300,12 +301,23 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
             solved_set = set(all_solved)
             target_solved = [pid for pid in class_prob_ids if pid in solved_set]
 
-            # Match tuition by name or short name
+            # Match tuition: exact match or subset words with matching given name
             st_tuition = {}
+            name_clean = name_str.lower().strip()
+            name_words = name_clean.split()
+            # 1. Exact match
             for fn, fmap in tuition_data.items():
-                if fn.lower() in name_str.lower() or name_str.lower() in fn.lower():
+                if fn.lower().strip() == name_clean:
                     st_tuition = fmap
                     break
+            # 2. Subset words with identical given name (e.g. "Gia Hưng" in "Trần Gia Hưng", "Huy" in "Nguyễn Đắc Gia Huy")
+            if not st_tuition:
+                for fn, fmap in tuition_data.items():
+                    fn_words = fn.lower().strip().split()
+                    if fn_words and name_words and fn_words[-1] == name_words[-1]:
+                        if set(fn_words).issubset(set(name_words)) or set(name_words).issubset(set(fn_words)):
+                            st_tuition = fmap
+                            break
             if not st_tuition:
                 st_tuition = {m: False for m in tuition_months}
 
@@ -379,6 +391,25 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
     if "class_info" not in final_data:
         final_data["class_info"] = {}
     final_data["class_info"]["title"] = "Deruck's Competitive Programming"
+
+    grader_problems = existing_data.get("grader_problems", [])
+    final_data["grader_problems"] = grader_problems
+
+    # Merge grader problems into problems list if not already present
+    prob_id_set = {p["id"] for p in problems}
+    for gp in grader_problems:
+        if gp["id"] not in prob_id_set:
+            problems.append({
+                "id": gp["id"],
+                "name": gp["name"],
+                "platform": "DeruckOJ",
+                "url": f'#judge-{gp["id"]}',
+                "badge_color": gp.get("badge_color", "indigo"),
+                "category": gp.get("category", "Cơ bản"),
+                "difficulty": gp.get("difficulty", "Level 1 • Cơ bản"),
+                "classes": gp.get("classes", ["Public"])
+            })
+
     final_data["students"] = students
     final_data["problems"] = problems
     final_data["curriculum"] = curriculum

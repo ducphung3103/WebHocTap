@@ -157,6 +157,9 @@
           <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
             📝 Bài Tập
           </button>
+          <button onclick="switchTab('judge')" id="tab-btn-judge" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
+            ⚡ Chấm Bài Online
+          </button>
           <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
             📚 Bài Giảng
           </button>
@@ -184,6 +187,7 @@
         <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">🏆 BXH</button>
         <button onclick="switchTab('contests')" id="tab-btn-contests-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
         <button onclick="switchTab('problems')" id="tab-btn-problems-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
+        <button onclick="switchTab('judge')" id="tab-btn-judge-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">⚡ Chấm bài</button>
         <button onclick="switchTab('curriculum')" id="tab-btn-curriculum-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</button>
         <a href="student.html" id="tab-btn-student-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
       </div>
@@ -643,6 +647,7 @@
         <!-- Platform Filter -->
         <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl text-xs border border-slate-800/80">
           <button onclick="filterProblemPlatform('all')" id="prob-filter-all" class="px-2.5 py-1 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition">Tất cả sàn</button>
+          <button onclick="filterProblemPlatform('DeruckOJ')" id="prob-filter-DeruckOJ" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-emerald-300 transition">⚡ Chấm Nội Bộ</button>
           <button onclick="filterProblemPlatform('MarisaOJ')" id="prob-filter-MarisaOJ" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-purple-300 transition">🟣 Marisa</button>
           <button onclick="filterProblemPlatform('VJudge')" id="prob-filter-VJudge" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-emerald-300 transition">🟢 VJudge</button>
           <button onclick="filterProblemPlatform('Codeforces')" id="prob-filter-Codeforces" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-blue-300 transition">🔵 CF</button>
@@ -651,6 +656,246 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="problems-grid">
         <!-- Dynamically populated -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB: CHẤM BÀI TRỰC TUYẾN (ONLINE JUDGE) -->
+    <!-- ========================================== -->
+    <section id="section-judge" class="space-y-6 hidden">
+      <!-- Header Banner & Controls -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">⚡</span>
+            <h2 class="text-xl font-bold text-white tracking-tight">Hệ Thống Chấm Bài Trực Tuyến (Online Judge)</h2>
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">C++20 & Python 3</span>
+          </div>
+          <p class="text-xs text-slate-400">Chấm tự động theo thời gian thực với bộ test của giáo viên. Hỗ trợ chấm trực tuyến (Wandbox API) và chấm cục bộ siêu tốc (Local Judge Server).</p>
+        </div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+          <!-- Engine Status Pill -->
+          <div id="judge-engine-pill" class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="judge-engine-text">Wandbox API Online</span>
+          </div>
+
+          <!-- Teacher testcase manager trigger -->
+          <button onclick="openTestcaseManagerModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
+            <span>⚙️</span> Quản Lý Bộ Test & Thêm Bài
+          </button>
+        </div>
+      </div>
+
+      <!-- Problem Selector Carousel / Pills -->
+      <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-2xl space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <span class="text-slate-400 font-semibold flex items-center gap-1.5">
+            <span>📝</span> Chọn bài tập cơ bản để nộp code:
+          </span>
+          <span class="text-slate-500 font-mono" id="judge-problems-count">8 bài cơ bản</span>
+        </div>
+        <div class="flex items-center gap-2 overflow-x-auto pb-1" id="judge-problem-selector">
+          <!-- Populated dynamically with problem pills -->
+        </div>
+      </div>
+
+      <!-- Workspace: 2 Columns (Left: Problem Statement & Samples | Right: Code Editor & Live Grader) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- LEFT: PROBLEM STATEMENT & SAMPLES (5 cols on lg) -->
+        <div class="lg:col-span-5 space-y-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+          
+          <!-- Problem Title & Badges -->
+          <div class="space-y-2 border-b border-slate-800 pb-4">
+            <div class="flex items-center justify-between gap-2">
+              <span id="judge-prob-id" class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">CB-01</span>
+              <div class="flex items-center gap-1.5">
+                <span id="judge-prob-time" class="text-[11px] font-mono text-amber-300 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">⏱️ 1.0s</span>
+                <span id="judge-prob-mem" class="text-[11px] font-mono text-purple-300 bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded">💾 256MB</span>
+              </div>
+            </div>
+            <h3 id="judge-prob-name" class="text-lg font-extrabold text-white">Tính tổng hai số nguyên A + B</h3>
+            <div class="flex items-center gap-2 flex-wrap text-xs">
+              <span id="judge-prob-diff" class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30">Level 1 • Nhập xuất</span>
+              <span id="judge-prob-testcount" class="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800 text-slate-300 border border-slate-700">8 Bộ Test (2 mẫu • 6 ẩn)</span>
+              <span id="judge-prob-status-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-400 border border-slate-700">Chưa nộp</span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">📖 Đề bài:</h4>
+              <p id="judge-prob-desc" class="text-slate-200 whitespace-pre-line"></p>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">📥 Dữ liệu vào (Input):</h4>
+              <p id="judge-prob-input" class="text-slate-300 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80 font-mono text-xs"></p>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">📤 Dữ liệu ra (Output):</h4>
+              <p id="judge-prob-output" class="text-slate-300 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80 font-mono text-xs"></p>
+            </div>
+          </div>
+
+          <!-- Sample Tests -->
+          <div class="space-y-3 pt-2 border-t border-slate-800">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 flex items-center justify-between">
+              <span>🧪 Ví Dụ Mẫu (Sample Tests):</span>
+            </h4>
+            <div id="judge-sample-tests-container" class="space-y-3">
+              <!-- Dynamically populated sample tests -->
+            </div>
+          </div>
+
+          <!-- Teacher Quick Box -->
+          <div id="judge-teacher-quickbox" class="hidden bg-indigo-950/30 border border-indigo-500/30 rounded-xl p-3 text-xs space-y-2">
+            <div class="font-bold text-indigo-300 flex items-center justify-between">
+              <span>👑 Quyền Giảng Viên:</span>
+              <button onclick="openEditTestcasesForCurrentProblem()" class="underline hover:text-white cursor-pointer">Sửa bộ test bài này ↗</button>
+            </div>
+            <p class="text-[11px] text-slate-400">Thầy có thể thêm, bớt hoặc chỉnh sửa input/output bộ test của bài tập này bất kỳ lúc nào.</p>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: CODE EDITOR & LIVE GRADER (7 cols on lg) -->
+        <div class="lg:col-span-7 space-y-4">
+          
+          <!-- Code Editor Card -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden flex flex-col">
+            
+            <!-- Editor Toolbar -->
+            <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <label for="judge-lang-select" class="text-xs font-semibold text-slate-400">Ngôn ngữ:</label>
+                <select id="judge-lang-select" onchange="handleJudgeLanguageChange()" class="bg-slate-900 border border-slate-700 text-xs font-bold text-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                  <option value="cpp">C++ (g++ 13 / C++20)</option>
+                  <option value="python">Python (Python 3.12)</option>
+                </select>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button onclick="insertJudgeStarterTemplate()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Lấy code khung mẫu">
+                  <span>📄</span> Code mẫu
+                </button>
+                <button onclick="clearJudgeCode()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-rose-300 border border-slate-700 transition flex items-center gap-1 cursor-pointer" title="Xóa trắng code">
+                  <span>🗑️</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Code Textarea -->
+            <div class="relative bg-slate-950 flex font-mono text-xs sm:text-sm">
+              <textarea 
+                id="judge-code-editor" 
+                rows="16" 
+                spellcheck="false" 
+                placeholder="// Viết code C++ hoặc Python tại đây..."
+                class="w-full bg-slate-950 text-slate-100 font-mono text-xs sm:text-sm leading-relaxed p-4 resize-y focus:outline-none focus:ring-1 focus:ring-indigo-500/50 selection:bg-indigo-600/40 tab-size-4"
+              ></textarea>
+            </div>
+
+            <!-- Actions Bar -->
+            <div class="bg-slate-950/80 px-4 py-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
+              <div class="text-xs text-slate-500 flex items-center gap-2">
+                <span id="judge-editor-status">Sẵn sàng nộp bài</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button onclick="runJudgeSampleOnly()" id="btn-judge-run-sample" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer shadow">
+                  <span>▶️</span> Chạy Thử Ví Dụ
+                </button>
+                <button onclick="submitJudgeAllTests()" id="btn-judge-submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
+                  <span>🚀</span> Nộp Bài & Chấm Điểm
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Live Grading Result Console -->
+          <div id="judge-console-card" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+            
+            <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-3">
+              <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                <span>📊</span> Kết Quả Chấm Bài
+              </h4>
+              <span id="judge-verdict-tag" class="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 border border-slate-700">
+                Chưa có kết quả
+              </span>
+            </div>
+
+            <!-- Progress Bar while judging -->
+            <div id="judge-progress-container" class="space-y-1.5 hidden">
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span id="judge-progress-text" class="text-indigo-400 font-semibold">Đang chấm test 1/8...</span>
+                <span id="judge-progress-pct" class="text-slate-400">12%</span>
+              </div>
+              <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                <div id="judge-progress-bar" class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Overall Banner -->
+            <div id="judge-verdict-banner" class="hidden rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3">
+              <!-- Dynamically populated verdict banner -->
+            </div>
+
+            <!-- Compiler Error Message (If CE) -->
+            <div id="judge-ce-container" class="hidden bg-rose-950/40 border border-rose-500/30 rounded-xl p-3.5 space-y-2">
+              <div class="text-xs font-bold text-rose-300 flex items-center gap-1.5">
+                <span>⚠️</span> Lỗi biên dịch (Compilation Error):
+              </div>
+              <pre id="judge-ce-text" class="font-mono text-xs text-rose-200 overflow-x-auto whitespace-pre-wrap p-2 bg-slate-950/70 rounded-lg"></pre>
+            </div>
+
+            <!-- Testcases Results Grid / List -->
+            <div class="space-y-2">
+              <div class="text-xs font-semibold text-slate-400">Chi tiết từng bộ test:</div>
+              <div id="judge-test-matrix" class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div class="col-span-full text-xs text-slate-500 italic py-2">Bấm "Nộp Bài & Chấm Điểm" để hệ thống chấm từng testcase.</div>
+              </div>
+            </div>
+
+            <!-- Test Detail Expansion Box -->
+            <div id="judge-test-detail-box" class="hidden bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs space-y-2 font-mono">
+              <!-- Populated when user clicks on a test -->
+            </div>
+
+          </div>
+
+          <!-- Submission History Card -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-400">
+              <span class="flex items-center gap-1.5"><span>📜</span> Lịch sử nộp bài gần đây:</span>
+              <button onclick="clearJudgeHistory()" class="text-slate-500 hover:text-rose-400 transition cursor-pointer">Xóa lịch sử</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-slate-300">
+                <thead class="text-[11px] text-slate-500 uppercase border-b border-slate-800">
+                  <tr>
+                    <th class="py-2 px-2">Thời gian</th>
+                    <th class="py-2 px-2">Bài</th>
+                    <th class="py-2 px-2">Ngôn ngữ</th>
+                    <th class="py-2 px-2">Kết quả</th>
+                    <th class="py-2 px-2">Điểm</th>
+                    <th class="py-2 px-2 text-right">Xem lại</th>
+                  </tr>
+                </thead>
+                <tbody id="judge-history-body" class="divide-y divide-slate-800/60 font-mono">
+                  <tr><td colspan="6" class="py-3 text-center text-slate-500 italic">Chưa có bài nộp nào.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
@@ -1028,6 +1273,200 @@
       </div>
     </div>
 
+    <!-- ============================================== -->
+    <!-- MODAL 4: TEACHER TESTCASE & PROBLEM MANAGER -->
+    <!-- ============================================== -->
+    <div id="modal-testcase-manager" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+      <div class="relative w-full max-w-4xl max-h-[90vh] bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 flex flex-col space-y-4 overflow-hidden">
+        
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 flex-shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">⚙️</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-white">Quản Lý Bộ Test & Thêm Bài Chấm Trực Tuyến</h3>
+              <p class="text-xs text-slate-400">Dành cho Thầy/Admin: Chỉnh sửa testcase, thêm bài tập cơ bản, nạp bộ test hàng loạt</p>
+            </div>
+          </div>
+          <button onclick="closeTestcaseManagerModal()" class="text-slate-400 hover:text-white text-lg p-1 cursor-pointer">✕</button>
+        </div>
+
+        <!-- Navigation Tabs inside Modal -->
+        <div class="flex items-center gap-2 border-b border-slate-800 pb-2 text-xs flex-shrink-0">
+          <button id="tc-tab-btn-manage" onclick="switchTestcaseTab('manage')" class="px-3 py-1.5 rounded-lg font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition cursor-pointer">
+            🧪 Bộ Test Bài Hiện Tại
+          </button>
+          <button id="tc-tab-btn-create" onclick="switchTestcaseTab('create')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
+            ➕ Thêm Bài Tập Mới
+          </button>
+          <button id="tc-tab-btn-batch" onclick="switchTestcaseTab('batch')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
+            📥 Import Hàng Loạt Test
+          </button>
+          <button id="tc-tab-btn-export" onclick="switchTestcaseTab('export')" class="px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
+            💾 Sao Lưu / Đồng Bộ
+          </button>
+        </div>
+
+        <!-- Modal Body (Scrollable) -->
+        <div class="flex-1 overflow-y-auto pr-1 space-y-4">
+          
+          <!-- TAB 1: MANAGE TESTS FOR A PROBLEM -->
+          <div id="tc-tab-content-manage" class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+              <div class="flex items-center gap-2">
+                <label for="tc-manage-prob-select" class="text-xs font-semibold text-slate-300 whitespace-nowrap">Chọn bài:</label>
+                <select id="tc-manage-prob-select" onchange="loadProblemIntoTestcaseManager(this.value)" class="bg-slate-900 border border-slate-700 text-xs font-bold text-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="addNewTestcaseRow()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1 cursor-pointer">
+                  <span>➕</span> Thêm Test Mới
+                </button>
+                <button type="button" onclick="saveTestcasesFromManager()" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1 cursor-pointer">
+                  <span>💾</span> Lưu Tất Cả Test
+                </button>
+              </div>
+            </div>
+
+            <!-- Problem meta info summary -->
+            <div id="tc-manage-prob-info" class="text-xs text-slate-400 font-mono flex items-center gap-4">
+              <span>Mã: <strong id="tc-info-id" class="text-indigo-300">CB-01</strong></span>
+              <span>Tổng số test: <strong id="tc-info-count" class="text-white">8</strong></span>
+            </div>
+
+            <!-- Testcases list -->
+            <div id="tc-tests-list-container" class="space-y-3">
+              <!-- Dynamically populated testcase rows -->
+            </div>
+          </div>
+
+          <!-- TAB 2: CREATE NEW GRADER PROBLEM -->
+          <div id="tc-tab-content-create" class="space-y-4 hidden">
+            <form onsubmit="handleCreateNewGraderProblem(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="space-y-1">
+                  <label class="text-xs font-semibold text-slate-300">Mã bài (*):</label>
+                  <input type="text" id="new-gprob-id" required placeholder="Ví dụ: CB-09 hoặc ARR-01" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                </div>
+                <div class="sm:col-span-2 space-y-1">
+                  <label class="text-xs font-semibold text-slate-300">Tên bài tập (*):</label>
+                  <input type="text" id="new-gprob-name" required placeholder="Ví dụ: Tìm số nhỏ nhất trong mảng" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="space-y-1">
+                  <label class="text-xs font-semibold text-slate-300">Độ khó / Cấp độ:</label>
+                  <input type="text" id="new-gprob-diff" placeholder="Level 1 • Cơ bản" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="space-y-1">
+                  <label class="text-xs font-semibold text-slate-300">Chủ đề:</label>
+                  <input type="text" id="new-gprob-cat" placeholder="Mảng một chiều" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="space-y-1">
+                  <label class="text-xs font-semibold text-slate-300">Giới hạn thời gian (giây):</label>
+                  <input type="number" id="new-gprob-timelimit" step="0.1" value="1.0" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-xs font-semibold text-slate-300">Nội dung đề bài (*):</label>
+                <textarea id="new-gprob-desc" rows="3" required placeholder="Mô tả yêu cầu bài toán..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-indigo-500"></textarea>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="space-y-1">
+                  <label class="text-xs font-semibold text-slate-300">Quy cách dữ liệu vào (Input format):</label>
+                  <textarea id="new-gprob-input" rows="2" placeholder="Dòng đầu gồm N..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500"></textarea>
+                </div>
+                <div class="space-y-1">
+                  <label class="text-xs font-semibold text-slate-300">Quy cách dữ liệu ra (Output format):</label>
+                  <textarea id="new-gprob-output" rows="2" placeholder="In ra một số duy nhất..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500"></textarea>
+                </div>
+              </div>
+
+              <!-- Initial Sample Test -->
+              <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl space-y-2">
+                <div class="text-xs font-bold text-indigo-300">🧪 Bộ test mẫu đầu tiên (Sample Test 1):</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="text-[11px] text-slate-400">Input mẫu:</label>
+                    <textarea id="new-gprob-sample-in" rows="2" class="w-full font-mono bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none"></textarea>
+                  </div>
+                  <div>
+                    <label class="text-[11px] text-slate-400">Output mẫu:</label>
+                    <textarea id="new-gprob-sample-out" rows="2" class="w-full font-mono bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-end gap-2 pt-2 border-t border-slate-800">
+                <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition shadow cursor-pointer">
+                  Tạo Bài Tập Mới
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- TAB 3: BATCH IMPORT TESTCASES -->
+          <div id="tc-tab-content-batch" class="space-y-4 hidden">
+            <div class="space-y-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+              <label for="tc-batch-prob-select" class="text-xs font-semibold text-slate-300">Chọn bài tập để nạp thêm test:</label>
+              <select id="tc-batch-prob-select" class="bg-slate-900 border border-slate-700 text-xs font-bold text-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                <!-- Dynamically populated -->
+              </select>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <label class="font-semibold text-slate-300">Dán danh sách bộ test (Định dạng phân tách chuẩn):</label>
+                <button type="button" onclick="insertBatchTestSampleTemplate()" class="text-indigo-400 hover:underline cursor-pointer">Chèn mẫu ví dụ</button>
+              </div>
+              <textarea id="tc-batch-text" rows="8" placeholder="=== TEST ===&#10;INPUT:&#10;5 7&#10;OUTPUT:&#10;12&#10;&#10;=== TEST ===&#10;INPUT:&#10;100 200&#10;OUTPUT:&#10;300" class="w-full font-mono bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-indigo-500"></textarea>
+              <p class="text-[11px] text-slate-400 italic">💡 Sử dụng dòng <code>=== TEST ===</code> hoặc <code>--- TEST ---</code> để phân cách từng test. Tiếp theo là nhãn <code>INPUT:</code> và <code>OUTPUT:</code>.</p>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+              <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                <input type="checkbox" id="tc-batch-append" checked class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
+                <span>Thêm nối tiếp (Không xóa các test cũ đang có)</span>
+              </label>
+              <button type="button" onclick="handleBatchImportTests()" class="px-5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition cursor-pointer">
+                📥 Nạp Bộ Test
+              </button>
+            </div>
+          </div>
+
+          <!-- TAB 4: EXPORT / SYNC -->
+          <div id="tc-tab-content-export" class="space-y-4 hidden">
+            <div class="p-4 bg-slate-950/70 border border-slate-800 rounded-xl space-y-3">
+              <h4 class="text-xs font-bold text-white uppercase tracking-wider">📤 Xuất dữ liệu bộ test & bài tập</h4>
+              <p class="text-xs text-slate-400">Tải file <code>grader_problems.json</code> chứa đầy đủ danh sách bài tập cơ bản và tất cả bộ test (input/output). Thầy có thể lưu trữ hoặc chuyển qua máy khác.</p>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="downloadGraderProblemsJSON()" class="px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
+                  <span>💾</span> Tải File grader_problems.json
+                </button>
+              </div>
+            </div>
+
+            <div class="p-4 bg-slate-950/70 border border-slate-800 rounded-xl space-y-3">
+              <h4 class="text-xs font-bold text-white uppercase tracking-wider">📥 Nhập file JSON bộ test</h4>
+              <p class="text-xs text-slate-400">Chọn file JSON đã xuất trước đó để khôi phục hoặc cập nhật thêm bài tập và testcase vào hệ thống.</p>
+              <div class="flex items-center gap-3">
+                <input type="file" id="tc-file-import-input" accept=".json" class="text-xs text-slate-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer">
+                <button type="button" onclick="handleImportGraderProblemsJSON()" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow transition cursor-pointer">
+                  Nạp File JSON
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
   </main>
 
   <!-- FOOTER -->
@@ -1156,10 +1595,14 @@
 
       // Check hash tab routing
       if (window.location.hash) {
-        const hashTab = window.location.hash.replace('#', '');
-        if (['home', 'leaderboard', 'contests', 'problems', 'curriculum', 'admin'].includes(hashTab)) {
-          if (currentAuth || hashTab === 'home') {
-            switchTab(hashTab);
+        const hashRaw = window.location.hash.replace('#', '');
+        if (hashRaw.startsWith('judge-')) {
+          const probId = hashRaw.replace('judge-', '');
+          switchTab('judge');
+          setTimeout(() => selectJudgeProblem(probId), 80);
+        } else if (['home', 'leaderboard', 'contests', 'problems', 'judge', 'curriculum', 'admin'].includes(hashRaw)) {
+          if (currentAuth || hashRaw === 'home') {
+            switchTab(hashRaw);
           } else {
             switchTab('home');
           }
@@ -1240,7 +1683,7 @@
 
       window.location.hash = tabName;
 
-      const sections = ['home', 'leaderboard', 'contests', 'problems', 'curriculum'];
+      const sections = ['home', 'leaderboard', 'contests', 'problems', 'judge', 'curriculum'];
       sections.forEach(s => {
         const el = document.getElementById(`section-${s}`);
         const btn = document.getElementById(`tab-btn-${s}`);
@@ -1259,6 +1702,10 @@
           if (mBtn) mBtn.className = "tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400";
         }
       });
+
+      if (tabName === 'judge') {
+        renderJudgeWorkspace();
+      }
     }
 
     // TOGGLE ADMIN STUDENT MANAGEMENT & MINI STATS (INTEGRATED ON LEADERBOARD)
@@ -1765,7 +2212,7 @@
 
     function filterProblems(filter = currentProblemFilter) {
       currentProblemFilter = filter;
-      ['all', 'MarisaOJ', 'VJudge', 'Codeforces'].forEach(f => {
+      ['all', 'DeruckOJ', 'MarisaOJ', 'VJudge', 'Codeforces'].forEach(f => {
         const btn = document.getElementById(`prob-filter-${f}`);
         if (btn) {
           if (f === filter) {
@@ -1781,8 +2228,9 @@
     function getPlatformName(platform) {
       if (!platform) return 'VJudge';
       const p = platform.toLowerCase();
-      if (p.includes('codeforces')) return 'Codeforces';
+      if (p.includes('codeforces') || p.includes('cf')) return 'Codeforces';
       if (p.includes('marisa')) return 'MarisaOJ';
+      if (p.includes('deruck') || p.includes('judge') || p.includes('nội bộ')) return 'DeruckOJ';
       return 'VJudge';
     }
 
@@ -1852,6 +2300,8 @@
           platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-blue-500/10 text-blue-300 border border-blue-500/20">Codeforces</span>`;
         } else if (plat === "VJudge") {
           platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">VJudge</span>`;
+        } else if (plat === "DeruckOJ" || p.platform === "DeruckOJ") {
+          platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">⚡ DeruckOJ</span>`;
         } else {
           platBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-purple-500/10 text-purple-300 border border-purple-500/20">MarisaOJ</span>`;
         }
@@ -1899,9 +2349,17 @@
             <div class="text-xs text-slate-400 font-mono">
               Đã AC: <span class="text-emerald-400 font-bold">${solvedCount}/${totalStudents}</span>
             </div>
-            <a href="${p.url}" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1 shadow">
-              Làm bài ↗
-            </a>
+            ${
+              (p.platform === 'DeruckOJ' || (p.url && p.url.startsWith('#judge'))) ? `
+                <button onclick="openJudgeWithProblem('${p.id}')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center gap-1 shadow cursor-pointer">
+                  <span>⚡</span> Nộp & Chấm
+                </button>
+              ` : `
+                <a href="${p.url}" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1 shadow">
+                  Làm bài ↗
+                </a>
+              `
+            }
           </div>
         `;
         grid.appendChild(card);
@@ -2826,7 +3284,7 @@
       if (!currentAuth || (currentAuth.role !== 'admin' && currentAuth.role !== 'teacher')) return;
 
       const isFullAdmin = currentAuth.role === 'admin';
-      const months = appData.tuition_months || ['Tháng 9', 'Tháng 10'];
+      const months = appData.tuition_months || ['Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 
       // Render Header
       let headHtml = `<tr>
@@ -3033,7 +3491,7 @@
     }
 
     function promptAddTuitionMonth() {
-      const current = appData.tuition_months || ['Tháng 9', 'Tháng 10'];
+      const current = appData.tuition_months || ['Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
       const nextNum = current.length + 8; // approx
       const monthName = prompt("Nhập tên tháng học phí mới:", `Tháng ${nextNum > 12 ? nextNum - 12 : nextNum}`);
       if (!monthName || !monthName.trim()) return;
@@ -3152,7 +3610,7 @@
           activity: {},
           tuition: {}
         };
-        (appData.tuition_months || ['Tháng 9', 'Tháng 10']).forEach(m => newStudent.tuition[m] = false);
+        (appData.tuition_months || ['Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12']).forEach(m => newStudent.tuition[m] = false);
         appData.students.push(newStudent);
       }
 
@@ -3492,7 +3950,7 @@
       XLSX.utils.book_append_sheet(wb, wsStudents, "Học Sinh");
 
       // Sheet 2: Học Phí
-      const months = appData.tuition_months || ['Tháng 9', 'Tháng 10'];
+      const months = appData.tuition_months || ['Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
       const feeHeaders = ["Họ và tên", "Lớp", ...months];
       const feeRows = [feeHeaders];
       (appData.students || []).forEach(s => {
@@ -3582,6 +4040,1340 @@
         localStorage.removeItem('cp_app_data');
         location.reload();
       }
+    }
+
+    // ============================================================
+    // 5. ONLINE JUDGE & TESTCASE GRADER ENGINE (DERUCKOJ)
+    // ============================================================
+    let currentJudgeProbId = 'CB-01';
+    let currentJudgeLang = 'cpp';
+    let isJudging = false;
+    let localJudgeAvailable = null;
+    let judgeSubmissionHistory = [];
+    let currentTestcaseEditingProbId = 'CB-01';
+
+    function getGraderProblems() {
+      if (appData && Array.isArray(appData.grader_problems) && appData.grader_problems.length > 0) {
+        return appData.grader_problems;
+      }
+      if (appData && Array.isArray(appData.problems)) {
+        const list = appData.problems.filter(p => p.platform === 'DeruckOJ' || p.testcases);
+        if (list.length > 0) return list;
+      }
+      return [];
+    }
+
+    async function checkLocalJudgeHealth() {
+      const enginePill = document.getElementById('judge-engine-pill');
+      const engineText = document.getElementById('judge-engine-text');
+      try {
+        const resp = await fetch('http://127.0.0.1:8080/health', {
+          signal: AbortSignal.timeout(1200)
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && data.status === 'ok') {
+            localJudgeAvailable = true;
+            if (enginePill && engineText) {
+              enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 flex items-center gap-2 shadow-inner";
+              engineText.innerHTML = '⚡ Local Judge Siêu Tốc (MinGW & Python)';
+            }
+            return true;
+          }
+        }
+      } catch (e) {
+        // Local judge not running
+      }
+      localJudgeAvailable = false;
+      if (enginePill && engineText) {
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> <span>Wandbox API (Cloud C++20/Py3)</span>';
+      }
+      return false;
+    }
+
+    function renderJudgeWorkspace() {
+      checkLocalJudgeHealth();
+      const graderProbs = getGraderProblems();
+      
+      const countEl = document.getElementById('judge-problems-count');
+      if (countEl) countEl.textContent = `${graderProbs.length} bài cơ bản`;
+
+      // Render problem selector carousel pills
+      const selector = document.getElementById('judge-problem-selector');
+      if (selector) {
+        selector.innerHTML = '';
+        if (graderProbs.length === 0) {
+          selector.innerHTML = '<span class="text-xs text-slate-500 italic">Chưa có bài tập cơ bản nào.</span>';
+        } else {
+          graderProbs.forEach(p => {
+            const btn = document.createElement('button');
+            const isSelected = (p.id === currentJudgeProbId);
+            
+            // Check if solved
+            let isSolved = false;
+            if (currentAuth && currentAuth.role === 'student' && appData && appData.students) {
+              const me = appData.students.find(s => s.name === currentAuth.name);
+              if (me && me.solved && me.solved.includes(p.id)) isSolved = true;
+            }
+
+            btn.onclick = () => selectJudgeProblem(p.id);
+            btn.className = `px-3 py-1.5 rounded-xl text-xs font-mono font-semibold whitespace-nowrap flex items-center gap-1.5 transition cursor-pointer border ${
+              isSelected 
+                ? 'bg-indigo-600 text-white border-indigo-400 shadow-md shadow-indigo-600/30' 
+                : 'bg-slate-950/70 hover:bg-slate-800 text-slate-300 border-slate-800'
+            }`;
+            btn.innerHTML = `
+              <span>${isSolved ? '✅' : '⚡'}</span>
+              <span>${p.id}</span>
+              <span class="text-[10px] opacity-75 font-sans">${p.name.length > 20 ? p.name.slice(0, 18) + '...' : p.name}</span>
+            `;
+            selector.appendChild(btn);
+          });
+        }
+      }
+
+      // Load active problem
+      let prob = graderProbs.find(p => p.id === currentJudgeProbId);
+      if (!prob && graderProbs.length > 0) {
+        prob = graderProbs[0];
+        currentJudgeProbId = prob.id;
+      }
+
+      if (!prob) return;
+
+      // Update meta details
+      const idEl = document.getElementById('judge-prob-id');
+      const nameEl = document.getElementById('judge-prob-name');
+      const timeEl = document.getElementById('judge-prob-time');
+      const memEl = document.getElementById('judge-prob-mem');
+      const diffEl = document.getElementById('judge-prob-diff');
+      const testcountEl = document.getElementById('judge-prob-testcount');
+      const statusBadge = document.getElementById('judge-prob-status-badge');
+      const descEl = document.getElementById('judge-prob-desc');
+      const inputEl = document.getElementById('judge-prob-input');
+      const outputEl = document.getElementById('judge-prob-output');
+
+      if (idEl) idEl.textContent = prob.id;
+      if (nameEl) nameEl.textContent = prob.name;
+      if (timeEl) timeEl.textContent = `⏱️ ${prob.time_limit || 1.0}s`;
+      if (memEl) memEl.textContent = `💾 ${prob.memory_limit || 256}MB`;
+      if (diffEl) diffEl.textContent = prob.difficulty || prob.category || 'Căn bản';
+      
+      const tests = prob.testcases || [];
+      const sampleCount = tests.filter(t => t.sample).length;
+      const hiddenCount = tests.length - sampleCount;
+      if (testcountEl) testcountEl.textContent = `${tests.length} Bộ Test (${sampleCount} mẫu • ${hiddenCount} ẩn)`;
+
+      // Solved badge
+      if (statusBadge) {
+        let isSolved = false;
+        if (currentAuth && currentAuth.role === 'student' && appData && appData.students) {
+          const me = appData.students.find(s => s.name === currentAuth.name);
+          if (me && me.solved && me.solved.includes(prob.id)) isSolved = true;
+        }
+        if (isSolved) {
+          statusBadge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+          statusBadge.textContent = "✅ Đã Hoàn Thành (AC)";
+        } else {
+          statusBadge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-400 border border-slate-700";
+          statusBadge.textContent = "Chưa nộp";
+        }
+      }
+
+      if (descEl) descEl.textContent = prob.description || 'Đang cập nhật đề bài...';
+      if (inputEl) inputEl.textContent = prob.input_format || 'Dữ liệu đầu vào theo chuẩn bài toán.';
+      if (outputEl) outputEl.textContent = prob.output_format || 'In kết quả ra màn hình chuẩn (stdout).';
+
+      // Sample Tests Box
+      const sampleContainer = document.getElementById('judge-sample-tests-container');
+      if (sampleContainer) {
+        sampleContainer.innerHTML = '';
+        const samples = tests.filter(t => t.sample);
+        const displaySamples = (samples.length > 0) ? samples : tests.slice(0, 2);
+        
+        if (displaySamples.length === 0) {
+          sampleContainer.innerHTML = '<div class="text-xs text-slate-500 italic">Chưa có bộ test ví dụ.</div>';
+        } else {
+          displaySamples.forEach((tc, idx) => {
+            const card = document.createElement('div');
+            card.className = "bg-slate-950/80 border border-slate-800/80 rounded-xl p-3 space-y-2 text-xs font-mono";
+            card.innerHTML = `
+              <div class="flex items-center justify-between text-slate-400 text-[11px] font-sans font-bold">
+                <span>Ví dụ #${idx + 1}</span>
+                <span class="text-[10px] text-indigo-400 font-mono">Test công khai</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div class="space-y-1">
+                  <div class="flex items-center justify-between text-[10px] text-slate-500">
+                    <span>Input:</span>
+                    <button type="button" onclick="copyTextToClipboard(${JSON.stringify(tc.input)})" class="text-indigo-400 hover:text-indigo-300">Copy</button>
+                  </div>
+                  <pre class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-slate-200 overflow-x-auto whitespace-pre-wrap">${escapeHtml(tc.input)}</pre>
+                </div>
+                <div class="space-y-1">
+                  <div class="flex items-center justify-between text-[10px] text-slate-500">
+                    <span>Output:</span>
+                    <button type="button" onclick="copyTextToClipboard(${JSON.stringify(tc.output)})" class="text-emerald-400 hover:text-emerald-300">Copy</button>
+                  </div>
+                  <pre class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-emerald-300 overflow-x-auto whitespace-pre-wrap">${escapeHtml(tc.output)}</pre>
+                </div>
+              </div>
+            `;
+            sampleContainer.appendChild(card);
+          });
+        }
+      }
+
+      // Teacher quick box toggle
+      const teacherBox = document.getElementById('judge-teacher-quickbox');
+      if (teacherBox) {
+        if (currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher')) {
+          teacherBox.classList.remove('hidden');
+        } else {
+          teacherBox.classList.add('hidden');
+        }
+      }
+
+      // Load code from localStorage or template
+      const langSelect = document.getElementById('judge-lang-select');
+      if (langSelect) langSelect.value = currentJudgeLang;
+
+      const codeEditor = document.getElementById('judge-code-editor');
+      if (codeEditor) {
+        const savedCode = localStorage.getItem(`deruck_code_${currentJudgeProbId}_${currentJudgeLang}`);
+        if (savedCode && savedCode.trim()) {
+          codeEditor.value = savedCode;
+        } else {
+          codeEditor.value = getStarterTemplate(currentJudgeProbId, currentJudgeLang);
+        }
+      }
+
+      renderJudgeSubmissionHistory();
+    }
+
+    function selectJudgeProblem(probId) {
+      saveCurrentJudgeCodeToLocal();
+      currentJudgeProbId = probId;
+      renderJudgeWorkspace();
+    }
+
+    function openJudgeWithProblem(probId) {
+      currentJudgeProbId = probId;
+      switchTab('judge');
+      setTimeout(() => {
+        selectJudgeProblem(probId);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
+    }
+
+    function saveCurrentJudgeCodeToLocal() {
+      const codeEditor = document.getElementById('judge-code-editor');
+      if (codeEditor && currentJudgeProbId) {
+        localStorage.setItem(`deruck_code_${currentJudgeProbId}_${currentJudgeLang}`, codeEditor.value);
+      }
+    }
+
+    function handleJudgeLanguageChange() {
+      saveCurrentJudgeCodeToLocal();
+      const langSelect = document.getElementById('judge-lang-select');
+      if (langSelect) currentJudgeLang = langSelect.value;
+      
+      const codeEditor = document.getElementById('judge-code-editor');
+      if (codeEditor) {
+        const savedCode = localStorage.getItem(`deruck_code_${currentJudgeProbId}_${currentJudgeLang}`);
+        if (savedCode && savedCode.trim()) {
+          codeEditor.value = savedCode;
+        } else {
+          codeEditor.value = getStarterTemplate(currentJudgeProbId, currentJudgeLang);
+        }
+      }
+    }
+
+    function getStarterTemplate(probId, lang) {
+      if (lang === 'cpp') {
+        if (probId === 'CB-01') {
+          return `#include <iostream>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    long long a, b;
+    if (cin >> a >> b) {
+        cout << a + b << "\\n";
+    }
+    return 0;
+}`;
+        }
+        return `#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    // Viết code giải bài tại đây
+
+    return 0;
+}`;
+      } else {
+        if (probId === 'CB-01') {
+          return `import sys
+
+def main():
+    tokens = sys.stdin.read().split()
+    if len(tokens) >= 2:
+        a = int(tokens[0])
+        b = int(tokens[1])
+        print(a + b)
+
+if __name__ == '__main__':
+    main()`;
+        }
+        return `import sys
+
+def solve():
+    # Viết code giải bài tại đây
+    pass
+
+if __name__ == '__main__':
+    solve()`;
+      }
+    }
+
+    function insertJudgeStarterTemplate() {
+      const codeEditor = document.getElementById('judge-code-editor');
+      if (codeEditor) {
+        codeEditor.value = getStarterTemplate(currentJudgeProbId, currentJudgeLang);
+        saveCurrentJudgeCodeToLocal();
+        showLiveToast("Đã chèn khung code mẫu!");
+      }
+    }
+
+    function clearJudgeCode() {
+      if (confirm("Bạn có chắc chắn muốn xóa trắng code hiện tại không?")) {
+        const codeEditor = document.getElementById('judge-code-editor');
+        if (codeEditor) {
+          codeEditor.value = '';
+          saveCurrentJudgeCodeToLocal();
+        }
+      }
+    }
+
+    function copyTextToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showLiveToast("Đã sao chép vào bộ nhớ tạm!");
+        });
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        showLiveToast("Đã sao chép!");
+      }
+    }
+
+    function normalizeOutput(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/\r\n/g, '\n')
+        .replace(/\r/g, '\n')
+        .split('\n')
+        .map(line => line.trimEnd())
+        .join('\n')
+        .trim();
+    }
+
+    // Execute code on either local judge server or Wandbox API
+    async function executeCode(lang, code, stdin, timeLimit = 1.0) {
+      // 1. Try Local Judge Server first
+      if (localJudgeAvailable !== false) {
+        try {
+          const resp = await fetch('http://127.0.0.1:8080/judge', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              lang,
+              code,
+              stdin,
+              time_limit: timeLimit
+            }),
+            signal: AbortSignal.timeout((timeLimit + 3) * 1000)
+          });
+          if (resp.ok) {
+            const data = await resp.json();
+            localJudgeAvailable = true;
+            return data;
+          }
+        } catch (e) {
+          localJudgeAvailable = false;
+        }
+      }
+
+      // 2. Fallback: Wandbox API (Cloud Execution)
+      const compiler = (lang === 'cpp') ? 'gcc-head' : 'cpython-3.12.7';
+      const compilerOptions = (lang === 'cpp') ? 'warning,c++20,optimize' : '';
+
+      try {
+        const resp = await fetch('https://wandbox.org/api/compile.json', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            compiler,
+            code,
+            stdin,
+            compiler_options: compilerOptions
+          }),
+          signal: AbortSignal.timeout(15000)
+        });
+
+        if (!resp.ok) {
+          throw new Error(`Wandbox HTTP ${resp.status}`);
+        }
+
+        const data = await resp.json();
+        
+        // Check compilation error
+        if (data.compiler_error && data.compiler_error.trim().length > 0) {
+          return {
+            status: 'CE',
+            compile_error: data.compiler_error,
+            execution_time: 0
+          };
+        }
+
+        // Check runtime exit code
+        if (data.status && String(data.status) !== '0') {
+          return {
+            status: 'RTE',
+            stdout: data.program_output || '',
+            stderr: data.program_error || `Process exited with code ${data.status}`,
+            execution_time: 0.1
+          };
+        }
+
+        // Check TLE from wandbox signal if any
+        if (data.signal && (data.signal === 'SIGXCPU' || data.signal === 'SIGKILL')) {
+          return {
+            status: 'TLE',
+            stdout: '',
+            stderr: 'Time Limit Exceeded',
+            execution_time: timeLimit
+          };
+        }
+
+        return {
+          status: 'OK',
+          stdout: data.program_output || data.program_message || '',
+          stderr: data.program_error || '',
+          execution_time: 0.08
+        };
+      } catch (err) {
+        return {
+          status: 'RTE',
+          stdout: '',
+          stderr: 'Lỗi kết nối máy chủ chấm: ' + err.message,
+          execution_time: 0
+        };
+      }
+    }
+
+    // RUN SAMPLE TESTS ONLY
+    async function runJudgeSampleOnly() {
+      if (isJudging) return;
+      const prob = getGraderProblems().find(p => p.id === currentJudgeProbId);
+      if (!prob) return;
+
+      const codeEditor = document.getElementById('judge-code-editor');
+      const code = codeEditor ? codeEditor.value : '';
+      if (!code.trim()) {
+        alert("Vui lòng viết code trước khi chạy thử!");
+        return;
+      }
+
+      saveCurrentJudgeCodeToLocal();
+      const tests = prob.testcases || [];
+      const samples = tests.filter(t => t.sample);
+      const testList = (samples.length > 0) ? samples : tests.slice(0, 2);
+
+      if (testList.length === 0) {
+        alert("Bài tập này chưa có bộ test ví dụ!");
+        return;
+      }
+
+      isJudging = true;
+      const btnSample = document.getElementById('btn-judge-run-sample');
+      const btnSubmit = document.getElementById('btn-judge-submit');
+      if (btnSample) {
+        btnSample.disabled = true;
+        btnSample.innerHTML = '<span>⏳</span> Đang chạy...';
+      }
+      if (btnSubmit) btnSubmit.disabled = true;
+
+      const progressContainer = document.getElementById('judge-progress-container');
+      const progressBar = document.getElementById('judge-progress-bar');
+      const progressText = document.getElementById('judge-progress-text');
+      const progressPct = document.getElementById('judge-progress-pct');
+      const banner = document.getElementById('judge-verdict-banner');
+      const ceBox = document.getElementById('judge-ce-container');
+      const ceText = document.getElementById('judge-ce-text');
+      const matrix = document.getElementById('judge-test-matrix');
+      const detailBox = document.getElementById('judge-test-detail-box');
+
+      if (progressContainer) progressContainer.classList.remove('hidden');
+      if (banner) banner.classList.add('hidden');
+      if (ceBox) ceBox.classList.add('hidden');
+      if (detailBox) detailBox.classList.add('hidden');
+      if (matrix) matrix.innerHTML = '';
+
+      let passedCount = 0;
+
+      for (let i = 0; i < testList.length; i++) {
+        const tc = testList[i];
+        const pct = Math.round(((i + 1) / testList.length) * 100);
+        if (progressText) progressText.textContent = `Đang chạy test ví dụ ${i + 1}/${testList.length}...`;
+        if (progressPct) progressPct.textContent = `${pct}%`;
+        if (progressBar) progressBar.style.width = `${pct}%`;
+
+        const res = await executeCode(currentJudgeLang, code, tc.input, prob.time_limit || 1.0);
+
+        if (res.status === 'CE') {
+          if (ceBox && ceText) {
+            ceBox.classList.remove('hidden');
+            ceText.textContent = res.compile_error || 'Compilation Error';
+          }
+          if (banner) {
+            banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-rose-950/70 border border-rose-500/40 text-rose-300";
+            banner.innerHTML = `<div><span class="text-lg">❌</span> <strong>LỖI BIÊN DỊCH (Compilation Error)</strong></div>`;
+            banner.classList.remove('hidden');
+          }
+          break;
+        }
+
+        const normActual = normalizeOutput(res.stdout);
+        const normExpected = normalizeOutput(tc.output);
+        const isMatch = (normActual === normExpected);
+        if (isMatch) passedCount++;
+
+        const cell = document.createElement('div');
+        cell.className = `p-2.5 rounded-xl border text-xs font-mono flex flex-col justify-between cursor-pointer transition ${
+          isMatch 
+            ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/40' 
+            : 'bg-rose-950/50 border-rose-500/40 text-rose-300 hover:bg-rose-900/40'
+        }`;
+        cell.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold">Ví dụ #${i + 1}</span>
+            <span>${isMatch ? '✅ AC' : '❌ WA'}</span>
+          </div>
+          <div class="text-[10px] text-slate-400 mt-1">${res.execution_time ? (res.execution_time + 's') : 'OK'}</div>
+        `;
+        cell.onclick = () => showJudgeTestDetail(i + 1, tc.input, tc.output, res.stdout, res.stderr, isMatch ? 'AC' : 'WA');
+        matrix.appendChild(cell);
+      }
+
+      if (progressContainer) progressContainer.classList.add('hidden');
+      if (passedCount === testList.length) {
+        if (banner) {
+          banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-emerald-950/70 border border-emerald-500/40 text-emerald-300";
+          banner.innerHTML = `<div><span class="text-lg">🎉</span> <strong>CHÍNH XÁC TOÀN BỘ VÍ DỤ!</strong> (${passedCount}/${testList.length} test ví dụ trùng khớp)</div>`;
+          banner.classList.remove('hidden');
+        }
+      } else {
+        if (banner) {
+          banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-amber-950/70 border border-amber-500/40 text-amber-300";
+          banner.innerHTML = `<div><span class="text-lg">⚠️</span> <strong>KẾT QUẢ CHƯA KHỚP</strong> (${passedCount}/${testList.length} ví dụ). Bấm vào ô test để xem khác biệt input/output.</div>`;
+          banner.classList.remove('hidden');
+        }
+      }
+
+      isJudging = false;
+      if (btnSample) {
+        btnSample.disabled = false;
+        btnSample.innerHTML = '<span>▶️</span> Chạy Thử Ví Dụ';
+      }
+      if (btnSubmit) btnSubmit.disabled = false;
+    }
+
+    // SUBMIT ALL TESTS & FULL JUDGING
+    async function submitJudgeAllTests() {
+      if (isJudging) return;
+      const prob = getGraderProblems().find(p => p.id === currentJudgeProbId);
+      if (!prob) return;
+
+      const codeEditor = document.getElementById('judge-code-editor');
+      const code = codeEditor ? codeEditor.value : '';
+      if (!code.trim()) {
+        alert("Vui lòng viết code trước khi nộp bài!");
+        return;
+      }
+
+      saveCurrentJudgeCodeToLocal();
+      const tests = prob.testcases || [];
+      if (tests.length === 0) {
+        alert("Bài tập này chưa có bộ test nào để chấm!");
+        return;
+      }
+
+      isJudging = true;
+      const btnSample = document.getElementById('btn-judge-run-sample');
+      const btnSubmit = document.getElementById('btn-judge-submit');
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<span>⏳</span> Đang chấm bài...';
+      }
+      if (btnSample) btnSample.disabled = true;
+
+      const progressContainer = document.getElementById('judge-progress-container');
+      const progressBar = document.getElementById('judge-progress-bar');
+      const progressText = document.getElementById('judge-progress-text');
+      const progressPct = document.getElementById('judge-progress-pct');
+      const banner = document.getElementById('judge-verdict-banner');
+      const ceBox = document.getElementById('judge-ce-container');
+      const ceText = document.getElementById('judge-ce-text');
+      const matrix = document.getElementById('judge-test-matrix');
+      const verdictTag = document.getElementById('judge-verdict-tag');
+      const detailBox = document.getElementById('judge-test-detail-box');
+
+      if (progressContainer) progressContainer.classList.remove('hidden');
+      if (banner) banner.classList.add('hidden');
+      if (ceBox) ceBox.classList.add('hidden');
+      if (detailBox) detailBox.classList.add('hidden');
+      if (matrix) matrix.innerHTML = '';
+      if (verdictTag) {
+        verdictTag.className = "text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 animate-pulse";
+        verdictTag.textContent = "Đang chấm...";
+      }
+
+      let acCount = 0;
+      let firstFailedVerdict = null;
+      let isCE = false;
+
+      for (let i = 0; i < tests.length; i++) {
+        const tc = tests[i];
+        const pct = Math.round(((i + 1) / tests.length) * 100);
+        if (progressText) progressText.textContent = `Đang chấm test ${i + 1}/${tests.length}...`;
+        if (progressPct) progressPct.textContent = `${pct}%`;
+        if (progressBar) progressBar.style.width = `${pct}%`;
+
+        const res = await executeCode(currentJudgeLang, code, tc.input, prob.time_limit || 1.0);
+
+        if (res.status === 'CE') {
+          isCE = true;
+          firstFailedVerdict = 'CE';
+          if (ceBox && ceText) {
+            ceBox.classList.remove('hidden');
+            ceText.textContent = res.compile_error || 'Compilation Error';
+          }
+          break;
+        }
+
+        let testVerdict = 'AC';
+        if (res.status === 'TLE') {
+          testVerdict = 'TLE';
+        } else if (res.status === 'RTE') {
+          testVerdict = 'RTE';
+        } else {
+          const normActual = normalizeOutput(res.stdout);
+          const normExpected = normalizeOutput(tc.output);
+          if (normActual !== normExpected) {
+            testVerdict = 'WA';
+          }
+        }
+
+        if (testVerdict === 'AC') {
+          acCount++;
+        } else if (!firstFailedVerdict) {
+          firstFailedVerdict = testVerdict;
+        }
+
+        const isAC = (testVerdict === 'AC');
+        const cell = document.createElement('div');
+        cell.className = `p-2.5 rounded-xl border text-xs font-mono flex flex-col justify-between cursor-pointer transition ${
+          isAC 
+            ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/40' 
+            : 'bg-rose-950/50 border-rose-500/40 text-rose-300 hover:bg-rose-900/40'
+        }`;
+        cell.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold">Test #${i + 1}</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${isAC ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${testVerdict}</span>
+          </div>
+          <div class="text-[10px] text-slate-400 mt-1 flex items-center justify-between">
+            <span>${tc.sample ? 'Ví dụ' : 'Test ẩn'}</span>
+            <span>${res.execution_time ? (res.execution_time + 's') : ''}</span>
+          </div>
+        `;
+        cell.onclick = () => showJudgeTestDetail(i + 1, tc.input, tc.output, res.stdout, res.stderr, testVerdict);
+        matrix.appendChild(cell);
+      }
+
+      if (progressContainer) progressContainer.classList.add('hidden');
+
+      const finalScore = Math.round((acCount / tests.length) * 100);
+      let finalVerdict = 'AC';
+
+      if (isCE) {
+        finalVerdict = 'CE';
+      } else if (acCount === tests.length) {
+        finalVerdict = 'AC';
+      } else {
+        finalVerdict = firstFailedVerdict || 'WA';
+      }
+
+      // Update Verdict Tag
+      if (verdictTag) {
+        if (finalVerdict === 'AC') {
+          verdictTag.className = "text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+          verdictTag.textContent = `AC (100/100)`;
+        } else if (finalVerdict === 'CE') {
+          verdictTag.className = "text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40";
+          verdictTag.textContent = `CE (0/100)`;
+        } else {
+          verdictTag.className = "text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40";
+          verdictTag.textContent = `${finalVerdict} (${finalScore}/100)`;
+        }
+      }
+
+      // Update Verdict Banner
+      if (banner) {
+        banner.classList.remove('hidden');
+        if (finalVerdict === 'AC') {
+          banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-emerald-950/80 border border-emerald-500/40 text-emerald-300";
+          banner.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🎉</span>
+              <div>
+                <div class="text-sm font-bold">ACCEPTED (AC) - XUẤT SẮC!</div>
+                <div class="text-xs text-emerald-400/80 font-normal">Vượt qua toàn bộ ${tests.length}/${tests.length} testcase! Đạt điểm tối đa 100/100.</div>
+              </div>
+            </div>
+            <div class="text-xl font-mono font-black text-emerald-300">100/100</div>
+          `;
+
+          // Handle Student Progress & AC Recording
+          handleStudentACRecorded(prob.id);
+
+        } else if (finalVerdict === 'CE') {
+          banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-amber-950/80 border border-amber-500/40 text-amber-300";
+          banner.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">⚠️</span>
+              <div>
+                <div class="text-sm font-bold">COMPILATION ERROR (CE)</div>
+                <div class="text-xs text-amber-400/80 font-normal">Chương trình không biên dịch được. Vui lòng xem thông báo lỗi chi tiết bên dưới.</div>
+              </div>
+            </div>
+            <div class="text-xl font-mono font-black text-amber-300">0/100</div>
+          `;
+        } else {
+          banner.className = "rounded-xl p-4 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 bg-rose-950/80 border border-rose-500/40 text-rose-300";
+          banner.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">❌</span>
+              <div>
+                <div class="text-sm font-bold">${finalVerdict === 'WA' ? 'WRONG ANSWER (WA)' : (finalVerdict === 'TLE' ? 'TIME LIMIT EXCEEDED (TLE)' : 'RUNTIME ERROR (RTE)')}</div>
+                <div class="text-xs text-rose-400/80 font-normal">Chính xác ${acCount}/${tests.length} testcase. Bấm vào ô test để xem sự khác biệt.</div>
+              </div>
+            </div>
+            <div class="text-xl font-mono font-black text-rose-300">${finalScore}/100</div>
+          `;
+        }
+      }
+
+      // Add to Submission History
+      const histItem = {
+        time: new Date().toLocaleTimeString(),
+        probId: prob.id,
+        probName: prob.name,
+        lang: (currentJudgeLang === 'cpp' ? 'C++20' : 'Python 3'),
+        verdict: finalVerdict,
+        score: finalScore,
+        acCount,
+        totalCount: tests.length,
+        code
+      };
+      saveJudgeSubmissionHistory(histItem);
+
+      isJudging = false;
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<span>🚀</span> Nộp Bài & Chấm Điểm';
+      }
+      if (btnSample) btnSample.disabled = false;
+    }
+
+    function showJudgeTestDetail(testNum, input, expected, actual, stderr, verdict) {
+      const box = document.getElementById('judge-test-detail-box');
+      if (!box) return;
+      box.classList.remove('hidden');
+
+      const isAC = (verdict === 'AC');
+      box.innerHTML = `
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <span class="font-bold text-slate-200">Chi tiết Test #${testNum} (${verdict})</span>
+          <button onclick="document.getElementById('judge-test-detail-box').classList.add('hidden')" class="text-slate-500 hover:text-white cursor-pointer">✕ Đóng</button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+          <div>
+            <div class="text-[11px] text-slate-400 font-bold mb-1">Dữ liệu vào (Input):</div>
+            <pre class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-slate-200 max-h-32 overflow-y-auto whitespace-pre-wrap">${escapeHtml(input)}</pre>
+          </div>
+          <div>
+            <div class="text-[11px] text-emerald-400 font-bold mb-1">Đáp án đúng (Expected Output):</div>
+            <pre class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-emerald-300 max-h-32 overflow-y-auto whitespace-pre-wrap">${escapeHtml(expected)}</pre>
+          </div>
+          <div class="md:col-span-2">
+            <div class="text-[11px] font-bold mb-1 ${isAC ? 'text-emerald-400' : 'text-rose-400'}">Kết quả chạy của bạn (Your Output):</div>
+            <pre class="bg-slate-900 border ${isAC ? 'border-emerald-500/30' : 'border-rose-500/30'} p-2 rounded-lg ${isAC ? 'text-emerald-200' : 'text-rose-200'} max-h-40 overflow-y-auto whitespace-pre-wrap">${escapeHtml(actual || (stderr ? `[STDERR]\n${stderr}` : '(Không có đầu ra)'))}</pre>
+          </div>
+        </div>
+      `;
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function handleStudentACRecorded(probId) {
+      if (!currentAuth) return;
+      if (currentAuth.role === 'student' && appData && appData.students) {
+        const student = appData.students.find(s => s.name === currentAuth.name);
+        if (student) {
+          if (!student.solved) student.solved = [];
+          if (!student.solved.includes(probId)) {
+            student.solved.push(probId);
+            saveAppDataLocally();
+            renderProblems();
+            renderMatrix();
+            showLiveToast(`🎉 Chúc mừng ${student.name}! Bài ${probId} đã được ghi nhận hoàn thành.`);
+            
+            // Update status badge on active workspace
+            const statusBadge = document.getElementById('judge-prob-status-badge');
+            if (statusBadge) {
+              statusBadge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+              statusBadge.textContent = "✅ Đã Hoàn Thành (AC)";
+            }
+          }
+        }
+      }
+    }
+
+    function saveJudgeSubmissionHistory(item) {
+      try {
+        const historyJson = localStorage.getItem('deruck_judge_history');
+        let list = historyJson ? JSON.parse(historyJson) : [];
+        list.unshift(item);
+        if (list.length > 20) list = list.slice(0, 20);
+        localStorage.setItem('deruck_judge_history', JSON.stringify(list));
+        renderJudgeSubmissionHistory();
+      } catch (e) {}
+    }
+
+    function renderJudgeSubmissionHistory() {
+      const tbody = document.getElementById('judge-history-body');
+      if (!tbody) return;
+
+      try {
+        const historyJson = localStorage.getItem('deruck_judge_history');
+        const list = historyJson ? JSON.parse(historyJson) : [];
+        if (list.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="py-3 text-center text-slate-500 italic">Chưa có bài nộp nào.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = '';
+        list.forEach((sub, idx) => {
+          const tr = document.createElement('tr');
+          const isAC = (sub.verdict === 'AC');
+          let vBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold ${
+            isAC 
+              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' 
+              : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+          }">${sub.verdict}</span>`;
+
+          tr.innerHTML = `
+            <td class="py-2.5 px-2 text-slate-400">${sub.time}</td>
+            <td class="py-2.5 px-2 font-bold text-white">${sub.probId}</td>
+            <td class="py-2.5 px-2 text-slate-300">${sub.lang}</td>
+            <td class="py-2.5 px-2">${vBadge}</td>
+            <td class="py-2.5 px-2 font-bold ${isAC ? 'text-emerald-400' : 'text-slate-300'}">${sub.score}/100</td>
+            <td class="py-2.5 px-2 text-right">
+              <button onclick="restoreJudgeCodeFromHistory(${idx})" class="text-indigo-400 hover:text-indigo-300 hover:underline cursor-pointer">Lấy code</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="6" class="py-3 text-center text-slate-500 italic">Lỗi hiển thị lịch sử nộp bài.</td></tr>';
+      }
+    }
+
+    function restoreJudgeCodeFromHistory(index) {
+      try {
+        const historyJson = localStorage.getItem('deruck_judge_history');
+        const list = historyJson ? JSON.parse(historyJson) : [];
+        if (list[index] && list[index].code) {
+          const codeEditor = document.getElementById('judge-code-editor');
+          if (codeEditor) {
+            codeEditor.value = list[index].code;
+            saveCurrentJudgeCodeToLocal();
+            showLiveToast(`Đã khôi phục code bài ${list[index].probId} từ lịch sử!`);
+          }
+        }
+      } catch (e) {}
+    }
+
+    function clearJudgeHistory() {
+      if (confirm("Bạn có chắc chắn muốn xóa lịch sử nộp bài không?")) {
+        localStorage.removeItem('deruck_judge_history');
+        renderJudgeSubmissionHistory();
+      }
+    }
+
+    // ============================================================
+    // 6. TEACHER TESTCASE & PROBLEM MANAGER MODAL LOGIC
+    // ============================================================
+    function openTestcaseManagerModal() {
+      const modal = document.getElementById('modal-testcase-manager');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+
+      // Populate problem dropdowns
+      populateTestcaseProblemDropdowns();
+      
+      // Load current problem into manager
+      loadProblemIntoTestcaseManager(currentJudgeProbId);
+      switchTestcaseTab('manage');
+    }
+
+    function closeTestcaseManagerModal() {
+      const modal = document.getElementById('modal-testcase-manager');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openEditTestcasesForCurrentProblem() {
+      openTestcaseManagerModal();
+      loadProblemIntoTestcaseManager(currentJudgeProbId);
+    }
+
+    function switchTestcaseTab(tabName) {
+      const tabs = ['manage', 'create', 'batch', 'export'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tc-tab-btn-${t}`);
+        const content = document.getElementById(`tc-tab-content-${t}`);
+        if (t === tabName) {
+          if (btn) btn.className = "px-3 py-1.5 rounded-lg font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition cursor-pointer";
+          if (content) content.classList.remove('hidden');
+        } else {
+          if (btn) btn.className = "px-3 py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer";
+          if (content) content.classList.add('hidden');
+        }
+      });
+    }
+
+    function populateTestcaseProblemDropdowns() {
+      const selectManage = document.getElementById('tc-manage-prob-select');
+      const selectBatch = document.getElementById('tc-batch-prob-select');
+      const probs = getGraderProblems();
+
+      const optionsHtml = probs.map(p => `<option value="${p.id}">${p.id} - ${p.name}</option>`).join('');
+
+      if (selectManage) {
+        selectManage.innerHTML = optionsHtml;
+        selectManage.value = currentJudgeProbId;
+      }
+      if (selectBatch) {
+        selectBatch.innerHTML = optionsHtml;
+        selectBatch.value = currentJudgeProbId;
+      }
+    }
+
+    function loadProblemIntoTestcaseManager(probId) {
+      currentTestcaseEditingProbId = probId;
+      const selectManage = document.getElementById('tc-manage-prob-select');
+      if (selectManage) selectManage.value = probId;
+
+      const prob = getGraderProblems().find(p => p.id === probId);
+      if (!prob) return;
+
+      const infoId = document.getElementById('tc-info-id');
+      const infoCount = document.getElementById('tc-info-count');
+      if (infoId) infoId.textContent = prob.id;
+      
+      const tests = prob.testcases || [];
+      if (infoCount) infoCount.textContent = tests.length;
+
+      const container = document.getElementById('tc-tests-list-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (tests.length === 0) {
+        container.innerHTML = '<div class="p-4 text-center text-slate-500 bg-slate-950 rounded-xl border border-slate-800">Chưa có testcase nào. Bấm "Thêm Test Mới" để thêm test đầu tiên.</div>';
+        return;
+      }
+
+      tests.forEach((tc, idx) => {
+        appendTestcaseRowToDOM(tc.input, tc.output, tc.sample, idx + 1);
+      });
+    }
+
+    function appendTestcaseRowToDOM(input = '', output = '', isSample = false, indexNum = null) {
+      const container = document.getElementById('tc-tests-list-container');
+      if (!container) return;
+
+      const rowCount = container.querySelectorAll('.tc-test-row').length + 1;
+      const num = indexNum || rowCount;
+
+      const card = document.createElement('div');
+      card.className = "tc-test-row bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3";
+      card.innerHTML = `
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-xs font-bold text-white bg-slate-800 px-2 py-0.5 rounded">Test #${num}</span>
+            <label class="flex items-center gap-1.5 text-xs text-indigo-300 font-semibold cursor-pointer">
+              <input type="checkbox" class="tc-row-sample rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0" ${isSample ? 'checked' : ''}>
+              <span>Là Test Ví Dụ (Công khai)</span>
+            </label>
+          </div>
+          <button type="button" onclick="this.closest('.tc-test-row').remove(); updateTestcaseRowNumbers();" class="text-xs text-rose-400 hover:text-rose-300 font-semibold cursor-pointer flex items-center gap-1">
+            <span>🗑️</span> Xóa test
+          </button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="text-[11px] font-semibold text-slate-400">Dữ liệu vào (Input):</label>
+            <textarea class="tc-row-input w-full font-mono bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-100 focus:outline-none focus:border-indigo-500 resize-y" rows="3" placeholder="Nhập input...">${escapeHtml(input)}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="text-[11px] font-semibold text-slate-400">Dữ liệu ra chuẩn (Output):</label>
+            <textarea class="tc-row-output w-full font-mono bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-emerald-300 focus:outline-none focus:border-indigo-500 resize-y" rows="3" placeholder="Nhập output chuẩn...">${escapeHtml(output)}</textarea>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    }
+
+    function addNewTestcaseRow() {
+      const container = document.getElementById('tc-tests-list-container');
+      if (container && container.querySelector('.text-center')) {
+        container.innerHTML = '';
+      }
+      appendTestcaseRowToDOM('', '', false);
+      updateTestcaseRowNumbers();
+    }
+
+    function updateTestcaseRowNumbers() {
+      const container = document.getElementById('tc-tests-list-container');
+      if (!container) return;
+      const rows = container.querySelectorAll('.tc-test-row');
+      rows.forEach((r, idx) => {
+        const badge = r.querySelector('.font-mono.font-bold');
+        if (badge) badge.textContent = `Test #${idx + 1}`;
+      });
+      const infoCount = document.getElementById('tc-info-count');
+      if (infoCount) infoCount.textContent = rows.length;
+    }
+
+    function saveTestcasesFromManager() {
+      const prob = getGraderProblems().find(p => p.id === currentTestcaseEditingProbId);
+      if (!prob) {
+        alert("Không tìm thấy bài tập cần lưu!");
+        return;
+      }
+
+      const container = document.getElementById('tc-tests-list-container');
+      if (!container) return;
+
+      const rows = container.querySelectorAll('.tc-test-row');
+      const newTestcases = [];
+
+      rows.forEach(r => {
+        const inp = r.querySelector('.tc-row-input')?.value || '';
+        const out = r.querySelector('.tc-row-output')?.value || '';
+        const isSample = !!r.querySelector('.tc-row-sample')?.checked;
+        if (inp.trim() || out.trim()) {
+          newTestcases.push({
+            input: inp,
+            output: out,
+            sample: isSample
+          });
+        }
+      });
+
+      prob.testcases = newTestcases;
+
+      // Update in appData.grader_problems
+      if (!appData.grader_problems) appData.grader_problems = [];
+      const gIdx = appData.grader_problems.findIndex(p => p.id === prob.id);
+      if (gIdx >= 0) {
+        appData.grader_problems[gIdx] = prob;
+      } else {
+        appData.grader_problems.push(prob);
+      }
+
+      // Update in appData.problems
+      if (appData.problems) {
+        const pIdx = appData.problems.findIndex(p => p.id === prob.id);
+        if (pIdx >= 0) {
+          appData.problems[pIdx] = Object.assign({}, appData.problems[pIdx], prob);
+        }
+      }
+
+      saveAppDataLocally();
+      renderJudgeWorkspace();
+      renderProblems();
+      showLiveToast(`Đã lưu thành công ${newTestcases.length} testcase cho bài ${prob.id}!`);
+    }
+
+    // CREATE NEW GRADER PROBLEM
+    function handleCreateNewGraderProblem(event) {
+      event.preventDefault();
+      const id = document.getElementById('new-gprob-id').value.trim();
+      const name = document.getElementById('new-gprob-name').value.trim();
+      const diff = document.getElementById('new-gprob-diff').value.trim() || 'Level 1 • Cơ bản';
+      const cat = document.getElementById('new-gprob-cat').value.trim() || 'Căn bản';
+      const timeLimit = parseFloat(document.getElementById('new-gprob-timelimit').value) || 1.0;
+      const desc = document.getElementById('new-gprob-desc').value.trim();
+      const inputFormat = document.getElementById('new-gprob-input').value.trim();
+      const outputFormat = document.getElementById('new-gprob-output').value.trim();
+      const sampleIn = document.getElementById('new-gprob-sample-in').value;
+      const sampleOut = document.getElementById('new-gprob-sample-out').value;
+
+      if (!id || !name || !desc) {
+        alert("Vui lòng điền đầy đủ Mã bài, Tên bài và Đề bài!");
+        return;
+      }
+
+      // Check existing ID
+      const existing = getGraderProblems().find(p => p.id.toUpperCase() === id.toUpperCase());
+      if (existing) {
+        alert(`Mã bài "${id}" đã tồn tại! Vui lòng chọn mã khác.`);
+        return;
+      }
+
+      const initialTests = [];
+      if (sampleIn.trim() || sampleOut.trim()) {
+        initialTests.push({
+          input: sampleIn,
+          output: sampleOut,
+          sample: true
+        });
+      }
+
+      const newProb = {
+        id,
+        name,
+        platform: 'DeruckOJ',
+        url: `#judge-${id}`,
+        difficulty: diff,
+        category: cat,
+        classes: ['Public'],
+        time_limit: timeLimit,
+        memory_limit: 256,
+        description: desc,
+        input_format: inputFormat || 'Dữ liệu đầu vào chuẩn.',
+        output_format: outputFormat || 'In kết quả ra màn hình chuẩn.',
+        testcases: initialTests
+      };
+
+      if (!appData.grader_problems) appData.grader_problems = [];
+      appData.grader_problems.push(newProb);
+
+      if (!appData.problems) appData.problems = [];
+      appData.problems.push(newProb);
+
+      saveAppDataLocally();
+      populateTestcaseProblemDropdowns();
+      currentJudgeProbId = id;
+      renderJudgeWorkspace();
+      renderProblems();
+
+      // Clear form
+      document.getElementById('new-gprob-id').value = '';
+      document.getElementById('new-gprob-name').value = '';
+      document.getElementById('new-gprob-desc').value = '';
+      document.getElementById('new-gprob-sample-in').value = '';
+      document.getElementById('new-gprob-sample-out').value = '';
+
+      // Switch to manage tab to add more testcases
+      switchTestcaseTab('manage');
+      loadProblemIntoTestcaseManager(id);
+      showLiveToast(`🎉 Đã tạo bài tập mới ${id} thành công! Hãy thêm các test ẩn.`);
+    }
+
+    // BATCH IMPORT TESTCASES
+    function insertBatchTestSampleTemplate() {
+      const ta = document.getElementById('tc-batch-text');
+      if (ta) {
+        ta.value = `=== TEST ===
+INPUT:
+10 20
+OUTPUT:
+30
+
+=== TEST ===
+INPUT:
+-5 15
+OUTPUT:
+10
+
+=== TEST ===
+INPUT:
+1000000000 2000000000
+OUTPUT:
+3000000000`;
+      }
+    }
+
+    function handleBatchImportTests() {
+      const selectBatch = document.getElementById('tc-batch-prob-select');
+      const probId = selectBatch ? selectBatch.value : currentJudgeProbId;
+      const prob = getGraderProblems().find(p => p.id === probId);
+      if (!prob) {
+        alert("Vui lòng chọn bài tập để nạp test!");
+        return;
+      }
+
+      const batchText = document.getElementById('tc-batch-text')?.value || '';
+      if (!batchText.trim()) {
+        alert("Vui lòng dán nội dung bộ test!");
+        return;
+      }
+
+      const appendMode = !!document.getElementById('tc-batch-append')?.checked;
+
+      // Split by test separators: === TEST === or --- TEST --- or [TEST]
+      const rawBlocks = batchText.split(/(?:={3,}|-{3,}|\*{3,})\s*(?:TEST\s*\d*|BỘ TEST\s*\d*)?\s*(?:={3,}|-{3,}|\*{3,})/i)
+        .map(b => b.trim())
+        .filter(b => b.length > 0);
+
+      const parsedTests = [];
+
+      rawBlocks.forEach(block => {
+        let inputPart = '';
+        let outputPart = '';
+
+        if (/INPUT:/i.test(block) && /OUTPUT:/i.test(block)) {
+          const parts = block.split(/OUTPUT:/i);
+          const inHalf = parts[0].replace(/INPUT:/i, '').trim();
+          const outHalf = (parts[1] || '').trim();
+          inputPart = inHalf;
+          outputPart = outHalf;
+        } else {
+          // If no labels, check for empty line delimiter
+          const lines = block.split('\n');
+          const mid = Math.floor(lines.length / 2);
+          inputPart = lines.slice(0, mid).join('\n').trim();
+          outputPart = lines.slice(mid).join('\n').trim();
+        }
+
+        if (inputPart || outputPart) {
+          parsedTests.push({
+            input: inputPart,
+            output: outputPart,
+            sample: false
+          });
+        }
+      });
+
+      if (parsedTests.length === 0) {
+        alert("Không thể phân tích cú pháp bộ test. Vui lòng kiểm tra định dạng nhãn INPUT: và OUTPUT:!");
+        return;
+      }
+
+      if (!prob.testcases || !appendMode) {
+        prob.testcases = parsedTests;
+      } else {
+        prob.testcases.push(...parsedTests);
+      }
+
+      // Update in appData
+      if (!appData.grader_problems) appData.grader_problems = [];
+      const gIdx = appData.grader_problems.findIndex(p => p.id === prob.id);
+      if (gIdx >= 0) appData.grader_problems[gIdx] = prob;
+      else appData.grader_problems.push(prob);
+
+      if (appData.problems) {
+        const pIdx = appData.problems.findIndex(p => p.id === prob.id);
+        if (pIdx >= 0) appData.problems[pIdx] = Object.assign({}, appData.problems[pIdx], prob);
+      }
+
+      saveAppDataLocally();
+      renderJudgeWorkspace();
+      switchTestcaseTab('manage');
+      loadProblemIntoTestcaseManager(prob.id);
+      showLiveToast(`✅ Đã nạp thành công ${parsedTests.length} testcase vào bài ${prob.id}!`);
+    }
+
+    // EXPORT & IMPORT JSON
+    function downloadGraderProblemsJSON() {
+      const graderProbs = getGraderProblems();
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(graderProbs, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "grader_problems.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showLiveToast("Đã tải xuống file grader_problems.json!");
+    }
+
+    function handleImportGraderProblemsJSON() {
+      const fileInput = document.getElementById('tc-file-import-input');
+      if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        alert("Vui lòng chọn file JSON để nạp!");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!Array.isArray(imported)) {
+            alert("File JSON không hợp lệ! Dữ liệu phải là một mảng các bài tập.");
+            return;
+          }
+
+          appData.grader_problems = imported;
+          
+          // Merge into appData.problems
+          imported.forEach(p => {
+            const idx = appData.problems.findIndex(item => item.id === p.id);
+            if (idx >= 0) {
+              appData.problems[idx] = Object.assign({}, appData.problems[idx], p);
+            } else {
+              appData.problems.push(p);
+            }
+          });
+
+          saveAppDataLocally();
+          populateTestcaseProblemDropdowns();
+          renderJudgeWorkspace();
+          renderProblems();
+          closeTestcaseManagerModal();
+          showLiveToast(`Đã nạp thành công ${imported.length} bài tập từ file JSON!`);
+        } catch (err) {
+          alert("Lỗi khi đọc file JSON: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
 
   </script>

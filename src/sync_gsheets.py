@@ -9,7 +9,7 @@ from typing import List, Dict, Any, Optional, Tuple
 
 # Ensure SSLKEYLOGFILE is safe
 _sslkeylogfile = os.environ.get("SSLKEYLOGFILE")
-if _sslkeylogfile and not os.path.exists(os.path.dirname(_sslkeylogfile)):
+if _sslkeylogfile and not os.path.exists(_sslkeylogfile):
     del os.environ["SSLKEYLOGFILE"]
 
 import gspread
@@ -360,23 +360,49 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
     if ws_fee:
         fee_rows = ws_fee.get_all_values()
         if fee_rows:
-            header_row = fee_rows[0]
-            for c_idx in range(2, len(header_row)):
-                m_val = header_row[c_idx].strip()
-                if m_val:
-                    tuition_months.append(m_val)
+            # Find the header row containing "Họ và tên" or "Tháng"
+            header_row_idx = -1
+            for r_idx, r in enumerate(fee_rows):
+                r_text = " ".join([str(c).strip().lower() for c in r])
+                if "họ và tên" in r_text or "tháng" in r_text or "thang" in r_text:
+                    header_row_idx = r_idx
+                    break
 
-            for r in fee_rows[1:]:
-                if r and r[0].strip() and not r[0].strip().startswith("="):
-                    fee_name = r[0].strip()
+            if header_row_idx != -1:
+                header_row = fee_rows[header_row_idx]
+                month_cols = []
+                for c_idx, col_name in enumerate(header_row):
+                    m_val = str(col_name).strip()
+                    if not m_val:
+                        continue
+                    m_lower = m_val.lower()
+                    if "tháng" in m_lower or "thang" in m_lower or "month" in m_lower or any(m_lower.startswith(x) for x in ["t9", "t10", "t11", "t12"]):
+                        tuition_months.append(m_val)
+                        month_cols.append((m_val, c_idx))
+                    elif c_idx >= 2 and "họ" not in m_lower and "lớp" not in m_lower and "stt" not in m_lower:
+                        tuition_months.append(m_val)
+                        month_cols.append((m_val, c_idx))
+
+                def is_paid_val(val: Any) -> bool:
+                    if val is True:
+                        return True
+                    s = str(val).strip().lower()
+                    return s in ["true", "x", "1", "v", "✓", "yes", "co", "c", "đã đóng", "da dong", "ok"]
+
+                for r in fee_rows[header_row_idx + 1:]:
+                    if not r:
+                        continue
+                    fee_name = str(r[0]).strip()
+                    if not fee_name or fee_name.startswith("=") or fee_name.isdigit() or fee_name.lower() in ["tổng", "tong", "total", "sum"]:
+                        continue
                     st_fee_map = {}
-                    for idx, m in enumerate(tuition_months, 2):
-                        cell_val = r[idx].strip().lower() if idx < len(r) else ""
-                        st_fee_map[m] = True if cell_val == "x" else False
+                    for m_name, c_idx in month_cols:
+                        c_val = r[c_idx] if c_idx < len(r) else ""
+                        st_fee_map[m_name] = is_paid_val(c_val)
                     tuition_data[fee_name] = st_fee_map
 
     if not tuition_months:
-        tuition_months = existing_data.get("tuition_months", ["Tháng 9", "Tháng 10"])
+        tuition_months = existing_data.get("tuition_months", ["Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"])
 
     # 5. Parse Students ("Học Sinh")
     students = []
@@ -453,12 +479,23 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                 class_prob_ids = class_problems_map.get(cls_str, [])
                 target_solved = [pid for pid in class_prob_ids if pid in set(all_solved)]
 
-                # Tuition matching
+                # Tuition matching: exact match or subset words with matching given name
                 st_tuition = {}
+                name_clean = name_str.lower().strip()
+                name_words = name_clean.split()
+                # 1. Exact match
                 for fn, fmap in tuition_data.items():
-                    if fn.lower() in name_str.lower() or name_str.lower() in fn.lower():
+                    if fn.lower().strip() == name_clean:
                         st_tuition = fmap
                         break
+                # 2. Subset words with identical given name (e.g. "Gia Hưng" in "Trần Gia Hưng", "Huy" in "Nguyễn Đắc Gia Huy")
+                if not st_tuition:
+                    for fn, fmap in tuition_data.items():
+                        fn_words = fn.lower().strip().split()
+                        if fn_words and name_words and fn_words[-1] == name_words[-1]:
+                            if set(fn_words).issubset(set(name_words)) or set(name_words).issubset(set(fn_words)):
+                                st_tuition = fmap
+                                break
                 if not st_tuition:
                     st_tuition = {m: False for m in tuition_months}
 
@@ -523,6 +560,24 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                 class_config[c_key]["total_problems"] = 8
 
     final_data = existing_data if existing_data else {}
+    grader_problems = existing_data.get("grader_problems", [])
+    final_data["grader_problems"] = grader_problems
+
+    # Merge grader problems into problems list if not already present
+    prob_id_set = {p["id"] for p in problems}
+    for gp in grader_problems:
+        if gp["id"] not in prob_id_set:
+            problems.append({
+                "id": gp["id"],
+                "name": gp["name"],
+                "platform": "DeruckOJ",
+                "url": f'#judge-{gp["id"]}',
+                "badge_color": gp.get("badge_color", "indigo"),
+                "category": gp.get("category", "Cơ bản"),
+                "difficulty": gp.get("difficulty", "Level 1 • Cơ bản"),
+                "classes": gp.get("classes", ["Public"])
+            })
+
     final_data["students"] = students
     final_data["problems"] = problems
     final_data["curriculum"] = curriculum

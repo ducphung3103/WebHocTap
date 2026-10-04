@@ -12,109 +12,231 @@
     {
       "id": "MARISA-1",
       "name": "A + B",
-      "url": "https://marisaoj.com/problem/1",
       "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/1",
       "badge_color": "purple",
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "C++",
         "Python 1-1",
-        "C++ nâng cao",
-        "C++ cơ bản"
+        "Python"
       ]
     },
     {
       "id": "MARISA-2",
       "name": "Chu vi và diện tích hình chữ nhật",
-      "url": "https://marisaoj.com/problem/2",
       "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/2",
       "badge_color": "purple",
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "C++",
         "Python 1-1",
-        "C++ nâng cao",
-        "C++ cơ bản"
+        "Python"
       ]
     },
     {
       "id": "MARISA-3",
       "name": "Phép chia",
-      "url": "https://marisaoj.com/problem/3",
       "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/3",
       "badge_color": "purple",
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "C++",
         "Python 1-1",
-        "C++ nâng cao",
-        "C++ cơ bản"
+        "Python"
       ]
     },
     {
       "id": "MARISA-8",
       "name": "Tổng các chữ số",
-      "url": "https://marisaoj.com/problem/8",
       "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/8",
       "badge_color": "purple",
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "C++",
         "Python 1-1",
-        "C++ nâng cao",
-        "C++ cơ bản"
+        "Python"
       ]
     },
     {
       "id": "MARISA-396",
       "name": "Số chính phương",
-      "url": "https://marisaoj.com/problem/396",
       "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/396",
       "badge_color": "purple",
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     },
     {
       "id": "MARISA-397",
       "name": "Số nguyên tố",
-      "url": "https://marisaoj.com/problem/397",
       "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/397",
       "badge_color": "purple",
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ]
     },
     {
       "id": "MARISA-499",
       "name": "Tổng ước số",
-      "url": "https://marisaoj.com/problem/499",
       "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/499",
       "badge_color": "purple",
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "C++",
         "Python 1-1",
-        "C++ nâng cao",
-        "C++ cơ bản"
+        "Python"
       ]
     },
     {
       "id": "MARISA-314",
       "name": "Chữ số lớn nhất",
-      "url": "https://marisaoj.com/problem/314",
       "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/314",
       "badge_color": "purple",
       "category": "Brute Force",
       "difficulty": "Level 1 • Brute Force",
       "classes": [
+        "C++",
         "Python 1-1",
-        "C++ nâng cao",
-        "C++ cơ bản"
+        "Python"
+      ]
+    },
+    {
+      "id": "CB-01",
+      "name": "Tính tổng hai số nguyên A + B",
+      "platform": "DeruckOJ",
+      "url": "#judge-CB-01",
+      "badge_color": "indigo",
+      "category": "Nhập xuất cơ bản",
+      "difficulty": "Level 1 • Nhập xuất",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ]
+    },
+    {
+      "id": "CB-02",
+      "name": "Số chẵn hay số lẻ",
+      "platform": "DeruckOJ",
+      "url": "#judge-CB-02",
+      "badge_color": "cyan",
+      "category": "Cấu trúc rẽ nhánh if/else",
+      "difficulty": "Level 1 • Rẽ nhánh",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ]
+    },
+    {
+      "id": "CB-03",
+      "name": "Tìm số lớn nhất trong ba số",
+      "platform": "DeruckOJ",
+      "url": "#judge-CB-03",
+      "badge_color": "blue",
+      "category": "Cấu trúc rẽ nhánh if/else",
+      "difficulty": "Level 1 • Rẽ nhánh",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ]
+    },
+    {
+      "id": "CB-04",
+      "name": "Tính tổng dãy số từ 1 đến N",
+      "platform": "DeruckOJ",
+      "url": "#judge-CB-04",
+      "badge_color": "emerald",
+      "category": "Vòng lặp cơ bản",
+      "difficulty": "Level 1 • Vòng lặp",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ]
+    },
+    {
+      "id": "CB-05",
+      "name": "Tính giai thừa N!",
+      "platform": "DeruckOJ",
+      "url": "#judge-CB-05",
+      "badge_color": "amber",
+      "category": "Vòng lặp & Tích số",
+      "difficulty": "Level 1 • Vòng lặp",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ]
+    },
+    {
+      "id": "CB-06",
+      "name": "Kiểm tra số nguyên tố",
+      "platform": "DeruckOJ",
+      "url": "#judge-CB-06",
+      "badge_color": "purple",
+      "category": "Thuật toán số học cơ bản",
+      "difficulty": "Level 1 • Số học",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ]
+    },
+    {
+      "id": "CB-07",
+      "name": "Đảo ngược xâu ký tự",
+      "platform": "DeruckOJ",
+      "url": "#judge-CB-07",
+      "badge_color": "pink",
+      "category": "Xử lý chuỗi (String)",
+      "difficulty": "Level 1 • Chuỗi",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ]
+    },
+    {
+      "id": "CB-08",
+      "name": "Tìm số lớn nhất trong mảng",
+      "platform": "DeruckOJ",
+      "url": "#judge-CB-08",
+      "badge_color": "teal",
+      "category": "Mảng một chiều (Array)",
+      "difficulty": "Level 1 • Mảng",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
       ]
     }
   ],
@@ -133,599 +255,601 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
-        "CF-276A",
-        "CF-2004E",
-        "CF-463B",
-        "CF-116B",
-        "CF-1986B",
-        "CF-61E",
-        "CF-222A",
-        "CF-2004F",
-        "CF-432A",
-        "CF-496C",
-        "CF-148A",
-        "CF-1993A",
-        "CF-1986A",
-        "CF-1000F",
-        "CF-1894B",
-        "CF-2181H",
-        "CF-104619J",
-        "CF-2045H",
-        "CF-104619H",
-        "CF-1997C",
-        "CF-617E",
-        "CF-1966D",
-        "CF-920E",
-        "CF-106084B",
-        "CF-43B",
-        "CF-1238D",
-        "CF-2001E1",
         "CF-105901L",
-        "CF-505C",
-        "CF-363C",
-        "CF-2001D",
-        "CF-1997A",
-        "CF-105544A",
-        "CF-96B",
-        "CF-2238D",
-        "CF-104118G",
-        "CF-315A",
-        "CF-382C",
-        "CF-319C",
-        "CF-915F",
-        "CF-336A",
-        "CF-296A",
-        "CF-1895B",
-        "CF-71A",
-        "CF-437C",
-        "CF-225C",
-        "CF-352A",
-        "CF-104118J",
-        "CF-483B",
-        "CF-786B",
-        "CF-1886A",
-        "CF-41A",
-        "CF-124A",
-        "CF-449D",
-        "CF-1768A",
-        "CF-218B",
-        "CF-1833F",
-        "CF-347B",
-        "CF-1822B",
-        "CF-2001C",
-        "CF-337B",
-        "CF-451E",
-        "CF-460C",
-        "CF-1991B",
-        "CF-344B",
-        "CF-105657K",
-        "CF-1857E",
-        "CF-200B",
-        "CF-2045I",
-        "CF-388A",
-        "CF-456A",
-        "CF-59A",
-        "CF-300A",
-        "CF-1895A",
         "CF-287A",
-        "CF-105657M",
-        "CF-106262L",
-        "CF-1993B",
-        "CF-75C",
-        "CF-279C",
-        "CF-416C",
-        "CF-304A",
-        "CF-1120D",
-        "CF-1354D",
-        "CF-255C",
-        "CF-2181B",
-        "CF-2045A",
-        "CF-105544C",
-        "CF-106161J",
-        "CF-1198D",
-        "CF-986E",
-        "CF-4A",
-        "CF-486D",
-        "CF-2004B",
-        "CF-508C",
-        "CF-271D",
-        "CF-1894C",
-        "CF-1990D",
-        "CF-441C",
-        "CF-2004D",
-        "CF-2172F",
-        "CF-106268D",
-        "CF-462B",
-        "CF-339D",
-        "CF-166E",
-        "CF-242B",
-        "CF-1994A",
-        "CF-337E",
-        "CF-217A",
-        "CF-1991D",
-        "CF-63E",
-        "CF-448C",
-        "CF-104118C",
-        "CF-501C",
-        "CF-276B",
-        "CF-105484J",
-        "CF-236A",
-        "CF-349B",
-        "CF-106161L",
-        "CF-69A",
-        "CF-2172I",
-        "CF-109A",
-        "CF-254A",
-        "CF-1311D",
-        "CF-1902A",
-        "CF-510B",
-        "CF-104118I",
-        "CF-1995C",
-        "CF-1991A",
-        "CF-2239B",
-        "CF-105637C",
-        "CF-283A",
-        "CF-1991C",
-        "CF-433A",
-        "CF-1822D",
-        "CF-105901G",
-        "CF-105544L",
-        "CF-2000C",
-        "CF-706D",
-        "CF-1994B",
-        "CF-414B",
-        "CF-61A",
-        "CF-330B",
-        "CF-298B",
-        "CF-2172A",
-        "CF-1975C",
-        "CF-152A",
-        "CF-126B",
-        "CF-1902D",
-        "CF-260A",
-        "CF-106161A",
-        "CF-1771A",
-        "CF-96A",
-        "CF-144A",
-        "CF-237A",
-        "CF-106262G",
-        "CF-2045C",
-        "CF-1251C",
-        "CF-598D",
-        "CLUE-voi26_light",
-        "CF-550C",
-        "CF-1861C",
-        "CF-1977C",
-        "CF-104619L",
-        "CF-222B",
-        "CF-233A",
-        "CF-34A",
-        "CF-466B",
-        "CF-1861E",
-        "CF-2003D1",
-        "CF-105544F",
-        "CF-2260B",
-        "CF-441B",
-        "CF-105901I",
-        "CF-118A",
-        "CF-460B",
-        "CF-485A",
-        "CF-1895D",
-        "CF-166C",
-        "CF-320B",
-        "CF-272A",
-        "CF-104118F",
-        "CF-258A",
-        "CF-1827B1",
-        "CF-438D",
-        "CF-1010211",
-        "CF-1832D2",
-        "CF-112A",
-        "CF-2001A",
-        "CF-106084A",
-        "CF-352B",
-        "CF-365B",
-        "CF-697D",
-        "CF-2004C",
-        "CF-2181D",
-        "CF-129A",
-        "CF-110A",
-        "CF-1977A",
-        "CF-2181A",
-        "CF-224A",
-        "CF-2030E",
-        "CF-285A",
-        "CF-246B",
-        "CF-1990C",
-        "CF-613D",
-        "CF-105901A",
-        "CF-58A",
-        "CF-1986F",
-        "CF-358D",
-        "CF-1699D",
-        "CF-1096D",
-        "CF-106144J",
-        "CF-219C",
-        "CF-357B",
-        "CF-598E",
-        "CF-104118A",
-        "CF-1995A",
-        "CF-340C",
-        "CF-271A",
-        "CF-105637K",
-        "CF-104619F",
-        "CF-448D",
-        "CF-104619B",
-        "CF-168A",
-        "CF-1923E",
-        "CF-1998C",
-        "CF-1994D",
-        "CF-455A",
-        "CF-224B",
-        "CF-105544M",
-        "CF-242A",
-        "CF-13E",
-        "CF-165E",
-        "CF-1902B",
-        "CF-453A",
-        "CF-369C",
-        "CF-433B",
-        "CF-1768B",
-        "CF-152C",
-        "CF-1916E",
-        "CF-1902C",
-        "CF-1824B2",
-        "CF-1832D1",
-        "CF-294B",
-        "CF-1859D",
-        "CF-205A",
-        "CF-257C",
-        "CF-214B",
-        "CF-350A",
-        "CF-116A",
-        "CF-431C",
-        "CF-1998B",
-        "CF-1957F1",
-        "CF-454B",
-        "CF-459B",
-        "CF-358A",
-        "CF-275B",
-        "CF-1886B",
-        "CF-106144G",
-        "CF-186A",
-        "CF-139A",
-        "CF-1822C",
-        "CF-600E",
-        "CF-1016D",
-        "CF-1998A",
-        "CF-160A",
-        "CF-106144C",
-        "CF-268C",
-        "CF-1976A",
-        "CF-1886C",
-        "CF-476B",
-        "CF-230A",
-        "CF-165C",
-        "CF-347A",
-        "CF-1986C",
-        "CF-104454L",
-        "CF-275A",
-        "CF-105657A",
-        "CF-1894D",
-        "CF-104118H",
-        "CF-105637A",
-        "CF-342A",
-        "CF-105484B",
-        "CF-1857G",
-        "CF-1859E",
-        "CF-1976B",
-        "CF-459A",
-        "CF-86D",
-        "CF-1833E",
-        "CF-2172M",
-        "CF-227B",
-        "CF-1976D",
-        "CF-375D",
-        "CF-1966A",
-        "CF-257B",
-        "CF-1822A",
-        "CF-1995B2",
-        "CF-106144A",
-        "CF-266A",
-        "CF-137B",
-        "CF-276C",
-        "CF-1896D",
-        "CF-1899G",
-        "CF-1986G2",
-        "CF-1975A",
-        "CF-106262J",
-        "CF-1894A",
-        "CF-106144F",
-        "CF-106268I",
-        "CF-115A",
-        "CF-375C",
-        "CF-1891C",
-        "CF-279B",
-        "CF-106084L",
-        "CF-75A",
         "CF-510C",
-        "CF-2231D",
-        "CF-349A",
-        "CF-272C",
-        "CF-1858E1",
-        "CF-1292D",
-        "CF-285C",
-        "CF-431B",
-        "CF-282C",
-        "CF-916E",
-        "CF-888G",
-        "CF-1891A",
-        "CF-106161B",
-        "CF-493D",
-        "CF-1895C",
-        "CF-228A",
-        "CF-337A",
-        "CF-467C",
-        "CF-825E",
-        "CF-253A",
-        "CF-230B",
-        "CF-1316E",
-        "CF-2260C",
-        "CF-264A",
-        "CF-287B",
-        "CF-105637B",
-        "CF-219A",
-        "CF-558E",
-        "CF-80A",
-        "CF-295A",
-        "CF-106353E",
-        "CF-192A",
-        "CF-1856E2",
-        "CF-295B",
-        "CF-274B",
-        "CF-106262E",
-        "CF-105657E",
-        "CF-34B",
-        "CF-92A",
-        "CF-339B",
-        "CF-450B",
-        "CF-1998E1",
-        "CF-2172E",
-        "CF-463C",
-        "CF-118B",
-        "CF-104619K",
-        "CF-401A",
-        "CF-2231B",
-        "CF-106161G",
-        "CF-427C",
-        "CF-141A",
-        "CF-43A",
-        "CF-1975B",
-        "CF-105637E",
-        "CF-318A",
-        "CF-215A",
-        "CF-281A",
-        "CF-479C",
-        "CF-104619E",
-        "CF-868F",
-        "CF-1215E",
-        "CF-368B",
-        "CF-339A",
-        "CF-2000F",
-        "CF-313C",
-        "CF-105901F",
-        "CF-248A",
-        "CF-2041H",
-        "CF-2172K",
-        "CF-264B",
-        "CF-466C",
-        "CF-214A",
-        "CF-1827B2",
-        "CF-313B",
-        "CF-182D",
-        "CF-439C",
-        "CF-342E",
-        "CF-2041D",
-        "CF-104A",
-        "CF-106084C",
-        "CF-2041E",
-        "CF-340D",
-        "CF-105741C",
-        "CF-332B",
-        "CF-285B",
-        "CF-165A",
-        "CF-979D",
-        "CF-404C",
-        "CF-334A",
-        "CF-1709E",
-        "CF-1906A",
-        "CF-106677D",
-        "CF-1906F",
-        "CF-486C",
-        "CF-1998D",
-        "CF-1993C",
-        "CF-840C",
-        "CF-151A",
-        "CF-450A",
-        "CF-350C",
-        "CF-1891D",
-        "CF-121A",
-        "CF-221D",
-        "CF-266B",
-        "CF-1986D",
-        "CF-104619I",
-        "CF-106144B",
-        "CF-1966C",
-        "CF-363B",
-        "CF-149A",
-        "CF-246D",
-        "CF-354C",
-        "CF-300B",
-        "CF-322B",
-        "CF-1902E",
-        "CF-2181F",
-        "CF-2172B",
-        "CF-313A",
-        "CF-2045M",
-        "CF-1995B1",
-        "CF-106677C",
-        "CF-401C",
-        "CF-1884D",
-        "CF-432D",
-        "CF-2045B",
-        "CF-1900E",
-        "CF-2041C",
-        "CF-1994C",
-        "CF-371C",
-        "CF-2041I",
-        "CF-271B",
-        "CF-348A",
-        "CF-471D",
-        "CF-105484K",
-        "CF-122A",
-        "CF-104619A",
-        "CF-1990A",
-        "CF-106353F",
-        "CF-1856E1",
-        "CF-277A",
-        "CF-106144M",
-        "CF-377A",
-        "CF-105544B",
-        "CF-32B",
-        "CF-1066182N",
-        "CF-106353L",
-        "CF-372A",
-        "CF-1966B",
-        "CF-289B",
-        "CF-105637J",
-        "CF-2268B",
-        "CF-118D",
-        "CF-600C",
-        "CF-104118K",
-        "CF-106262H",
-        "CF-2231C",
-        "CF-189A",
-        "CF-339C",
-        "CF-106262M",
-        "CF-2268A",
-        "CF-231A",
-        "CF-1906E",
-        "CF-221A",
-        "CF-1906M",
-        "CF-492C",
-        "CF-361A",
-        "CF-1997B",
-        "CF-300C",
-        "CF-160B",
-        "CF-1872G",
-        "CF-493C",
-        "CF-359D",
-        "CF-1986E",
-        "CF-344A",
-        "CF-106353D",
-        "CF-330A",
-        "CF-236B",
-        "CF-479D",
-        "CF-501A",
-        "CF-353A",
-        "CF-104619C",
-        "CF-443B",
-        "CF-27A",
-        "CF-270A",
-        "CF-445A",
-        "CF-199A",
-        "CF-231C",
-        "CF-2041A",
-        "CF-133A",
-        "CF-1913D",
-        "CF-439D",
-        "CF-136A",
-        "CF-105637F",
-        "CF-478C",
-        "CF-251A",
-        "CF-1824B1",
-        "CF-106262A",
-        "CF-2041M",
-        "CF-1051F",
-        "CF-106225F",
-        "CF-570D",
-        "CF-1997D",
-        "CF-327A",
-        "CF-451B",
-        "CF-327B",
-        "CF-106353J",
-        "CF-262B",
-        "CF-1062E",
-        "CF-1305F",
-        "CF-105484G",
-        "CF-208A",
-        "CF-475B",
-        "CF-106677E",
-        "CF-220A",
-        "CF-808G",
-        "CF-105484E",
-        "CF-244A",
-        "CF-102B",
-        "CF-106262I",
-        "CF-282A",
-        "CF-1990B",
-        "CF-160D",
-        "CF-2004A",
-        "CF-1748E",
-        "CF-1891B",
-        "CF-155A",
-        "CF-459D",
-        "CF-235A",
-        "CF-842D",
-        "CF-259A",
-        "CF-105544D",
-        "CF-263A",
-        "CF-106353A",
-        "CF-320A",
-        "CF-1192B",
-        "CF-253B",
-        "CF-166A",
-        "CF-1993D",
-        "CF-1828B",
-        "CF-2231A",
-        "CF-276D",
-        "CF-106268E",
-        "CF-385C",
-        "CF-106353K",
-        "CF-540C",
-        "CF-1900C",
-        "CF-95E",
-        "CF-623B",
-        "CF-105544H",
-        "CF-1975D",
-        "CF-1991E",
-        "CF-519D",
-        "CF-239A",
-        "CF-2001B",
-        "CF-106144E",
-        "CF-446A",
-        "CF-346B",
-        "CF-106084D",
-        "CF-2181M",
-        "CF-269B",
-        "CF-371B",
-        "CF-1234D",
-        "CF-1977B",
+        "CF-61A",
         "CF-315B",
-        "CF-282B"
+        "CF-102B",
+        "CF-272C",
+        "CF-570D",
+        "CF-1975B",
+        "CF-106262L",
+        "CF-296A",
+        "CF-1990B",
+        "CF-706D",
+        "CF-2260C",
+        "CF-318A",
+        "CF-34A",
+        "CF-339D",
+        "CF-4A",
+        "CF-106144C",
+        "CF-133A",
+        "CF-105484G",
+        "CF-106144M",
+        "CF-263A",
+        "CF-1986D",
+        "CF-1827B2",
+        "CF-441C",
+        "CF-1895D",
+        "CF-320A",
+        "CF-340D",
+        "CF-118A",
+        "CF-1906E",
+        "CF-1895A",
+        "CF-86D",
+        "CF-1316E",
+        "CF-460B",
+        "CF-124A",
+        "CF-106144A",
+        "CF-165E",
+        "CF-32B",
+        "CF-2231A",
+        "CF-2181M",
+        "CF-357B",
+        "CF-369C",
+        "CF-505C",
+        "CF-443B",
+        "CF-342E",
+        "CF-501C",
+        "CF-126B",
+        "CF-1000F",
+        "CF-1994B",
+        "CF-438D",
+        "CF-27A",
+        "CF-339A",
+        "CF-230B",
+        "CF-485A",
+        "CF-1768B",
+        "CF-233A",
+        "CF-1894D",
+        "CF-129A",
+        "CF-222A",
+        "CF-282C",
+        "CF-106262I",
+        "CF-416C",
+        "CF-106262H",
+        "CF-1902C",
+        "CF-182D",
+        "CF-377A",
+        "CF-13E",
+        "CF-825E",
+        "CF-439D",
+        "CF-1894C",
+        "CF-104118H",
+        "CF-320B",
+        "CF-116B",
+        "CF-451B",
+        "CF-235A",
+        "CF-332B",
+        "CF-1998D",
+        "CF-106225F",
+        "CF-2172I",
+        "CF-258A",
+        "CF-322B",
+        "CF-279C",
+        "CF-271A",
+        "CF-1895C",
+        "CF-1923E",
+        "CF-106353E",
+        "CF-463B",
+        "CF-43A",
+        "CF-160B",
+        "CF-105901G",
+        "CF-363B",
+        "CF-1891C",
+        "CF-106161A",
+        "CF-104619J",
+        "CF-454B",
+        "CF-104454L",
+        "CF-1120D",
+        "CF-600E",
+        "CF-106084D",
+        "CF-1857G",
+        "CF-1990A",
+        "CF-2001C",
+        "CF-1891B",
+        "CF-105637K",
+        "CF-445A",
+        "CF-453A",
+        "CF-2041A",
+        "CF-486C",
+        "CF-2001A",
+        "CF-218B",
+        "CF-375D",
+        "CF-105637F",
+        "CF-58A",
+        "CF-330B",
+        "CF-492C",
+        "CF-1966C",
+        "CF-401A",
+        "CF-808G",
+        "CF-236B",
+        "CF-348A",
+        "CF-496C",
+        "CF-219A",
+        "CF-104619K",
+        "CF-104118G",
+        "CF-106161J",
+        "CF-1986B",
+        "CF-1975C",
+        "CF-493D",
+        "CF-136A",
+        "CF-2172F",
+        "CF-1234D",
+        "CF-540C",
+        "CF-1976A",
+        "CF-347A",
+        "CF-43B",
+        "CF-476B",
+        "CF-1832D1",
+        "CF-137B",
+        "CF-456A",
+        "CF-205A",
+        "CF-105637B",
+        "CF-92A",
+        "CF-122A",
+        "CF-224A",
+        "CF-462B",
+        "CF-842D",
+        "CF-371C",
+        "CF-242B",
+        "CF-106353D",
+        "CF-104619H",
+        "CF-2045H",
+        "CF-2181D",
+        "CF-1305F",
+        "CF-231C",
+        "CF-1995A",
+        "CF-105544A",
+        "CF-106353J",
+        "CF-448C",
+        "CF-2000F",
+        "CF-460C",
+        "CF-352A",
+        "CF-246D",
+        "CF-139A",
+        "CF-148A",
+        "CF-221A",
+        "CF-1998B",
+        "CF-189A",
+        "CF-479D",
+        "CF-432D",
+        "CF-493C",
+        "CF-371B",
+        "CF-165C",
+        "CF-361A",
+        "CF-2181B",
+        "CF-192A",
+        "CF-2000C",
+        "CF-2045C",
+        "CF-104118K",
+        "CF-2001E1",
+        "CF-75C",
+        "CF-486D",
+        "CF-1902E",
+        "CF-106353F",
+        "CF-1998E1",
+        "CF-446A",
+        "CF-106262G",
+        "CF-105637J",
+        "CF-104619I",
+        "CF-105657K",
+        "CF-1832D2",
+        "CF-2004E",
+        "CF-315A",
+        "CF-106268E",
+        "CF-455A",
+        "CF-257B",
+        "CF-1859D",
+        "CF-281A",
+        "CF-868F",
+        "CF-105544D",
+        "CF-313C",
+        "CF-467C",
+        "CF-479C",
+        "CF-359D",
+        "CF-165A",
+        "CF-1994D",
+        "CF-2045A",
+        "CF-264B",
+        "CF-300C",
+        "CF-106144E",
+        "CF-2030E",
+        "CF-106262E",
+        "CF-106262J",
+        "CF-2045M",
+        "CF-2181F",
+        "CF-257C",
+        "CF-433B",
+        "CF-888G",
+        "CF-104619C",
+        "CF-459A",
+        "CF-105484J",
+        "CF-916E",
+        "CF-1977C",
+        "CF-327A",
+        "CF-275B",
+        "CF-1827B1",
+        "CF-244A",
+        "CF-270A",
+        "CF-2172K",
+        "CF-152C",
+        "CF-2231C",
+        "CF-1215E",
+        "CF-144A",
+        "CF-2172M",
+        "CF-385C",
+        "CF-1995C",
+        "CF-106144G",
+        "CF-1916E",
+        "CF-104118I",
+        "CF-1977B",
+        "CF-160A",
+        "CF-617E",
+        "CF-375C",
+        "CF-274B",
+        "CF-106677E",
+        "CF-550C",
+        "CF-2045B",
+        "CF-1906M",
+        "CF-1833E",
+        "CF-104118C",
+        "CF-313A",
+        "CF-372A",
+        "CF-459B",
+        "CF-354C",
+        "CF-1998A",
+        "CF-1884D",
+        "CF-1894B",
+        "CF-346B",
+        "CF-1861E",
+        "CF-441B",
+        "CF-1993C",
+        "CF-437C",
+        "CF-1856E2",
+        "CF-224B",
+        "CF-248A",
+        "CF-272A",
+        "CF-1997A",
+        "CF-166E",
+        "CF-1010211",
+        "CF-1991E",
+        "CF-1966D",
+        "CF-287B",
+        "CF-2004B",
+        "CF-219C",
+        "CF-786B",
+        "CF-613D",
+        "CF-1822B",
+        "CF-109A",
+        "CF-221D",
+        "CF-259A",
+        "CF-1311D",
+        "CF-313B",
+        "CF-80A",
+        "CF-2268A",
+        "CF-1997B",
+        "CF-363C",
+        "CF-95E",
+        "CF-220A",
+        "CF-558E",
+        "CF-598D",
+        "CF-1891D",
+        "CF-1976B",
+        "CF-106084A",
+        "CF-105657M",
+        "CF-105484B",
+        "CF-344A",
+        "CF-106084B",
+        "CF-105901I",
+        "CF-1976D",
+        "CF-105484K",
+        "CF-439C",
+        "CF-283A",
+        "CF-915F",
+        "CF-519D",
+        "CF-1986A",
+        "CF-342A",
+        "CF-1900E",
+        "CF-276B",
+        "CF-2172E",
+        "CF-1886A",
+        "CF-106161B",
+        "CF-1899G",
+        "CF-2041C",
+        "CF-1986G2",
+        "CF-236A",
+        "CF-353A",
+        "CF-327B",
+        "CF-2260B",
+        "CF-230A",
+        "CF-105544L",
+        "CF-1900C",
+        "CF-106144F",
+        "CF-1292D",
+        "CF-330A",
+        "CF-1051F",
+        "CF-1709E",
+        "CF-105657A",
+        "CF-2045I",
+        "CF-451E",
+        "CF-350A",
+        "CF-246B",
+        "CF-1913D",
+        "CF-448D",
+        "CF-1062E",
+        "CF-105544H",
+        "CF-59A",
+        "CF-2004C",
+        "CF-979D",
+        "CF-304A",
+        "CF-1886B",
+        "CF-1991A",
+        "CF-105637E",
+        "CF-166A",
+        "CF-1994A",
+        "CF-106268D",
+        "CF-2003D1",
+        "CF-106144J",
+        "CF-1975D",
+        "CF-105484E",
+        "CF-2239B",
+        "CF-349B",
+        "CF-264A",
+        "CF-104118A",
+        "CF-253B",
+        "CF-151A",
+        "CF-2001B",
+        "CF-277A",
+        "CF-106161L",
+        "CF-106084L",
+        "CF-920E",
+        "CF-1991D",
+        "CF-294B",
+        "CF-237A",
+        "CF-501A",
+        "CF-104118F",
+        "CF-1902B",
+        "CF-2172A",
+        "CF-401C",
+        "CF-1856E1",
+        "CF-1822C",
+        "CF-141A",
+        "CF-1016D",
+        "CF-276D",
+        "CF-186A",
+        "CF-1895B",
+        "CF-217A",
+        "CF-1991B",
+        "CF-358A",
+        "CF-166C",
+        "CF-2238D",
+        "CF-1995B1",
+        "CF-228A",
+        "CF-266A",
+        "CF-1906A",
+        "CF-96A",
+        "CF-2231B",
+        "CF-106268I",
+        "CF-253A",
+        "CF-450B",
+        "CF-319C",
+        "CF-71A",
+        "CF-41A",
+        "CF-337B",
+        "CF-337E",
+        "CF-168A",
+        "CF-382C",
+        "CF-2268B",
+        "CF-276A",
+        "CF-404C",
+        "CF-106262A",
+        "CF-106144B",
+        "CF-214A",
+        "CF-1891A",
+        "CF-347B",
+        "CF-104619B",
+        "CF-365B",
+        "CF-1858E1",
+        "CF-1986E",
+        "CF-1993B",
+        "CF-1822D",
+        "CF-106677C",
+        "CF-2004F",
+        "CF-1994C",
+        "CF-268C",
+        "CF-152A",
+        "CF-106084C",
+        "CF-1857E",
+        "CF-121A",
+        "CF-242A",
+        "CF-2041I",
+        "CF-105657E",
+        "CF-155A",
+        "CF-262B",
+        "CF-34B",
+        "CF-199A",
+        "CF-2181H",
+        "CF-1768A",
+        "CF-106677D",
+        "CF-466C",
+        "CF-508C",
+        "CF-334A",
+        "CF-986E",
+        "CF-459D",
+        "CF-1251C",
+        "CF-697D",
+        "CF-600C",
+        "CF-239A",
+        "CF-295A",
+        "CF-104118J",
+        "CF-1748E",
+        "CF-623B",
+        "CF-96B",
+        "CF-431B",
+        "CF-1998C",
+        "CF-432A",
+        "CF-275A",
+        "CF-251A",
+        "CF-271D",
+        "CF-2004A",
+        "CF-2041M",
+        "CF-225C",
+        "CF-106262M",
+        "CF-1975A",
+        "CF-1192B",
+        "CF-466B",
+        "CF-1957F1",
+        "CF-276C",
+        "CF-104619A",
+        "CF-1990C",
+        "CF-149A",
+        "CF-2041D",
+        "CF-475B",
+        "CF-112A",
+        "CF-266B",
+        "CF-339C",
+        "CF-1966A",
+        "CF-2004D",
+        "CF-106161G",
+        "CF-1977A",
+        "CF-227B",
+        "CF-75A",
+        "CF-105637A",
+        "CF-431C",
+        "CF-1699D",
+        "CF-269B",
+        "CF-300B",
+        "CF-350C",
+        "CF-1859E",
+        "CF-1902D",
+        "CF-1198D",
+        "CF-450A",
+        "CF-510B",
+        "CF-1990D",
+        "CF-1354D",
+        "CF-282B",
+        "CF-105901F",
+        "CF-368B",
+        "CF-1896D",
+        "CF-279B",
+        "CF-105544M",
+        "CF-222B",
+        "CF-2041E",
+        "CF-598E",
+        "CF-449D",
+        "CF-1096D",
+        "CF-344B",
+        "CF-463C",
+        "CF-105544C",
+        "CF-214B",
+        "CF-2001D",
+        "CF-61E",
+        "CF-106353L",
+        "CF-388A",
+        "CF-105544F",
+        "CF-433A",
+        "CF-271B",
+        "CF-2231D",
+        "CF-352B",
+        "CF-1828B",
+        "CF-1906F",
+        "CF-358D",
+        "CF-104619L",
+        "CF-1986C",
+        "CF-2041H",
+        "CF-414B",
+        "CF-1822A",
+        "CF-116A",
+        "CF-105901A",
+        "CF-1886C",
+        "CF-63E",
+        "CF-115A",
+        "CF-118B",
+        "CF-336A",
+        "CF-208A",
+        "CF-337A",
+        "CF-231A",
+        "CF-1997C",
+        "CF-106353K",
+        "CF-285A",
+        "CF-2172B",
+        "CF-1997D",
+        "CF-1894A",
+        "CF-160D",
+        "CF-118D",
+        "CF-104A",
+        "CF-1771A",
+        "CF-105637C",
+        "CF-69A",
+        "CF-289B",
+        "CF-105544B",
+        "CLUE-voi26_light",
+        "CF-340C",
+        "CF-471D",
+        "CF-1993A",
+        "CF-298B",
+        "CF-1872G",
+        "CF-1238D",
+        "CF-300A",
+        "CF-478C",
+        "CF-2181A",
+        "CF-1902A",
+        "CF-285C",
+        "CF-1966B",
+        "CF-282A",
+        "CF-215A",
+        "CF-1066182N",
+        "CF-1824B2",
+        "CF-1991C",
+        "CF-106353A",
+        "CF-1833F",
+        "CF-483B",
+        "CF-104619E",
+        "CF-105741C",
+        "CF-260A",
+        "CF-255C",
+        "CF-1824B1",
+        "CF-1986F",
+        "CF-295B",
+        "CF-104619F",
+        "CF-339B",
+        "CF-427C",
+        "CF-1993D",
+        "CF-285B",
+        "CF-840C",
+        "CF-254A",
+        "CF-349A",
+        "CF-1861C",
+        "CF-1995B2",
+        "CF-110A",
+        "CF-200B"
       ],
       "target_solved": [],
       "target_solved_count": 0,
-      "target_class_total": 0,
+      "target_class_total": 8,
       "total_solved_count": 580,
       "rating": 0,
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 13,
+        "week": 10,
         "month": 227,
         "year": 358,
         "total": 580
@@ -935,11 +1059,15 @@
           "total": 3,
           "ac": 1
         },
-        "2025-11-19": {
-          "total": 20,
-          "ac": 7
+        "2025-11-20": {
+          "total": 16,
+          "ac": 5
         },
-        "2025-11-17": {
+        "2025-11-19": {
+          "total": 4,
+          "ac": 2
+        },
+        "2025-11-18": {
           "total": 28,
           "ac": 8
         },
@@ -967,13 +1095,17 @@
           "total": 15,
           "ac": 8
         },
-        "2025-10-23": {
+        "2025-10-24": {
           "total": 17,
           "ac": 4
         },
+        "2025-10-23": {
+          "total": 8,
+          "ac": 2
+        },
         "2025-10-22": {
-          "total": 31,
-          "ac": 6
+          "total": 23,
+          "ac": 4
         },
         "2025-10-18": {
           "total": 7,
@@ -1052,15 +1184,15 @@
           "ac": 6
         },
         "2024-08-13": {
-          "total": 7,
+          "total": 8,
           "ac": 2
         },
         "2024-08-12": {
-          "total": 3,
+          "total": 4,
           "ac": 1
         },
         "2024-08-11": {
-          "total": 8,
+          "total": 6,
           "ac": 0
         },
         "2024-08-10": {
@@ -1083,9 +1215,13 @@
           "total": 8,
           "ac": 5
         },
+        "2024-07-29": {
+          "total": 2,
+          "ac": 1
+        },
         "2024-07-28": {
-          "total": 15,
-          "ac": 5
+          "total": 13,
+          "ac": 4
         },
         "2024-07-23": {
           "total": 6,
@@ -1119,9 +1255,13 @@
           "total": 3,
           "ac": 0
         },
+        "2024-06-24": {
+          "total": 3,
+          "ac": 2
+        },
         "2024-06-23": {
-          "total": 14,
-          "ac": 6
+          "total": 11,
+          "ac": 4
         },
         "2024-06-18": {
           "total": 1,
@@ -1248,12 +1388,8 @@
           "ac": 3
         },
         "2023-10-31": {
-          "total": 1,
-          "ac": 1
-        },
-        "2023-10-30": {
-          "total": 6,
-          "ac": 3
+          "total": 7,
+          "ac": 4
         },
         "2023-10-10": {
           "total": 1,
@@ -1323,8 +1459,12 @@
           "total": 4,
           "ac": 1
         },
+        "2023-02-22": {
+          "total": 2,
+          "ac": 0
+        },
         "2023-02-21": {
-          "total": 12,
+          "total": 10,
           "ac": 1
         },
         "2023-02-20": {
@@ -1375,13 +1515,12 @@
           "total": 2,
           "ac": 2
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 1,
       "name": "Nguyễn Gia Thiên Ân",
-      "class": "C++ nâng cao",
+      "class": "C++",
       "cf_handle": "ngtan11dona",
       "vjudge_handle": "ngiathienan",
       "marisa_handle": "za_pobeda",
@@ -1392,141 +1531,143 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
-        "MARISA-69",
-        "CLUE-ls_ts10_25_b",
-        "CLUE-ag_ts10_26_a",
-        "CLUE-tninh_ts10_26_a",
-        "CF-2266A",
-        "CLUE-dt_ts10_26_d",
-        "CLUE-dnai_ts10_26_b",
-        "MARISA-106",
-        "CLUE-kh_ts10_26_e",
-        "MARISA-13",
-        "MARISA-105",
-        "CF-4C",
-        "MARISA-203",
-        "CLUE-gl_ts10_26_b",
-        "CLUE-na_ts10_26_b",
-        "CLUE-tninh_ts10_26_c",
-        "CF-2260B",
-        "CLUE-tg_ts10_25_b",
-        "CLUE-ag_ts10_26_b",
-        "CLUE-ht_ts10_26_a",
-        "CLUE-dhv_ts10_26_a",
-        "CLUE-th_ts10_26_b",
-        "MARISA-61",
-        "CLUE-dn_hsg9_26_b",
-        "CLUE-kh_ts10_26_c",
-        "CLUE-dhv_ts10_26_b",
-        "CLUE-dn_hsg9_26_a",
-        "CF-2267B",
-        "CLUE-nb_hsg9_26_e",
-        "CLUE-nb_ts10_25_a",
-        "CLUE-pt_prets10_26_a",
-        "CLUE-dt_ts10_25_c",
-        "CLUE-tg_ts10_25_a",
         "CLUE-qngai_ts10_25_c",
-        "CF-295A",
-        "CLUE-ls_ts10_26_b",
-        "CLUE-dt_ts10_25_a",
-        "CLUE-nb_hsg9_26_c",
-        "CLUE-tn_hsg9_26_b",
-        "CLUE-gl_ts10_26_d",
-        "CLUE-nb_hsg9_26_a",
-        "CLUE-db_ts10_26_a",
-        "CLUE-dl_hsg9_26_b",
-        "CLUE-ld_ts10_26_b",
-        "CLUE-ct_ts10_26_b",
-        "CLUE-qngai_ts10_26_b",
-        "CLUE-dt_ts10_26_b",
-        "MARISA-71",
-        "CLUE-tn_ttts10_25_b",
-        "CLUE-nb_ts10_26_b",
-        "CLUE-ag_ts10_26_d",
-        "CLUE-ls_ts10_25_a",
-        "CF-2267A",
-        "CLUE-ct_ts10_26_c",
-        "CLUE-ct_hsg9_26_b",
-        "CLUE-dhh_ts10_26_a",
-        "CF-443A",
-        "CLUE-contest06_aa",
-        "MARISA-60",
-        "CLUE-dl_hsg9_26_d",
-        "CLUE-dt_ts10_25_b",
-        "MARISA-68",
-        "CLUE-ls_ts10_26_c",
-        "MARISA-70",
-        "CLUE-ls_ts10_25_c",
-        "CLUE-tq_ts10_26_b",
-        "CLUE-lc_ts10_26_b",
-        "MARISA-515",
-        "CF-2266B",
-        "CF-816B",
-        "CLUE-pt_ts10_26_b",
-        "MARISA-201",
-        "MARISA-25",
-        "CLUE-dnai_ts10_26_c",
-        "CLUE-th_ttts10_26_a",
-        "CLUE-hy_ts10_26_b",
-        "CLUE-ct_ts10_26_a",
-        "CLUE-hp_hsg9_26_a",
-        "CLUE-gl_ts10_26_a",
-        "CLUE-nb_hsg9_26_b",
-        "CLUE-dnai_ts10_26_e",
-        "CLUE-qt_hsg9_26_a",
-        "MARISA-478",
-        "CLUE-tninh_ts10_26_b",
-        "CF-466C",
-        "CLUE-nb_ts10_26_d",
         "CLUE-dl_hsg9_26_a",
-        "CF-313B",
-        "CLUE-qnam_ts10_25_b",
-        "MARISA-204",
-        "CLUE-dnai_ts10_26_d",
-        "CLUE-ls_ts10_26_a",
-        "CF-2167A",
-        "CLUE-qngai_ts10_26_c",
-        "CLUE-lc_ts10_26_a",
-        "CLUE-qngai_ts10_25_b",
-        "CLUE-gl_hsg9_26_a",
-        "CLUE-pt_prets10_26_c",
-        "CLUE-ct_hsg9_26_c",
-        "CLUE-qngai_ts10_25_a",
-        "CLUE-bg_ts10_25_a",
-        "CLUE-dt_ts10_26_a",
-        "MARISA-59",
-        "CLUE-gl_ts10_26_c",
-        "CLUE-qngai_ts10_26_a",
-        "CLUE-tq_ts10_26_a",
-        "CLUE-kh_ts10_26_d",
-        "CLUE-ld_ts10_26_a",
-        "MARISA-102",
-        "CLUE-contest02_d",
-        "CLUE-nb_ts10_26_a",
-        "CLUE-tn_ts10_26_a",
-        "CLUE-th_ttts10_26_b",
-        "CLUE-bl_ts10_25_a",
-        "CF-1398C",
-        "CF-236A",
-        "CLUE-lc_ts10_26_c",
-        "CLUE-ld_ts10_26_c",
-        "CLUE-nb_ts10_26_c",
-        "CLUE-tg_ts10_25_c",
-        "CLUE-pt_prets10_26_b",
-        "CLUE-ct_hsg9_26_a",
-        "CF-2269A",
-        "CLUE-kh_ts10_26_a",
-        "CLUE-ht_ts10_26_c",
-        "CLUE-qngai_ts10_26_d",
-        "CLUE-dt_ts10_25_d",
-        "MARISA-631",
+        "CLUE-nb_hsg9_26_e",
+        "CLUE-ls_ts10_25_a",
+        "CF-443A",
+        "CLUE-pt_ts10_26_b",
+        "CF-295A",
         "MARISA-104",
+        "CLUE-nb_hsg9_26_b",
+        "CLUE-hy_ts10_26_b",
+        "CLUE-ct_hsg9_26_a",
+        "CLUE-lc_ts10_26_b",
+        "CLUE-kh_ts10_26_c",
+        "CLUE-dt_ts10_26_a",
+        "CF-236A",
+        "CLUE-ag_ts10_26_a",
+        "CF-2260B",
+        "CLUE-tn_hsg9_26_b",
+        "CLUE-qngai_ts10_25_b",
+        "CLUE-tninh_ts10_26_a",
+        "CLUE-ag_ts10_26_b",
+        "CLUE-tq_ts10_26_a",
+        "CLUE-pt_prets10_26_c",
+        "CLUE-qngai_ts10_26_d",
+        "MARISA-105",
+        "CLUE-gl_ts10_26_d",
+        "CLUE-dnai_ts10_26_b",
+        "CLUE-qngai_ts10_25_a",
+        "MARISA-102",
+        "CLUE-nb_ts10_25_a",
+        "CLUE-tg_ts10_25_c",
+        "CLUE-ct_ts10_26_c",
+        "CLUE-dhv_ts10_26_b",
+        "CLUE-tn_ttts10_25_b",
+        "CLUE-dn_hsg9_26_b",
+        "CLUE-tg_ts10_25_a",
+        "CLUE-bl_ts10_25_a",
+        "CLUE-gl_ts10_26_a",
+        "CLUE-ht_ts10_26_a",
+        "CLUE-dl_hsg9_26_b",
+        "CLUE-nb_hsg9_26_a",
+        "CLUE-qt_hsg9_26_a",
+        "MARISA-25",
+        "MARISA-203",
+        "CLUE-ld_ts10_26_b",
+        "CLUE-hp_hsg9_26_a",
+        "CLUE-qngai_ts10_26_c",
         "CLUE-dhh_ts10_26_b",
+        "CLUE-ld_ts10_26_c",
+        "CLUE-gl_ts10_26_b",
+        "CF-2266B",
+        "CLUE-dhv_ts10_26_a",
+        "CLUE-kh_ts10_26_d",
+        "CF-816B",
+        "CLUE-lc_ts10_26_c",
+        "MARISA-478",
+        "CLUE-dnai_ts10_26_c",
+        "CLUE-nb_ts10_26_b",
         "CLUE-hy_ts10_26_a",
-        "CLUE-kh_ts10_26_b"
+        "CLUE-pt_prets10_26_b",
+        "CLUE-gl_ts10_26_c",
+        "CLUE-tq_ts10_26_b",
+        "CLUE-ls_ts10_26_a",
+        "CLUE-bg_ts10_25_a",
+        "CLUE-dnai_ts10_26_d",
+        "CLUE-dt_ts10_25_a",
+        "CF-2267B",
+        "CLUE-tn_ts10_26_a",
+        "CF-1398C",
+        "CLUE-kh_ts10_26_e",
+        "MARISA-60",
+        "CLUE-ct_ts10_26_b",
+        "CLUE-dt_ts10_25_c",
+        "CLUE-nb_ts10_26_c",
+        "CLUE-ct_hsg9_26_b",
+        "CF-2266A",
+        "CLUE-dt_ts10_25_b",
+        "CLUE-lc_ts10_26_a",
+        "CLUE-qngai_ts10_26_b",
+        "MARISA-68",
+        "CF-2267A",
+        "CLUE-kh_ts10_26_b",
+        "CLUE-na_ts10_26_b",
+        "MARISA-204",
+        "CLUE-qnam_ts10_25_b",
+        "MARISA-201",
+        "MARISA-631",
+        "CLUE-dn_hsg9_26_a",
+        "CLUE-qngai_ts10_26_a",
+        "MARISA-59",
+        "CLUE-dnai_ts10_26_e",
+        "CLUE-th_ts10_26_b",
+        "CF-4C",
+        "MARISA-515",
+        "CLUE-ag_ts10_26_d",
+        "CLUE-dt_ts10_25_d",
+        "CLUE-tg_ts10_25_b",
+        "CLUE-dt_ts10_26_d",
+        "CLUE-kh_ts10_26_a",
+        "CLUE-contest06_aa",
+        "CLUE-th_ttts10_26_a",
+        "MARISA-13",
+        "CLUE-pt_prets10_26_a",
+        "CLUE-ls_ts10_26_c",
+        "MARISA-61",
+        "CLUE-tninh_ts10_26_c",
+        "CLUE-nb_hsg9_26_c",
+        "MARISA-106",
+        "CLUE-db_ts10_26_a",
+        "CF-2269A",
+        "CLUE-contest02_d",
+        "CLUE-nb_ts10_26_d",
+        "CLUE-ls_ts10_25_c",
+        "CLUE-ct_hsg9_26_c",
+        "CLUE-ct_ts10_26_a",
+        "CLUE-ls_ts10_25_b",
+        "CLUE-ls_ts10_26_b",
+        "CLUE-nb_ts10_26_a",
+        "MARISA-69",
+        "CLUE-ld_ts10_26_a",
+        "CF-2167A",
+        "CF-313B",
+        "CLUE-tninh_ts10_26_b",
+        "CLUE-dt_ts10_26_b",
+        "CLUE-gl_hsg9_26_a",
+        "CLUE-th_ttts10_26_b",
+        "CF-466C",
+        "CLUE-dhh_ts10_26_a",
+        "CLUE-ht_ts10_26_c",
+        "MARISA-70",
+        "CLUE-dl_hsg9_26_d",
+        "MARISA-71"
       ],
       "target_solved": [],
       "target_solved_count": 0,
@@ -1536,7 +1677,7 @@
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 2,
+        "week": 1,
         "month": 7,
         "year": 132,
         "total": 132
@@ -1730,13 +1871,12 @@
           "total": 3,
           "ac": 0
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 2,
       "name": "Lê Dũng",
-      "class": "C++ nâng cao",
+      "class": "C++",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "",
@@ -1747,7 +1887,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [],
       "target_solved": [],
@@ -1763,13 +1905,12 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "solved_problems_detail": []
+      "activity": {}
     },
     {
       "stt": 3,
       "name": "Phạm Quốc An",
-      "class": "C++ cơ bản",
+      "class": "C++",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "",
@@ -1780,7 +1921,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [],
       "target_solved": [],
@@ -1796,13 +1939,12 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "solved_problems_detail": []
+      "activity": {}
     },
     {
       "stt": 4,
       "name": "Nguyễn Đình Phát",
-      "class": "C++ cơ bản",
+      "class": "C++",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "dphatdzvl",
@@ -1813,7 +1955,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": true,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
         "MARISA-11",
@@ -1895,13 +2039,12 @@
           "total": 5,
           "ac": 0
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 5,
       "name": "Nguyễn Đắc Gia Huy",
-      "class": "C++ cơ bản",
+      "class": "C++",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "satfswert",
@@ -1912,7 +2055,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": true,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
         "MARISA-13",
@@ -1985,13 +2130,12 @@
           "total": 11,
           "ac": 0
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 6,
       "name": "Mai Thiên Kim",
-      "class": "C++ cơ bản",
+      "class": "C++",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Kimkimkim",
@@ -2002,7 +2146,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": true,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
         "MARISA-1",
@@ -2072,13 +2218,12 @@
           "total": 22,
           "ac": 8
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 7,
       "name": "Trần Thái Thiên Ân",
-      "class": "C++ cơ bản",
+      "class": "C++",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "thienann200212",
@@ -2089,7 +2234,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": true,
-        "Tháng 10": false
+        "Tháng 10": true,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
         "MARISA-1",
@@ -2153,13 +2300,12 @@
           "total": 12,
           "ac": 7
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 8,
       "name": "Nguyễn Thị Hồng Nhung",
-      "class": "C++ cơ bản",
+      "class": "C++",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "",
@@ -2170,7 +2316,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": false,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [],
       "target_solved": [],
@@ -2186,13 +2334,12 @@
         "year": 0,
         "total": 0
       },
-      "activity": {},
-      "solved_problems_detail": []
+      "activity": {}
     },
     {
       "stt": 9,
       "name": "Nguyễn Đức Phát",
-      "class": "Python cơ bản",
+      "class": "Python",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Nguyenducphat",
@@ -2203,7 +2350,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": true,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
         "MARISA-1",
@@ -2231,9 +2380,18 @@
         "MARISA-8",
         "MARISA-9"
       ],
-      "target_solved": [],
-      "target_solved_count": 0,
-      "target_class_total": 0,
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-8",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-499",
+        "MARISA-314"
+      ],
+      "target_solved_count": 8,
+      "target_class_total": 8,
       "total_solved_count": 24,
       "rating": 0,
       "title": "Newbie",
@@ -2333,13 +2491,12 @@
           "total": 5,
           "ac": 0
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 10,
       "name": "Lê Phan Khánh Nam",
-      "class": "Python cơ bản",
+      "class": "Python",
       "cf_handle": "khanhnam_215",
       "vjudge_handle": "khanhnam56",
       "marisa_handle": "khanhnam_15",
@@ -2350,30 +2507,40 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": true,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
         "MARISA-1",
-        "MARISA-4",
+        "MARISA-397",
         "MARISA-15",
-        "MARISA-2",
+        "MARISA-3",
+        "MARISA-396",
         "MARISA-421",
         "MARISA-420",
-        "MARISA-314",
         "MARISA-499",
-        "MARISA-396",
-        "MARISA-3",
-        "MARISA-397"
+        "MARISA-314",
+        "MARISA-2",
+        "MARISA-4"
       ],
-      "target_solved": [],
-      "target_solved_count": 0,
-      "target_class_total": 0,
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-499",
+        "MARISA-314"
+      ],
+      "target_solved_count": 7,
+      "target_class_total": 8,
       "total_solved_count": 11,
       "rating": 0,
       "title": "Newbie",
       "rating_change": "",
       "stats": {
-        "week": 11,
+        "week": 10,
         "month": 11,
         "year": 11,
         "total": 11
@@ -2439,13 +2606,12 @@
           "total": 17,
           "ac": 3
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 11,
       "name": "Trần Gia Hưng",
-      "class": "Python cơ bản",
+      "class": "Python",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Gia_Hung_Tran",
@@ -2456,14 +2622,18 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": true,
-        "Tháng 10": false
+        "Tháng 10": true,
+        "Tháng 11": true,
+        "Tháng 12": true
       },
       "solved": [
         "MARISA-1"
       ],
-      "target_solved": [],
-      "target_solved_count": 0,
-      "target_class_total": 0,
+      "target_solved": [
+        "MARISA-1"
+      ],
+      "target_solved_count": 1,
+      "target_class_total": 8,
       "total_solved_count": 1,
       "rating": 0,
       "title": "Newbie",
@@ -2487,13 +2657,12 @@
           "total": 1,
           "ac": 1
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 12,
       "name": "Trần Thái Thiên Kim",
-      "class": "Python cơ bản",
+      "class": "Python",
       "cf_handle": "",
       "vjudge_handle": "",
       "marisa_handle": "Thienkim0316",
@@ -2504,7 +2673,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": true,
-        "Tháng 10": true
+        "Tháng 10": true,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
         "MARISA-1",
@@ -2512,9 +2683,13 @@
         "MARISA-2",
         "MARISA-3"
       ],
-      "target_solved": [],
-      "target_solved_count": 0,
-      "target_class_total": 0,
+      "target_solved": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3"
+      ],
+      "target_solved_count": 3,
+      "target_class_total": 8,
       "total_solved_count": 4,
       "rating": 0,
       "title": "Newbie",
@@ -2530,8 +2705,7 @@
           "total": 14,
           "ac": 4
         }
-      },
-      "solved_problems_detail": []
+      }
     },
     {
       "stt": 13,
@@ -2547,7 +2721,9 @@
       "status": "Đang học",
       "tuition": {
         "Tháng 9": true,
-        "Tháng 10": false
+        "Tháng 10": false,
+        "Tháng 11": false,
+        "Tháng 12": false
       },
       "solved": [
         "MARISA-1",
@@ -2656,8 +2832,7 @@
           "total": 12,
           "ac": 12
         }
-      },
-      "solved_problems_detail": []
+      }
     }
   ],
   "curriculum": [
@@ -2666,8 +2841,7 @@
       "chapter": "Tuần 1",
       "title": "Nhập xuất & Cấu trúc cơ bản C++",
       "classes": [
-        "C++ nâng cao",
-        "C++ cơ bản"
+        "C++"
       ],
       "url": "https://notion.so",
       "summary": "Cú pháp C++, biến, kiểu int/long long, cin/cout, toán tử số học"
@@ -2677,8 +2851,7 @@
       "chapter": "Tuần 2",
       "title": "Cấu trúc rẽ nhánh & Vòng lặp",
       "classes": [
-        "C++ nâng cao",
-        "C++ cơ bản"
+        "C++"
       ],
       "url": "https://notion.so",
       "summary": "If/else, switch case, vòng lặp for, while, do-while"
@@ -2688,8 +2861,7 @@
       "chapter": "Tuần 3",
       "title": "Mảng 1 chiều & Kỹ thuật đếm phân phối",
       "classes": [
-        "C++ nâng cao",
-        "C++ cơ bản"
+        "C++"
       ],
       "url": "https://notion.so",
       "summary": "Khai báo mảng, duyệt mảng, tìm kiếm, mảng đánh dấu"
@@ -2699,7 +2871,8 @@
       "chapter": "Tuần 1",
       "title": "Cơ bản về Python & Thao tác biến",
       "classes": [
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ],
       "url": "https://notion.so",
       "summary": "Hàm print(), input(), ép kiểu int/float, toán tử cơ bản"
@@ -2709,7 +2882,8 @@
       "chapter": "Tuần 2",
       "title": "Vòng lặp & Cấu trúc rẽ nhánh trong Python",
       "classes": [
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ],
       "url": "https://notion.so",
       "summary": "For in range, while, if/elif/else, xử lý số học"
@@ -2719,7 +2893,8 @@
       "chapter": "Tuần 3",
       "title": "Danh sách (List) & Chuỗi (String)",
       "classes": [
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ],
       "url": "https://notion.so",
       "summary": "List indexing, slicing, methods append/pop/sort, chuỗi"
@@ -2729,7 +2904,8 @@
       "chapter": "Chuyên đề",
       "title": "Kỹ thuật Duyệt nhánh cận & Tối ưu hóa",
       "classes": [
-        "Python 1-1"
+        "Python 1-1",
+        "Python"
       ],
       "url": "https://notion.so",
       "summary": "Tối ưu độ phức tạp thời gian O(N) và O(N log N) bồi dưỡng HSG"
@@ -3022,6 +3198,34 @@
         "MARISA-499",
         "MARISA-314"
       ]
+    },
+    "C++": {
+      "name": "Lớp C++",
+      "badge_color": "bg-blue-500/15 text-blue-300 border-blue-500/30",
+      "problem_ids": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-8",
+        "MARISA-499",
+        "MARISA-314"
+      ],
+      "total_problems": 6
+    },
+    "Python": {
+      "name": "Lớp Python",
+      "badge_color": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+      "problem_ids": [
+        "MARISA-1",
+        "MARISA-2",
+        "MARISA-3",
+        "MARISA-8",
+        "MARISA-396",
+        "MARISA-397",
+        "MARISA-499",
+        "MARISA-314"
+      ],
+      "total_problems": 8
     }
   },
   "auth_tokens": {
@@ -3030,118 +3234,724 @@
       "name": "Quản trị viên / Giáo viên",
       "class": "ALL"
     },
-    "d243ec14df629a9b69fa0b1013100a48ecfb8e43a96666563506876a70b1bcb8": {
-      "role": "teacher",
-      "name": "Giảng viên",
-      "class": "ALL"
-    },
-    "262851000b71310e070dde64f6d4725b7077555bd4e3974f7b8a67d909a6f112": {
-      "role": "teacher",
-      "name": "Giảng viên",
-      "class": "ALL"
-    },
-    "f51a697e64f2d51e27bc76c5569a532aa1df0f3ba4f9488fdc602d63dfc2106a": {
+    "747a418c455f484f47e197ae1b563907e3caf8014f41a6fbffdadda6459ee9a7": {
       "role": "class",
-      "name": "Lớp C++ nâng cao",
-      "class": "C++ nâng cao"
+      "name": "Lớp C++",
+      "class": "C++"
     },
-    "cda0694a47da9846952f77b3c9e04c258180aa5fcf02d929bb785bb8a2a5604f": {
+    "bbe11ae2f8c5c6286c4c39b3cf17136b906ac3e6a670e3f3ecda54d1394427cd": {
       "role": "class",
-      "name": "Lớp C++ cơ bản",
-      "class": "C++ cơ bản"
+      "name": "Lớp Python",
+      "class": "Python"
     },
-    "ca66c06c66c2e3c0cf50d21e69f97239dc838d9b447c36ebc3f782f77c7a45fb": {
-      "role": "class",
-      "name": "Lớp Python cơ bản",
-      "class": "Python cơ bản"
-    },
-    "016631a6e22b281fe23b9ab96cd5c0c6b83f98cea141a27b8cf41d6ea73a8829": {
+    "fd5505221c3a94bec8b527a5f88e5c2722d13fde570e1bc0fded4ac277ea69da": {
       "role": "class",
       "name": "Lớp Python 1-1",
       "class": "Python 1-1"
     },
     "55b8707037f16bc5a146d540e05fa609f62fc4727a7efcf4a2f47e9823c21a39": {
       "role": "student",
-      "stt": 1,
       "name": "Nguyễn Gia Thiên Ân",
-      "class": "C++ nâng cao"
+      "class": "C++"
     },
     "60ac24424670f9e8c3559f67663274681f9792c86ababb4e3304e15d5823c1f4": {
       "role": "student",
-      "stt": 2,
       "name": "Lê Dũng",
-      "class": "C++ nâng cao"
+      "class": "C++"
     },
     "6edd718edb01e3b798fd2f788338b0a5585e0c24d5589786ee5b2aa2499cbbe1": {
       "role": "student",
-      "stt": 3,
       "name": "Phạm Quốc An",
-      "class": "C++ cơ bản"
+      "class": "C++"
     },
     "a441c5ff4aa7185514c5161ba3ba8320232d52dc56d9232b907acb57e19e5e57": {
       "role": "student",
-      "stt": 4,
       "name": "Nguyễn Đình Phát",
-      "class": "C++ cơ bản"
+      "class": "C++"
     },
     "b6760997462627133fdd6f6156ab8f304972162179d216f64ea9da196017e234": {
       "role": "student",
-      "stt": 5,
       "name": "Nguyễn Đắc Gia Huy",
-      "class": "C++ cơ bản"
+      "class": "C++"
     },
     "78f1ed977dd8b7959674831522139aecee2ce8814a8446dbf12fee02601ec216": {
       "role": "student",
-      "stt": 6,
       "name": "Mai Thiên Kim",
-      "class": "C++ cơ bản"
+      "class": "C++"
     },
     "e4d8f0abd426ddb01555299c0d0e14190e48da88d667ab8b518babc55e9fbd72": {
       "role": "student",
-      "stt": 7,
       "name": "Trần Thái Thiên Ân",
-      "class": "C++ cơ bản"
+      "class": "C++"
     },
     "321aaf06fed97532c4feb62cff61d1dd132a91f0a95ecb70be15783842eb6ab1": {
       "role": "student",
-      "stt": 8,
       "name": "Nguyễn Thị Hồng Nhung",
-      "class": "C++ cơ bản"
+      "class": "C++"
     },
     "06584d9aa6499f67008e7faa65149142ab5d7b76856e517843c8d580d79949e0": {
       "role": "student",
-      "stt": 9,
       "name": "Nguyễn Đức Phát",
-      "class": "Python cơ bản"
+      "class": "Python"
     },
     "8eddeb429510b7ba493020e4f29b7f91cd6cbaaa588b00ec2c0ffb92282f1e77": {
       "role": "student",
-      "stt": 10,
       "name": "Lê Phan Khánh Nam",
-      "class": "Python cơ bản"
+      "class": "Python"
     },
     "427e527d60b0605ccfa50e38daba8f856191a09a7a195981512a2211c7219ce1": {
       "role": "student",
-      "stt": 11,
       "name": "Trần Gia Hưng",
-      "class": "Python cơ bản"
+      "class": "Python"
     },
     "e14c27bee07eb09dc7e3dfc97c24935e77a0df09afbe148ef316515a5f26d257": {
       "role": "student",
-      "stt": 12,
       "name": "Trần Thái Thiên Kim",
-      "class": "Python cơ bản"
+      "class": "Python"
     },
     "3764895fbb3ae59753594634e3786ed605ec2ddda8d73819bad9ea03047cc45f": {
       "role": "student",
-      "stt": 13,
       "name": "Lê Minh Khôi",
       "class": "Python 1-1"
     }
   },
   "tuition_months": [
     "Tháng 9",
-    "Tháng 10"
+    "Tháng 10",
+    "Tháng 11",
+    "Tháng 12"
   ],
-  "last_updated": "2026-10-03T09:06:57Z"
+  "last_updated": "2026-10-04T01:56:36Z",
+  "grader_problems": [
+    {
+      "id": "CB-01",
+      "code": "CB-01",
+      "name": "Tính tổng hai số nguyên A + B",
+      "platform": "DeruckOJ",
+      "badge_color": "indigo",
+      "category": "Nhập xuất cơ bản",
+      "difficulty": "Level 1 • Nhập xuất",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ],
+      "time_limit": 1.0,
+      "memory_limit": 256,
+      "description": "Cho hai số nguyên A và B. Hãy tính và in ra giá trị của tổng A + B.",
+      "input_format": "Gồm một dòng chứa hai số nguyên A và B cách nhau bởi dấu cách (-10^9 <= A, B <= 10^9).",
+      "output_format": "In ra một số nguyên duy nhất là giá trị của A + B.",
+      "starter_cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    \n    long long a, b;\n    if (cin >> a >> b) {\n        cout << a + b << \"\\n\";\n    }\n    return 0;\n}",
+      "starter_py": "import sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if len(data) >= 2:\n        a, b = int(data[0]), int(data[1])\n        print(a + b)\n\nif __name__ == \"__main__\":\n    main()",
+      "sample_tests": [
+        {
+          "input": "2 3",
+          "output": "5",
+          "explain": "Tổng 2 + 3 = 5."
+        },
+        {
+          "input": "-10 15",
+          "output": "5",
+          "explain": "Tổng (-10) + 15 = 5."
+        }
+      ],
+      "testcases": [
+        {
+          "input": "2 3",
+          "output": "5",
+          "is_sample": true,
+          "score": 12.5
+        },
+        {
+          "input": "-10 15",
+          "output": "5",
+          "is_sample": true,
+          "score": 12.5
+        },
+        {
+          "input": "0 0",
+          "output": "0",
+          "is_sample": false,
+          "score": 12.5
+        },
+        {
+          "input": "1000000 2000000",
+          "output": "3000000",
+          "is_sample": false,
+          "score": 12.5
+        },
+        {
+          "input": "-500 -700",
+          "output": "-1200",
+          "is_sample": false,
+          "score": 12.5
+        },
+        {
+          "input": "1000000000 -1000000000",
+          "output": "0",
+          "is_sample": false,
+          "score": 12.5
+        },
+        {
+          "input": "999999999 1",
+          "output": "1000000000",
+          "is_sample": false,
+          "score": 12.5
+        },
+        {
+          "input": "-999999999 -1",
+          "output": "-1000000000",
+          "is_sample": false,
+          "score": 12.5
+        }
+      ]
+    },
+    {
+      "id": "CB-02",
+      "code": "CB-02",
+      "name": "Số chẵn hay số lẻ",
+      "platform": "DeruckOJ",
+      "badge_color": "cyan",
+      "category": "Cấu trúc rẽ nhánh if/else",
+      "difficulty": "Level 1 • Rẽ nhánh",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ],
+      "time_limit": 1.0,
+      "memory_limit": 256,
+      "description": "Cho một số nguyên N. Hãy xác định xem N là số chẵn hay số lẻ. Nếu N là số chẵn thì in ra \"CHAN\", nếu N là số lẻ thì in ra \"LE\".",
+      "input_format": "Gồm một số nguyên N (-10^9 <= N <= 10^9).",
+      "output_format": "In ra \"CHAN\" hoặc \"LE\" (viết hoa, không dấu ngoặc kép).",
+      "starter_cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    long long n;\n    if (cin >> n) {\n        if (n % 2 == 0) cout << \"CHAN\\n\";\n        else cout << \"LE\\n\";\n    }\n    return 0;\n}",
+      "starter_py": "n = int(input().strip())\nif n % 2 == 0:\n    print(\"CHAN\")\nelse:\n    print(\"LE\")",
+      "sample_tests": [
+        {
+          "input": "4",
+          "output": "CHAN",
+          "explain": "4 chia hết cho 2 nên là số chẵn."
+        },
+        {
+          "input": "7",
+          "output": "LE",
+          "explain": "7 không chia hết cho 2 nên là số lẻ."
+        }
+      ],
+      "testcases": [
+        {
+          "input": "4",
+          "output": "CHAN",
+          "is_sample": true,
+          "score": 14.28
+        },
+        {
+          "input": "7",
+          "output": "LE",
+          "is_sample": true,
+          "score": 14.28
+        },
+        {
+          "input": "0",
+          "output": "CHAN",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "-6",
+          "output": "CHAN",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "-13",
+          "output": "LE",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "1000000000",
+          "output": "CHAN",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "999999999",
+          "output": "LE",
+          "is_sample": false,
+          "score": 14.32
+        }
+      ]
+    },
+    {
+      "id": "CB-03",
+      "code": "CB-03",
+      "name": "Tìm số lớn nhất trong ba số",
+      "platform": "DeruckOJ",
+      "badge_color": "blue",
+      "category": "Cấu trúc rẽ nhánh if/else",
+      "difficulty": "Level 1 • Rẽ nhánh",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ],
+      "time_limit": 1.0,
+      "memory_limit": 256,
+      "description": "Cho ba số nguyên a, b, c. Hãy tìm và in ra số có giá trị lớn nhất trong ba số đó.",
+      "input_format": "Một dòng chứa 3 số nguyên a, b, c cách nhau bởi dấu cách (-10^9 <= a, b, c <= 10^9).",
+      "output_format": "In ra số nguyên lớn nhất trong ba số.",
+      "starter_cpp": "#include <iostream>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    long long a, b, c;\n    if (cin >> a >> b >> c) {\n        cout << max({a, b, c}) << \"\\n\";\n    }\n    return 0;\n}",
+      "starter_py": "a, b, c = map(int, input().split())\nprint(max(a, b, c))",
+      "sample_tests": [
+        {
+          "input": "3 7 5",
+          "output": "7",
+          "explain": "Số lớn nhất là 7."
+        },
+        {
+          "input": "-5 -2 -9",
+          "output": "-2",
+          "explain": "Số lớn nhất trong các số âm là -2."
+        }
+      ],
+      "testcases": [
+        {
+          "input": "3 7 5",
+          "output": "7",
+          "is_sample": true,
+          "score": 14.28
+        },
+        {
+          "input": "-5 -2 -9",
+          "output": "-2",
+          "is_sample": true,
+          "score": 14.28
+        },
+        {
+          "input": "10 10 10",
+          "output": "10",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "100 20 50",
+          "output": "100",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "15 25 25",
+          "output": "25",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "-1000000000 0 1000000000",
+          "output": "1000000000",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "40 80 60",
+          "output": "80",
+          "is_sample": false,
+          "score": 14.32
+        }
+      ]
+    },
+    {
+      "id": "CB-04",
+      "code": "CB-04",
+      "name": "Tính tổng dãy số từ 1 đến N",
+      "platform": "DeruckOJ",
+      "badge_color": "emerald",
+      "category": "Vòng lặp cơ bản",
+      "difficulty": "Level 1 • Vòng lặp",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ],
+      "time_limit": 1.0,
+      "memory_limit": 256,
+      "description": "Cho số nguyên dương N. Hãy tính tổng các số nguyên liên tiếp từ 1 đến N: S = 1 + 2 + 3 + ... + N.",
+      "input_format": "Một số nguyên dương N duy nhất (1 <= N <= 10^6).",
+      "output_format": "In ra giá trị của tổng S.",
+      "starter_cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    long long n;\n    if (cin >> n) {\n        long long s = n * (n + 1) / 2;\n        cout << s << \"\\n\";\n    }\n    return 0;\n}",
+      "starter_py": "n = int(input().strip())\ns = n * (n + 1) // 2\nprint(s)",
+      "sample_tests": [
+        {
+          "input": "5",
+          "output": "15",
+          "explain": "1 + 2 + 3 + 4 + 5 = 15."
+        },
+        {
+          "input": "1",
+          "output": "1",
+          "explain": "Tổng chỉ có 1 phần tử = 1."
+        }
+      ],
+      "testcases": [
+        {
+          "input": "5",
+          "output": "15",
+          "is_sample": true,
+          "score": 14.28
+        },
+        {
+          "input": "1",
+          "output": "1",
+          "is_sample": true,
+          "score": 14.28
+        },
+        {
+          "input": "10",
+          "output": "55",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "100",
+          "output": "5050",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "1000",
+          "output": "500500",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "1000000",
+          "output": "500000500000",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "77",
+          "output": "3003",
+          "is_sample": false,
+          "score": 14.32
+        }
+      ]
+    },
+    {
+      "id": "CB-05",
+      "code": "CB-05",
+      "name": "Tính giai thừa N!",
+      "platform": "DeruckOJ",
+      "badge_color": "amber",
+      "category": "Vòng lặp & Tích số",
+      "difficulty": "Level 1 • Vòng lặp",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ],
+      "time_limit": 1.0,
+      "memory_limit": 256,
+      "description": "Cho số tự nhiên N. Hãy tính giai thừa của N: N! = 1 * 2 * ... * N. Quy ước 0! = 1.",
+      "input_format": "Một số nguyên N (0 <= N <= 15).",
+      "output_format": "In ra giá trị N!.",
+      "starter_cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (cin >> n) {\n        long long ans = 1;\n        for (int i = 1; i <= n; ++i) ans *= i;\n        cout << ans << \"\\n\";\n    }\n    return 0;\n}",
+      "starter_py": "n = int(input().strip())\nans = 1\nfor i in range(1, n + 1):\n    ans *= i\nprint(ans)",
+      "sample_tests": [
+        {
+          "input": "5",
+          "output": "120",
+          "explain": "5! = 1 * 2 * 3 * 4 * 5 = 120."
+        },
+        {
+          "input": "0",
+          "output": "1",
+          "explain": "0! = 1 theo quy ước."
+        }
+      ],
+      "testcases": [
+        {
+          "input": "5",
+          "output": "120",
+          "is_sample": true,
+          "score": 14.28
+        },
+        {
+          "input": "0",
+          "output": "1",
+          "is_sample": true,
+          "score": 14.28
+        },
+        {
+          "input": "1",
+          "output": "1",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "3",
+          "output": "6",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "7",
+          "output": "5040",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "10",
+          "output": "3628800",
+          "is_sample": false,
+          "score": 14.28
+        },
+        {
+          "input": "15",
+          "output": "1307674368000",
+          "is_sample": false,
+          "score": 14.32
+        }
+      ]
+    },
+    {
+      "id": "CB-06",
+      "code": "CB-06",
+      "name": "Kiểm tra số nguyên tố",
+      "platform": "DeruckOJ",
+      "badge_color": "purple",
+      "category": "Thuật toán số học cơ bản",
+      "difficulty": "Level 1 • Số học",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ],
+      "time_limit": 1.0,
+      "memory_limit": 256,
+      "description": "Cho số nguyên N. Số nguyên tố là số nguyên lớn hơn 1 và chỉ chia hết cho 1 và chính nó. Hãy kiểm tra xem N có phải là số nguyên tố hay không. Nếu đúng in \"YES\", ngược lại in \"NO\".",
+      "input_format": "Một số nguyên N duy nhất (-10^9 <= N <= 10^9).",
+      "output_format": "In ra YES nếu N là số nguyên tố, ngược lại in NO.",
+      "starter_cpp": "#include <iostream>\nusing namespace std;\n\nbool isPrime(long long n) {\n    if (n < 2) return false;\n    for (long long i = 2; i * i <= n; ++i) {\n        if (n % i == 0) return false;\n    }\n    return true;\n}\n\nint main() {\n    long long n;\n    if (cin >> n) {\n        if (isPrime(n)) cout << \"YES\\n\";\n        else cout << \"NO\\n\";\n    }\n    return 0;\n}",
+      "starter_py": "def is_prime(n):\n    if n < 2:\n        return False\n    i = 2\n    while i * i <= n:\n        if n % i == 0:\n            return False\n        i += 1\n    return True\n\nn = int(input().strip())\nprint(\"YES\" if is_prime(n) else \"NO\")",
+      "sample_tests": [
+        {
+          "input": "7",
+          "output": "YES",
+          "explain": "7 là số nguyên tố."
+        },
+        {
+          "input": "4",
+          "output": "NO",
+          "explain": "4 chia hết cho 2 nên không phải số nguyên tố."
+        }
+      ],
+      "testcases": [
+        {
+          "input": "7",
+          "output": "YES",
+          "is_sample": true,
+          "score": 11.11
+        },
+        {
+          "input": "4",
+          "output": "NO",
+          "is_sample": true,
+          "score": 11.11
+        },
+        {
+          "input": "1",
+          "output": "NO",
+          "is_sample": false,
+          "score": 11.11
+        },
+        {
+          "input": "2",
+          "output": "YES",
+          "is_sample": false,
+          "score": 11.11
+        },
+        {
+          "input": "0",
+          "output": "NO",
+          "is_sample": false,
+          "score": 11.11
+        },
+        {
+          "input": "-5",
+          "output": "NO",
+          "is_sample": false,
+          "score": 11.11
+        },
+        {
+          "input": "97",
+          "output": "YES",
+          "is_sample": false,
+          "score": 11.11
+        },
+        {
+          "input": "100",
+          "output": "NO",
+          "is_sample": false,
+          "score": 11.11
+        },
+        {
+          "input": "1000000007",
+          "output": "YES",
+          "is_sample": false,
+          "score": 11.12
+        }
+      ]
+    },
+    {
+      "id": "CB-07",
+      "code": "CB-07",
+      "name": "Đảo ngược xâu ký tự",
+      "platform": "DeruckOJ",
+      "badge_color": "pink",
+      "category": "Xử lý chuỗi (String)",
+      "difficulty": "Level 1 • Chuỗi",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ],
+      "time_limit": 1.0,
+      "memory_limit": 256,
+      "description": "Cho một xâu ký tự S. Hãy in ra xâu S sau khi đã đảo ngược thứ tự các ký tự.",
+      "input_format": "Một dòng chứa xâu ký tự S (độ dài không quá 1000 ký tự).",
+      "output_format": "In ra xâu S đảo ngược.",
+      "starter_cpp": "#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string s;\n    if (getline(cin, s)) {\n        reverse(s.begin(), s.end());\n        cout << s << \"\\n\";\n    }\n    return 0;\n}",
+      "starter_py": "s = input()\nprint(s[::-1])",
+      "sample_tests": [
+        {
+          "input": "hello",
+          "output": "olleh",
+          "explain": "Đảo ngược hello thành olleh."
+        },
+        {
+          "input": "12345",
+          "output": "54321",
+          "explain": "Đảo ngược số dạng xâu."
+        }
+      ],
+      "testcases": [
+        {
+          "input": "hello",
+          "output": "olleh",
+          "is_sample": true,
+          "score": 16.66
+        },
+        {
+          "input": "12345",
+          "output": "54321",
+          "is_sample": true,
+          "score": 16.66
+        },
+        {
+          "input": "a",
+          "output": "a",
+          "is_sample": false,
+          "score": 16.66
+        },
+        {
+          "input": "racecar",
+          "output": "racecar",
+          "is_sample": false,
+          "score": 16.66
+        },
+        {
+          "input": "Competitive Programming",
+          "output": "gnimmargorP evititepmoC",
+          "is_sample": false,
+          "score": 16.66
+        },
+        {
+          "input": "Python vs C++",
+          "output": "++C sv nohtyP",
+          "is_sample": false,
+          "score": 16.7
+        }
+      ]
+    },
+    {
+      "id": "CB-08",
+      "code": "CB-08",
+      "name": "Tìm số lớn nhất trong mảng",
+      "platform": "DeruckOJ",
+      "badge_color": "teal",
+      "category": "Mảng một chiều (Array)",
+      "difficulty": "Level 1 • Mảng",
+      "classes": [
+        "Public",
+        "C++",
+        "Python",
+        "Python 1-1"
+      ],
+      "time_limit": 1.0,
+      "memory_limit": 256,
+      "description": "Cho một dãy gồm N số nguyên. Hãy tìm phần tử có giá trị lớn nhất trong dãy số đó.",
+      "input_format": "Dòng đầu chứa số nguyên dương N (1 <= N <= 10^5). Dòng thứ hai chứa N số nguyên cách nhau một dấu cách (-10^9 <= A_i <= 10^9).",
+      "output_format": "In ra một số nguyên duy nhất là giá trị lớn nhất trong dãy.",
+      "starter_cpp": "#include <iostream>\n#include <vector>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    int n;\n    if (cin >> n) {\n        long long max_val = -2e18;\n        for (int i = 0; i < n; ++i) {\n            long long x;\n            cin >> x;\n            if (x > max_val) max_val = x;\n        }\n        cout << max_val << \"\\n\";\n    }\n    return 0;\n}",
+      "starter_py": "import sys\n\ndef main():\n    lines = sys.stdin.read().split()\n    if not lines:\n        return\n    n = int(lines[0])\n    nums = [int(x) for x in lines[1:n+1]]\n    print(max(nums))\n\nif __name__ == \"__main__\":\n    main()",
+      "sample_tests": [
+        {
+          "input": "5\n1 9 3 7 5",
+          "output": "9",
+          "explain": "Số lớn nhất là 9."
+        },
+        {
+          "input": "4\n-10 -5 -20 -3",
+          "output": "-3",
+          "explain": "Số lớn nhất trong các số âm là -3."
+        }
+      ],
+      "testcases": [
+        {
+          "input": "5\n1 9 3 7 5",
+          "output": "9",
+          "is_sample": true,
+          "score": 16.66
+        },
+        {
+          "input": "4\n-10 -5 -20 -3",
+          "output": "-3",
+          "is_sample": true,
+          "score": 16.66
+        },
+        {
+          "input": "1\n42",
+          "output": "42",
+          "is_sample": false,
+          "score": 16.66
+        },
+        {
+          "input": "6\n0 0 0 0 0 0",
+          "output": "0",
+          "is_sample": false,
+          "score": 16.66
+        },
+        {
+          "input": "5\n100 200 500 500 300",
+          "output": "500",
+          "is_sample": false,
+          "score": 16.66
+        },
+        {
+          "input": "7\n-100 -50 0 20 80 40 80",
+          "output": "80",
+          "is_sample": false,
+          "score": 16.7
+        }
+      ]
+    }
+  ]
 }

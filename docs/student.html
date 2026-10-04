@@ -297,6 +297,32 @@
 
       </div>
 
+      <!-- TUITION STATUS (Theo dõi học phí 4 tháng 9 - 10 - 11 - 12) -->
+      <div id="student-tuition-section" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center text-lg">
+              💳
+            </div>
+            <div>
+              <h2 class="text-base font-bold text-white flex items-center gap-2">
+                Trạng Thái Học Phí
+                <span class="text-[11px] font-normal px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Học Kỳ I (Tháng 9 • 10 • 11 • 12)</span>
+              </h2>
+              <p class="text-xs text-slate-400">Dữ liệu đối chiếu tự động từ Google Sheets của giáo viên</p>
+            </div>
+          </div>
+          <div id="student-tuition-summary-badge" class="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 border border-slate-700 self-start sm:self-auto flex items-center gap-1.5">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- 4 Months Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1" id="student-tuition-grid">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
       <!-- HOMEWORK WEEKLY PROGRESS (Đề bài tuần này) -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -615,11 +641,63 @@
       // Homework Progress specific to student's class
       renderHomeworkChecklist(student);
 
+      // Tuition Status (Tháng 9, 10, 11, 12)
+      renderStudentTuition(student);
+
       // Activity Heatmap & Year Switching
       setupStudentHeatmap(student);
 
       // Solved Archive Table
       renderSolvedArchive(student);
+    }
+
+    function renderStudentTuition(student) {
+      const section = document.getElementById('student-tuition-section');
+      const grid = document.getElementById('student-tuition-grid');
+      const summaryBadge = document.getElementById('student-tuition-summary-badge');
+      if (!section || !grid || !summaryBadge) return;
+
+      const months = appData.tuition_months || ['Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+      const tuitionMap = student.tuition || {};
+
+      let paidCount = 0;
+      grid.innerHTML = '';
+
+      months.forEach(m => {
+        const isPaid = Boolean(tuitionMap[m]);
+        if (isPaid) paidCount++;
+
+        const card = document.createElement('div');
+        card.className = isPaid 
+          ? "bg-slate-950/80 border border-emerald-500/30 rounded-xl p-3.5 flex flex-col justify-between space-y-2 shadow-sm transition hover:border-emerald-500/60"
+          : "bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 flex flex-col justify-between space-y-2 shadow-sm transition hover:border-slate-700";
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-200 font-mono tracking-wide">${m}</span>
+            <span class="text-base">${isPaid ? '✅' : '⏳'}</span>
+          </div>
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-lg border transition ${
+              isPaid 
+                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' 
+                : 'bg-slate-800 text-rose-300 border-slate-700'
+            }">
+              ${isPaid ? 'Đã đóng ✅' : 'Chưa đóng ⏳'}
+            </span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      const totalMonths = months.length;
+      if (paidCount === totalMonths) {
+        summaryBadge.className = "text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5";
+        summaryBadge.innerHTML = `<span>✓</span> Hoàn thành ${paidCount}/${totalMonths} tháng`;
+      } else {
+        summaryBadge.className = "text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1.5";
+        summaryBadge.innerHTML = `<span>⏳</span> Đã đóng ${paidCount}/${totalMonths} tháng`;
+      }
     }
 
     function renderHomeworkChecklist(student) {
