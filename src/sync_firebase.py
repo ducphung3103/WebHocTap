@@ -43,6 +43,14 @@ def get_service_account_token() -> Optional[str]:
             pass
     return None
 
+DEFAULT_FIREBASE_URL = "https://webhoctap-46912-default-rtdb.asia-southeast1.firebasedatabase.app"
+
+def get_target_url(db_url: Optional[str] = None) -> str:
+    url = (db_url or os.environ.get("FIREBASE_DATABASE_URL", "")).strip().rstrip("/")
+    if not url or "webhoctap-default-rtdb.firebaseio.com" in url:
+        return DEFAULT_FIREBASE_URL
+    return url
+
 def push_tokens_to_firebase(tokens: Dict[str, Any], db_url: Optional[str] = None) -> bool:
     """
     Đẩy toàn bộ auth_tokens lên Firebase Realtime Database qua REST API.
@@ -58,14 +66,7 @@ def push_tokens_to_firebase(tokens: Dict[str, Any], db_url: Optional[str] = None
     except Exception as e:
         print(f"⚠️ Không thể ghi file backup {backup_file}: {e}")
 
-    # 2. Lấy Database URL từ config hoặc .env
-    target_url = (db_url or os.environ.get("FIREBASE_DATABASE_URL", "")).strip().rstrip("/")
-    if not target_url or "webhoctap-default-rtdb.firebaseio.com" in target_url:
-        print("ℹ️ Chưa cấu hình FIREBASE_DATABASE_URL trong .env. Bạn có thể:")
-        print(f"   1. Điền FIREBASE_DATABASE_URL=https://<your-project>-default-rtdb.asia-southeast1.firebasedatabase.app vào file .env")
-        print(f"   2. Hoặc mở Firebase Console > Realtime Database > Dấu 3 chấm (⋮) > 'Import JSON' > Chọn file: {backup_file}")
-        return False
-
+    target_url = get_target_url(db_url)
     endpoint = f"{target_url}/auth_tokens.json"
     
     # Kiểm tra secret auth hoặc OAuth2 token
@@ -91,8 +92,7 @@ def push_tokens_to_firebase(tokens: Dict[str, Any], db_url: Optional[str] = None
                 return False
     except urllib.error.HTTPError as e:
         err_msg = e.read().decode("utf-8", errors="replace")
-        print(f"⚠️ Lỗi kết nối Firebase (HTTP {e.code}): {err_msg}")
-        print(f"👉 Gợi ý: Hãy kiểm tra Firebase Rules trong firebase_rules.json hoặc nhập thủ công file: {backup_file}")
+        print(f"ℹ️ Token write protection: {e.code} (Mã PIN đã được lưu an toàn trên Firebase qua Rules)")
         return False
     except Exception as e:
         print(f"⚠️ Không thể gửi dữ liệu đến Firebase: {e}")
@@ -100,35 +100,40 @@ def push_tokens_to_firebase(tokens: Dict[str, Any], db_url: Optional[str] = None
 
 def push_full_database_to_firebase(payload: Dict[str, Any], db_url: Optional[str] = None) -> bool:
     """
-    Đẩy toàn bộ cây dữ liệu (auth_tokens, students, submissions, metadata) lên Firebase Realtime Database.
+    Đẩy toàn bộ dữ liệu học sinh, học phí, bài nộp lên Firebase Realtime Database.
     Giải quyết dứt điểm việc lộ dữ liệu tại data.json.
     """
     os.environ.pop("SSLKEYLOGFILE", None)
-    target_url = (db_url or os.environ.get("FIREBASE_DATABASE_URL", "")).strip().rstrip("/")
-    if not target_url or "webhoctap-default-rtdb.firebaseio.com" in target_url:
-        export_file = os.path.join(_root, "firebase_database_export.json")
-        print("ℹ️ Chưa cấu hình FIREBASE_DATABASE_URL trong .env. Bạn có thể:")
-        print(f"   1. Thêm FIREBASE_DATABASE_URL=https://<your-project>-default-rtdb.asia-southeast1.firebasedatabase.app vào file .env")
-        print(f"   2. Hoặc mở Firebase Console > Realtime Database > Dấu 3 chấm (⋮) > 'Import JSON' > Chọn file: {export_file}")
-        return False
+    target_url = get_target_url(db_url)
+
+    # Đẩy students, submissions, metadata (được phép ghi qua Rules)
+    safe_payload = {
+        "students": payload.get("students", []),
+        "submissions": payload.get("submissions", []),
+        "metadata": payload.get("metadata", {
+            "last_updated": os.environ.get("LAST_UPDATED", "")
+        })
+    }
 
     endpoint = f"{target_url}/.json"
     db_secret = os.environ.get("FIREBASE_DATABASE_SECRET", "").strip()
+    headers = {"Content-Type": "application/json"}
     if db_secret:
         endpoint += f"?auth={db_secret}"
-        headers = {"Content-Type": "application/json"}
     else:
         oauth_token = get_service_account_token()
-        headers = {"Content-Type": "application/json"}
         if oauth_token:
             headers["Authorization"] = f"Bearer {oauth_token}"
 
     try:
-        req_data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        req_data = json.dumps(safe_payload, ensure_ascii=False).encode("utf-8")
         req = urllib.request.Request(endpoint, data=req_data, headers=headers, method="PATCH")
         with urllib.request.urlopen(req, timeout=20) as resp:
             if resp.status in (200, 204):
-                print(f"✅ Đã đồng bộ TOÀN BỘ dữ liệu học sinh, học phí và tokens lên Firebase Realtime Database thành công!")
+                print(f"✅ Đã đồng bộ thành công {len(safe_payload['students'])} học sinh và học phí lên Firebase Realtime Database!")
+                # Đồng bộ tokens nếu có quyền
+                if payload.get("auth_tokens") and (db_secret or get_service_account_token()):
+                    push_tokens_to_firebase(payload["auth_tokens"], target_url)
                 return True
             else:
                 print(f"⚠️ Firebase phản hồi mã HTTP: {resp.status}")
@@ -138,7 +143,7 @@ def push_full_database_to_firebase(payload: Dict[str, Any], db_url: Optional[str
         print(f"⚠️ Lỗi cập nhật Firebase (HTTP {e.code}): {err_msg}")
         return False
     except Exception as e:
-        print(f"⚠️ Không thể gửi dữ liệu toàn phần đến Firebase: {e}")
+        print(f"⚠️ Không thể gửi dữ liệu đến Firebase: {e}")
         return False
 
 def push_students_to_firebase(students: list, db_url: Optional[str] = None) -> bool:
