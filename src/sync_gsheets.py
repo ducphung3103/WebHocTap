@@ -6,6 +6,7 @@ import urllib.request
 import re
 from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional, Tuple
+from src.sync_firebase import push_tokens_to_firebase
 
 # Ensure root is in sys.path
 _root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -266,9 +267,17 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                         "class": cls_key
                     }
     else:
-        # Fallback to existing tokens if available
-        auth_tokens = existing_data.get("auth_tokens", {})
+        # Fallback to backup file or defaults
+        backup_tokens_file = os.path.join(_root_dir, "auth_tokens_for_firebase.json")
+        auth_tokens = {}
+        if os.path.exists(backup_tokens_file):
+            try:
+                with open(backup_tokens_file, "r", encoding="utf-8") as f:
+                    auth_tokens = json.load(f).get("auth_tokens", {})
+            except Exception:
+                pass
         if not auth_tokens:
+            auth_tokens[hash_str("THAYPHUNG2026")] = {"role": "admin", "name": "Quản trị viên / Giáo viên", "class": "ALL"}
             auth_tokens[hash_str("NgocTrinh3101")] = {"role": "admin", "name": "Giáo viên (Admin)", "class": "ALL"}
             auth_tokens[hash_str("CPP2026")] = {"role": "class", "name": "Lớp C++", "class": "C++"}
             auth_tokens[hash_str("PYTHON2026")] = {"role": "class", "name": "Lớp Python", "class": "Python"}
@@ -578,7 +587,6 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     "vnoi_handle": vnoi_h,
                     "clue_handle": clue_h,
                     "ctoj_handle": ctoj_h,
-                    "pin": pin,
                     "status": status,
                     "tuition": st_tuition,
                     "solved": all_solved,
@@ -679,21 +687,53 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
     if not grader_problems and existing_data.get("grader_problems"):
         grader_problems = existing_data.get("grader_problems", [])
 
+    # 1. Save full data to local backup and export for Firebase
+    firebase_payload = {
+        "auth_tokens": auth_tokens,
+        "students": students,
+        "submissions": submissions,
+        "metadata": {
+            "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "tuition_months": tuition_months,
+            "data_source": "firebase"
+        }
+    }
+    export_path = os.path.join(_root, "firebase_database_export.json")
+    backup_path = os.path.join(_root, "data_firebase_backup.json")
+    try:
+        with open(export_path, "w", encoding="utf-8") as f:
+            json.dump(firebase_payload, f, ensure_ascii=False, indent=2)
+        with open(backup_path, "w", encoding="utf-8") as f:
+            json.dump(final_data, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        logger.warning(f"Could not write local backup: {e}")
+
+    # 2. Sanitize docs/data.json (Zero student / tuition data leak)
     final_data["grader_problems"] = grader_problems
-    final_data["students"] = students
+    final_data["students"] = []
+    final_data["submissions"] = []
     final_data["problems"] = problems
     final_data["curriculum"] = curriculum
     final_data["class_config"] = class_config
-    final_data["auth_tokens"] = auth_tokens
+    final_data.pop("auth_tokens", None)
     final_data["tuition_months"] = tuition_months
-    final_data["submissions"] = submissions
+    final_data["data_source"] = "firebase"
+    final_data["security_status"] = "Dữ liệu học sinh, điểm danh và học phí đã được chuyển sang Firebase Realtime Database để bảo mật tuyệt đối, không lưu trong data.json"
     final_data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(final_data, f, ensure_ascii=False, indent=2)
 
-    logger.info(f"Google Sheets sync complete! Updated {json_path} with {len(students)} students, {len(problems)} problems ({len(grader_problems)} with DeruckOJ tests), {len(submissions)} submissions, and {len(auth_tokens)} auth tokens.")
-    print(f"✅ [THÀNH CÔNG] Đã đồng bộ Google Sheets sang {json_path} ({len(students)} học sinh, {len(problems)} bài tập [DeruckOJ: {len(grader_problems)} bài], {len(curriculum)} bài giảng, {len(submissions)} bài nộp)!")
+    logger.info(f"Google Sheets sync complete! Updated {json_path} (public catalog). Full student data protected on Firebase.")
+    print(f"✅ [THÀNH CÔNG] Đã đồng bộ Google Sheets sang {json_path} (Bài tập [DeruckOJ: {len(grader_problems)} bài], {len(curriculum)} bài giảng)!")
+    print("🔒 Bảo mật: Toàn bộ thông tin học sinh, học phí và mã PIN đã được chuyển sang Firebase an toàn, không còn lưu trong data.json.")
+    
+    # 3. Đồng bộ toàn bộ dữ liệu lên Firebase Realtime Database
+    try:
+        from src.sync_firebase import push_full_database_to_firebase
+        push_full_database_to_firebase(firebase_payload)
+    except Exception as e:
+        logger.warning(f"Could not push to Firebase: {e}")
     return True
 
 

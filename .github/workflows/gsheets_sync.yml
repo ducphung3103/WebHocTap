@@ -43,6 +43,7 @@ jobs:
         env:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
         run: python -m src.sync_gsheets --two-way --no-push
 
       - name: Commit and Push Changes

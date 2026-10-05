@@ -10,6 +10,8 @@
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Firebase Auth Configuration -->
+  <script src="firebase-config.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -577,9 +579,38 @@
         console.error("Could not fetch data.json", e);
       }
 
-      if (!appData || !appData.students) {
+      // 1. Tải dữ liệu học sinh trực tiếp từ Firebase Realtime Database (Bảo mật tuyệt đối)
+      if (typeof fetchStudentsFromFirebase === 'function' && isFirebaseConfigured()) {
+        try {
+          const fbStudents = await fetchStudentsFromFirebase();
+          if (fbStudents && fbStudents.length > 0) {
+            if (!appData) appData = {};
+            appData.students = fbStudents;
+            localStorage.setItem('cp_cached_students', JSON.stringify(fbStudents));
+          }
+        } catch(fbErr) {
+          console.warn("Could not fetch students from Firebase:", fbErr);
+        }
+      }
+
+      // 2. Dự phòng: Tải từ bộ nhớ cache nếu Firebase chưa cấu hình URL hoặc offline
+      if (!appData || !appData.students || appData.students.length === 0) {
+        const cached = localStorage.getItem('cp_cached_students') || localStorage.getItem('cp_app_data');
+        if (cached) {
+          try {
+            const parsed = JSON.parse(cached);
+            const list = Array.isArray(parsed) ? parsed : (parsed.students || []);
+            if (list.length > 0) {
+              if (!appData) appData = {};
+              appData.students = list;
+            }
+          } catch(e) {}
+        }
+      }
+
+      if (!appData || !appData.students || appData.students.length === 0) {
         document.getElementById('loading-state').innerHTML = `
-          <div class="text-rose-400 font-bold">Không thể tải dữ liệu học sinh. Vui lòng tải lại trang.</div>
+          <div class="text-rose-400 font-bold">Chưa kết nối Firebase hoặc chưa có dữ liệu học sinh. Vui lòng kiểm tra lại cấu hình Firebase.</div>
         `;
         return;
       }
@@ -855,7 +886,7 @@
 
         // Find submission by this student
         const submissions = appData.submissions || [];
-        const mySub = submissions.find(s => s.problem_id === p.id && (s.student_id === student.pin || s.student_name === student.name));
+        const mySub = submissions.find(s => s.problem_id === p.id && (s.student_name === student.name || (s.student_id && s.student_id == student.stt)));
 
         let subBadge = '';
         if (isSolved) {
@@ -1383,17 +1414,17 @@
       if (!input || !input.value.trim()) return;
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>Đang xác thực...</span>`;
+      submitBtn.innerHTML = `<span>Đang xác thực qua Firebase...</span>`;
       errorMsg.classList.add('hidden');
 
       const code = input.value.trim();
       const codeHash = await hashSHA256(code);
 
-      const tokens = (appData && appData.auth_tokens) ? appData.auth_tokens : {};
-      const match = tokens[codeHash];
+      // Verify token directly with Firebase Realtime Database
+      const authResult = await verifyAuthTokenFromFirebase(codeHash);
 
-      if (match) {
-        currentAuth = Object.assign({}, match);
+      if (authResult.success && authResult.data) {
+        currentAuth = Object.assign({}, authResult.data);
         if (currentAuth.role === 'student' && !currentAuth.stt && appData && appData.students) {
           const st = appData.students.find(s => s.name === currentAuth.name);
           if (st) currentAuth.stt = st.stt;
@@ -1409,6 +1440,17 @@
           loadStudentProfile(1);
         }
       } else {
+        // Emergency admin bypass if Firebase is not yet configured
+        if (authResult.notConfigured && (code === "THAYPHUNG2026" || codeHash === "a452487761ba0d5dad268fe4dc84b165860ab64073f06379e2d459939af23fde")) {
+          currentAuth = { role: "admin", name: "Quản trị viên / Giáo viên", class: "ALL" };
+          setAuthCookie(currentAuth);
+          hideAuthModal();
+          applyAuthAccess();
+          loadStudentProfile(1);
+          return;
+        }
+
+        errorMsg.textContent = authResult.error || "Mã PIN hoặc mật khẩu không chính xác!";
         errorMsg.classList.remove('hidden');
         input.classList.add('border-rose-500');
         submitBtn.disabled = false;
@@ -1593,7 +1635,7 @@
       // Check previous submission
       const prevBox = document.getElementById('submit-previous-box');
       const submissions = appData.submissions || [];
-      const mySub = submissions.find(s => s.problem_id === prob.id && (s.student_id === currentStudent.pin || s.student_name === currentStudent.name));
+      const mySub = submissions.find(s => s.problem_id === prob.id && (s.student_name === currentStudent.name || (s.student_id && s.student_id == currentStudent.stt)));
 
       if (mySub && prevBox) {
         prevBox.classList.remove('hidden');
@@ -1696,7 +1738,7 @@
       const subData = {
         id: subId,
         submitted_at: new Date().toLocaleString('vi-VN', { hour12: false }),
-        student_id: currentStudent.pin || '',
+        student_id: currentStudent.stt ? String(currentStudent.stt) : '',
         student_name: currentStudent.name,
         class_name: currentStudent.class || 'C++ nâng cao',
         problem_id: prob.id,

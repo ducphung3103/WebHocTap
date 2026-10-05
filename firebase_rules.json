@@ -1,0 +1,29 @@
+{
+  "rules": {
+    "auth_tokens": {
+      /* Chặn người dùng đọc hoặc crawl toàn bộ danh sách token */
+      ".read": false,
+      "$tokenHash": {
+        /* Chỉ cho phép đọc bản ghi của chính token khi người dùng nhập đúng mã PIN / mật khẩu đã được băm SHA-256 */
+        ".read": true,
+        /* Không cho phép khách ghi đè trái phép */
+        ".write": false
+      }
+    },
+    "students": {
+      /* Cho phép Web đọc danh sách học sinh để hiển thị bảng điểm, tiến độ và hồ sơ */
+      ".read": true,
+      /* Cho phép ghi từ giao diện Admin hoặc script đồng bộ */
+      ".write": true
+    },
+    "submissions": {
+      /* Cho phép học sinh đọc và nộp bài trực tiếp vào máy chủ */
+      ".read": true,
+      ".write": true
+    },
+    "metadata": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}

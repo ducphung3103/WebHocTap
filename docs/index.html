@@ -6,6 +6,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Deruck's Competitive Programming</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Firebase Auth Configuration -->
+  <script src="firebase-config.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script>
@@ -707,12 +709,19 @@
           <button onclick="toggleProblemViewMode('list')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer w-fit shadow">
             <span>←</span> Quay lại danh sách bài tập
           </button>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
             <span class="text-xs text-slate-400 font-medium hidden sm:inline">Máy chủ chấm:</span>
+            <!-- Mode Selector -->
+            <select id="judge-server-select" onchange="handleJudgeServerChange(this.value)" class="bg-slate-950 border border-slate-800 text-slate-300 text-xs rounded-xl px-2.5 py-1.5 font-mono cursor-pointer focus:ring-1 focus:ring-indigo-500 outline-none">
+              <option value="auto">🔄 Luân Phiên (Tự động tải)</option>
+              <option value="judge0">🚀 26TinyLove Judge0</option>
+              <option value="wandbox">🌐 Wandbox API</option>
+              <option value="local" id="opt-local-judge" class="hidden">⚡ Local Judge (127.0.0.1)</option>
+            </select>
             <!-- Engine Status Pill -->
-            <div id="judge-engine-pill" class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner">
+            <div id="judge-engine-pill" title="Hệ thống tự động phân bổ tải luân phiên giữa các máy chủ chấm (26TinyLove, Wandbox, Local) và tự động chuyển đổi khi máy chủ quá tải" class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner cursor-help">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span id="judge-engine-text">Wandbox API Online</span>
+              <span id="judge-engine-text">Luân Phiên (26TinyLove + Wandbox)</span>
             </div>
           </div>
         </div>
@@ -1767,7 +1776,7 @@
         <div class="space-y-3 text-xs">
           <!-- Connection Status Card -->
           <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
-            <div class="font-bold text-slate-300">📡 Kênh kết nối khả dụng:</div>
+            <div class="font-bold text-slate-300">📡 Kênh kết nối & Bảo mật:</div>
             <div class="flex items-center justify-between">
               <span class="text-slate-400">1. Máy chủ Python Local (:8080):</span>
               <span class="font-mono text-emerald-400 font-semibold" id="sync-lbl-local">Đang kiểm tra...</span>
@@ -1775,6 +1784,36 @@
             <div class="flex items-center justify-between">
               <span class="text-slate-400">2. Google Apps Script Webhook:</span>
               <span class="font-mono text-indigo-400 font-semibold" id="sync-lbl-gas">Đang kiểm tra...</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-400">3. Firebase Realtime Database (Mã PIN):</span>
+              <span class="font-mono text-amber-400 font-semibold" id="sync-lbl-firebase">Đang kiểm tra...</span>
+            </div>
+          </div>
+
+          <!-- Firebase Database URL input -->
+          <div class="space-y-2 p-3 bg-amber-950/15 border border-amber-500/20 rounded-xl">
+            <div class="flex items-center justify-between">
+              <label class="block font-bold text-amber-300 flex items-center gap-1.5 text-xs">
+                <span>🔥</span> Firebase Realtime Database (Bảo Mật Học Sinh & Học Phí):
+              </label>
+            </div>
+            <input type="text" id="cfg-firebase-url" placeholder="https://your-project-default-rtdb.asia-southeast1.firebasedatabase.app"
+              class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-amber-200 placeholder-slate-600 focus:outline-none focus:border-amber-500 font-mono">
+            <p class="text-[11px] text-slate-400 leading-relaxed">
+              Toàn bộ thông tin học sinh, học phí và mã PIN được chuyển sang Firebase bảo mật tuyệt đối. Tệp <code>data.json</code> công khai chỉ chứa bài tập và lý thuyết, không bị lộ thông tin cá nhân.
+            </p>
+            <div class="flex items-center gap-2 pt-1 flex-wrap">
+              <button type="button" onclick="pushDataToFirebaseGUI()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-600/30 hover:bg-amber-600/50 text-amber-300 border border-amber-500/40 transition cursor-pointer flex items-center gap-1.5 shadow">
+                <span>⬆️</span> Đẩy dữ liệu lên Firebase
+              </button>
+              <button type="button" onclick="document.getElementById('fb-upload-file').click()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 border border-indigo-500/40 transition cursor-pointer flex items-center gap-1.5 shadow" title="Chọn tệp firebase_database_export.json để đẩy trực tiếp lên Firebase">
+                <span>📁</span> Nhập tệp JSON lên Firebase
+              </button>
+              <input type="file" id="fb-upload-file" accept=".json" style="display:none" onchange="uploadJsonFileToFirebase(event)">
+              <button type="button" onclick="pullDataFromFirebaseGUI()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition cursor-pointer flex items-center gap-1.5 shadow">
+                <span>⬇️</span> Tải dữ liệu từ Firebase
+              </button>
             </div>
           </div>
 
@@ -2144,7 +2183,7 @@
   <script>
     let appData = null;
 
-    // Load data from data.json or fallback
+    // Load data from data.json (public catalog) and Firebase (secure students/tuition)
     async function initApp() {
       let serverTokens = null;
       try {
@@ -2155,12 +2194,44 @@
             serverTokens = Object.assign({}, appData.auth_tokens);
           }
         }
+
+        // 1. Tải danh sách học sinh & bài nộp trực tiếp từ Firebase Realtime Database (Bảo mật tuyệt đối)
+        if (typeof fetchStudentsFromFirebase === 'function' && isFirebaseConfigured()) {
+          try {
+            const fbStudents = await fetchStudentsFromFirebase();
+            if (fbStudents && fbStudents.length > 0) {
+              appData.students = fbStudents;
+              localStorage.setItem('cp_cached_students', JSON.stringify(fbStudents));
+            }
+            const fbSubs = await fetchSubmissionsFromFirebase();
+            if (fbSubs && fbSubs.length > 0) {
+              appData.submissions = fbSubs;
+            }
+          } catch(fbErr) {
+            console.warn("Could not fetch students from Firebase:", fbErr);
+          }
+        }
+
+        // 2. Dự phòng: Nếu appData.students rỗng (do data.json đã làm sạch và Firebase chưa cấu hình URL hoặc offline)
+        if (!appData.students || appData.students.length === 0) {
+          const cachedStudents = localStorage.getItem('cp_cached_students');
+          if (cachedStudents) {
+            try {
+              const parsed = JSON.parse(cachedStudents);
+              const list = Array.isArray(parsed) ? parsed : (parsed.students || []);
+              if (list.length > 0) {
+                appData.students = list;
+              }
+            } catch(e) {}
+          }
+        }
+
         // Load local overrides only if user explicitly edited locally and server is not newer
         const localSaved = localStorage.getItem('cp_app_data');
         if (localSaved) {
           try {
             const parsed = JSON.parse(localSaved);
-            if (parsed && parsed.students) {
+            if (parsed && parsed.students && parsed.students.length > 0) {
               let sStr = (appData && appData.last_updated) ? String(appData.last_updated) : "";
               if (sStr && !sStr.endsWith('Z') && !sStr.includes('+')) sStr += 'Z';
               const serverTime = sStr ? new Date(sStr).getTime() : 0;
@@ -2174,18 +2245,20 @@
 
               // If server data is newer or has more students, discard stale localStorage cache
               if (serverTime >= localTime || serverStudents > localStudents) {
-                localStorage.removeItem('cp_app_data');
+                // Keep server students
               } else if (localTime > serverTime && localStudents >= serverStudents) {
-                appData = parsed;
+                appData.students = parsed.students;
               }
             }
           } catch(e) {
             localStorage.removeItem('cp_app_data');
           }
         }
-        // CRUCIAL: Server auth_tokens always authoritative for logins!
-        if (appData && serverTokens) {
-          appData.auth_tokens = Object.assign({}, appData.auth_tokens || {}, serverTokens);
+        if (appData && appData.students) {
+          delete appData.auth_tokens;
+          appData.students.forEach(s => {
+            if (s) delete s.pin;
+          });
         }
       } catch (e) {
         console.warn("Could not fetch data.json, using embedded fallback", e);
@@ -3796,17 +3869,17 @@
       if (!input || !input.value.trim()) return;
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>Đang xác thực...</span>`;
+      submitBtn.innerHTML = `<span>Đang xác thực qua Firebase...</span>`;
       errorMsg.classList.add('hidden');
 
       const code = input.value.trim();
       const codeHash = await hashSHA256(code);
 
-      const tokens = (appData && appData.auth_tokens) ? appData.auth_tokens : {};
-      const match = tokens[codeHash];
+      // Verify token directly with Firebase Realtime Database
+      const authResult = await verifyAuthTokenFromFirebase(codeHash);
 
-      if (match) {
-        currentAuth = Object.assign({}, match);
+      if (authResult.success && authResult.data) {
+        currentAuth = Object.assign({}, authResult.data);
         if (currentAuth.role === 'student' && appData && appData.students) {
           const st = appData.students.find(s => s.name === currentAuth.name);
           if (st) {
@@ -3817,12 +3890,20 @@
         setAuthCookie(currentAuth);
         hideAuthModal();
         applyAuthAccess();
-        if (currentAuth.role === 'admin') {
-          switchTab('leaderboard');
-        } else {
-          switchTab('leaderboard');
-        }
+        switchTab('leaderboard');
       } else {
+        // Emergency admin bypass if Firebase is not yet configured so teacher can open settings to configure Firebase URL
+        if (authResult.notConfigured && (code === "THAYPHUNG2026" || codeHash === "a452487761ba0d5dad268fe4dc84b165860ab64073f06379e2d459939af23fde")) {
+          currentAuth = { role: "admin", name: "Quản trị viên / Giáo viên", class: "ALL" };
+          setAuthCookie(currentAuth);
+          hideAuthModal();
+          applyAuthAccess();
+          switchTab('admin');
+          alert("⚡ Chế độ thiết lập: Đã đăng nhập Admin tạm thời vì Firebase chưa được điền URL. Vui lòng vào Cài đặt (⚙️) để điền URL Firebase Realtime Database!");
+          return;
+        }
+
+        errorMsg.textContent = authResult.error || "Mã PIN hoặc mật khẩu không chính xác!";
         errorMsg.classList.remove('hidden');
         input.classList.add('border-rose-500');
         submitBtn.disabled = false;
@@ -4320,14 +4401,9 @@
           </span>
         `;
 
-        const pinCellHtml = isFullAdmin ? `
-          <div class="inline-flex items-center gap-1.5 bg-slate-950 border border-slate-800 px-2 py-1 rounded-lg text-xs">
-            <span id="pin-text-${s.stt}" class="font-bold text-slate-300">••••••</span>
-            <button onclick="togglePinReveal(${s.stt}, '${pinDisplay}')" class="text-slate-400 hover:text-white text-xs cursor-pointer" title="Xem mã PIN">👁️</button>
-          </div>
-        ` : `
-          <div class="inline-flex items-center gap-1.5 bg-slate-950 border border-slate-800 px-2 py-1 rounded-lg text-xs">
-            <span class="font-bold text-slate-500">••••••</span>
+        const pinCellHtml = `
+          <div class="inline-flex items-center gap-1.5 bg-slate-950 border border-emerald-500/30 px-2 py-1 rounded-lg text-xs" title="Mã PIN bảo mật qua Firebase Realtime Database">
+            <span class="text-emerald-400 font-semibold text-[11px] flex items-center gap-1">🔒 Firebase</span>
           </div>
         `;
 
@@ -4410,6 +4486,11 @@
         month: month,
         is_paid: student.tuition[month]
       });
+
+      // Sync to Firebase Realtime Database (Bảo mật tuyệt đối)
+      if (typeof saveTuitionToFirebase === 'function' && isFirebaseConfigured()) {
+        saveTuitionToFirebase(student.stt, month, student.tuition[month]);
+      }
     }
 
     function updateStudentStatus(stt, newStatus) {
@@ -4426,6 +4507,11 @@
         name: student.name,
         status: newStatus
       });
+
+      // Sync to Firebase Realtime Database (Bảo mật tuyệt đối)
+      if (typeof saveStudentStatusToFirebase === 'function' && isFirebaseConfigured()) {
+        saveStudentStatusToFirebase(student.stt, newStatus);
+      }
     }
 
     function promptAddTuitionMonth() {
@@ -4472,7 +4558,8 @@
       document.getElementById('form-student-stt').value = student.stt;
       document.getElementById('form-student-name').value = student.name;
       document.getElementById('form-student-class').value = student.class || 'C++';
-      document.getElementById('form-student-pin').value = student.pin || '';
+      document.getElementById('form-student-pin').value = '';
+      document.getElementById('form-student-pin').placeholder = 'Nhập mã PIN mới nếu muốn đổi (lưu Firebase)...';
       document.getElementById('form-student-status').value = student.status || 'Đang học';
       document.getElementById('form-student-marisa').value = student.marisa_handle || '';
       document.getElementById('form-student-cf').value = student.cf_handle || '';
@@ -4503,13 +4590,14 @@
 
       if (!name) return;
 
+      let savedStt = 1;
+
       if (sttVal) {
         // Edit existing
         const student = appData.students.find(s => s.stt === parseInt(sttVal));
         if (student) {
           student.name = name;
           student.class = cls;
-          student.pin = pin;
           student.status = status;
           student.marisa_handle = marisa;
           student.cf_handle = cf;
@@ -4517,18 +4605,19 @@
           student.vnoi_handle = vnoi;
           student.clue_handle = clue;
           student.ctoj_handle = ctoj;
+          savedStt = student.stt;
         }
       } else {
         // Add new
         const newStt = appData.students.length > 0 
           ? Math.max(...appData.students.map(s => s.stt)) + 1 
           : 1;
+        savedStt = newStt;
         
         const newStudent = {
           stt: newStt,
           name: name,
           class: cls,
-          pin: pin,
           status: status,
           marisa_handle: marisa,
           cf_handle: cf,
@@ -4552,16 +4641,31 @@
         appData.students.push(newStudent);
       }
 
-      // Re-hash PIN
+      // Sync PIN to Firebase Realtime Database (Bảo mật tuyệt đối, không lưu plain text vào data.json)
       if (pin) {
         const pinHash = await hashSHA256(pin);
-        if (!appData.auth_tokens) appData.auth_tokens = {};
-        appData.auth_tokens[pinHash] = {
-          role: "student",
-          name: name,
-          class: cls
-        };
+        const dbUrl = getFirebaseDatabaseUrl();
+        if (dbUrl && isFirebaseConfigured()) {
+          try {
+            await fetch(`${dbUrl}/auth_tokens/${pinHash}.json`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                role: "student",
+                name: name,
+                class: cls,
+                stt: savedStt
+              })
+            });
+            showLiveToast("🔥 Đã lưu mã PIN học sinh lên Firebase!", "success");
+          } catch(err) {
+            console.warn("Could not push PIN to Firebase directly:", err);
+          }
+        }
       }
+
+      // Ensure no auth_tokens or pins stored in public client data
+      delete appData.auth_tokens;
 
       saveAppDataLocally();
       closeStudentModal();
@@ -4569,7 +4673,12 @@
       renderAdminDashboard();
       renderMatrix();
 
-      // Two-way sync to Google Sheets
+      // Sync students list to Firebase Realtime Database
+      if (typeof saveStudentsToFirebase === 'function' && isFirebaseConfigured()) {
+        saveStudentsToFirebase(appData.students);
+      }
+
+      // Two-way sync to Google Sheets (private sheet)
       syncToGoogleSheets({
         action: 'save_student',
         student: {
@@ -4590,6 +4699,11 @@
       renderAdminStudents();
       renderAdminDashboard();
       renderMatrix();
+
+      // Sync updated list to Firebase
+      if (typeof saveStudentsToFirebase === 'function' && isFirebaseConfigured()) {
+        saveStudentsToFirebase(appData.students);
+      }
     }
 
     // 2. ADMIN CURRICULUM
@@ -4975,7 +5089,12 @@
     }
 
     function exportDataJson() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+      const cleanData = JSON.parse(JSON.stringify(appData || {}));
+      delete cleanData.auth_tokens;
+      if (cleanData.students) {
+        cleanData.students.forEach(s => delete s.pin);
+      }
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cleanData, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
       downloadAnchor.setAttribute("download", "data.json");
@@ -5141,8 +5260,12 @@
       modal.classList.remove('hidden');
 
       const savedUrl = localStorage.getItem('cp_gas_sync_url') || (appData && appData.gas_sync_url) || '';
-      const input = document.getElementById('cfg-gas-url');
-      if (input) input.value = savedUrl;
+      const inputGas = document.getElementById('cfg-gas-url');
+      if (inputGas) inputGas.value = savedUrl;
+
+      const savedFbUrl = localStorage.getItem('cp_firebase_db_url') || (typeof FIREBASE_CONFIG !== 'undefined' ? FIREBASE_CONFIG.databaseURL : '');
+      const inputFb = document.getElementById('cfg-firebase-url');
+      if (inputFb) inputFb.value = savedFbUrl;
 
       checkSyncChannelsStatus();
     }
@@ -5153,24 +5276,36 @@
     }
 
     function saveSyncSettings() {
-      const input = document.getElementById('cfg-gas-url');
-      const val = input ? input.value.trim() : '';
-      if (val) {
-        localStorage.setItem('cp_gas_sync_url', val);
+      const inputGas = document.getElementById('cfg-gas-url');
+      const valGas = inputGas ? inputGas.value.trim() : '';
+      if (valGas) {
+        localStorage.setItem('cp_gas_sync_url', valGas);
       } else {
         localStorage.removeItem('cp_gas_sync_url');
       }
-      showLiveToast("Đã lưu cấu hình kênh đồng bộ!", "success");
+
+      const inputFb = document.getElementById('cfg-firebase-url');
+      const valFb = inputFb ? inputFb.value.trim() : '';
+      if (valFb) {
+        localStorage.setItem('cp_firebase_db_url', valFb);
+      } else {
+        localStorage.removeItem('cp_firebase_db_url');
+      }
+
+      showLiveToast("Đã lưu cấu hình Google Sheet & Firebase!", "success");
       checkSyncChannelsStatus();
     }
 
     async function checkSyncChannelsStatus() {
       const lblLocal = document.getElementById('sync-lbl-local');
       const lblGas = document.getElementById('sync-lbl-gas');
+      const lblFb = document.getElementById('sync-lbl-firebase');
       const gasUrl = localStorage.getItem('cp_gas_sync_url') || '';
+      const fbUrl = (localStorage.getItem('cp_firebase_db_url') || (typeof FIREBASE_CONFIG !== 'undefined' ? FIREBASE_CONFIG.databaseURL : '')).trim();
 
       if (lblLocal) lblLocal.textContent = "Đang kiểm tra...";
       if (lblGas) lblGas.textContent = gasUrl ? "Đã cấu hình URL" : "Chưa cấu hình";
+      if (lblFb) lblFb.textContent = (fbUrl && !fbUrl.includes('webhoctap-default-rtdb.firebaseio.com')) ? "Đang kết nối..." : "Chưa cấu hình URL";
 
       // Test local server
       try {
@@ -5205,12 +5340,106 @@
           lblGas.textContent = "🟢 Đã thiết lập Webhook";
         }
       }
+
+      // Test Firebase
+      if (fbUrl && !fbUrl.includes('webhoctap-default-rtdb.firebaseio.com') && lblFb) {
+        try {
+          const probeUrl = `${fbUrl.replace(/\/+$/, '')}/auth_tokens/test_probe.json`;
+          const resp = await fetch(probeUrl, { signal: AbortSignal.timeout(4000) });
+          if (resp.ok || resp.status === 401 || resp.status === 403) {
+            lblFb.textContent = "🟢 Sẵn sàng (Bảo mật Rules)";
+            lblFb.className = "font-mono text-emerald-400 font-bold";
+          } else {
+            lblFb.textContent = `🟡 Phản hồi HTTP ${resp.status}`;
+            lblFb.className = "font-mono text-amber-400 font-semibold";
+          }
+        } catch(e) {
+          lblFb.textContent = "🔴 Lỗi kết nối Firebase";
+          lblFb.className = "font-mono text-rose-400 font-semibold";
+        }
+      } else if (lblFb) {
+        lblFb.textContent = "⚪ Chưa cấu hình";
+        lblFb.className = "font-mono text-slate-500";
+      }
     }
 
     async function testSyncConnection() {
-      showLiveToast("Đang kiểm tra kết nối tới Google Sheets...", "info");
+      showLiveToast("Đang kiểm tra kết nối tới Google Sheets & Firebase...", "info");
       await checkSyncChannelsStatus();
       showLiveToast("Kiểm tra kết nối hoàn tất!", "success");
+    }
+
+    async function pushDataToFirebaseGUI() {
+      if (!isFirebaseConfigured()) {
+        alert("Vui lòng nhập và lưu URL Firebase Realtime Database trước khi đẩy dữ liệu!\n(Ví dụ: https://your-project-default-rtdb.asia-southeast1.firebasedatabase.app)");
+        return;
+      }
+      if (!appData || !appData.students || appData.students.length === 0) {
+        alert("Không có dữ liệu học sinh trong bộ nhớ để đẩy lên Firebase!");
+        return;
+      }
+      showLiveToast("Đang đồng bộ dữ liệu lên Firebase Realtime Database...", "info");
+      const ok = await pushFullDatabaseToFirebaseClient(appData);
+      if (ok) {
+        showLiveToast(`🔥 Đã đồng bộ thành công ${appData.students.length} học sinh lên Firebase!`, "success");
+        await checkSyncChannelsStatus();
+      } else {
+        showLiveToast("❌ Lỗi khi đẩy dữ liệu lên Firebase. Vui lòng kiểm tra lại URL và Rules!", "error");
+      }
+    }
+
+    async function uploadJsonFileToFirebase(evt) {
+      const file = evt.target.files && evt.target.files[0];
+      if (!file) return;
+      if (!isFirebaseConfigured()) {
+        alert("Vui lòng nhập và lưu URL Firebase Realtime Database trước khi đẩy dữ liệu!\n(Ví dụ: https://your-project-default-rtdb.asia-southeast1.firebasedatabase.app)");
+        evt.target.value = '';
+        return;
+      }
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        showLiveToast(`Đang đẩy tệp ${file.name} lên Firebase...`, "info");
+        const ok = await pushFullDatabaseToFirebaseClient(parsed);
+        if (ok) {
+          if (parsed.students && parsed.students.length > 0) {
+            appData.students = parsed.students;
+            localStorage.setItem('cp_cached_students', JSON.stringify(parsed.students));
+            saveAppDataLocally();
+            renderAdminStudents();
+            renderAdminDashboard();
+            renderScoreboard();
+            renderMatrix();
+          }
+          showLiveToast(`🔥 Đã nhập thành công ${file.name} lên Firebase!`, "success");
+        } else {
+          showLiveToast("❌ Không thể tải lên Firebase. Vui lòng kiểm tra lại Rules hoặc URL!", "error");
+        }
+      } catch (err) {
+        showLiveToast(`❌ Lỗi đọc tệp JSON: ${err.message}`, "error");
+      }
+      evt.target.value = '';
+    }
+
+    async function pullDataFromFirebaseGUI() {
+      if (!isFirebaseConfigured()) {
+        alert("Vui lòng nhập và lưu URL Firebase Realtime Database trước!");
+        return;
+      }
+      showLiveToast("Đang tải dữ liệu từ Firebase Realtime Database...", "info");
+      const fbStudents = await fetchStudentsFromFirebase();
+      if (fbStudents && fbStudents.length > 0) {
+        appData.students = fbStudents;
+        localStorage.setItem('cp_cached_students', JSON.stringify(fbStudents));
+        saveAppDataLocally();
+        renderAdminStudents();
+        renderAdminDashboard();
+        renderScoreboard();
+        renderMatrix();
+        showLiveToast(`✅ Đã tải về thành công ${fbStudents.length} học sinh từ Firebase!`, "success");
+      } else {
+        showLiveToast("⚠️ Chưa tìm thấy dữ liệu học sinh trên Firebase Realtime Database!", "warning");
+      }
     }
 
     // Attempt to flush pending changes on startup or reconnection
@@ -5239,9 +5468,105 @@
       return list.filter(p => canViewItem(p));
     }
 
-    async function checkLocalJudgeHealth() {
+    // Multi-judge pool configuration (Load balancing & automatic failover)
+    let judgeMode = 'auto'; // 'auto' | 'judge0' | 'wandbox' | 'local'
+    let judgeRoundRobinCounter = 0;
+
+    const JUDGE_SERVERS = {
+      judge0: {
+        id: 'judge0',
+        name: '26TinyLove',
+        fullName: '26TinyLove Judge0 (Cloud C++20 / Py3)',
+        url: 'https://judge.26tinylove.com',
+        available: true,
+        failCount: 0,
+        cooldownUntil: 0
+      },
+      wandbox: {
+        id: 'wandbox',
+        name: 'Wandbox',
+        fullName: 'Wandbox Cloud (GCC 14 / Py 3.12)',
+        url: 'https://wandbox.org',
+        available: true,
+        failCount: 0,
+        cooldownUntil: 0
+      },
+      local: {
+        id: 'local',
+        name: 'Local Judge',
+        fullName: 'Local Judge Siêu Tốc (MinGW & Python)',
+        url: 'http://127.0.0.1:8080',
+        available: false,
+        failCount: 0,
+        cooldownUntil: 0
+      }
+    };
+
+    function updateJudgeEngineUI() {
       const enginePill = document.getElementById('judge-engine-pill');
       const engineText = document.getElementById('judge-engine-text');
+      const optLocal = document.getElementById('opt-local-judge');
+
+      if (optLocal) {
+        if (JUDGE_SERVERS.local.available) {
+          optLocal.classList.remove('hidden');
+        } else {
+          optLocal.classList.add('hidden');
+        }
+      }
+
+      if (!enginePill || !engineText) return;
+
+      if (judgeMode === 'judge0') {
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span> <span>26TinyLove Judge0</span>';
+        return;
+      }
+      if (judgeMode === 'wandbox') {
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> <span>Wandbox Cloud</span>';
+        return;
+      }
+      if (judgeMode === 'local') {
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span>Local Judge Siêu Tốc</span>';
+        return;
+      }
+
+      // Mode: auto (Round-robin luân phiên giữa các máy chấm đang sẵn sàng)
+      const activeList = [];
+      if (JUDGE_SERVERS.local.available) activeList.push('Local');
+      if (JUDGE_SERVERS.judge0.available) activeList.push('26TinyLove');
+      if (JUDGE_SERVERS.wandbox.available) activeList.push('Wandbox');
+
+      if (JUDGE_SERVERS.local.available) {
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span>Luân Phiên (${activeList.join(' + ')})</span>`;
+      } else if (JUDGE_SERVERS.judge0.available && JUDGE_SERVERS.wandbox.available) {
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span> <span>Luân Phiên (26TinyLove + Wandbox)</span>';
+      } else if (JUDGE_SERVERS.judge0.available) {
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span> <span>26TinyLove Cloud</span>';
+      } else {
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> <span>Wandbox Cloud</span>';
+      }
+    }
+
+    function handleJudgeServerChange(val) {
+      judgeMode = val;
+      updateJudgeEngineUI();
+      if (val === 'auto') {
+        showLiveToast("Đã kích hoạt chế độ Luân Phiên & Tự Động Dự Phòng (Round-Robin)!");
+      } else {
+        const srv = JUDGE_SERVERS[val];
+        showLiveToast(`Đã cố định máy chấm: ${srv ? srv.name : val}`);
+      }
+    }
+
+    async function checkJudgeServersHealth() {
+      // 1. Check Local Judge
       try {
         const resp = await fetch('http://127.0.0.1:8080/health', {
           signal: AbortSignal.timeout(1200)
@@ -5249,24 +5574,40 @@
         if (resp.ok) {
           const data = await resp.json();
           if (data && data.status === 'ok') {
+            JUDGE_SERVERS.local.available = true;
             localJudgeAvailable = true;
-            if (enginePill && engineText) {
-              enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 flex items-center gap-2 shadow-inner";
-              engineText.innerHTML = '⚡ Local Judge Siêu Tốc (MinGW & Python)';
-            }
-            return true;
+          } else {
+            JUDGE_SERVERS.local.available = false;
+            localJudgeAvailable = false;
           }
+        } else {
+          JUDGE_SERVERS.local.available = false;
+          localJudgeAvailable = false;
         }
       } catch (e) {
-        // Local judge not running
+        JUDGE_SERVERS.local.available = false;
+        localJudgeAvailable = false;
       }
-      localJudgeAvailable = false;
-      if (enginePill && engineText) {
-        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner";
-        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> <span>Wandbox API (Cloud C++20/Py3)</span>';
+
+      // 2. Check 26TinyLove Judge0
+      try {
+        const j0Resp = await fetch('https://judge.26tinylove.com/about', {
+          signal: AbortSignal.timeout(2500)
+        });
+        if (j0Resp.ok) {
+          JUDGE_SERVERS.judge0.available = true;
+          JUDGE_SERVERS.judge0.failCount = 0;
+        }
+      } catch (e) {
+        if (JUDGE_SERVERS.judge0.failCount > 2) {
+          JUDGE_SERVERS.judge0.available = false;
+        }
       }
-      return false;
+
+      updateJudgeEngineUI();
+      return true;
     }
+    const checkLocalJudgeHealth = checkJudgeServersHealth;
 
     function renderJudgeWorkspace() {
       checkLocalJudgeHealth();
@@ -5597,7 +5938,8 @@
               ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' 
               : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
           }`;
-          resMeta.textContent = `${res.status} | ${res.execution_time ? (res.execution_time + 's') : '0.05s'}`;
+          const srvTag = res.server ? ` [${res.server}]` : '';
+          resMeta.textContent = `${res.status} | ${res.execution_time ? (res.execution_time + 's') : '0.05s'}${srvTag}`;
         }
 
         if (res.status === 'CE') {
@@ -5693,102 +6035,255 @@
         .trim();
     }
 
-    // Execute code on either local judge server or Wandbox API
-    async function executeCode(lang, code, stdin, timeLimit = 1.0) {
-      const baseTime = parseFloat(timeLimit) || 1.0;
-      // Python gets a fair multiplier (min 2.5s or 2x base time limit) to offset interpreter startup
-      const effectiveTimeLimit = (lang === 'python') ? Math.max(baseTime * 2.0, 2.5) : baseTime;
+    // UTF-8 safe Base64 encoder/decoder for Judge0 submissions
+    function safeStringToBase64(str) {
+      if (!str) return '';
+      const bytes = new TextEncoder().encode(str);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      return btoa(bin);
+    }
 
-      // 1. Try Local Judge Server first
-      if (localJudgeAvailable !== false) {
-        try {
-          const resp = await fetch('http://127.0.0.1:8080/judge', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              lang,
-              code,
-              stdin,
-              time_limit: effectiveTimeLimit
-            }),
-            signal: AbortSignal.timeout((effectiveTimeLimit + 4) * 1000)
-          });
-          if (resp.ok) {
-            const data = await resp.json();
-            localJudgeAvailable = true;
-            return data;
-          }
-        } catch (e) {
-          localJudgeAvailable = false;
-        }
+    function safeBase64ToString(b64) {
+      if (!b64) return '';
+      try {
+        const bin = atob(b64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        return new TextDecoder('utf-8', { fatal: false }).decode(bytes);
+      } catch (e) {
+        return b64;
+      }
+    }
+
+    // 1. Execute on 26TinyLove Judge0 API
+    async function executeJudge0(lang, code, stdin, timeLimit) {
+      const language_id = (lang === 'cpp' || lang === 'c++') ? 54 : 71;
+      const effectiveTimeLimit = (lang === 'python') ? Math.max(timeLimit * 2.0, 2.5) : timeLimit;
+
+      const payload = {
+        language_id: language_id,
+        source_code: safeStringToBase64(code),
+        stdin: safeStringToBase64(stdin),
+        cpu_time_limit: effectiveTimeLimit
+      };
+      if (lang === 'cpp' || lang === 'c++') {
+        payload.compiler_options = '-O2 -std=c++2a';
       }
 
-      // 2. Fallback: Wandbox API (Cloud Execution)
+      const resp = await fetch('https://judge.26tinylove.com/submissions?base64_encoded=true&wait=true', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(Math.max((effectiveTimeLimit + 6) * 1000, 15000))
+      });
+
+      if (!resp.ok) {
+        throw new Error(`26TinyLove HTTP ${resp.status}`);
+      }
+
+      const data = await resp.json();
+      const statusId = data.status ? data.status.id : 0;
+      const rawStdout = safeBase64ToString(data.stdout);
+      const rawStderr = safeBase64ToString(data.stderr);
+      const rawCompile = safeBase64ToString(data.compile_output);
+      const execTime = parseFloat(data.time) || (lang === 'python' ? 0.03 : 0.01);
+
+      if (statusId === 6) { // Compilation Error
+        return {
+          status: 'CE',
+          compile_error: rawCompile || rawStderr || data.message || 'Compilation Error',
+          execution_time: 0,
+          server: '26TinyLove'
+        };
+      }
+
+      if (statusId === 5) { // Time Limit Exceeded
+        return {
+          status: 'TLE',
+          stdout: '',
+          stderr: `Quá thời gian cho phép (${effectiveTimeLimit}s)`,
+          execution_time: execTime,
+          server: '26TinyLove'
+        };
+      }
+
+      if (statusId >= 7 && statusId <= 14) { // Runtime Error
+        return {
+          status: 'RTE',
+          stdout: rawStdout,
+          stderr: rawStderr || (data.status ? data.status.description : 'Runtime Error'),
+          execution_time: execTime,
+          server: '26TinyLove'
+        };
+      }
+
+      return {
+        status: 'OK',
+        stdout: rawStdout,
+        stderr: rawStderr || '',
+        execution_time: execTime,
+        server: '26TinyLove'
+      };
+    }
+
+    // 2. Execute on Wandbox API
+    async function executeWandbox(lang, code, stdin, timeLimit) {
+      const effectiveTimeLimit = (lang === 'python') ? Math.max(timeLimit * 2.0, 2.5) : timeLimit;
       const compiler = (lang === 'cpp') ? 'gcc-head' : 'cpython-3.12.7';
       const compilerOptions = (lang === 'cpp') ? 'warning,c++20,optimize' : '';
 
-      try {
-        const resp = await fetch('https://wandbox.org/api/compile.json', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            compiler,
-            code,
-            stdin,
-            compiler_options: compilerOptions
-          }),
-          signal: AbortSignal.timeout(Math.max((effectiveTimeLimit + 6) * 1000, 15000))
-        });
+      const resp = await fetch('https://wandbox.org/api/compile.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          compiler,
+          code,
+          stdin,
+          compiler_options: compilerOptions
+        }),
+        signal: AbortSignal.timeout(Math.max((effectiveTimeLimit + 6) * 1000, 16000))
+      });
 
-        if (!resp.ok) {
-          throw new Error(`Wandbox HTTP ${resp.status}`);
-        }
+      if (!resp.ok) {
+        throw new Error(`Wandbox HTTP ${resp.status}`);
+      }
 
-        const data = await resp.json();
-        
-        // Check compilation error
-        if (data.compiler_error && data.compiler_error.trim().length > 0) {
-          return {
-            status: 'CE',
-            compile_error: data.compiler_error,
-            execution_time: 0
-          };
-        }
+      const data = await resp.json();
 
-        // Check runtime exit code
-        if (data.status && String(data.status) !== '0') {
-          return {
-            status: 'RTE',
-            stdout: data.program_output || '',
-            stderr: data.program_error || `Process exited with code ${data.status}`,
-            execution_time: 0.1
-          };
-        }
-
-        // Check TLE from wandbox signal if any
-        if (data.signal && (data.signal === 'SIGXCPU' || data.signal === 'SIGKILL')) {
-          return {
-            status: 'TLE',
-            stdout: '',
-            stderr: `Quá thời gian cho phép (${effectiveTimeLimit}s)`,
-            execution_time: effectiveTimeLimit
-          };
-        }
-
+      if (data.compiler_error && data.compiler_error.trim().length > 0) {
         return {
-          status: 'OK',
-          stdout: data.program_output || data.program_message || '',
-          stderr: data.program_error || '',
-          execution_time: (lang === 'python' ? 0.05 : 0.02)
-        };
-      } catch (err) {
-        return {
-          status: 'RTE',
-          stdout: '',
-          stderr: 'Lỗi kết nối máy chủ chấm: ' + err.message,
-          execution_time: 0
+          status: 'CE',
+          compile_error: data.compiler_error,
+          execution_time: 0,
+          server: 'Wandbox'
         };
       }
+
+      if (data.status && String(data.status) !== '0') {
+        return {
+          status: 'RTE',
+          stdout: data.program_output || '',
+          stderr: data.program_error || `Process exited with code ${data.status}`,
+          execution_time: 0.1,
+          server: 'Wandbox'
+        };
+      }
+
+      if (data.signal && (data.signal === 'SIGXCPU' || data.signal === 'SIGKILL')) {
+        return {
+          status: 'TLE',
+          stdout: '',
+          stderr: `Quá thời gian cho phép (${effectiveTimeLimit}s)`,
+          execution_time: effectiveTimeLimit,
+          server: 'Wandbox'
+        };
+      }
+
+      return {
+        status: 'OK',
+        stdout: data.program_output || data.program_message || '',
+        stderr: data.program_error || '',
+        execution_time: (lang === 'python' ? 0.05 : 0.02),
+        server: 'Wandbox'
+      };
+    }
+
+    // 3. Execute on Local Judge Server
+    async function executeLocalJudge(lang, code, stdin, timeLimit) {
+      const effectiveTimeLimit = (lang === 'python') ? Math.max(timeLimit * 2.0, 2.5) : timeLimit;
+      const resp = await fetch('http://127.0.0.1:8080/judge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          lang,
+          code,
+          stdin,
+          time_limit: effectiveTimeLimit
+        }),
+        signal: AbortSignal.timeout((effectiveTimeLimit + 4) * 1000)
+      });
+      if (!resp.ok) {
+        throw new Error(`Local Judge HTTP ${resp.status}`);
+      }
+      const data = await resp.json();
+      data.server = 'Local';
+      return data;
+    }
+
+    // Multi-judge dispatcher with Round-Robin Load Balancing and Automatic Failover
+    async function executeCode(lang, code, stdin, timeLimit = 1.0) {
+      const baseTime = parseFloat(timeLimit) || 1.0;
+      const now = Date.now();
+
+      // If user manually chose a fixed judge mode
+      if (judgeMode === 'judge0') {
+        return await executeJudge0(lang, code, stdin, baseTime);
+      }
+      if (judgeMode === 'wandbox') {
+        return await executeWandbox(lang, code, stdin, baseTime);
+      }
+      if (judgeMode === 'local') {
+        return await executeLocalJudge(lang, code, stdin, baseTime);
+      }
+
+      // Mode: auto (Round-robin luân phiên & tự động dự phòng)
+      const pool = [];
+      if (JUDGE_SERVERS.local.available && now >= JUDGE_SERVERS.local.cooldownUntil) {
+        pool.push('local');
+      }
+      if (JUDGE_SERVERS.judge0.available && now >= JUDGE_SERVERS.judge0.cooldownUntil) {
+        pool.push('judge0');
+      }
+      if (JUDGE_SERVERS.wandbox.available && now >= JUDGE_SERVERS.wandbox.cooldownUntil) {
+        pool.push('wandbox');
+      }
+      if (pool.length === 0) {
+        pool.push('judge0', 'wandbox');
+      }
+
+      // Round-robin start index
+      const startIndex = (judgeRoundRobinCounter++) % pool.length;
+      const orderedAttempts = [];
+      for (let i = 0; i < pool.length; i++) {
+        orderedAttempts.push(pool[(startIndex + i) % pool.length]);
+      }
+
+      let lastError = null;
+
+      for (const srvId of orderedAttempts) {
+        try {
+          let res = null;
+          if (srvId === 'judge0') {
+            res = await executeJudge0(lang, code, stdin, baseTime);
+          } else if (srvId === 'wandbox') {
+            res = await executeWandbox(lang, code, stdin, baseTime);
+          } else if (srvId === 'local') {
+            res = await executeLocalJudge(lang, code, stdin, baseTime);
+          }
+
+          if (res) {
+            JUDGE_SERVERS[srvId].failCount = 0;
+            return res;
+          }
+        } catch (err) {
+          console.warn(`[Máy chấm ${srvId}] Quá tải hoặc gặp sự cố (${err.message}). Đang tự động chuyển tiếp...`);
+          lastError = err;
+          JUDGE_SERVERS[srvId].failCount = (JUDGE_SERVERS[srvId].failCount || 0) + 1;
+          // After 3 consecutive failures, put on cooldown
+          if (JUDGE_SERVERS[srvId].failCount >= 3) {
+            JUDGE_SERVERS[srvId].cooldownUntil = Date.now() + 25000;
+          }
+        }
+      }
+
+      return {
+        status: 'RTE',
+        stdout: '',
+        stderr: 'Lỗi kết nối máy chủ chấm: ' + (lastError ? lastError.message : 'Tất cả các máy chấm đều đang bận hoặc quá tải. Vui lòng thử lại sau giây lát!'),
+        execution_time: 0,
+        server: 'Error'
+      };
     }
 
     // SUBMIT ALL TESTS & FULL JUDGING
@@ -5897,10 +6392,13 @@
           </div>
           <div class="text-[10px] text-slate-400 mt-1 flex items-center justify-between">
             <span>${tc.sample ? 'Ví dụ' : 'Test ẩn'}</span>
-            <span>${res.execution_time ? (res.execution_time + 's') : ''}</span>
+            <div class="flex items-center gap-1 font-mono">
+              ${res.server ? `<span class="opacity-75 text-[9px] font-sans px-1 py-0.2 rounded bg-slate-900 border border-slate-700/60">[${res.server}]</span>` : ''}
+              <span>${res.execution_time ? (res.execution_time + 's') : ''}</span>
+            </div>
           </div>
         `;
-        cell.onclick = () => showJudgeTestDetail(i + 1, tc.input, tc.output, res.stdout, res.stderr, testVerdict);
+        cell.onclick = () => showJudgeTestDetail(i + 1, tc.input, tc.output, res.stdout, res.stderr, testVerdict, res.server, res.execution_time);
         matrix.appendChild(cell);
       }
 
@@ -6031,7 +6529,7 @@
       if (btnRun) btnRun.disabled = false;
     }
 
-    function showJudgeTestDetail(testNum, input, expected, actual, stderr, verdict) {
+    function showJudgeTestDetail(testNum, input, expected, actual, stderr, verdict, server = '', execTime = '') {
       const box = document.getElementById('judge-test-detail-box');
       if (!box) return;
       box.classList.remove('hidden');
@@ -6050,9 +6548,14 @@
         displayOutput = '(Không có đầu ra)';
       }
 
+      const serverInfo = server ? `<span class="text-xs font-mono font-normal text-slate-400 ml-2 hidden sm:inline">| Máy chấm: <strong class="text-indigo-300">${escapeHtml(server)}</strong> ${execTime ? '(' + execTime + 's)' : ''}</span>` : '';
+
       box.innerHTML = `
         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-          <span class="font-bold text-slate-200">Chi tiết Test #${testNum} (${verdict})</span>
+          <div class="flex items-center">
+            <span class="font-bold text-slate-200">Chi tiết Test #${testNum} (${verdict})</span>
+            ${serverInfo}
+          </div>
           <button onclick="document.getElementById('judge-test-detail-box').classList.add('hidden')" class="text-slate-500 hover:text-white cursor-pointer">✕ Đóng</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">

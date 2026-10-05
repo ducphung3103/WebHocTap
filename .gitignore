@@ -36,6 +36,11 @@ env/
 service_account.json
 credentials.json
 service_account_*.json
+auth_tokens*.json
+firebase_database_export*.json
+data_firebase_backup*.json
+*backup*.json
+private_*.json
 *.key
 
 # IDE settings

@@ -29,6 +29,51 @@ GPP_CMD = next((p for p in GCC_PATHS if p and os.path.exists(p)), "")
 PYTHON_CMD = sys.executable
 
 
+def execute_judge0_fallback(language: str, code: str, stdin_data: str, time_limit: float = 2.0) -> Dict[str, Any]:
+    """Fallback execution via https://judge.26tinylove.com when local compiler is missing."""
+    import urllib.request
+    import base64
+    try:
+        lang_id = 54 if language in ["cpp", "c++"] else 71
+        eff_limit = max(time_limit * 2.0, 2.5) if lang_id == 71 else time_limit
+        b64_code = base64.b64encode(code.encode('utf-8')).decode('ascii')
+        b64_stdin = base64.b64encode(stdin_data.encode('utf-8')).decode('ascii')
+        payload = {
+            "language_id": lang_id,
+            "source_code": b64_code,
+            "stdin": b64_stdin,
+            "cpu_time_limit": eff_limit
+        }
+        if lang_id == 54:
+            payload["compiler_options"] = "-O2 -std=c++2a"
+
+        req = urllib.request.Request(
+            "https://judge.26tinylove.com/submissions?base64_encoded=true&wait=true",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"}
+        )
+        resp = urllib.request.urlopen(req, timeout=max(eff_limit + 6, 15))
+        data = json.loads(resp.read().decode("utf-8"))
+
+        status_id = data.get("status", {}).get("id", 0)
+        def d(s):
+            return base64.b64decode(s).decode("utf-8", errors="replace") if s else ""
+        stdout = d(data.get("stdout"))
+        stderr = d(data.get("stderr"))
+        compile_out = d(data.get("compile_output"))
+        dur = float(data.get("time") or 0.01)
+
+        if status_id == 6:
+            return {"status": "CE", "error": compile_out or stderr or "Compilation Error", "compile_error": compile_out}
+        if status_id == 5:
+            return {"status": "TLE", "error": f"Quá thời gian cho phép ({eff_limit}s)", "time": eff_limit, "execution_time": eff_limit}
+        if status_id >= 7:
+            return {"status": "RTE", "error": stderr or "Runtime Error", "output": stdout, "stdout": stdout, "time": dur, "execution_time": dur}
+        return {"status": "OK", "output": stdout, "stdout": stdout, "time": dur, "execution_time": dur}
+    except Exception as e:
+        return {"status": "RTE", "error": f"Lỗi kết nối máy chủ chấm 26TinyLove: {e}"}
+
+
 def execute_test(language: str, code: str, stdin_data: str, time_limit: float = 2.0) -> Dict[str, Any]:
     """Compiles and executes code against stdin within time_limit."""
     time_limit = max(0.5, min(time_limit, 5.0))
@@ -37,10 +82,7 @@ def execute_test(language: str, code: str, stdin_data: str, time_limit: float = 
     try:
         if language in ["cpp", "c++"]:
             if not GPP_CMD:
-                return {
-                    "status": "CE",
-                    "error": "Không tìm thấy g++.exe trên máy tính. Vui lòng cài đặt MinGW/CodeBlocks hoặc sử dụng trình chấm trực tuyến Wandbox!"
-                }
+                return execute_judge0_fallback(language, code, stdin_data, time_limit)
 
             src_file = os.path.join(temp_dir, "solution.cpp")
             exe_file = os.path.join(temp_dir, "solution.exe")
@@ -177,6 +219,7 @@ class JudgeHandler(BaseHTTPRequestHandler):
                 "python": bool(PYTHON_CMD),
                 "gpp_path": GPP_CMD,
                 "python_path": PYTHON_CMD,
+                "cloud_fallback": "judge.26tinylove.com",
                 "sync_enabled": True
             }
             self.wfile.write(json.dumps(data).encode("utf-8"))

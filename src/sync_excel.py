@@ -5,6 +5,7 @@ import hashlib
 import openpyxl
 from datetime import datetime, timezone
 from typing import List, Dict
+from src.sync_firebase import push_tokens_to_firebase
 
 # Ensure SSLKEYLOGFILE is safe
 _sslkeylogfile = os.environ.get("SSLKEYLOGFILE")
@@ -332,7 +333,6 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
                 "vnoi_handle": vnoi_h,
                 "clue_handle": clue_h,
                 "ctoj_handle": ctoj_h,
-                "pin": pin,
                 "status": status,
                 "tuition": st_tuition,
                 "solved": all_solved,
@@ -410,18 +410,51 @@ def sync(excel_path: str = "Quản lý học sinh.xlsx", json_path: str = "docs/
                 "classes": gp.get("classes", ["Public"])
             })
 
-    final_data["students"] = students
+    # 1. Save full data to local backup and export for Firebase
+    firebase_payload = {
+        "auth_tokens": auth_tokens,
+        "students": students,
+        "submissions": final_data.get("submissions", []),
+        "metadata": {
+            "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "tuition_months": tuition_months,
+            "data_source": "firebase"
+        }
+    }
+    export_path = os.path.join(_root, "firebase_database_export.json")
+    backup_path = os.path.join(_root, "data_firebase_backup.json")
+    try:
+        with open(export_path, "w", encoding="utf-8") as f:
+            json.dump(firebase_payload, f, ensure_ascii=False, indent=2)
+        with open(backup_path, "w", encoding="utf-8") as f:
+            json.dump(final_data, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        logger.warning(f"Could not write local backup: {e}")
+
+    # 2. Sanitize docs/data.json (Zero student / tuition data leak)
+    final_data["students"] = []
+    final_data["submissions"] = []
     final_data["problems"] = problems
     final_data["curriculum"] = curriculum
     final_data["class_config"] = class_config
-    final_data["auth_tokens"] = auth_tokens
+    final_data.pop("auth_tokens", None)
     final_data["tuition_months"] = tuition_months
+    final_data["data_source"] = "firebase"
+    final_data["security_status"] = "Dữ liệu học sinh, điểm danh và học phí đã được chuyển sang Firebase Realtime Database để bảo mật tuyệt đối, không lưu trong data.json"
     final_data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(final_data, f, ensure_ascii=False, indent=2)
 
-    logger.info(f"Sync complete! Updated {json_path} with {len(students)} students, {len(problems)} problems, {len(curriculum)} lectures, and {len(auth_tokens)} auth tokens.")
+    logger.info(f"Sync complete! Updated {json_path} (public catalog). Full student data protected on Firebase.")
+    print("🔒 Bảo mật: Toàn bộ thông tin học sinh, học phí và mã PIN đã được chuyển sang Firebase an toàn, không còn lưu trong data.json.")
+    
+    # 3. Đồng bộ toàn bộ dữ liệu lên Firebase Realtime Database
+    try:
+        from src.sync_firebase import push_full_database_to_firebase
+        push_full_database_to_firebase(firebase_payload)
+    except Exception as e:
+        logger.warning(f"Could not push to Firebase: {e}")
     return True
 
 

@@ -226,16 +226,36 @@ def save_student_to_sheet(student_data: Dict[str, Any]) -> Dict[str, Any]:
         if found_row_idx != -1:
             # Update existing student row
             stt = rows_stu[found_row_idx - 1][0] if rows_stu[found_row_idx - 1] else str(found_row_idx - 1)
-            updated_row = [stt, name, cls_str, marisa_h, cf_h, vj_h, vnoi_h, clue_h, pin, status, notes]
+            existing_row = rows_stu[found_row_idx - 1]
+            existing_pin = existing_row[8] if len(existing_row) > 8 else ""
+            pin_to_save = pin if pin else existing_pin
+            updated_row = [stt, name, cls_str, marisa_h, cf_h, vj_h, vnoi_h, clue_h, pin_to_save, status, notes]
             cell_range = f"A{found_row_idx}:K{found_row_idx}"
             ws_stu.update(cell_range, [updated_row], value_input_option="USER_ENTERED")
             action = "updated"
+            # Update Firebase if pin changed
+            if pin:
+                try:
+                    import hashlib
+                    from src.sync_firebase import push_tokens_to_firebase
+                    h_pin = hashlib.sha256(pin.encode("utf-8")).hexdigest()
+                    push_tokens_to_firebase({h_pin: {"role": "student", "name": name, "class": cls_str, "stt": int(stt) if stt.isdigit() else 1}})
+                except Exception as fe:
+                    logger.warning(f"Could not update Firebase token: {fe}")
         else:
             # Append new student row
             new_stt = str(len(rows_stu))
             new_row = [new_stt, name, cls_str, marisa_h, cf_h, vj_h, vnoi_h, clue_h, pin, status, notes]
             ws_stu.append_row(new_row, value_input_option="USER_ENTERED")
             action = "added"
+            if pin:
+                try:
+                    import hashlib
+                    from src.sync_firebase import push_tokens_to_firebase
+                    h_pin = hashlib.sha256(pin.encode("utf-8")).hexdigest()
+                    push_tokens_to_firebase({h_pin: {"role": "student", "name": name, "class": cls_str, "stt": int(new_stt)}})
+                except Exception as fe:
+                    logger.warning(f"Could not update Firebase token: {fe}")
 
             # Also ensure student exists in 'Học Phí'
             try:
@@ -357,7 +377,18 @@ def sync_all_from_local_json(json_path: str = "docs/data.json") -> Dict[str, Any
 
     students = data.get("students", [])
     if not students:
-        return {"status": "error", "message": "Không có học sinh nào trong docs/data.json"}
+        # Fallback to local backup or Firebase export if docs/data.json is sanitized
+        backup_path = "data_firebase_backup.json"
+        if os.path.exists(backup_path):
+            try:
+                with open(backup_path, "r", encoding="utf-8") as f_b:
+                    b_data = json.load(f_b)
+                    students = b_data.get("students", [])
+            except Exception:
+                pass
+
+    if not students:
+        return {"status": "error", "message": "Không có học sinh nào trong docs/data.json hoặc data_firebase_backup.json"}
 
     try:
         sh = get_spreadsheet()

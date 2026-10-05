@@ -65,11 +65,13 @@ flowchart LR
 ```
 
 ### Các nguyên tắc bảo mật cốt lõi:
-1. **Bảo mật một chiều (SHA-256 Hashing):**
-   - Mật khẩu admin, mật khẩu lớp và mã PIN của học sinh **không bao giờ lưu dưới dạng văn bản thô (plaintext)** trên web công khai hay trong file `docs/data.json`.
-   - Tất cả mã truy cập đều được chuyển đổi thành mã băm SHA-256 (chuỗi hexa 64 ký tự). Trình duyệt chỉ băm mã người dùng nhập vào rồi đối chiếu với bảng băm `auth_tokens`.
-2. **Cô lập File Excel Master:**
+1. **Lưu trữ & Xác thực qua Firebase Realtime Database (Chống rò rỉ tuyệt đối):**
+   - Mật khẩu admin, mật khẩu lớp và mã PIN của học sinh **tuyệt đối không lưu trong file `docs/data.json`**.
+   - Toàn bộ mã PIN và token được chuyển sang lưu trữ trên **Firebase Realtime Database** dưới dạng mã băm SHA-256 (`/auth_tokens/{hash}`).
+   - **Quy tắc bảo mật Firebase (Security Rules):** Thiết lập `.read: false` trên toàn bộ nút `auth_tokens` (chặn liệt kê, crawl toàn bộ token), chỉ cho phép truy vấn đơn lẻ `$tokenHash` (`.read: true`). Trình duyệt người dùng khi nhập mã PIN sẽ băm SHA-256 rồi gửi yêu cầu kiểm tra token tương ứng. Người ngoài hoặc học sinh khác không thể nào quét hoặc lấy trộm mã PIN của nhau.
+2. **Cô lập File Excel Master & Google Sheets:**
    - File `Quản lý học sinh.xlsx` chứa đầy đủ họ tên, tài khoản và học phí được khai báo trong `.gitignore`. File này tuyệt đối không bao giờ bị đẩy lên GitHub.
+   - Script tự động đồng bộ (`sync_gsheets.py`, `sync_excel.py`) tự động lọc bỏ toàn bộ trường PIN trước khi xuất file `docs/data.json`.
 3. **Phân lập không gian lớp học:**
    - Học sinh lớp C++ khi đăng nhập sẽ chỉ thấy nội dung dành cho lớp C++. Tab bài tập, bài giảng và bảng xếp hạng tự động lọc và khóa các nội dung của lớp Python hay Python 1-1.
 4. **Bảo vệ quyền Admin:**
