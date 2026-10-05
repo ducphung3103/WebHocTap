@@ -16,9 +16,9 @@
  */
 
 const FIREBASE_CONFIG = {
-  // Điền URL Firebase Realtime Database của bạn tại đây:
-  databaseURL: "https://webhoctap-default-rtdb.firebaseio.com",
-  projectId: "webhoctap-510409"
+  // URL Firebase Realtime Database đã cấu hình:
+  databaseURL: "https://webhoctap-46912-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "webhoctap-46912"
 };
 
 /**
