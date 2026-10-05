@@ -128,6 +128,25 @@ def check_and_sync_all(driver=None, marisa_crawler=None) -> bool:
 
     students = app_data.get("students", [])
     if not students:
+        try:
+            from src.sync_firebase import fetch_database_from_firebase
+            fb_data = fetch_database_from_firebase()
+            if fb_data.get("students"):
+                students = fb_data["students"]
+        except Exception:
+            pass
+
+        if not students:
+            backup_p = os.path.join(_PROJECT_ROOT, "data_firebase_backup.json")
+            if os.path.exists(backup_p):
+                try:
+                    with open(backup_p, "r", encoding="utf-8") as f_b:
+                        b_data = json.load(f_b)
+                        students = b_data.get("students", [])
+                except Exception:
+                    pass
+
+    if not students:
         return False
 
     now = datetime.now()
@@ -273,6 +292,29 @@ def check_and_sync_all(driver=None, marisa_crawler=None) -> bool:
 
         app_data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
+        # 1. Push updated students and activity to Firebase Realtime Database
+        try:
+            from src.sync_firebase import push_students_to_firebase
+            push_students_to_firebase(students)
+            print(f"[{now_str}] ☁️ Đã cập nhật tiến độ bài nộp mới lên Firebase Realtime Database thành công!")
+        except Exception as fb_err:
+            logger.warning(f"Could not push updated students to Firebase: {fb_err}")
+
+        # 2. Update local data backup
+        backup_p = os.path.join(_PROJECT_ROOT, "data_firebase_backup.json")
+        try:
+            if os.path.exists(backup_p):
+                with open(backup_p, "r", encoding="utf-8") as f_b:
+                    b_data = json.load(f_b)
+                b_data["students"] = students
+                b_data["last_updated"] = app_data["last_updated"]
+                with open(backup_p, "w", encoding="utf-8") as f_b:
+                    json.dump(b_data, f_b, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
+        # 3. Sanitize docs/data.json (Zero student leak)
+        app_data["students"] = []
         with open(json_path, "w", encoding="utf-8") as f:
             json.dump(app_data, f, ensure_ascii=False, indent=2)
 

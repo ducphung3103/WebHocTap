@@ -6,6 +6,8 @@ on:
     paths:
       - ".github/workflows/gsheets_sync.yml"
       - "src/sync_gsheets.py"
+      - "src/sync_to_gsheet.py"
+      - "src/sync_firebase.py"
   schedule:
     - cron: '*/15 * * * *'
   repository_dispatch:

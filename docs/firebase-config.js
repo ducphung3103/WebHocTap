@@ -73,11 +73,32 @@ async function verifyAuthTokenFromFirebase(tokenHash) {
     }
 
     const data = await resp.json();
-    if (!data) {
-      return { success: false, error: "Mã PIN hoặc mật khẩu không chính xác!" };
+    if (data) {
+      return { success: true, data: data };
     }
 
-    return { success: true, data: data };
+    // 2. Dự phòng: Tìm mã PIN trong danh sách học sinh (đã băm SHA-256 an toàn)
+    try {
+      const students = await fetchStudentsFromFirebase();
+      if (students && Array.isArray(students)) {
+        const found = students.find(s => s && s.pin_hash && s.pin_hash.toLowerCase() === tokenHash.toLowerCase());
+        if (found) {
+          return {
+            success: true,
+            data: {
+              role: "student",
+              name: found.name,
+              class: found.class,
+              stt: found.stt
+            }
+          };
+        }
+      }
+    } catch(fErr) {
+      console.warn("Fallback pin_hash check error:", fErr);
+    }
+
+    return { success: false, error: "Mã PIN hoặc mật khẩu không chính xác!" };
   } catch (err) {
     console.error("Firebase Auth Error:", err);
     return {

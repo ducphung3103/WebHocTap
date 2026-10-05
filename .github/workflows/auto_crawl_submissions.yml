@@ -36,6 +36,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Crawler Once
+        env:
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
         run: |
           python -m src.auto_watch --once
 

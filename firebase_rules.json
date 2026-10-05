@@ -6,8 +6,8 @@
       "$tokenHash": {
         /* Chỉ cho phép đọc bản ghi của chính token khi người dùng nhập đúng mã PIN / mật khẩu đã được băm SHA-256 */
         ".read": true,
-        /* Không cho phép khách ghi đè trái phép */
-        ".write": false
+        /* Cho phép ghi mã băm PIN từ script đồng bộ hoặc giao diện Thêm Học Sinh */
+        ".write": true
       }
     },
     "students": {

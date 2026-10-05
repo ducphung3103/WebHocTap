@@ -83,7 +83,7 @@ def fetch_online_submissions(cf_handle: str = "", clue_handle: str = "", existin
     if clue_handle and clue_handle.strip():
         for page in range(1, 10):
             try:
-                url = f"https://oj.clue.edu.vn/submissions/user/{clue_handle.strip()}/?page={page}"
+                url = f"https://oj.clue.vn/submissions/user/{clue_handle.strip()}/?page={page}"
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
                 with urllib.request.urlopen(req, timeout=6) as resp:
                     html = resp.read().decode("utf-8")
@@ -163,7 +163,7 @@ def git_push() -> bool:
         return False
 
 
-def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/data.json") -> bool:
+def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/data.json", no_push: bool = False, **kwargs) -> bool:
     settings = get_settings()
     sheet_id = (spreadsheet_id or settings.spreadsheet_id).strip()
     is_ci = os.getenv("CI") == "true" or not sys.stdin.isatty()
@@ -238,7 +238,24 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
         except Exception:
             existing_data = {}
 
-    existing_students = {s["name"]: s for s in existing_data.get("students", [])}
+    existing_students = {s["name"]: s for s in existing_data.get("students", []) if s and s.get("name")}
+    if not existing_students:
+        try:
+            from src.sync_firebase import fetch_database_from_firebase
+            fb_data = fetch_database_from_firebase()
+            if fb_data.get("students"):
+                existing_students = {s["name"]: s for s in fb_data["students"] if s and s.get("name")}
+        except Exception:
+            pass
+        if not existing_students:
+            backup_p = os.path.join(_root_dir, "data_firebase_backup.json")
+            if os.path.exists(backup_p):
+                try:
+                    with open(backup_p, "r", encoding="utf-8") as f:
+                        b_data = json.load(f)
+                        existing_students = {s["name"]: s for s in b_data.get("students", []) if s and s.get("name")}
+                except Exception:
+                    pass
 
     # 1. Parse Security Config ("Cấu Hình Bảo Mật")
     auth_tokens = {}
@@ -587,6 +604,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     "vnoi_handle": vnoi_h,
                     "clue_handle": clue_h,
                     "ctoj_handle": ctoj_h,
+                    "pin_hash": hash_str(pin) if pin else existing_st.get("pin_hash", ""),
                     "status": status,
                     "tuition": st_tuition,
                     "solved": all_solved,
@@ -606,7 +624,8 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
                     auth_tokens[hash_str(pin)] = {
                         "role": "student",
                         "name": name_str,
-                        "class": cls_str
+                        "class": cls_str,
+                        "stt": st_idx
                     }
 
     # SAFETY GUARD: Never wipe out existing student list
@@ -698,13 +717,18 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
             "data_source": "firebase"
         }
     }
-    export_path = os.path.join(_root, "firebase_database_export.json")
-    backup_path = os.path.join(_root, "data_firebase_backup.json")
+    export_path = os.path.join(_root_dir, "firebase_database_export.json")
+    backup_path = os.path.join(_root_dir, "data_firebase_backup.json")
     try:
         with open(export_path, "w", encoding="utf-8") as f:
             json.dump(firebase_payload, f, ensure_ascii=False, indent=2)
+        local_backup_full = dict(final_data)
+        local_backup_full["students"] = students
+        local_backup_full["submissions"] = submissions
+        local_backup_full["auth_tokens"] = auth_tokens
+        local_backup_full["tuition_months"] = tuition_months
         with open(backup_path, "w", encoding="utf-8") as f:
-            json.dump(final_data, f, ensure_ascii=False, indent=2)
+            json.dump(local_backup_full, f, ensure_ascii=False, indent=2)
     except Exception as e:
         logger.warning(f"Could not write local backup: {e}")
 

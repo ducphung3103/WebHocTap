@@ -364,83 +364,176 @@ def save_curriculum_to_sheet(lec_data: Dict[str, Any]) -> Dict[str, Any]:
 def sync_all_from_local_json(json_path: str = "docs/data.json") -> Dict[str, Any]:
     """
     Two-way reconciler:
-    Pushes any modified tuition and student statuses from local docs/data.json to Google Sheet.
+    Fetches the latest student, tuition, status, and submission data from Firebase Realtime Database
+    (where the Web UI saves updates) and reconciles changes back into Google Sheets.
     """
-    if not os.path.exists(json_path):
-        return {"status": "error", "message": f"File {json_path} không tồn tại"}
+    students = []
+    submissions = []
 
+    # 1. First priority: Fetch live data from Firebase Realtime Database
     try:
-        with open(json_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+        from src.sync_firebase import fetch_database_from_firebase
+        fb_data = fetch_database_from_firebase()
+        if fb_data.get("students"):
+            students = fb_data["students"]
+        if fb_data.get("submissions"):
+            submissions = fb_data["submissions"]
+        if students:
+            logger.info(f"Retrieved {len(students)} students and {len(submissions)} submissions from Firebase for 2-way reconciliation.")
     except Exception as e:
-        return {"status": "error", "message": f"Không thể đọc file {json_path}: {e}"}
+        logger.warning(f"Could not fetch Firebase data for 2-way sync: {e}")
 
-    students = data.get("students", [])
+    # 2. Second priority: Fallback to local backup
     if not students:
-        # Fallback to local backup or Firebase export if docs/data.json is sanitized
-        backup_path = "data_firebase_backup.json"
+        backup_path = os.path.join(_PROJECT_ROOT, "data_firebase_backup.json")
         if os.path.exists(backup_path):
             try:
                 with open(backup_path, "r", encoding="utf-8") as f_b:
                     b_data = json.load(f_b)
                     students = b_data.get("students", [])
+                    submissions = b_data.get("submissions", [])
             except Exception:
                 pass
 
+    # 3. Third priority: Fallback to docs/data.json
+    if not students and os.path.exists(json_path):
+        try:
+            with open(json_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                students = data.get("students", [])
+        except Exception as e:
+            logger.warning(f"Could not read {json_path}: {e}")
+
     if not students:
-        return {"status": "error", "message": "Không có học sinh nào trong docs/data.json hoặc data_firebase_backup.json"}
+        return {"status": "error", "message": "Không có dữ liệu học sinh nào từ Firebase hoặc file cục bộ để đối soát"}
 
     try:
         sh = get_spreadsheet()
-        ws_fee = sh.worksheet("Học Phí")
-        fee_rows = ws_fee.get_all_values()
-
-        # Locate header row
-        h_idx = -1
-        for idx, r in enumerate(fee_rows):
-            r_str = " ".join([str(c).lower() for c in r])
-            if "họ và tên" in r_str and ("tháng" in r_str or "thang" in r_str):
-                h_idx = idx
-                break
-
-        updated_cells = 0
-        if h_idx != -1:
-            header = fee_rows[h_idx]
-            month_map = {}
-            for c_idx, c_name in enumerate(header):
-                m_str = str(c_name).strip()
-                if "tháng" in m_str.lower():
-                    month_map[m_str] = c_idx
-
-            updates = []
-            for st in students:
-                st_name = st.get("name", "").strip().lower()
-                st_tuition = st.get("tuition", {})
-                if not st_tuition:
-                    continue
-
-                # Find row in fee_rows
-                for r_idx in range(h_idx + 1, len(fee_rows)):
-                    r_name = str(fee_rows[r_idx][0]).strip().lower() if len(fee_rows[r_idx]) > 0 else ""
-                    if r_name == st_name:
-                        for m_name, c_idx in month_map.items():
-                            cur_val = str(fee_rows[r_idx][c_idx]).strip().upper() if c_idx < len(fee_rows[r_idx]) else "FALSE"
-                            desired_bool = bool(st_tuition.get(m_name, False))
-                            desired_str = "TRUE" if desired_bool else "FALSE"
-                            if cur_val != desired_str:
-                                cell_ref = f"{col_idx_to_letter(c_idx)}{r_idx + 1}"
-                                updates.append({"range": cell_ref, "values": [[desired_str]]})
-                        break
-
-            if updates:
-                ws_fee.batch_update(updates, value_input_option="USER_ENTERED")
-                updated_cells = len(updates)
-                logger.info(f"Batch updated {updated_cells} tuition cells in 'Học Phí'.")
-
-        return {
+        summary = {
             "status": "success",
-            "updated_tuition_cells": updated_cells
+            "updated_tuition_cells": 0,
+            "updated_student_statuses": 0,
+            "new_students_added": 0,
+            "new_submissions_added": 0
         }
+
+        # A. Đối soát Học Phí (Worksheet "Học Phí")
+        ws_fee = get_worksheet_by_title(sh, ["Học Phí", "Hoc Phi", "Tuition", "Fee"])
+        if ws_fee:
+            fee_rows = ws_fee.get_all_values()
+            h_idx = -1
+            for idx, r in enumerate(fee_rows):
+                r_str = " ".join([str(c).lower() for c in r])
+                if "họ và tên" in r_str and ("tháng" in r_str or "thang" in r_str):
+                    h_idx = idx
+                    break
+
+            if h_idx != -1:
+                header = fee_rows[h_idx]
+                month_map = {}
+                for c_idx, c_name in enumerate(header):
+                    m_str = str(c_name).strip()
+                    if "tháng" in m_str.lower() or "thang" in m_str.lower() or any(m_str.lower().startswith(x) for x in ["t9", "t10", "t11", "t12"]):
+                        month_map[m_str] = c_idx
+
+                updates = []
+                for st in students:
+                    st_name = st.get("name", "").strip().lower()
+                    st_tuition = st.get("tuition", {})
+                    if not st_tuition:
+                        continue
+
+                    for r_idx in range(h_idx + 1, len(fee_rows)):
+                        r_name = str(fee_rows[r_idx][0]).strip().lower() if len(fee_rows[r_idx]) > 0 else ""
+                        if r_name == st_name:
+                            for m_name, c_idx in month_map.items():
+                                cur_val = str(fee_rows[r_idx][c_idx]).strip().upper() if c_idx < len(fee_rows[r_idx]) else "FALSE"
+                                desired_bool = bool(st_tuition.get(m_name, False))
+                                desired_str = "TRUE" if desired_bool else "FALSE"
+                                if cur_val != desired_str:
+                                    cell_ref = f"{col_idx_to_letter(c_idx)}{r_idx + 1}"
+                                    updates.append({"range": cell_ref, "values": [[desired_str]]})
+                            break
+
+                if updates:
+                    ws_fee.batch_update(updates, value_input_option="USER_ENTERED")
+                    summary["updated_tuition_cells"] = len(updates)
+                    logger.info(f"Batch updated {len(updates)} tuition cells in 'Học Phí'.")
+
+        # B. Đối soát Trạng thái & Học sinh mới (Worksheet "Học Sinh")
+        ws_stu = get_worksheet_by_title(sh, ["Học Sinh", "Hoc Sinh", "Danh sách Học sinh", "Students"])
+        if ws_stu:
+            stu_rows = ws_stu.get_all_values()
+            if stu_rows:
+                header = [str(c).strip().lower() for c in stu_rows[0]]
+                name_col_idx = 1
+                status_col_idx = -1
+                for c_idx, c_name in enumerate(header):
+                    if any(k in c_name for k in ["họ và tên", "họ tên", "tên"]):
+                        name_col_idx = c_idx
+                    elif any(k in c_name for k in ["trạng thái", "status"]):
+                        status_col_idx = c_idx
+
+                if status_col_idx == -1:
+                    status_col_idx = 9
+
+                sheet_names = {}
+                for r_idx in range(1, len(stu_rows)):
+                    row = stu_rows[r_idx]
+                    if len(row) > name_col_idx:
+                        s_name = str(row[name_col_idx]).strip().lower()
+                        if s_name:
+                            sheet_names[s_name] = r_idx + 1  # 1-based row index
+
+                status_updates = []
+                for st in students:
+                    st_name = st.get("name", "").strip().lower()
+                    if not st_name:
+                        continue
+                    fb_status = st.get("status", "Đang học")
+
+                    # Check if student exists in sheet
+                    if st_name in sheet_names:
+                        target_r = sheet_names[st_name]
+                        cur_status = stu_rows[target_r - 1][status_col_idx] if status_col_idx < len(stu_rows[target_r - 1]) else ""
+                        if cur_status.strip().lower() != fb_status.strip().lower() and fb_status:
+                            cell_ref = f"{col_idx_to_letter(status_col_idx)}{target_r}"
+                            status_updates.append({"range": cell_ref, "values": [[fb_status]]})
+                    else:
+                        # Student exists in Firebase but not in Google Sheet! Add to Google Sheet!
+                        try:
+                            save_student_to_sheet(st)
+                            summary["new_students_added"] += 1
+                            logger.info(f"Reconciled new student from Web/Firebase to Sheet: {st.get('name')}")
+                        except Exception as add_err:
+                            logger.warning(f"Could not add student {st.get('name')} to sheet: {add_err}")
+
+                if status_updates:
+                    ws_stu.batch_update(status_updates, value_input_option="USER_ENTERED")
+                    summary["updated_student_statuses"] = len(status_updates)
+                    logger.info(f"Updated {len(status_updates)} student statuses in 'Học Sinh'.")
+
+        # C. Đối soát Bài Nộp (Worksheet "Bài Nộp")
+        if submissions:
+            ws_sub = get_worksheet_by_title(sh, ["Bài Nộp", "Bai Nop", "Nộp Bài", "Submissions"])
+            if ws_sub:
+                sub_rows = ws_sub.get_all_values()
+                sheet_sub_ids = {str(r[0]).strip() for r in sub_rows[1:] if r}
+                new_subs = 0
+                for sub in submissions:
+                    s_id = str(sub.get("id", "")).strip()
+                    if s_id and s_id not in sheet_sub_ids:
+                        try:
+                            save_submission_to_sheet(sub)
+                            sheet_sub_ids.add(s_id)
+                            new_subs += 1
+                        except Exception:
+                            pass
+                summary["new_submissions_added"] = new_subs
+
+        print(f"✅ Đối soát 2 chiều hoàn tất: Cập nhật {summary['updated_tuition_cells']} ô học phí, {summary['updated_student_statuses']} trạng thái, thêm {summary['new_students_added']} học sinh mới.")
+        return summary
+
     except Exception as e:
         logger.error(f"Error during two-way sync: {e}")
         return {"status": "error", "message": str(e)}
