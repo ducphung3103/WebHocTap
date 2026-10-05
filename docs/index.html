@@ -107,7 +107,7 @@
         </div>
 
         <div id="auth-error-msg" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 px-3 py-2 rounded-lg">
-          ❌ Mã truy cập không chính xác. Vui lòng kiểm tra lại hoặc liên hệ Thầy Đức!
+          ❌ Mã truy cập không chính xác. Vui lòng kiểm tra lại hoặc liên hệ Thầy Đức qua Zalo: <strong>0396468382</strong>!
         </div>
 
         <button 
@@ -118,6 +118,16 @@
           <span>Đăng Nhập Vào Hệ Thống</span>
           <span>→</span>
         </button>
+
+        <!-- Quick Contact Help -->
+        <div class="text-[11px] text-slate-400 text-center space-y-1 pt-1">
+          <div>Chưa có mã PIN cá nhân? Liên hệ Giảng viên:</div>
+          <div class="flex items-center justify-center gap-3 text-xs font-semibold">
+            <a href="https://zalo.me/0396468382" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">💬 Zalo: 0396468382</a>
+            <span class="text-slate-600">•</span>
+            <a href="https://www.facebook.com/deruckphung3103/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline">🌐 Facebook</a>
+          </div>
+        </div>
       </form>
 
       <!-- Footer Info -->
@@ -420,21 +430,83 @@
         </div>
       </div>
 
-      <!-- INSTRUCTOR & SCHEDULE -->
-      <div class="rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div class="flex items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-3xl shadow-lg shrink-0">
-            👨‍🏫
+      <!-- INSTRUCTOR & CONTACT SECTION -->
+      <div class="rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 p-6 sm:p-8 space-y-6 shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="flex items-start sm:items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 border border-indigo-400/40 flex items-center justify-center text-3xl shadow-xl shadow-indigo-600/30 shrink-0">
+              👨‍🏫
+            </div>
+            <div class="space-y-1">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-wide">
+                <span>⭐</span> Giảng Viên Phụ Trách
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-white tracking-tight">Thầy Đức (Deruck)</h3>
+              <p class="text-xs text-slate-300 leading-relaxed max-w-xl">
+                Huấn luyện viên Lập trình thi đấu • Kinh nghiệm bồi dưỡng nhiều thế hệ học sinh đạt giải HSG, Olympic Tin học và luyện thi vào các trường Chuyên Tin.
+              </p>
+            </div>
           </div>
-          <div class="space-y-1">
-            <h3 class="text-base font-bold text-white">Giảng viên Thầy Đức (Deruck)</h3>
-            <p class="text-xs text-slate-400">Huấn luyện viên Lập trình thi đấu • Kinh nghiệm bồi dưỡng nhiều thế hệ học sinh đạt giải HSG và Olympic Tin học</p>
+
+          <div class="flex items-center gap-3 shrink-0">
+            <button onclick="showAuthModal()" class="px-5 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/30 flex items-center gap-2 cursor-pointer active:scale-95">
+              <span>🔑</span>
+              <span>Đăng Nhập Ngay</span>
+              <span>→</span>
+            </button>
           </div>
         </div>
 
-        <button onclick="showAuthModal()" class="px-5 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/30 shrink-0 cursor-pointer">
-          Đăng Nhập Ngay →
-        </button>
+        <!-- CONTACT CHANNELS -->
+        <div class="pt-5 border-t border-slate-800/80">
+          <div class="text-xs font-semibold text-slate-300 mb-3 flex items-center gap-2">
+            <span>📞</span> <span>Thông tin liên hệ trực tiếp với Giảng viên:</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/deruckphung3103/" target="_blank" rel="noopener noreferrer" 
+               class="group flex items-center gap-3 p-3.5 rounded-2xl bg-slate-950/70 hover:bg-blue-950/40 border border-slate-800 hover:border-blue-500/50 transition shadow-sm cursor-pointer">
+              <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform shrink-0 font-bold text-base">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="text-[11px] text-slate-400 font-medium">Facebook</div>
+                <div class="text-xs font-bold text-blue-300 group-hover:text-blue-200 truncate">deruckphung3103</div>
+              </div>
+              <span class="text-slate-600 group-hover:text-blue-400 text-xs transition">↗</span>
+            </a>
+
+            <!-- Zalo -->
+            <a href="https://zalo.me/0396468382" target="_blank" rel="noopener noreferrer" 
+               class="group flex items-center gap-3 p-3.5 rounded-2xl bg-slate-950/70 hover:bg-sky-950/40 border border-slate-800 hover:border-sky-500/50 transition shadow-sm cursor-pointer">
+              <div class="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400 group-hover:scale-110 transition-transform shrink-0 font-black text-xs tracking-tighter">
+                ZALO
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="text-[11px] text-slate-400 font-medium">Zalo / Hotline</div>
+                <div class="text-xs font-bold text-sky-300 group-hover:text-sky-200 font-mono truncate">0396468382</div>
+              </div>
+              <span class="text-slate-600 group-hover:text-sky-400 text-xs transition">↗</span>
+            </a>
+
+            <!-- Gmail -->
+            <a href="mailto:phungduc3103@gmail.com" 
+               class="group flex items-center gap-3 p-3.5 rounded-2xl bg-slate-950/70 hover:bg-rose-950/40 border border-slate-800 hover:border-rose-500/50 transition shadow-sm cursor-pointer">
+              <div class="w-10 h-10 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform shrink-0 text-base">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="text-[11px] text-slate-400 font-medium">Gmail</div>
+                <div class="text-xs font-bold text-rose-300 group-hover:text-rose-200 font-mono truncate">phungduc3103@gmail.com</div>
+              </div>
+              <span class="text-slate-600 group-hover:text-rose-400 text-xs transition">↗</span>
+            </a>
+          </div>
+        </div>
       </div>
 
     </section>
@@ -2355,6 +2427,16 @@
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div>© 2026 Deruck's Competitive Programming • Tự động hóa với Python & GitHub Actions <span id="sync-last-updated" class="ml-2 text-indigo-400 font-mono"></span></div>
       <div class="flex items-center gap-4 text-slate-400 flex-wrap justify-center">
+        <a href="https://www.facebook.com/deruckphung3103/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition flex items-center gap-1 font-semibold" title="Facebook Giảng viên">
+          <span>🌐 Facebook</span>
+        </a>
+        <a href="https://zalo.me/0396468382" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition flex items-center gap-1 font-semibold" title="Zalo / Hotline Giảng viên">
+          <span>💬 Zalo: 0396468382</span>
+        </a>
+        <a href="mailto:phungduc3103@gmail.com" class="hover:text-rose-400 transition flex items-center gap-1 font-semibold" title="Email Giảng viên">
+          <span>✉️ phungduc3103@gmail.com</span>
+        </a>
+        <span class="text-slate-700 hidden sm:inline">|</span>
         <a href="https://codeforces.com" target="_blank" class="hover:text-indigo-400 transition">Codeforces</a>
         <a href="https://vjudge.net" target="_blank" class="hover:text-emerald-400 transition">VJudge</a>
         <a href="https://marisaoj.com" target="_blank" class="hover:text-purple-400 transition">MarisaOJ</a>
