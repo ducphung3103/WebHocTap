@@ -2901,8 +2901,8 @@
       // Check hash tab routing
       if (window.location.hash) {
         const hashRaw = window.location.hash.replace('#', '');
-        if (hashRaw.startsWith('judge-')) {
-          const probId = hashRaw.replace('judge-', '');
+        if (hashRaw.startsWith('judge-') || hashRaw.startsWith('problem-')) {
+          const probId = hashRaw.replace('problem-', '').replace('judge-', '');
           switchTab('problems');
           toggleProblemViewMode('judge');
           setTimeout(() => selectJudgeProblem(probId), 80);
@@ -2910,11 +2910,7 @@
           switchTab('problems');
           toggleProblemViewMode('judge');
         } else if (['home', 'problems', 'submissions', 'leaderboard', 'contests', 'curriculum', 'admin'].includes(hashRaw)) {
-          if (currentAuth || hashRaw === 'home') {
-            switchTab(hashRaw);
-          } else {
-            switchTab('home');
-          }
+          switchTab(hashRaw);
         }
       }
 
@@ -3086,21 +3082,13 @@
 
     // TAB SWITCHING & HASH ROUTING (INCLUDES RETURN HOME)
     function switchTab(tabName) {
-      if (!currentAuth && tabName !== 'home') {
-        showAuthModal();
-        const noticeEl = document.getElementById('auth-modal-notice');
-        if (noticeEl) {
-          noticeEl.classList.remove('hidden');
-          noticeEl.textContent = '🔒 Toàn bộ thông tin học tập, bảng xếp hạng và bài giảng được bảo mật. Bắt buộc phải có tài khoản để xem!';
-        }
-        tabName = 'home';
-      }
-
       if (tabName === 'admin') {
-        tabName = 'leaderboard';
-        if (currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher')) {
-          setTimeout(() => toggleAdminStudentView('tuition'), 50);
+        if (!currentAuth || (currentAuth.role !== 'admin' && currentAuth.role !== 'teacher')) {
+          showAuthModal();
+          return;
         }
+        tabName = 'leaderboard';
+        setTimeout(() => toggleAdminStudentView('tuition'), 50);
       }
 
       if (tabName === 'judge') {
@@ -3622,18 +3610,8 @@
 
     // ROLE & PERMISSION CHECK FOR CONTENT (PROBLEMS & CURRICULUM)
     function canViewItem(item) {
-      if (!currentAuth) return false;
-      if (currentAuth.role === 'admin' || currentAuth.role === 'teacher') return true;
-      const classes = item.classes || [];
-      if (classes.includes('Tất cả') || classes.includes('All')) {
-        return true;
-      }
-      if (currentAuth.role === 'student' || currentAuth.role === 'class') {
-        const userCls = currentAuth.class;
-        if (!userCls) return false;
-        return classes.includes(userCls);
-      }
-      return false;
+      // Chuẩn DMOJ: Toàn bộ bài tập trong kho bài tập mở công khai cho tất cả mọi người
+      return true;
     }
 
     // 2. RENDER PROBLEMS
@@ -3652,9 +3630,6 @@
     }
 
     function filterProblemClass(cls) {
-      if (currentAuth && currentAuth.role === 'student' && currentAuth.class) {
-        cls = currentAuth.class;
-      }
       currentProblemClassFilter = cls;
       currentProblemDisplayLimit = 60;
       const classKeys = [
@@ -3713,27 +3688,6 @@
       const tbody = document.getElementById('problems-table-body');
       const loadMoreContainer = document.getElementById('problems-loadmore-container');
       if (!tbody || !appData || !appData.problems) return;
-
-      if (!currentAuth) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="8" class="p-12 text-center text-slate-400">
-              <div class="max-w-md mx-auto space-y-4">
-                <div class="w-14 h-14 mx-auto rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl">🔒</div>
-                <div class="space-y-1">
-                  <div class="font-bold text-white text-base">Kho Bài Tập Được Bảo Mật</div>
-                  <p class="text-xs text-slate-400">Bắt buộc phải đăng nhập bằng Mã PIN hoặc Mật khẩu để truy cập danh sách bài tập được giao.</p>
-                </div>
-                <button onclick="showAuthModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/25 cursor-pointer">
-                  🔑 Đăng Nhập Bằng Mã PIN →
-                </button>
-              </div>
-            </td>
-          </tr>
-        `;
-        if (loadMoreContainer) loadMoreContainer.innerHTML = '';
-        return;
-      }
 
       tbody.innerHTML = '';
       if (loadMoreContainer) loadMoreContainer.innerHTML = '';
@@ -6389,10 +6343,7 @@
       } else if (appData && Array.isArray(appData.grader_problems) && appData.grader_problems.length > 0) {
         list = appData.grader_problems;
       }
-      if (!currentAuth || currentAuth.role === 'admin' || currentAuth.role === 'teacher') {
-        return list;
-      }
-      return list.filter(p => canViewItem(p));
+      return list;
     }
 
     // Math text formatting helper for DMOJ formulas
