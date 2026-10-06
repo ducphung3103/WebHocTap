@@ -242,6 +242,9 @@ async function saveStudentSolvedToFirebase(studentIdent, probId) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(student.solved)
           });
+          if (resp.ok) {
+            touchFirebaseLastUpdated().catch(() => {});
+          }
           return resp.ok;
         }
         return true;
@@ -265,6 +268,9 @@ async function saveStudentsToFirebase(students) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(students)
     });
+    if (resp.ok) {
+      touchFirebaseLastUpdated().catch(() => {});
+    }
     return resp.ok;
   } catch(err) {
     console.warn("Could not save students to Firebase:", err);
@@ -288,6 +294,9 @@ async function saveTuitionToFirebase(stt, month, isPaid) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(Boolean(isPaid))
         });
+        if (resp.ok) {
+          touchFirebaseLastUpdated().catch(() => {});
+        }
         return resp.ok;
       }
     }
@@ -313,6 +322,9 @@ async function saveStudentStatusToFirebase(stt, newStatus) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newStatus)
         });
+        if (resp.ok) {
+          touchFirebaseLastUpdated().catch(() => {});
+        }
         return resp.ok;
       }
     }
@@ -320,6 +332,22 @@ async function saveStudentStatusToFirebase(stt, newStatus) {
     console.warn("Could not update student status to Firebase:", err);
   }
   return false;
+}
+
+/**
+ * Cập nhật timestamp last_updated lên Firebase (Micro-polling 25 bytes)
+ */
+async function touchFirebaseLastUpdated() {
+  if (!isFirebaseConfigured()) return;
+  const dbUrl = getFirebaseDatabaseUrl();
+  try {
+    const nowIso = new Date().toISOString();
+    await fetch(`${dbUrl}/metadata/last_updated.json`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nowIso)
+    });
+  } catch(e) {}
 }
 
 /**
@@ -337,6 +365,9 @@ async function saveSubmissionToFirebase(subData) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(subData)
     });
+    if (resp.ok) {
+      touchFirebaseLastUpdated().catch(() => {});
+    }
     return resp.ok;
   } catch(err) {
     console.warn("Could not save submission to Firebase:", err);
@@ -357,6 +388,9 @@ async function updateSubmissionInFirebase(subId, patchData) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(patchData)
     });
+    if (resp.ok) {
+      touchFirebaseLastUpdated().catch(() => {});
+    }
     return resp.ok;
   } catch(err) {
     console.warn("Could not update submission in Firebase:", err);
@@ -375,6 +409,9 @@ async function deleteSubmissionFromFirebase(subId) {
     const resp = await fetch(`${dbUrl}/submissions/${key}.json`, {
       method: 'DELETE'
     });
+    if (resp.ok) {
+      touchFirebaseLastUpdated().catch(() => {});
+    }
     return resp.ok;
   } catch(err) {
     console.warn("Could not delete submission from Firebase:", err);
