@@ -163,6 +163,51 @@ async function fetchSubmissionsFromFirebase() {
 }
 
 /**
+ * 3b. Bảo mật mã nguồn: Che giấu toàn bộ code/đáp án bài làm đối với học sinh và khách, chỉ Admin/Giáo viên được xem
+ */
+function sanitizeSubmissionsForRole(submissions, isAdminOrTeacher) {
+  if (!submissions || !Array.isArray(submissions)) return [];
+  if (isAdminOrTeacher) return submissions;
+  return submissions.map(s => {
+    if (!s) return s;
+    return {
+      ...s,
+      answer: '🔒 [Mã nguồn bài nộp đã được bảo mật — Chỉ Quản trị viên / Giáo viên mới có quyền xem]'
+    };
+  });
+}
+
+/**
+ * 3c. Tìm kiếm bài nộp của học sinh linh hoạt theo Tên, STT hoặc Mã PIN (Bảo tồn nhận diện sau khi reload cache)
+ */
+function findStudentSubmission(submissions, probId, studentIdentifier) {
+  if (!submissions || !Array.isArray(submissions) || !probId || !studentIdentifier) return null;
+  
+  let name = '';
+  let stt = '';
+  let pin = '';
+  
+  if (typeof studentIdentifier === 'object') {
+    name = (studentIdentifier.name || '').trim().toLowerCase();
+    stt = (studentIdentifier.stt !== undefined && studentIdentifier.stt !== null && studentIdentifier.stt !== '') ? String(studentIdentifier.stt) : '';
+    pin = (studentIdentifier.pin || studentIdentifier.student_pin || studentIdentifier.student_id || '').trim();
+  } else if (typeof studentIdentifier === 'number') {
+    stt = String(studentIdentifier);
+  } else {
+    name = String(studentIdentifier).trim().toLowerCase();
+  }
+
+  return submissions.find(s => {
+    if (!s || s.problem_id !== probId) return false;
+    const sName = (s.student_name || '').trim().toLowerCase();
+    if (name && sName && (sName === name || sName.includes(name) || name.includes(sName))) return true;
+    if (stt && ((s.student_stt && String(s.student_stt) === stt) || (s.student_id && String(s.student_id) === stt) || (s.stt && String(s.stt) === stt))) return true;
+    if (pin && (s.student_pin === pin || s.student_id === pin)) return true;
+    return false;
+  }) || null;
+}
+
+/**
  * 4. Lưu toàn bộ danh sách học sinh lên Firebase
  */
 async function saveStudentsToFirebase(students) {
@@ -232,20 +277,61 @@ async function saveStudentStatusToFirebase(stt, newStatus) {
 }
 
 /**
- * 7. Lưu bài nộp mới lên Firebase
+ * 7. Lưu bài nộp mới lên Firebase (Bảo tồn vĩnh viễn theo ID bài nộp, chống mất dữ liệu khi reload cache)
  */
 async function saveSubmissionToFirebase(subData) {
-  if (!isFirebaseConfigured()) return false;
+  if (!isFirebaseConfigured() || !subData) return false;
   const dbUrl = getFirebaseDatabaseUrl();
   try {
-    const resp = await fetch(`${dbUrl}/submissions.json`, {
-      method: 'POST',
+    const subId = subData.id || ('SUB-' + Date.now());
+    subData.id = subId;
+    const key = encodeURIComponent(subId);
+    const resp = await fetch(`${dbUrl}/submissions/${key}.json`, {
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(subData)
     });
     return resp.ok;
   } catch(err) {
     console.warn("Could not save submission to Firebase:", err);
+    return false;
+  }
+}
+
+/**
+ * 7b. Cập nhật chấm điểm, trạng thái hoặc nhận xét bài nộp lên Firebase
+ */
+async function updateSubmissionInFirebase(subId, patchData) {
+  if (!isFirebaseConfigured() || !subId || !patchData) return false;
+  const dbUrl = getFirebaseDatabaseUrl();
+  try {
+    const key = encodeURIComponent(subId);
+    const resp = await fetch(`${dbUrl}/submissions/${key}.json`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(patchData)
+    });
+    return resp.ok;
+  } catch(err) {
+    console.warn("Could not update submission in Firebase:", err);
+    return false;
+  }
+}
+
+/**
+ * 7c. Xóa bài nộp khỏi Firebase
+ */
+async function deleteSubmissionFromFirebase(subId) {
+  if (!isFirebaseConfigured() || !subId) return false;
+  const dbUrl = getFirebaseDatabaseUrl();
+  try {
+    const key = encodeURIComponent(subId);
+    const resp = await fetch(`${dbUrl}/submissions/${key}.json`, {
+      method: 'DELETE'
+    });
+    return resp.ok;
+  } catch(err) {
+    console.warn("Could not delete submission from Firebase:", err);
     return false;
   }
 }

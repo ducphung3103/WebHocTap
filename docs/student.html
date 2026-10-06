@@ -575,6 +575,9 @@
     let currentStudent = null;
 
     async function initStudentPage() {
+      // Kiểm tra trạng thái xác thực người dùng trước tiên
+      const isAuthed = checkAuthSession();
+
       try {
         const response = await fetch('data.json?v=' + Date.now());
         if (response.ok) {
@@ -584,17 +587,43 @@
         console.error("Could not fetch data.json", e);
       }
 
-      // 1. Tải dữ liệu học sinh trực tiếp từ Firebase Realtime Database (Bảo mật tuyệt đối)
+      // 1. Tải dữ liệu học sinh & bài nộp trực tiếp từ Firebase Realtime Database (Bảo mật tuyệt đối)
       if (typeof fetchStudentsFromFirebase === 'function' && isFirebaseConfigured()) {
         try {
           const fbStudents = await fetchStudentsFromFirebase();
           if (fbStudents && fbStudents.length > 0) {
             if (!appData) appData = {};
             appData.students = fbStudents;
-            localStorage.setItem('cp_cached_students', JSON.stringify(fbStudents));
+            try { localStorage.setItem('cp_cached_students', JSON.stringify(fbStudents)); } catch(e) {}
+          }
+          const fbSubs = await fetchSubmissionsFromFirebase();
+          if (fbSubs && fbSubs.length > 0) {
+            const isAdminUser = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+            appData.submissions = (typeof sanitizeSubmissionsForRole === 'function')
+              ? sanitizeSubmissionsForRole(fbSubs, isAdminUser)
+              : fbSubs;
+            try {
+              localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions));
+            } catch(e) {}
           }
         } catch(fbErr) {
           console.warn("Could not fetch students from Firebase:", fbErr);
+        }
+      }
+
+      // 1b. Dự phòng: Nếu appData.submissions rỗng, tải từ bộ nhớ đệm cp_cached_submissions
+      if (!appData.submissions || appData.submissions.length === 0) {
+        const cachedSubs = localStorage.getItem('cp_cached_submissions');
+        if (cachedSubs) {
+          try {
+            const parsed = JSON.parse(cachedSubs);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              const isAdminUser = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+              appData.submissions = (typeof sanitizeSubmissionsForRole === 'function')
+                ? sanitizeSubmissionsForRole(parsed, isAdminUser)
+                : parsed;
+            }
+          } catch(e) {}
         }
       }
 
@@ -621,7 +650,6 @@
       }
 
       // Check security auth session from Cookie
-      const isAuthed = checkAuthSession();
       if (!isAuthed) {
         document.getElementById('loading-state').innerHTML = `
           <div class="p-8 text-center bg-slate-900 border border-slate-800 rounded-2xl space-y-4 max-w-lg mx-auto shadow-2xl">
@@ -891,14 +919,20 @@
 
         // Find submission by this student
         const submissions = appData.submissions || [];
-        const mySub = submissions.find(s => s.problem_id === p.id && (s.student_name === student.name || (s.student_id && s.student_id == student.stt)));
+        const mySub = (typeof findStudentSubmission === 'function')
+          ? findStudentSubmission(submissions, p.id, student)
+          : submissions.find(s => s.problem_id === p.id && (s.student_name === student.name || (s.student_id && s.student_id == student.stt)));
 
         let subBadge = '';
         if (isSolved) {
           subBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">ĐÃ AC ✅</span>';
         } else if (mySub) {
-          if (mySub.score !== undefined && mySub.score !== '') {
+          if (mySub.status === 'Chấm đạt' || mySub.status === 'Hoàn thành') {
+            subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">✅ ${mySub.score ? `${mySub.score}/10 ` : ''}(Chấm đạt)</span>`;
+          } else if (mySub.score !== undefined && mySub.score !== '') {
             subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">💯 ${mySub.score}/10 (${mySub.status})</span>`;
+          } else if (mySub.status === 'Cần sửa') {
+            subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">⚠️ Cần sửa</span>`;
           } else {
             subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">📨 ${mySub.status || 'Đã nộp'}</span>`;
           }
@@ -1570,31 +1604,103 @@
     }
 
     let lastKnownUpdateTime = null;
-    function startLiveAutoRefresh() {
-      // Poll every 25 seconds for newly submitted problems
-      setInterval(async () => {
-        try {
-          const res = await fetch('data.json?v=' + Date.now());
-          if (!res.ok) return;
-          const freshData = await res.json();
-          if (!freshData || !freshData.last_updated) return;
+    let isRefreshingLiveStudent = false;
 
-          if (lastKnownUpdateTime && freshData.last_updated !== lastKnownUpdateTime) {
-            console.log('⚡ Phát hiện dữ liệu mới:', freshData.last_updated);
-            appData = freshData;
-            lastKnownUpdateTime = freshData.last_updated;
+    async function checkAndApplyStudentLiveUpdates(force = false) {
+      if (isRefreshingLiveStudent) return;
+      // QUOTA PROTECTION: Dừng kiểm tra khi tab đang chạy nền
+      if (document.hidden && !force) return;
 
-            const selector = document.getElementById('student-selector');
-            const curId = selector ? parseInt(selector.value) : 1;
-            loadStudentProfile(curId);
-            showLiveToast('⚡ Dữ liệu bài nộp vừa được cập nhật tự động!');
-          } else if (!lastKnownUpdateTime) {
-            lastKnownUpdateTime = freshData.last_updated;
-          }
-        } catch (e) {
-          // ignore transient poll errors
+      isRefreshingLiveStudent = true;
+      try {
+        const dbUrl = (typeof getFirebaseDatabaseUrl === 'function') ? getFirebaseDatabaseUrl() : '';
+        const fbReady = Boolean(dbUrl && typeof isFirebaseConfigured === 'function' && isFirebaseConfigured());
+        let remoteUpdateTime = null;
+
+        if (fbReady) {
+          // BẢO VỆ QUOTA: Chỉ kiểm tra timestamp /metadata/last_updated.json (~25 bytes)
+          try {
+            const metaResp = await fetch(`${dbUrl}/metadata/last_updated.json`, {
+              signal: AbortSignal.timeout(3500)
+            });
+            if (metaResp.ok) {
+              remoteUpdateTime = await metaResp.json();
+            }
+          } catch(e) {}
         }
-      }, 25000);
+
+        if (!remoteUpdateTime) {
+          try {
+            const djResp = await fetch('data.json?v=' + Date.now(), { signal: AbortSignal.timeout(3500) });
+            if (djResp.ok) {
+              const dj = await djResp.json();
+              if (dj && dj.last_updated) remoteUpdateTime = dj.last_updated;
+            }
+          } catch(e) {}
+        }
+
+        if (!remoteUpdateTime) {
+          isRefreshingLiveStudent = false;
+          return;
+        }
+
+        if (lastKnownUpdateTime && remoteUpdateTime === lastKnownUpdateTime && !force) {
+          isRefreshingLiveStudent = false;
+          return;
+        }
+
+        console.log('⚡ [5s Auto] Hồ sơ học sinh phát hiện dữ liệu mới:', remoteUpdateTime);
+        lastKnownUpdateTime = remoteUpdateTime;
+
+        if (fbReady && typeof fetchStudentsFromFirebase === 'function') {
+          const fbStudents = await fetchStudentsFromFirebase();
+          if (fbStudents && fbStudents.length > 0) {
+            appData.students = fbStudents;
+            try { localStorage.setItem('cp_cached_students', JSON.stringify(fbStudents)); } catch(e) {}
+          }
+        }
+
+        if (fbReady && typeof fetchSubmissionsFromFirebase === 'function') {
+          const fbSubs = await fetchSubmissionsFromFirebase();
+          if (fbSubs && fbSubs.length > 0) {
+            const isAdmin = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+            appData.submissions = (typeof sanitizeSubmissionsForRole === 'function')
+              ? sanitizeSubmissionsForRole(fbSubs, isAdmin)
+              : fbSubs;
+            try { localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions)); } catch(e) {}
+          }
+        }
+
+        try {
+          const resCatalog = await fetch('data.json?v=' + Date.now(), { signal: AbortSignal.timeout(4000) });
+          if (resCatalog.ok) {
+            const catalogData = await resCatalog.json();
+            if (catalogData.problems) appData.problems = catalogData.problems;
+            if (catalogData.curriculum) appData.curriculum = catalogData.curriculum;
+          }
+        } catch(e) {}
+
+        const selector = document.getElementById('student-selector');
+        const curId = currentStudent ? currentStudent.stt : (selector ? parseInt(selector.value) : 1);
+        loadStudentProfile(curId);
+        showLiveToast('⚡ Dữ liệu bài nộp & hồ sơ vừa được cập nhật tự động!');
+      } catch (e) {
+      } finally {
+        isRefreshingLiveStudent = false;
+      }
+    }
+
+    function startLiveAutoRefresh() {
+      // Chu kỳ cập nhật mỗi 5 giây, bảo vệ quota tự động bằng micro-polling
+      setInterval(() => {
+        checkAndApplyStudentLiveUpdates();
+      }, 5000);
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+          checkAndApplyStudentLiveUpdates();
+        }
+      });
     }
 
     // ============================================================
@@ -1640,7 +1746,9 @@
       // Check previous submission
       const prevBox = document.getElementById('submit-previous-box');
       const submissions = appData.submissions || [];
-      const mySub = submissions.find(s => s.problem_id === prob.id && (s.student_name === currentStudent.name || (s.student_id && s.student_id == currentStudent.stt)));
+      const mySub = (typeof findStudentSubmission === 'function')
+        ? findStudentSubmission(submissions, prob.id, currentStudent)
+        : submissions.find(s => s.problem_id === prob.id && (s.student_name === currentStudent.name || (s.student_id && s.student_id == currentStudent.stt)));
 
       if (mySub && prevBox) {
         prevBox.classList.remove('hidden');
@@ -1651,10 +1759,28 @@
         const fbBox = document.getElementById('prev-sub-feedback-box');
         const fbText = document.getElementById('prev-sub-feedback-text');
 
-        if (badge) badge.textContent = mySub.status || 'Đã nộp';
+        if (badge) {
+          badge.textContent = mySub.status || 'Đã nộp';
+          if (mySub.status === 'Chấm đạt' || mySub.status === 'Hoàn thành') {
+            badge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+          } else if (mySub.status === 'Cần sửa') {
+            badge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30";
+          } else {
+            badge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30";
+          }
+        }
         if (timeEl) timeEl.textContent = mySub.submitted_at || '--';
         if (scoreEl) scoreEl.textContent = (mySub.score !== undefined && mySub.score !== '') ? `${mySub.score}/10` : 'Chờ chấm';
-        if (contentEl) contentEl.textContent = mySub.answer || '--';
+        
+        // BẢO MẬT: Chỉ Admin / Giáo viên mới có quyền xem mã nguồn bài làm!
+        const isAdminUser = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+        if (contentEl) {
+          if (isAdminUser) {
+            contentEl.textContent = mySub.answer || '--';
+          } else {
+            contentEl.textContent = '🔒 Mã nguồn bài nộp đã được bảo mật (Chỉ Admin / Giáo viên có quyền xem code)';
+          }
+        }
 
         if (fbBox && fbText) {
           if (mySub.feedback) {
@@ -1665,10 +1791,13 @@
           }
         }
 
-        if (mySub.type === 'short' || mySub.submission_type_display === 'Điền đáp án') {
-          if (ansInput && !ansInput.value) ansInput.value = mySub.answer || '';
-        } else {
-          if (essayInput && !essayInput.value) essayInput.value = mySub.answer || '';
+        // Chỉ điền sẵn đáp án/code cũ nếu là Admin
+        if (isAdminUser) {
+          if (mySub.type === 'short' || mySub.submission_type_display === 'Điền đáp án') {
+            if (ansInput && !ansInput.value) ansInput.value = mySub.answer || '';
+          } else {
+            if (essayInput && !essayInput.value) essayInput.value = mySub.answer || '';
+          }
         }
       } else if (prevBox) {
         prevBox.classList.add('hidden');
@@ -1744,6 +1873,8 @@
         id: subId,
         submitted_at: new Date().toLocaleString('vi-VN', { hour12: false }),
         student_id: currentStudent.stt ? String(currentStudent.stt) : '',
+        student_stt: currentStudent.stt ? Number(currentStudent.stt) : '',
+        student_pin: currentStudent.pin || '',
         student_name: currentStudent.name,
         class_name: currentStudent.class || 'C++ nâng cao',
         problem_id: prob.id,
@@ -1766,7 +1897,15 @@
         if (!fullData.submissions) fullData.submissions = [];
         fullData.submissions.unshift(subData);
         localStorage.setItem('cp_app_data', JSON.stringify(fullData));
+        localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions));
       } catch(e) {}
+
+      // Lưu trữ đồng thời vào Firebase Realtime Database để bảo tồn dữ liệu vĩnh viễn
+      if (typeof saveSubmissionToFirebase === 'function' && isFirebaseConfigured()) {
+        try {
+          await saveSubmissionToFirebase(subData);
+        } catch(e) {}
+      }
 
       // Sync to backend / Google Sheet
       const gasUrl = localStorage.getItem('cp_gas_sync_url') || (appData && appData.gas_sync_url) || '';
