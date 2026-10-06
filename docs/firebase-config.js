@@ -149,13 +149,14 @@ async function fetchSubmissionsFromFirebase() {
     if (!resp.ok) return null;
     const data = await resp.json();
     if (!data) return [];
+    let list = [];
     if (Array.isArray(data)) {
-      return data.filter(Boolean);
+      list = data.filter(Boolean);
+    } else if (typeof data === 'object') {
+      list = Object.values(data);
     }
-    if (typeof data === 'object') {
-      return Object.values(data);
-    }
-    return [];
+    // CHỈ LƯU VÀ XỬ LÝ BÀI NỘP CỦA WEB DERUCKOJ (loại bỏ các web khác: Marisa, CF, VJudge, CSES...)
+    return list.filter(isDeruckSubmission);
   } catch(err) {
     console.warn("Could not fetch submissions from Firebase:", err);
     return [];
@@ -163,12 +164,64 @@ async function fetchSubmissionsFromFirebase() {
 }
 
 /**
- * 3b. Bảo mật mã nguồn: Che giấu toàn bộ code/đáp án bài làm đối với học sinh và khách, chỉ Admin/Giáo viên được xem
+ * 3b. Kiểm tra bài tập có thuộc WEB DeruckOJ hay không
+ */
+function isDeruckProblem(probId, probObj) {
+  if (!probId && !probObj) return false;
+  if (probObj && probObj.platform === 'DeruckOJ') return true;
+  const pid = String(probId || (probObj ? probObj.id : '')).toUpperCase().trim();
+  if (pid.startsWith('CPP-') || pid.startsWith('PY-') || pid.startsWith('PY11-') || pid.startsWith('26TI-') || pid.startsWith('DERUCK-')) {
+    return true;
+  }
+  if (typeof appData !== 'undefined' && appData && Array.isArray(appData.problems)) {
+    const found = appData.problems.find(p => p && p.id && p.id.toUpperCase() === pid);
+    if (found && found.platform === 'DeruckOJ') return true;
+  }
+  return false;
+}
+
+/**
+ * 3c. Kiểm tra bài nộp có thuộc WEB DeruckOJ hay không (chỉ lưu bài nộp của WEB DeruckOJ)
+ */
+function isDeruckSubmission(sub) {
+  if (!sub) return false;
+  // Bài nộp trực tiếp từ trình chấm WEB DeruckOJ
+  if (sub.submission_type_display && sub.submission_type_display.includes('DeruckOJ')) return true;
+  if (sub.feedback && sub.feedback.includes('DeruckOJ')) return true;
+  if (sub.platform && sub.platform === 'DeruckOJ') return true;
+
+  // Thuộc bài tập của WEB DeruckOJ
+  if (isDeruckProblem(sub.problem_id)) return true;
+
+  // Bài nộp thuộc các web khác (MarisaOJ, Codeforces, VJudge, CSES, VNOI...) -> Bỏ qua
+  const pid = String(sub.problem_id || '').toUpperCase().trim();
+  if (pid.startsWith('MARISA-') || pid.startsWith('CF-') || pid.startsWith('VJ-') || pid.startsWith('CSES-') || pid.startsWith('VNOI-')) {
+    return false;
+  }
+
+  // Bài nộp giả lập SUB-AC sinh từ nền tảng ngoài
+  const sid = String(sub.id || '').toUpperCase().trim();
+  if (sid.startsWith('SUB-AC-MARISA') || sid.startsWith('SUB-AC-CF') || sid.startsWith('SUB-AC-VJ') || sid.startsWith('SUB-AC-CSES')) {
+    return false;
+  }
+
+  // Bài nộp hợp lệ của học sinh có code thật
+  if (sid.startsWith('SUB-') && !sid.startsWith('SUB-AC-') && sub.answer && !sub.answer.includes('// Trạng thái: Chấm đạt (AC) 100/100')) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * 3d. Bảo mật mã nguồn: Che giấu toàn bộ code/đáp án bài làm đối với học sinh và khách, chỉ Admin/Giáo viên được xem
  */
 function sanitizeSubmissionsForRole(submissions, isAdminOrTeacher) {
   if (!submissions || !Array.isArray(submissions)) return [];
-  if (isAdminOrTeacher) return submissions;
-  return submissions.map(s => {
+  // Lọc chỉ giữ lại bài nộp của WEB DeruckOJ
+  const deruckOnly = submissions.filter(isDeruckSubmission);
+  if (isAdminOrTeacher) return deruckOnly;
+  return deruckOnly.map(s => {
     if (!s) return s;
     return {
       ...s,
@@ -355,6 +408,10 @@ async function touchFirebaseLastUpdated() {
  */
 async function saveSubmissionToFirebase(subData) {
   if (!isFirebaseConfigured() || !subData) return false;
+  // CHỈ LƯU BÀI NỘP CỦA WEB DERUCKOJ (các web khác không lưu vào submissions)
+  if (typeof isDeruckSubmission === 'function' && !isDeruckSubmission(subData)) {
+    return false;
+  }
   const dbUrl = getFirebaseDatabaseUrl();
   try {
     const subId = subData.id || ('SUB-' + Date.now());

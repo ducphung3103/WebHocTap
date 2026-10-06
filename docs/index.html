@@ -186,10 +186,6 @@
 
         <!-- User Session & Right Quick Actions -->
         <div class="flex items-center gap-2 shrink-0">
-          <div id="sync-live-pill" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-950 border border-slate-800 text-slate-300" title="Tự động đồng bộ mỗi 5s (tiết kiệm quota)">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>5s Sync</span>
-          </div>
           <div id="user-badge" class="px-2 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1">
             <span>👤</span>
             <span id="user-display-name">Khách</span>
@@ -2738,14 +2734,15 @@
             const fbSubs = await fetchSubmissionsFromFirebase();
             if (fbSubs && fbSubs.length > 0) {
               const isAdminUser = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+              const deruckSubs = (typeof isDeruckSubmission === 'function') ? fbSubs.filter(isDeruckSubmission) : fbSubs;
               if (isAdminUser) {
                 try {
-                  localStorage.setItem('cp_raw_submissions_v2', JSON.stringify(fbSubs));
+                  localStorage.setItem('cp_raw_submissions_v2', JSON.stringify(deruckSubs));
                 } catch(e) {}
               }
               appData.submissions = (typeof sanitizeSubmissionsForRole === 'function')
-                ? sanitizeSubmissionsForRole(fbSubs, isAdminUser)
-                : fbSubs;
+                ? sanitizeSubmissionsForRole(deruckSubs, isAdminUser)
+                : deruckSubs;
               try {
                 localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions));
               } catch(e) {}
@@ -2755,16 +2752,17 @@
           }
         }
 
-        // 1b. Dự phòng: Ghép nối và bảo toàn toàn bộ bài nộp cục bộ chống mất dữ liệu khi reload cache
+        // 1b. Dự phòng: Ghép nối và bảo toàn toàn bộ bài nộp cục bộ (chỉ lưu bài nộp WEB DeruckOJ)
         const cachedSubs = localStorage.getItem('cp_cached_submissions');
         if (cachedSubs) {
           try {
             const parsed = JSON.parse(cachedSubs);
             if (Array.isArray(parsed) && parsed.length > 0) {
               const isAdminUser = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+              const deruckParsed = (typeof isDeruckSubmission === 'function') ? parsed.filter(isDeruckSubmission) : parsed;
               const sanitizedParsed = (typeof sanitizeSubmissionsForRole === 'function') 
-                ? sanitizeSubmissionsForRole(parsed, isAdminUser) 
-                : parsed;
+                ? sanitizeSubmissionsForRole(deruckParsed, isAdminUser) 
+                : deruckParsed;
               if (!appData.submissions || appData.submissions.length === 0) {
                 appData.submissions = sanitizedParsed;
               } else {
@@ -2774,6 +2772,9 @@
                   }
                 });
               }
+              try {
+                localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions));
+              } catch(e) {}
             }
           } catch(e) {}
         }
@@ -3006,14 +3007,15 @@
           }
         }
 
-        // Tải danh sách bài nộp từ Firebase (Bảo mật: Chỉ Admin mới được xem mã nguồn)
+        // Tải danh sách bài nộp từ Firebase (Chỉ lưu & hiển thị bài nộp của WEB DeruckOJ)
         if (fbReady && typeof fetchSubmissionsFromFirebase === 'function') {
           const fbSubs = await fetchSubmissionsFromFirebase();
           if (fbSubs && fbSubs.length > 0) {
             const isAdmin = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+            const deruckSubs = (typeof isDeruckSubmission === 'function') ? fbSubs.filter(isDeruckSubmission) : fbSubs;
             appData.submissions = (typeof sanitizeSubmissionsForRole === 'function')
-              ? sanitizeSubmissionsForRole(fbSubs, isAdmin)
-              : fbSubs;
+              ? sanitizeSubmissionsForRole(deruckSubs, isAdmin)
+              : deruckSubs;
             try { localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions)); } catch(e) {}
           }
         }
@@ -3069,7 +3071,9 @@
           }
         }
 
-        showLiveToast('⚡ Bảng xếp hạng vừa tự động cập nhật bài nộp mới!');
+        if (force) {
+          showLiveToast('⚡ Bảng xếp hạng vừa cập nhật dữ liệu mới nhất!');
+        }
       } catch(e) {
         console.warn("Live auto refresh error:", e);
       } finally {
@@ -9794,7 +9798,7 @@ OUTPUT:
         }
       });
 
-      // 3. Bảo vệ lịch sử bài nộp: Đồng bộ 2 chiều các bài đã AC trong kho bài tập vào allSubs
+      // 3. Bảo vệ lịch sử bài nộp: Chỉ lưu bài nộp của WEB DeruckOJ (các web khác chỉ đồng bộ trong 5s để tính điểm/AC)
       const probMap = {};
       (appData.problems || []).forEach(p => probMap[p.id] = p);
 
@@ -9802,7 +9806,9 @@ OUTPUT:
         if (!s || !s.solved || !Array.isArray(s.solved)) return;
         s.solved.forEach(pId => {
           const prob = probMap[pId];
-          if (!prob) return;
+          // CHỈ lưu bài nộp nếu thuộc WEB DeruckOJ! Các web khác (Marisa, CF, VJudge, CSES...) bỏ qua không sinh bài nộp
+          if (typeof isDeruckProblem === 'function' && !isDeruckProblem(pId, prob)) return;
+
           const hasSub = allSubs.some(sub => sub && sub.problem_id === pId && (
             (sub.student_name && s.name && sub.student_name.trim().toLowerCase() === s.name.trim().toLowerCase()) ||
             (sub.student_stt && s.stt && Number(sub.student_stt) === Number(s.stt))
@@ -9817,18 +9823,25 @@ OUTPUT:
               student_name: s.name,
               class_name: s.class || 'C++ cơ bản',
               problem_id: pId,
-              problem_name: prob.name,
+              problem_name: prob ? prob.name : pId,
               type: 'essay',
-              submission_type_display: 'Code Online Judge',
-              answer: `[C++20]\n// Bài làm của học sinh: ${s.name}\n// Bài tập: ${prob.name} (${pId})\n// Trạng thái: Chấm đạt (AC) 100/100`,
+              submission_type_display: 'Code DeruckOJ',
+              answer: `[C++20]\n// Bài làm của học sinh: ${s.name}\n// Bài tập: ${prob ? prob.name : pId} (${pId})\n// Trạng thái: Chấm đạt (AC) 100/100`,
               status: 'Chấm đạt',
               score: '10',
-              feedback: 'Tự động đồng bộ từ Online Judge: AC (Chấm đạt 100/100 điểm).'
+              feedback: 'Tự động đồng bộ từ DeruckOJ: AC (Chấm đạt 100/100 điểm).'
             };
             allSubs.push(newSub);
           }
         });
       });
+
+      // Lọc sạch toàn bộ bài nộp trong bộ nhớ: Chỉ lưu bài nộp của WEB DeruckOJ
+      if (typeof isDeruckSubmission === 'function') {
+        appData.submissions = allSubs.filter(isDeruckSubmission);
+      } else {
+        appData.submissions = allSubs;
+      }
 
       try {
         localStorage.setItem('cp_cached_students', JSON.stringify(appData.students));
@@ -9843,7 +9856,9 @@ OUTPUT:
       const loadMoreContainer = document.getElementById('submissions-loadmore-container');
       if (!tbody) return;
 
-      const allSubs = (appData && Array.isArray(appData.submissions)) ? appData.submissions : [];
+      const rawSubs = (appData && Array.isArray(appData.submissions)) ? appData.submissions : [];
+      // CHỈ LƯU VÀ HIỂN THỊ BÀI NỘP CỦA WEB DERUCKOJ
+      const allSubs = (typeof isDeruckSubmission === 'function') ? rawSubs.filter(isDeruckSubmission) : rawSubs;
       if (countBadge) countBadge.textContent = `${allSubs.length} bài nộp`;
 
       const searchInput = document.getElementById('subs-search-input');

@@ -625,9 +625,10 @@
             const parsed = JSON.parse(cachedSubs);
             if (Array.isArray(parsed) && parsed.length > 0) {
               const isAdminUser = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+              const deruckParsed = (typeof isDeruckSubmission === 'function') ? parsed.filter(isDeruckSubmission) : parsed;
               appData.submissions = (typeof sanitizeSubmissionsForRole === 'function')
-                ? sanitizeSubmissionsForRole(parsed, isAdminUser)
-                : parsed;
+                ? sanitizeSubmissionsForRole(deruckParsed, isAdminUser)
+                : deruckParsed;
             }
           } catch(e) {}
         }
@@ -1689,7 +1690,9 @@
         const selector = document.getElementById('student-selector');
         const curId = currentStudent ? currentStudent.stt : (selector ? parseInt(selector.value) : 1);
         loadStudentProfile(curId);
-        showLiveToast('⚡ Dữ liệu bài nộp & hồ sơ vừa được cập nhật tự động!');
+        if (force) {
+          showLiveToast('⚡ Dữ liệu bài nộp & hồ sơ vừa được cập nhật!');
+        }
       } catch (e) {
       } finally {
         isRefreshingLiveStudent = false;
