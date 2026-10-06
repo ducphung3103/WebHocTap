@@ -208,6 +208,52 @@ function findStudentSubmission(submissions, probId, studentIdentifier) {
 }
 
 /**
+ * 3d. Cập nhật bài đã giải (AC) của học sinh lên Firebase Realtime Database
+ */
+async function saveStudentSolvedToFirebase(studentIdent, probId) {
+  if (!isFirebaseConfigured() || !studentIdent || !probId) return false;
+  const dbUrl = getFirebaseDatabaseUrl();
+  try {
+    const students = await fetchStudentsFromFirebase();
+    if (students && Array.isArray(students)) {
+      let idx = -1;
+      if (typeof studentIdent === 'number') {
+        idx = students.findIndex(s => s && s.stt === studentIdent);
+      } else if (typeof studentIdent === 'string') {
+        const sLower = studentIdent.trim().toLowerCase();
+        idx = students.findIndex(s => s && (
+          (s.name && s.name.trim().toLowerCase() === sLower) ||
+          (s.pin && s.pin === studentIdent)
+        ));
+      } else if (typeof studentIdent === 'object') {
+        idx = students.findIndex(s => s && (
+          (studentIdent.stt && s.stt === studentIdent.stt) ||
+          (studentIdent.name && s.name && s.name.trim().toLowerCase() === studentIdent.name.trim().toLowerCase())
+        ));
+      }
+
+      if (idx !== -1) {
+        const student = students[idx];
+        if (!student.solved) student.solved = [];
+        if (!student.solved.includes(probId)) {
+          student.solved.push(probId);
+          const resp = await fetch(`${dbUrl}/students/${idx}/solved.json`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(student.solved)
+          });
+          return resp.ok;
+        }
+        return true;
+      }
+    }
+  } catch(err) {
+    console.warn("Could not save student solved to Firebase:", err);
+  }
+  return false;
+}
+
+/**
  * 4. Lưu toàn bộ danh sách học sinh lên Firebase
  */
 async function saveStudentsToFirebase(students) {

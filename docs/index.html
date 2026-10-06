@@ -159,30 +159,37 @@
           </div>
         </a>
 
-        <!-- Navigation Tabs -->
+        <!-- DMOJ Primary Navigation Tabs -->
         <nav class="hidden md:flex items-center space-x-1 font-semibold text-xs" id="nav-tabs">
-          <button onclick="switchTab('home')" id="tab-btn-home" class="tab-btn active px-2.5 py-1.5 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1 transition cursor-pointer">
-            🏠 Trang Chủ
+          <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
+            <span>📝</span> Bài Tập
           </button>
-          <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
-            🏆 Bảng Xếp Hạng
+          <button onclick="switchTab('submissions')" id="tab-btn-submissions" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
+            <span>⚡</span> Bài Nộp
           </button>
-          <button onclick="switchTab('contests')" id="tab-btn-contests" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
-            ⚔️ Contest
+          <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
+            <span>🏆</span> Xếp Hạng
           </button>
-          <button onclick="switchTab('problems')" id="tab-btn-problems" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
-            📝 Bài Tập
+          <button onclick="switchTab('contests')" id="tab-btn-contests" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
+            <span>⚔️</span> Kỳ Thi
           </button>
-          <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer">
-            📚 Bài Giảng
+          <button onclick="switchTab('curriculum')" id="tab-btn-curriculum" class="tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer">
+            <span>📚</span> Giáo Trình
           </button>
-          <a href="student.html" id="tab-btn-student" class="tab-btn px-2.5 py-1.5 rounded-lg text-indigo-300 hover:text-white hover:bg-indigo-600/20 border border-transparent hover:border-indigo-500/30 flex items-center gap-1 transition">
-            👤 Cá Nhân
+          <button onclick="switchTab('home')" id="tab-btn-home" class="tab-btn active px-2.5 py-1.5 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition cursor-pointer">
+            <span>🏠</span> Giới Thiệu
+          </button>
+          <a href="student.html" id="tab-btn-student" class="tab-btn px-2.5 py-1.5 rounded-lg text-indigo-300 hover:text-white hover:bg-indigo-600/20 border border-transparent hover:border-indigo-500/30 flex items-center gap-1.5 transition">
+            <span>👤</span> Cá Nhân
           </a>
         </nav>
 
         <!-- User Session & Right Quick Actions -->
         <div class="flex items-center gap-2 shrink-0">
+          <div id="sync-live-pill" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-950 border border-slate-800 text-slate-300" title="Tự động đồng bộ mỗi 5s (tiết kiệm quota)">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>5s Sync</span>
+          </div>
           <div id="user-badge" class="px-2 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1">
             <span>👤</span>
             <span id="user-display-name">Khách</span>
@@ -194,13 +201,14 @@
         </div>
       </div>
 
-      <!-- Mobile Tab Bar -->
+      <!-- Mobile Tab Bar (DMOJ) -->
       <div class="flex md:hidden overflow-x-auto py-1.5 space-x-1 border-t border-slate-800 text-xs">
-        <button onclick="switchTab('home')" id="tab-btn-home-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold">🏠 Trang chủ</button>
+        <button onclick="switchTab('problems')" id="tab-btn-problems-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
+        <button onclick="switchTab('submissions')" id="tab-btn-submissions-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">⚡ Bài nộp</button>
         <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">🏆 BXH</button>
         <button onclick="switchTab('contests')" id="tab-btn-contests-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</button>
-        <button onclick="switchTab('problems')" id="tab-btn-problems-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
-        <button onclick="switchTab('curriculum')" id="tab-btn-curriculum-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</button>
+        <button onclick="switchTab('curriculum')" id="tab-btn-curriculum-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📚 Giáo trình</button>
+        <button onclick="switchTab('home')" id="tab-btn-home-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold">🏠 Giới thiệu</button>
         <a href="student.html" id="tab-btn-student-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-indigo-300 bg-indigo-600/20">👤 Cá nhân</a>
       </div>
     </div>
@@ -1216,11 +1224,11 @@
                   <thead class="text-[11px] text-slate-500 uppercase border-b border-slate-800">
                     <tr>
                       <th class="py-2.5 px-3">Thời gian</th>
-                      <th class="py-2.5 px-3">Mã bài</th>
+                      <th class="py-2.5 px-3">Học viên / Mã bài</th>
                       <th class="py-2.5 px-3">Ngôn ngữ</th>
                       <th class="py-2.5 px-3">Kết quả</th>
                       <th class="py-2.5 px-3">Điểm số</th>
-                      <th class="py-2.5 px-3 text-right">Xem lại</th>
+                      <th class="py-2.5 px-3 text-right">Mã nguồn</th>
                     </tr>
                   </thead>
                   <tbody id="judge-history-body" class="divide-y divide-slate-800/60 font-mono">
@@ -1234,6 +1242,82 @@
 
         </div>
       </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION: BẢNG CHẤM BÀI TOÀN HỆ THỐNG (DMOJ SUBMISSIONS) -->
+    <!-- ========================================== -->
+    <section id="section-submissions" class="space-y-6 hidden">
+      <!-- DMOJ SUBMISSIONS HEADER & FILTERS -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-4 rounded-2xl shadow-xl">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold text-lg shadow-inner">
+            ⚡
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base sm:text-lg font-black text-white tracking-tight">DMOJ Submissions</h2>
+              <span id="submissions-count-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">0 bài nộp</span>
+            </div>
+            <p class="text-xs text-slate-400">Dòng sự kiện chấm bài &amp; lịch sử nộp bài toàn hệ thống theo thời gian thực</p>
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <div class="relative">
+            <input 
+              type="text" 
+              id="subs-search-input" 
+              oninput="renderGlobalSubmissions()" 
+              placeholder="🔍 Tìm tên, mã bài..." 
+              class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono w-44 sm:w-52"
+            />
+          </div>
+
+          <select id="subs-verdict-filter" onchange="renderGlobalSubmissions()" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 font-mono focus:outline-none focus:border-indigo-500 cursor-pointer">
+            <option value="all">📊 Mọi kết quả</option>
+            <option value="AC">✓ AC (Đạt)</option>
+            <option value="WA">✗ WA (Sai test)</option>
+            <option value="TLE">⏱️ TLE (Quá giờ)</option>
+            <option value="CE">⚠️ CE (Lỗi dịch)</option>
+            <option value="RTE">💥 RTE (Lỗi chạy)</option>
+          </select>
+
+          <select id="subs-lang-filter" onchange="renderGlobalSubmissions()" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 font-mono focus:outline-none focus:border-indigo-500 cursor-pointer">
+            <option value="all">💻 Mọi ngôn ngữ</option>
+            <option value="cpp">🟦 C++20</option>
+            <option value="python">🐍 Python 3</option>
+          </select>
+
+          <button onclick="checkAndApplyLiveUpdates(true)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs transition cursor-pointer" title="Làm mới bài nộp ngay">
+            🔄
+          </button>
+        </div>
+      </div>
+
+      <!-- DMOJ SUBMISSIONS TABLE -->
+      <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60 shadow-xl">
+        <table class="w-full text-left text-xs sm:text-sm text-slate-300">
+          <thead class="bg-slate-800/90 text-[11px] sm:text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
+            <tr>
+              <th class="py-3 px-3 w-16 text-center font-mono">#ID</th>
+              <th class="py-3 px-3 w-32 font-mono">Thời gian</th>
+              <th class="py-3 px-3">Học viên</th>
+              <th class="py-3 px-3">Bài tập</th>
+              <th class="py-3 px-3 text-center w-24">Ngôn ngữ</th>
+              <th class="py-3 px-3 text-center w-28">Kết quả</th>
+              <th class="py-3 px-3 text-center w-20 font-mono">Điểm</th>
+              <th class="py-3 px-3 text-center hidden md:table-cell w-32 font-mono">Thời gian</th>
+              <th class="py-3 px-3 text-right w-28">Mã nguồn</th>
+            </tr>
+          </thead>
+          <tbody id="submissions-table-body" class="divide-y divide-slate-800/70 font-sans">
+            <!-- Populated dynamically via renderGlobalSubmissions() -->
+          </tbody>
+        </table>
+      </div>
+      <div id="submissions-loadmore-container" class="text-center pt-2"></div>
     </section>
 
     <!-- TAB 4: BÀI GIẢNG & LÝ THUYẾT (LMS) -->
@@ -2521,66 +2605,73 @@
 
         <!-- Student's Submission Content Review -->
         <div class="space-y-1 text-xs">
-          <label class="block font-bold text-slate-300">
-            📄 Bài làm của học sinh:
-          </label>
+          <div class="flex items-center justify-between">
+            <label class="block font-bold text-slate-300">
+              📄 Bài làm của học sinh:
+            </label>
+            <button type="button" onclick="copyGradeAnswerContent()" class="text-xs text-indigo-400 hover:text-indigo-200 cursor-pointer flex items-center gap-1 font-semibold">
+              <span>📋</span> Sao chép code
+            </button>
+          </div>
           <div id="grade-sub-answer-content" class="w-full max-h-48 overflow-y-auto bg-slate-950 border border-slate-700/80 rounded-xl p-3 font-mono text-xs text-slate-200 whitespace-pre-wrap leading-relaxed select-text">
             --
           </div>
         </div>
 
-        <!-- Grade Form Controls -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <!-- Status -->
-          <div class="space-y-1">
-            <label class="block font-bold text-slate-300">
-              📊 Trạng thái chấm:
-            </label>
-            <select id="grade-form-status" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-indigo-500">
-              <option value="Chấm đạt">✅ Chấm đạt</option>
-              <option value="Hoàn thành">🌟 Hoàn thành</option>
-              <option value="Cần sửa">⚠️ Cần sửa lại</option>
-              <option value="Chưa đạt">❌ Chưa đạt</option>
-              <option value="Đã nộp">⏳ Đã nộp</option>
-            </select>
-          </div>
-          <!-- Score -->
-          <div class="space-y-1">
-            <label class="block font-bold text-slate-300">
-              💯 Điểm số (Thang 10):
-            </label>
-            <input type="number" id="grade-form-score" min="0" max="10" step="0.5" placeholder="Ví dụ: 10 hoặc 9.5"
-              class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:outline-none focus:border-indigo-500">
-          </div>
-        </div>
-
-        <!-- Quick Score Presets -->
-        <div class="flex items-center gap-1.5 flex-wrap text-[11px]">
-          <span class="text-slate-500">Mẫu điểm nhanh:</span>
-          <button type="button" onclick="setQuickGrade(10, 'Chấm đạt', 'Xuất sắc! Lời giải chính xác và tối ưu.')" class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25 border border-emerald-500/30">10 điểm (Xuất sắc)</button>
-          <button type="button" onclick="setQuickGrade(9, 'Chấm đạt', 'Làm tốt! Đáp án đúng, trình bày rõ ràng.')" class="px-2 py-0.5 rounded bg-blue-500/15 text-blue-300 hover:bg-blue-500/25 border border-blue-500/30">9 điểm (Tốt)</button>
-          <button type="button" onclick="setQuickGrade(8, 'Chấm đạt', 'Khá tốt! Cần chú ý thêm trường hợp biên.')" class="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300 hover:bg-indigo-500/25 border border-indigo-500/30">8 điểm (Khá)</button>
-          <button type="button" onclick="setQuickGrade('', 'Cần sửa', 'Cần kiểm tra lại kết quả và nộp lại.')" class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30">Cần sửa lại</button>
-        </div>
-
-        <!-- Teacher Feedback -->
-        <div class="space-y-1 text-xs">
-          <div class="flex items-center justify-between">
-            <label class="block font-bold text-slate-300">
-              💬 Nhận xét của Thầy:
-            </label>
-            <div class="flex items-center gap-1 text-[10px] text-slate-500">
-              <span>Gợi ý nhanh</span>
+        <!-- Grade Form Controls (Admin & Teacher Only) -->
+        <div id="grade-modal-admin-controls" class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <!-- Status -->
+            <div class="space-y-1">
+              <label class="block font-bold text-slate-300">
+                📊 Trạng thái chấm:
+              </label>
+              <select id="grade-form-status" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-indigo-500">
+                <option value="Chấm đạt">✅ Chấm đạt</option>
+                <option value="Hoàn thành">🌟 Hoàn thành</option>
+                <option value="Cần sửa">⚠️ Cần sửa lại</option>
+                <option value="Chưa đạt">❌ Chưa đạt</option>
+                <option value="Đã nộp">⏳ Đã nộp</option>
+              </select>
+            </div>
+            <!-- Score -->
+            <div class="space-y-1">
+              <label class="block font-bold text-slate-300">
+                💯 Điểm số (Thang 10):
+              </label>
+              <input type="number" id="grade-form-score" min="0" max="10" step="0.5" placeholder="Ví dụ: 10 hoặc 9.5"
+                class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:outline-none focus:border-indigo-500">
             </div>
           </div>
-          <textarea id="grade-form-feedback" rows="3" placeholder="Viết lời khen, gợi ý hoặc sửa lỗi cho học sinh..."
-            class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500"></textarea>
-          <!-- Feedback chips -->
-          <div class="flex items-center gap-1 flex-wrap text-[10px] pt-1">
-            <button type="button" onclick="appendFeedback('🌟 Giải thuật tối ưu, cách giải rất sáng tạo!')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">🌟 Giải thuật tối ưu</button>
-            <button type="button" onclick="appendFeedback('👍 Đúng kết quả, trình bày mạch lạc!')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">👍 Đúng kết quả</button>
-            <button type="button" onclick="appendFeedback('⚠️ Chú ý kiểm tra trường hợp biên (0, số âm, mảng rỗng)!')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">⚠️ Kiểm tra trường hợp biên</button>
-            <button type="button" onclick="appendFeedback('🔄 Xem lại bước chia lấy dư hoặc tràn số nguyên lớn!')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">🔄 Tràn số / Chia dư</button>
+
+          <!-- Quick Score Presets -->
+          <div class="flex items-center gap-1.5 flex-wrap text-[11px]">
+            <span class="text-slate-500">Mẫu điểm nhanh:</span>
+            <button type="button" onclick="setQuickGrade(10, 'Chấm đạt', 'Xuất sắc! Lời giải chính xác và tối ưu.')" class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25 border border-emerald-500/30">10 điểm (Xuất sắc)</button>
+            <button type="button" onclick="setQuickGrade(9, 'Chấm đạt', 'Làm tốt! Đáp án đúng, trình bày rõ ràng.')" class="px-2 py-0.5 rounded bg-blue-500/15 text-blue-300 hover:bg-blue-500/25 border border-blue-500/30">9 điểm (Tốt)</button>
+            <button type="button" onclick="setQuickGrade(8, 'Chấm đạt', 'Khá tốt! Cần chú ý thêm trường hợp biên.')" class="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300 hover:bg-indigo-500/25 border border-indigo-500/30">8 điểm (Khá)</button>
+            <button type="button" onclick="setQuickGrade('', 'Cần sửa', 'Cần kiểm tra lại kết quả và nộp lại.')" class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30">Cần sửa lại</button>
+          </div>
+
+          <!-- Teacher Feedback -->
+          <div class="space-y-1 text-xs">
+            <div class="flex items-center justify-between">
+              <label class="block font-bold text-slate-300">
+                💬 Nhận xét của Thầy:
+              </label>
+              <div class="flex items-center gap-1 text-[10px] text-slate-500">
+                <span>Gợi ý nhanh</span>
+              </div>
+            </div>
+            <textarea id="grade-form-feedback" rows="3" placeholder="Viết lời khen, gợi ý hoặc sửa lỗi cho học sinh..."
+              class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500"></textarea>
+            <!-- Feedback chips -->
+            <div class="flex items-center gap-1 flex-wrap text-[10px] pt-1">
+              <button type="button" onclick="appendFeedback('🌟 Giải thuật tối ưu, cách giải rất sáng tạo!')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">🌟 Giải thuật tối ưu</button>
+              <button type="button" onclick="appendFeedback('👍 Đúng kết quả, trình bày mạch lạc!')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">👍 Đúng kết quả</button>
+              <button type="button" onclick="appendFeedback('⚠️ Chú ý kiểm tra trường hợp biên (0, số âm, mảng rỗng)!')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">⚠️ Kiểm tra trường hợp biên</button>
+              <button type="button" onclick="appendFeedback('🔄 Xem lại bước chia lấy dư hoặc tràn số nguyên lớn!')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">🔄 Tràn số / Chia dư</button>
+            </div>
           </div>
         </div>
 
@@ -2646,10 +2737,11 @@
             }
             const fbSubs = await fetchSubmissionsFromFirebase();
             if (fbSubs && fbSubs.length > 0) {
+              try {
+                localStorage.setItem('cp_raw_submissions_v2', JSON.stringify(fbSubs));
+              } catch(e) {}
               const isAdminUser = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
-              appData.submissions = (typeof sanitizeSubmissionsForRole === 'function') 
-                ? sanitizeSubmissionsForRole(fbSubs, isAdminUser) 
-                : fbSubs;
+              appData.submissions = fbSubs;
               try {
                 localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions));
               } catch(e) {}
@@ -2791,10 +2883,16 @@
         }
       } catch(e) {}
 
+      if (typeof reconcileStudentSolvedState === 'function') {
+        reconcileStudentSolvedState();
+      }
       renderMatrix();
       renderProblems();
       renderCurriculum();
       renderContests();
+      if (typeof renderGlobalSubmissions === 'function') {
+        renderGlobalSubmissions();
+      }
       startCountdown();
 
       // Check access authentication via Cookie
@@ -2811,7 +2909,7 @@
         } else if (hashRaw === 'judge') {
           switchTab('problems');
           toggleProblemViewMode('judge');
-        } else if (['home', 'leaderboard', 'contests', 'problems', 'curriculum', 'admin'].includes(hashRaw)) {
+        } else if (['home', 'problems', 'submissions', 'leaderboard', 'contests', 'curriculum', 'admin'].includes(hashRaw)) {
           if (currentAuth || hashRaw === 'home') {
             switchTab(hashRaw);
           } else {
@@ -2941,10 +3039,16 @@
         } catch(e) {}
 
         // Tự động render lại toàn bộ giao diện theo dữ liệu mới
+        if (typeof reconcileStudentSolvedState === 'function') {
+          reconcileStudentSolvedState();
+        }
         renderMatrix();
         renderProblems();
         renderCurriculum();
         renderContests();
+        if (typeof renderGlobalSubmissions === 'function') {
+          renderGlobalSubmissions();
+        }
         if (typeof renderJudgeWorkspace === 'function' && currentProblemViewMode === 'judge') {
           renderJudgeWorkspace();
         }
@@ -3006,7 +3110,7 @@
 
       window.location.hash = tabName;
 
-      const sections = ['home', 'leaderboard', 'contests', 'problems', 'curriculum'];
+      const sections = ['home', 'problems', 'submissions', 'leaderboard', 'contests', 'curriculum'];
       sections.forEach(s => {
         const el = document.getElementById(`section-${s}`);
         const btn = document.getElementById(`tab-btn-${s}`);
@@ -3014,13 +3118,13 @@
         if (s === tabName) {
           if (el) el.classList.remove('hidden');
           if (btn) {
-            btn.className = "tab-btn active px-2.5 py-1.5 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1 transition font-semibold cursor-pointer";
+            btn.className = "tab-btn active px-2.5 py-1.5 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1.5 transition font-semibold cursor-pointer";
           }
           if (mBtn) mBtn.className = "tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold";
         } else {
           if (el) el.classList.add('hidden');
           if (btn) {
-            btn.className = "tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition cursor-pointer";
+            btn.className = "tab-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1.5 transition cursor-pointer";
           }
           if (mBtn) mBtn.className = "tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400";
         }
@@ -3032,6 +3136,10 @@
         } else {
           renderProblems();
         }
+      } else if (tabName === 'submissions') {
+        renderGlobalSubmissions();
+      } else if (tabName === 'leaderboard') {
+        renderMatrix();
       }
     }
 
@@ -7742,7 +7850,11 @@
           };
           appData.submissions.unshift(subData);
           saveAppDataLocally();
-          try { localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions)); } catch(e) {}
+          try {
+            localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions));
+            localStorage.setItem('cp_raw_submissions_v2', JSON.stringify(appData.submissions));
+          } catch(e) {}
+          if (typeof renderGlobalSubmissions === 'function') renderGlobalSubmissions();
 
           // Lưu trữ vĩnh viễn lên Firebase Realtime Database
           if (typeof saveSubmissionToFirebase === 'function' && isFirebaseConfigured()) {
@@ -7830,17 +7942,28 @@
           if (!student.solved) student.solved = [];
           if (!student.solved.includes(probId)) {
             student.solved.push(probId);
-            saveAppDataLocally();
-            renderProblems();
-            renderMatrix();
-            showLiveToast(`🎉 Chúc mừng ${student.name}! Bài ${probId} đã được ghi nhận hoàn thành.`);
-            
-            // Update status badge on active workspace
-            const statusBadge = document.getElementById('judge-prob-status-badge');
-            if (statusBadge) {
-              statusBadge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
-              statusBadge.textContent = "✅ Đã Hoàn Thành (AC)";
-            }
+          }
+          const key = (student.name || '').trim().toLowerCase();
+          try {
+            localStorage.setItem('deruck_solved_backup_' + key, JSON.stringify(student.solved));
+            localStorage.setItem('cp_cached_students', JSON.stringify(appData.students));
+          } catch(e) {}
+          saveAppDataLocally();
+          if (typeof saveStudentsToFirebase === 'function' && isFirebaseConfigured()) {
+            saveStudentsToFirebase(appData.students).catch(() => {});
+          }
+          if (typeof saveStudentSolvedToFirebase === 'function' && isFirebaseConfigured()) {
+            saveStudentSolvedToFirebase(student.stt || student.name, probId).catch(() => {});
+          }
+          renderProblems();
+          renderMatrix();
+          if (typeof renderGlobalSubmissions === 'function') renderGlobalSubmissions();
+          showLiveToast(`🎉 Chúc mừng ${student.name}! Bài ${probId} đã được ghi nhận hoàn thành.`);
+          
+          const statusBadge = document.getElementById('judge-prob-status-badge');
+          if (statusBadge) {
+            statusBadge.className = "px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+            statusBadge.textContent = "✅ Đã Hoàn Thành (AC)";
           }
         }
       }
@@ -7863,39 +7986,87 @@
 
       try {
         const historyJson = localStorage.getItem('deruck_judge_history');
-        const list = historyJson ? JSON.parse(historyJson) : [];
-        if (list.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" class="py-3 text-center text-slate-500 italic">Chưa có bài nộp nào.</td></tr>';
+        const localList = historyJson ? JSON.parse(historyJson) : [];
+        
+        const platformSubs = (appData && Array.isArray(appData.submissions)) 
+          ? appData.submissions.filter(s => s && s.problem_id === currentJudgeProbId) 
+          : [];
+
+        const isAdmin = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+
+        if (platformSubs.length === 0 && localList.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="py-4 text-center text-slate-500 italic">Chưa có bài nộp nào cho bài này.</td></tr>';
           return;
         }
 
         tbody.innerHTML = '';
-        list.forEach((sub, idx) => {
-          const tr = document.createElement('tr');
-          const isAC = (sub.verdict === 'AC');
-          let vBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold ${
-            isAC 
-              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' 
-              : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-          }">${sub.verdict}</span>`;
 
-          const isPy = (sub.lang && sub.lang.toLowerCase().includes('python'));
-          const lBadge = isPy
-            ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">🐍 Python 3</span>`
-            : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">🟦 C++20</span>`;
+        if (platformSubs.length > 0) {
+          platformSubs.slice(0, 15).forEach((sub, idx) => {
+            const tr = document.createElement('tr');
+            const isAC = (sub.status === 'Chấm đạt' || sub.status === 'Hoàn thành' || (sub.feedback && sub.feedback.includes('AC')) || sub.verdict === 'AC');
+            const isWA = (sub.verdict === 'WA' || (sub.feedback && sub.feedback.includes('WA')) || (sub.status === 'Cần sửa' && (!sub.feedback || !sub.feedback.includes('TLE'))));
+            const isTLE = (sub.verdict === 'TLE' || (sub.feedback && sub.feedback.includes('TLE')));
+            const isCE = (sub.verdict === 'CE' || (sub.feedback && sub.feedback.includes('CE')));
 
-          tr.innerHTML = `
-            <td class="py-2.5 px-2 text-slate-400">${sub.time}</td>
-            <td class="py-2.5 px-2 font-bold text-white">${sub.probId}</td>
-            <td class="py-2.5 px-2">${lBadge}</td>
-            <td class="py-2.5 px-2">${vBadge}</td>
-            <td class="py-2.5 px-2 font-bold ${isAC ? 'text-emerald-400' : 'text-slate-300'}">${sub.score}/100</td>
-            <td class="py-2.5 px-2 text-right">
-              <button onclick="restoreJudgeCodeFromHistory(${idx})" class="text-indigo-400 hover:text-indigo-300 hover:underline font-semibold cursor-pointer">Lấy code</button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
+            let vBadge = '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-300">Đã nộp</span>';
+            if (isAC) vBadge = '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">✓ AC</span>';
+            else if (isCE) vBadge = '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">⚠️ CE</span>';
+            else if (isTLE) vBadge = '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">⏱️ TLE</span>';
+            else if (isWA) vBadge = '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">✗ WA</span>';
+
+            const isPy = (sub.answer && sub.answer.includes('[Python')) || (sub.lang && sub.lang.toLowerCase().includes('python'));
+            const lBadge = isPy
+              ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">🐍 Python 3</span>`
+              : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">🟦 C++20</span>`;
+
+            const isAuthor = Boolean(currentAuth && (
+              (currentAuth.name && sub.student_name && currentAuth.name.toLowerCase() === sub.student_name.toLowerCase()) ||
+              (currentAuth.pin && sub.student_pin && currentAuth.pin === sub.student_pin) ||
+              (currentAuth.stt && sub.student_stt && Number(currentAuth.stt) === Number(sub.student_stt))
+            ));
+            const canView = isAdmin || isAuthor;
+
+            const actionBtn = canView 
+              ? `<button onclick="viewSubmissionCodeModal('${sub.id}')" class="text-indigo-400 hover:text-indigo-200 font-semibold cursor-pointer">👁️ Xem code</button>`
+              : `<span class="text-[10px] text-slate-500 font-mono">🔒 Riêng tư</span>`;
+
+            tr.innerHTML = `
+              <td class="py-2.5 px-3 text-slate-400 font-mono text-[11px]">${sub.submitted_at || '--'}</td>
+              <td class="py-2.5 px-3 font-bold text-white text-xs">${escapeHtml(sub.student_name || 'Học sinh')}</td>
+              <td class="py-2.5 px-3">${lBadge}</td>
+              <td class="py-2.5 px-3">${vBadge}</td>
+              <td class="py-2.5 px-3 font-bold font-mono text-xs ${isAC ? 'text-emerald-400' : 'text-slate-300'}">${sub.score !== undefined ? sub.score : '--'}</td>
+              <td class="py-2.5 px-3 text-right">${actionBtn}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } else {
+          localList.forEach((sub, idx) => {
+            const tr = document.createElement('tr');
+            const isAC = (sub.verdict === 'AC');
+            let vBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold ${
+              isAC ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+            }">${sub.verdict}</span>`;
+
+            const isPy = (sub.lang && sub.lang.toLowerCase().includes('python'));
+            const lBadge = isPy
+              ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">🐍 Python 3</span>`
+              : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">🟦 C++20</span>`;
+
+            tr.innerHTML = `
+              <td class="py-2.5 px-3 text-slate-400 font-mono text-[11px]">${sub.time}</td>
+              <td class="py-2.5 px-3 font-bold text-white text-xs">${sub.probId}</td>
+              <td class="py-2.5 px-3">${lBadge}</td>
+              <td class="py-2.5 px-3">${vBadge}</td>
+              <td class="py-2.5 px-3 font-bold font-mono text-xs ${isAC ? 'text-emerald-400' : 'text-slate-300'}">${sub.score}/100</td>
+              <td class="py-2.5 px-3 text-right">
+                <button onclick="restoreJudgeCodeFromHistory(${idx})" class="text-indigo-400 hover:text-indigo-300 hover:underline font-semibold cursor-pointer">Lấy code</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
       } catch (e) {
         tbody.innerHTML = '<tr><td colspan="6" class="py-3 text-center text-slate-500 italic">Lỗi hiển thị lịch sử nộp bài.</td></tr>';
       }
@@ -9730,6 +9901,320 @@ OUTPUT:
         renderProblems();
         showLiveToast("Đã xóa bài nộp.");
       }
+    }
+
+    // ============================================================
+    // DMOJ GLOBAL SUBMISSIONS STREAM & RECONCILIATION ENGINE
+    // ============================================================
+    let currentSubmissionsDisplayLimit = 50;
+
+    function loadMoreSubmissions() {
+      currentSubmissionsDisplayLimit += 50;
+      renderGlobalSubmissions();
+    }
+
+    // SAO CHÉP MÃ NGUỒN TỪ MODAL XEM BÀI
+    function copyGradeAnswerContent() {
+      const el = document.getElementById('grade-sub-answer-content');
+      if (!el) return;
+      const text = el.textContent || '';
+      if (!text || text.includes('Mã nguồn bài làm được bảo mật')) {
+        alert("Không thể sao chép mã nguồn được bảo mật!");
+        return;
+      }
+      navigator.clipboard.writeText(text).then(() => {
+        showLiveToast('📋 Đã sao chép mã nguồn bài làm vào clipboard!');
+      }).catch(() => {
+        alert("Đã sao chép: " + text.slice(0, 50) + "...");
+      });
+    }
+
+    // BẢO VỆ VÀ PHỤC HỒI TOÀN BỘ TRẠNG THÁI AC & BÀI NỘP HỌC SINH (CHỐNG MẤT KHI RELOAD CACHE)
+    function reconcileStudentSolvedState() {
+      if (!appData || !Array.isArray(appData.students)) return;
+      const allSubs = (appData && Array.isArray(appData.submissions)) ? appData.submissions : [];
+
+      const solvedMap = {};
+      appData.students.forEach(s => {
+        if (!s || !s.name) return;
+        const key = s.name.trim().toLowerCase();
+        if (!solvedMap[key]) solvedMap[key] = new Set(s.solved || []);
+
+        // Phục hồi từ bộ nhớ đệm cục bộ bền vững
+        try {
+          const backup = localStorage.getItem('deruck_solved_backup_' + key);
+          if (backup) {
+            const list = JSON.parse(backup);
+            if (Array.isArray(list)) list.forEach(p => solvedMap[key].add(p));
+          }
+        } catch(e) {}
+      });
+
+      // Quét toàn bộ bài nộp: Nếu đạt AC, Chấm đạt hoặc điểm tối đa -> tự động khôi phục AC cho học sinh
+      allSubs.forEach(sub => {
+        if (!sub || !sub.problem_id) return;
+        const isAC = (sub.status === 'Chấm đạt' || sub.status === 'Hoàn thành' || 
+                      (sub.score && (Number(sub.score) >= 10 || String(sub.score).includes('100'))) || 
+                      (sub.feedback && sub.feedback.includes('AC')));
+        if (!isAC) return;
+
+        const sName = (sub.student_name || '').trim().toLowerCase();
+        let targetKey = null;
+        if (sName && solvedMap[sName]) {
+          targetKey = sName;
+        } else {
+          const matchStudent = appData.students.find(s => 
+            (s.name && s.name.trim().toLowerCase() === sName) ||
+            (sub.student_stt && s.stt && Number(s.stt) === Number(sub.student_stt)) ||
+            (sub.student_pin && s.pin && s.pin === sub.student_pin)
+          );
+          if (matchStudent) targetKey = (matchStudent.name || '').trim().toLowerCase();
+        }
+
+        if (targetKey && solvedMap[targetKey]) {
+          solvedMap[targetKey].add(sub.problem_id);
+        }
+      });
+
+      // Lưu lại danh sách solved đã chuẩn hóa cho từng học sinh
+      appData.students.forEach(s => {
+        if (!s || !s.name) return;
+        const key = s.name.trim().toLowerCase();
+        if (solvedMap[key]) {
+          s.solved = Array.from(solvedMap[key]);
+          try {
+            localStorage.setItem('deruck_solved_backup_' + key, JSON.stringify(s.solved));
+          } catch(e) {}
+        }
+      });
+
+      try {
+        localStorage.setItem('cp_cached_students', JSON.stringify(appData.students));
+      } catch(e) {}
+    }
+
+    // BẢNG CHẤM BÀI TOÀN HỆ THỐNG (DMOJ SUBMISSIONS STREAM)
+    function renderGlobalSubmissions() {
+      const tbody = document.getElementById('submissions-table-body');
+      const countBadge = document.getElementById('submissions-count-badge');
+      const loadMoreContainer = document.getElementById('submissions-loadmore-container');
+      if (!tbody) return;
+
+      const allSubs = (appData && Array.isArray(appData.submissions)) ? appData.submissions : [];
+      if (countBadge) countBadge.textContent = `${allSubs.length} bài nộp`;
+
+      const searchInput = document.getElementById('subs-search-input');
+      const verdictFilter = document.getElementById('subs-verdict-filter')?.value || 'all';
+      const langFilter = document.getElementById('subs-lang-filter')?.value || 'all';
+      const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+      const filtered = allSubs.filter(sub => {
+        if (!sub) return false;
+        
+        if (query) {
+          const match = (sub.student_name && sub.student_name.toLowerCase().includes(query)) ||
+            (sub.problem_id && sub.problem_id.toLowerCase().includes(query)) ||
+            (sub.problem_name && sub.problem_name.toLowerCase().includes(query)) ||
+            (sub.id && sub.id.toLowerCase().includes(query));
+          if (!match) return false;
+        }
+
+        if (verdictFilter !== 'all') {
+          const isAC = (sub.status === 'Chấm đạt' || sub.status === 'Hoàn thành' || (sub.feedback && sub.feedback.includes('AC')) || sub.verdict === 'AC');
+          const isWA = (sub.verdict === 'WA' || (sub.feedback && sub.feedback.includes('WA')) || (sub.status === 'Cần sửa' && (!sub.feedback || !sub.feedback.includes('TLE'))));
+          const isTLE = (sub.verdict === 'TLE' || (sub.feedback && sub.feedback.includes('TLE')));
+          const isCE = (sub.verdict === 'CE' || (sub.feedback && sub.feedback.includes('CE')));
+          const isRTE = (sub.verdict === 'RTE' || (sub.feedback && sub.feedback.includes('RTE')));
+
+          if (verdictFilter === 'AC' && !isAC) return false;
+          if (verdictFilter === 'WA' && !isWA) return false;
+          if (verdictFilter === 'TLE' && !isTLE) return false;
+          if (verdictFilter === 'CE' && !isCE) return false;
+          if (verdictFilter === 'RTE' && !isRTE) return false;
+        }
+
+        if (langFilter !== 'all') {
+          const isCpp = (sub.answer && sub.answer.includes('[C++')) || (sub.lang && sub.lang.includes('C++'));
+          const isPython = (sub.answer && sub.answer.includes('[Python')) || (sub.lang && sub.lang.includes('Python'));
+          if (langFilter === 'cpp' && !isCpp) return false;
+          if (langFilter === 'python' && !isPython) return false;
+        }
+
+        return true;
+      });
+
+      tbody.innerHTML = '';
+      if (loadMoreContainer) loadMoreContainer.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="9" class="p-10 text-center text-slate-500">
+              <div class="text-3xl mb-1">📜</div>
+              <div class="text-xs font-bold text-slate-300">Chưa có bài nộp nào phù hợp</div>
+              <p class="text-[11px] text-slate-400 mt-0.5">Các bài nộp từ học sinh sẽ xuất hiện tại đây theo thời gian thực.</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      const items = filtered.slice(0, currentSubmissionsDisplayLimit);
+      const isAdmin = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+
+      items.forEach((sub, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/40 transition border-b border-slate-800/60";
+
+        const subIdShort = sub.id ? (sub.id.replace('SUB-', '').slice(-6) || sub.id) : (idx + 1);
+        const isAC = (sub.status === 'Chấm đạt' || sub.status === 'Hoàn thành' || (sub.feedback && sub.feedback.includes('AC')) || sub.verdict === 'AC');
+        const isWA = (sub.verdict === 'WA' || (sub.feedback && sub.feedback.includes('WA')) || (sub.status === 'Cần sửa' && (!sub.feedback || !sub.feedback.includes('TLE'))));
+        const isTLE = (sub.verdict === 'TLE' || (sub.feedback && sub.feedback.includes('TLE')));
+        const isCE = (sub.verdict === 'CE' || (sub.feedback && sub.feedback.includes('CE')));
+        const isRTE = (sub.verdict === 'RTE' || (sub.feedback && sub.feedback.includes('RTE')));
+
+        let verdictBadge = '';
+        if (isAC) {
+          verdictBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">✓ AC</span>';
+        } else if (isCE) {
+          verdictBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold font-mono bg-purple-500/20 text-purple-300 border border-purple-500/30">⚠️ CE</span>';
+        } else if (isTLE) {
+          verdictBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">⏱️ TLE</span>';
+        } else if (isRTE) {
+          verdictBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold font-mono bg-pink-500/20 text-pink-300 border border-pink-500/30">💥 RTE</span>';
+        } else if (isWA) {
+          verdictBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold font-mono bg-rose-500/20 text-rose-300 border border-rose-500/30">✗ WA</span>';
+        } else {
+          verdictBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs font-medium font-mono bg-slate-800 text-slate-300 border border-slate-700">${escapeHtml(sub.status || 'Đã nộp')}</span>`;
+        }
+
+        const isCpp = (sub.answer && sub.answer.includes('[C++')) || (sub.lang && sub.lang.includes('C++'));
+        const langBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold ${isCpp ? 'bg-blue-500/15 text-blue-300 border border-blue-500/25' : 'bg-amber-500/15 text-amber-300 border border-amber-500/25'}">${isCpp ? 'C++20' : 'Python 3'}</span>`;
+
+        // Bảo mật mã nguồn: Admin xem tất cả; Học sinh xem được bài nộp của chính mình; Người khác bị khóa
+        const isAuthor = Boolean(currentAuth && (
+          (currentAuth.name && sub.student_name && currentAuth.name.toLowerCase() === sub.student_name.toLowerCase()) ||
+          (currentAuth.pin && sub.student_pin && currentAuth.pin === sub.student_pin) ||
+          (currentAuth.stt && sub.student_stt && Number(currentAuth.stt) === Number(sub.student_stt))
+        ));
+        const canViewCode = isAdmin || isAuthor;
+
+        const actionHtml = canViewCode ? `
+          <button onclick="viewSubmissionCodeModal('${sub.id}')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 transition cursor-pointer flex items-center gap-1 ml-auto">
+            <span>👁️</span><span>Xem code</span>
+          </button>
+        ` : `
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono text-slate-500 bg-slate-950 border border-slate-800 select-none block text-right" title="Mã nguồn được bảo mật — Chỉ Quản trị viên và Giáo viên mới có quyền xem">🔒 Riêng tư</span>
+        `;
+
+        let timeMem = '--';
+        if (sub.feedback && sub.feedback.includes('testcase')) {
+          timeMem = '0.02s • 1.2M';
+        }
+
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 text-center font-mono text-xs text-slate-400">#${subIdShort}</td>
+          <td class="py-2.5 px-3 font-mono text-[11px] text-slate-400 whitespace-nowrap">${sub.submitted_at || '--'}</td>
+          <td class="py-2.5 px-3">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center font-bold text-[10px] text-indigo-300 border border-slate-700 shrink-0">
+                ${(sub.student_name || 'U')[0]}
+              </div>
+              <div class="leading-tight">
+                <span class="font-bold text-white text-xs">${escapeHtml(sub.student_name || 'Học sinh')}</span>
+                ${sub.class_name ? `<div class="text-[10px] text-slate-400 font-mono">${escapeHtml(sub.class_name)}</div>` : ''}
+              </div>
+            </div>
+          </td>
+          <td class="py-2.5 px-3">
+            <div class="leading-tight">
+              <a href="javascript:void(0)" onclick="openJudgeWithProblem('${sub.problem_id}')" class="font-bold text-indigo-300 hover:text-white transition text-xs cursor-pointer block">
+                [${sub.problem_id}] ${escapeHtml(sub.problem_name || sub.problem_id)}
+              </a>
+            </div>
+          </td>
+          <td class="py-2.5 px-3 text-center">${langBadge}</td>
+          <td class="py-2.5 px-3 text-center">${verdictBadge}</td>
+          <td class="py-2.5 px-3 text-center font-mono font-bold text-xs ${isAC ? 'text-emerald-400' : 'text-slate-300'}">
+            ${sub.score !== undefined ? (String(sub.score).includes('/') ? sub.score : sub.score + '/10') : '--'}
+          </td>
+          <td class="py-2.5 px-3 text-center hidden md:table-cell font-mono text-[11px] text-slate-400">${timeMem}</td>
+          <td class="py-2.5 px-3 text-right">${actionHtml}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      if (filtered.length > currentSubmissionsDisplayLimit && loadMoreContainer) {
+        loadMoreContainer.innerHTML = `
+          <button onclick="loadMoreSubmissions()" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 text-xs font-bold transition shadow cursor-pointer">
+            ⬇️ Hiển thị thêm bài nộp (Đang xem ${currentSubmissionsDisplayLimit} / ${filtered.length})
+          </button>
+        `;
+      }
+    }
+
+    // XEM MÃ NGUỒN VÀ BẢO MẬT BÀI NỘP
+    function viewSubmissionCodeModal(subId) {
+      if (!appData || !appData.submissions) return;
+      let sub = appData.submissions.find(s => s.id === subId);
+
+      // Tra cứu từ kho lưu trữ raw submissions nếu có
+      try {
+        const rawSaved = localStorage.getItem('cp_raw_submissions_v2');
+        if (rawSaved) {
+          const rawList = JSON.parse(rawSaved);
+          const foundRaw = rawList.find(s => s.id === subId);
+          if (foundRaw && foundRaw.answer && !foundRaw.answer.includes('Mã nguồn bài nộp đã được bảo mật')) {
+            sub = foundRaw;
+          }
+        }
+      } catch(e) {}
+
+      if (!sub) return;
+
+      const isAdmin = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+      const isAuthor = Boolean(currentAuth && (
+        (currentAuth.name && sub.student_name && currentAuth.name.toLowerCase() === sub.student_name.toLowerCase()) ||
+        (currentAuth.pin && sub.student_pin && currentAuth.pin === sub.student_pin) ||
+        (currentAuth.stt && sub.student_stt && Number(currentAuth.stt) === Number(sub.student_stt))
+      ));
+
+      if (!isAdmin && !isAuthor) {
+        alert("🔒 Mã nguồn bài nộp của học sinh được bảo mật! Chỉ tác giả và Quản trị viên / Giáo viên mới có quyền xem.");
+        return;
+      }
+
+      currentGradeSubId = sub.id;
+      document.getElementById('grade-sub-id').value = sub.id;
+      document.getElementById('grade-modal-sub').textContent = `Mã bài nộp: ${sub.id}`;
+      document.getElementById('grade-sub-student').textContent = sub.student_name || 'Học sinh';
+      document.getElementById('grade-sub-class').textContent = sub.class_name || 'Lớp học';
+      document.getElementById('grade-sub-problem').textContent = `${sub.problem_id} - ${sub.problem_name || ''}`;
+      document.getElementById('grade-sub-time').textContent = sub.submitted_at || '--';
+
+      const typeBadge = document.getElementById('grade-sub-type-badge');
+      if (typeBadge) {
+        typeBadge.textContent = '💻 Code DMOJ';
+        typeBadge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30";
+      }
+
+      document.getElementById('grade-sub-answer-content').textContent = sub.answer || '(Trống)';
+
+      const statusEl = document.getElementById('grade-form-status');
+      const scoreEl = document.getElementById('grade-form-score');
+      const fbEl = document.getElementById('grade-form-feedback');
+      if (statusEl) statusEl.value = sub.status || 'Chấm đạt';
+      if (scoreEl) scoreEl.value = (sub.score !== undefined && sub.score !== '') ? sub.score : '10';
+      if (fbEl) fbEl.value = sub.feedback || '';
+
+      // Chỉ hiển thị controls chấm điểm nếu là Admin/Teacher
+      const adminControls = document.getElementById('grade-modal-admin-controls');
+      const btnSave = document.getElementById('btn-save-grade');
+      if (adminControls) adminControls.classList.toggle('hidden', !isAdmin);
+      if (btnSave) btnSave.classList.toggle('hidden', !isAdmin);
+
+      const modal = document.getElementById('modal-grade-submission');
+      if (modal) modal.classList.remove('hidden');
     }
 
     // ============================================================
