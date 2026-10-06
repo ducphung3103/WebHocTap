@@ -53,9 +53,9 @@
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white font-sans">
   <!-- FLOATING TOOLTIP FOR HEATMAP (ĐÈ LÊN TOÀN BỘ CÁC Ô, KHÔNG BỊ CHE KHUẤT) -->
-  <div id="heatmap-floating-tooltip" class="fixed pointer-events-none hidden px-3 py-2 rounded-xl bg-slate-900/98 text-white text-xs font-mono shadow-2xl border border-slate-700/80 backdrop-blur-md z-[999999] transition-opacity duration-150 transform -translate-x-1/2 -translate-y-full mb-2">
+  <div id="heatmap-floating-tooltip" class="fixed pointer-events-none hidden px-3 py-2 rounded-xl bg-white text-slate-800 text-xs font-mono shadow-xl border border-slate-200 backdrop-blur-md z-[999999] transition-opacity duration-150 transform -translate-x-1/2 -translate-y-full mb-2">
   </div>
 
   <!-- LIVE TOAST NOTIFICATION -->
@@ -65,11 +65,11 @@
   </div>
 
   <!-- SECURITY AUTHENTICATION MODAL (BẢO VỆ LỚP HỌC & PHÂN QUYỀN) -->
-  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl transition-all duration-300 hidden">
-    <div class="relative w-full max-w-md bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6">
+  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm transition-all duration-300 hidden">
+    <div class="relative w-full max-w-md bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6 text-slate-800">
       
       <!-- Close button / back to home -->
-      <button onclick="hideAuthModal(); window.location.href='index.html';" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">✕</button>
+      <button onclick="hideAuthModal(); window.location.href='index.html';" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 text-lg">✕</button>
 
       <!-- Modal Header -->
       <div class="text-center space-y-2">
@@ -97,7 +97,7 @@
               placeholder="Nhập mã PIN hoặc mật khẩu..." 
               autocomplete="off"
               required
-              class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition pr-10 font-mono tracking-wider"
+              class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition pr-10 font-mono tracking-wider"
             />
             <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3 text-slate-400 hover:text-slate-200 text-sm">
               👁️
@@ -132,8 +132,8 @@
   <!-- ============================================== -->
   <!-- MODAL: NỘP BÀI TẬP (STUDENT PORTAL)            -->
   <!-- ============================================== -->
-  <div id="modal-submit-problem" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
-    <div class="relative w-full max-w-xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+  <div id="modal-submit-problem" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm hidden">
+    <div class="relative w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto text-slate-800">
       <!-- Modal Header -->
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
         <div class="flex items-center gap-2.5">
@@ -145,11 +145,11 @@
             <p class="text-xs text-slate-400">Điền đáp án kết quả hoặc nộp lời giải tự luận / mã nguồn</p>
           </div>
         </div>
-        <button onclick="closeStudentSubmitModal()" class="text-slate-400 hover:text-white text-lg p-1 cursor-pointer transition">✕</button>
+        <button onclick="closeStudentSubmitModal()" class="text-slate-500 hover:text-slate-800 text-lg p-1 cursor-pointer transition">✕</button>
       </div>
 
       <!-- Problem Info Banner -->
-      <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl flex items-center justify-between text-xs">
+      <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between text-xs">
         <div class="space-y-0.5">
           <div class="flex items-center gap-2">
             <span id="submit-prob-id" class="font-mono font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">PROB-01</span>
@@ -167,7 +167,7 @@
         <label class="block font-bold text-slate-300">
           👤 Người nộp bài:
         </label>
-        <div class="p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 flex items-center justify-between">
+        <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 flex items-center justify-between">
           <span id="submit-student-name" class="font-semibold text-white">--</span>
           <span id="submit-student-class" class="text-xs text-indigo-400 font-mono">--</span>
         </div>
@@ -178,11 +178,11 @@
         <label class="block text-xs font-bold text-slate-300">
           📌 Hình thức nộp:
         </label>
-        <div class="grid grid-cols-2 gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+        <div class="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
           <button type="button" id="btn-submit-tab-short" onclick="switchStudentSubmitMode('short')" class="py-2 rounded-lg font-bold transition flex items-center justify-center gap-1.5 cursor-pointer bg-indigo-600 text-white shadow">
             <span>🔢</span> Điền Đáp Án
           </button>
-          <button type="button" id="btn-submit-tab-essay" onclick="switchStudentSubmitMode('essay')" class="py-2 rounded-lg font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer text-slate-400 hover:text-white">
+          <button type="button" id="btn-submit-tab-essay" onclick="switchStudentSubmitMode('essay')" class="py-2 rounded-lg font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer text-slate-500 hover:text-slate-800">
             <span>✍️</span> Tự Luận / Lời Giải
           </button>
         </div>
@@ -194,7 +194,7 @@
           Kết quả / Giá trị đáp án:
         </label>
         <input type="text" id="submit-answer-input" placeholder="Ví dụ: 42 hoặc CHAN hoặc 1000000007"
-          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-mono text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+          class="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
         <p class="text-[11px] text-slate-400 leading-relaxed">
           💡 Điền trực tiếp giá trị số, xâu ký tự hoặc kết quả in ra của bài toán.
         </p>
@@ -206,7 +206,7 @@
           Nội dung lời giải / Mã nguồn:
         </label>
         <textarea id="submit-essay-input" rows="8" placeholder="Trình bày giải thuật, các bước tư duy, chứng minh hoặc dán toàn bộ mã nguồn của bạn tại đây..."
-          class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 whitespace-pre leading-relaxed"></textarea>
+          class="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs font-mono text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 whitespace-pre leading-relaxed"></textarea>
       </div>
 
       <!-- Previous Submission Box (if student has already submitted) -->
@@ -222,7 +222,7 @@
             <span>Thời gian: <strong id="prev-sub-time" class="text-slate-300 font-mono">--</strong></span>
             <span>Điểm số: <strong id="prev-sub-score" class="text-emerald-400 font-bold font-mono">--</strong></span>
           </div>
-          <div class="p-2 bg-slate-950 rounded-lg text-slate-300 font-mono text-[11px] max-h-20 overflow-y-auto whitespace-pre-wrap" id="prev-sub-content"></div>
+          <div class="p-2 bg-slate-50 rounded-lg text-slate-800 font-mono text-[11px] max-h-20 overflow-y-auto whitespace-pre-wrap" id="prev-sub-content"></div>
           <div id="prev-sub-feedback-box" class="hidden p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-300">
             <strong>💬 Nhận xét của Thầy:</strong> <span id="prev-sub-feedback-text"></span>
           </div>
@@ -241,61 +241,63 @@
     </div>
   </div>
 
-  <!-- UNIFIED TOP NAVBAR -->
-  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+  <!-- UNIFIED TOP NAVBAR (DMOJ LIGHT) -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         
-        <!-- Brand Logo & Return Home Link -->
-        <a href="index.html" class="flex items-center gap-2.5 group hover:opacity-95 transition shrink-0" title="Trở về Trang chủ">
-          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-md shadow-indigo-500/25 ring-1 ring-white/20 group-hover:scale-105 transition-transform">
-            <span class="text-base">🚀</span>
+        <!-- Brand Logo: DMOJ Maple/Code Emblem + Text -->
+        <a href="index.html" class="flex items-center gap-2.5 group transition shrink-0" title="DMOJ • Deruck Online Judge">
+          <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm ring-1 ring-blue-500/30 group-hover:bg-blue-700 transition">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
           </div>
-          <div class="font-bold text-white text-xs sm:text-sm leading-tight tracking-tight flex items-center gap-1.5">
-            <span class="hidden sm:inline">Deruck's Competitive Programming</span>
-            <span class="sm:hidden">Deruck's CP</span>
-            <span class="text-[9px] font-mono px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LMS</span>
+          <div class="flex flex-col">
+            <div class="font-black text-slate-900 text-sm sm:text-base tracking-tight flex items-center gap-1.5 leading-none">
+              <span>DMOJ</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">Deruck</span>
+            </div>
+            <div class="text-[10px] text-slate-500 font-medium leading-tight mt-0.5">Don Mills Online Judge • LMS</div>
           </div>
         </a>
 
-        <!-- Navigation Tabs (Identical to index.html) -->
+        <!-- Navigation Tabs -->
         <nav class="hidden md:flex items-center space-x-1 font-semibold text-xs">
-          <a href="index.html" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition">
-            🏠 Trang Chủ
+          <a href="index.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center gap-1.5 transition font-medium">
+            <span>🏠</span> Trang Chủ
           </a>
-          <a href="index.html#leaderboard" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition">
-            🏆 Bảng Xếp Hạng
+          <a href="index.html#leaderboard" class="px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center gap-1.5 transition font-medium">
+            <span>🏆</span> Bảng Xếp Hạng
           </a>
-          <a href="index.html#contests" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition">
-            ⚔️ Contest
+          <a href="index.html#contests" class="px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center gap-1.5 transition font-medium">
+            <span>⚔️</span> Contest
           </a>
-          <a href="index.html#problems" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition">
-            📝 Bài Tập
+          <a href="index.html#problems" class="px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center gap-1.5 transition font-medium">
+            <span>📜</span> Bài Tập
           </a>
-          <a href="index.html#curriculum" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center gap-1 transition">
-            📚 Bài Giảng
+          <a href="index.html#curriculum" class="px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center gap-1.5 transition font-medium">
+            <span>📚</span> Bài Giảng
           </a>
-          <a href="student.html" class="px-2.5 py-1.5 rounded-lg text-white bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center gap-1 transition font-semibold">
-            👤 Cá Nhân
+          <a href="student.html" class="px-3 py-2 rounded-lg text-blue-700 bg-blue-50 border border-blue-200 font-bold flex items-center gap-1.5 transition shadow-xs">
+            <span>👤</span> Cá Nhân
           </a>
         </nav>
 
         <!-- User Session & Switcher & Auth Action -->
         <div class="flex items-center gap-2 shrink-0">
-          <!-- Admin Switcher (Hidden for students) -->
           <div class="hidden items-center gap-1" id="switcher-container">
-            <label for="student-selector" class="text-xs text-slate-400 hidden lg:inline">Chọn:</label>
-            <select id="student-selector" onchange="switchStudent(this.value)" class="bg-slate-900 border border-slate-800 text-slate-200 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-indigo-500">
-              <!-- Populated dynamically for Admin -->
+            <select id="student-selector" onchange="switchStudent(this.value)" class="bg-white border border-slate-300 text-slate-800 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500">
             </select>
           </div>
 
-          <div id="user-badge" class="px-2 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1">
+          <div id="user-badge" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200 flex items-center gap-1.5">
             <span>👤</span>
             <span id="user-display-name">--</span>
           </div>
 
-          <button id="btn-auth-action" onclick="showAuthModal()" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white border border-indigo-500/40 transition flex items-center gap-1 cursor-pointer" title="Đăng nhập hoặc đăng xuất">
+          <button id="btn-auth-action" onclick="showAuthModal()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-xs transition flex items-center gap-1.5 cursor-pointer" title="Đăng nhập hoặc đăng xuất">
             <span>🔑</span>
             <span class="hidden sm:inline">Đăng nhập</span>
           </button>
@@ -303,13 +305,13 @@
       </div>
 
       <!-- Mobile Tab Bar -->
-      <div class="flex md:hidden overflow-x-auto py-1.5 space-x-1 border-t border-slate-800 text-xs">
-        <a href="index.html" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">🏠 Trang chủ</a>
-        <a href="index.html#leaderboard" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">🏆 BXH</a>
-        <a href="index.html#contests" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">⚔️ Contest</a>
-        <a href="index.html#problems" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</a>
-        <a href="index.html#curriculum" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📚 Bài giảng</a>
-        <a href="student.html" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap bg-indigo-600/30 text-indigo-300 font-semibold">👤 Cá nhân</a>
+      <div class="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-slate-200 text-xs">
+        <a href="index.html" class="tab-btn px-3 py-1 rounded-lg whitespace-nowrap text-slate-600 font-medium">🏠 Trang chủ</a>
+        <a href="index.html#leaderboard" class="tab-btn px-3 py-1 rounded-lg whitespace-nowrap text-slate-600 font-medium">🏆 BXH</a>
+        <a href="index.html#contests" class="tab-btn px-3 py-1 rounded-lg whitespace-nowrap text-slate-600 font-medium">⚔️ Contest</a>
+        <a href="index.html#problems" class="tab-btn px-3 py-1 rounded-lg whitespace-nowrap text-slate-600 font-medium">📜 Bài tập</a>
+        <a href="index.html#curriculum" class="tab-btn px-3 py-1 rounded-lg whitespace-nowrap text-slate-600 font-medium">📚 Bài giảng</a>
+        <a href="student.html" class="tab-btn px-3 py-1 rounded-lg whitespace-nowrap bg-blue-50 text-blue-700 font-bold border border-blue-200">👤 Cá nhân</a>
       </div>
     </div>
   </header>
@@ -327,7 +329,7 @@
     <div id="profile-container" class="space-y-8 hidden">
       
       <!-- HERO CARD -->
-      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950/70 via-slate-900 to-slate-900 border border-indigo-500/30 p-4 sm:p-5 md:p-6">
+      <div class="relative overflow-hidden rounded-xl bg-white border border-slate-200 p-6 shadow-xs text-slate-800">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           
           <div class="flex items-center gap-4">
@@ -339,7 +341,7 @@
             <!-- Name & Info -->
             <div class="space-y-1">
               <div class="flex items-center gap-2 flex-wrap">
-                <h1 id="student-name" class="text-lg md:text-2xl font-bold text-white tracking-tight">--</h1>
+                <h1 id="student-name" class="text-lg md:text-2xl font-bold text-slate-900 tracking-tight">--</h1>
                 <span id="student-class" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">--</span>
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-700/40 text-slate-400 border border-slate-700">Newbie ⚪</span>
               </div>
@@ -350,10 +352,10 @@
           </div>
 
           <!-- Rating & Standing summary -->
-          <div class="flex items-center gap-2 bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl shrink-0 self-start md:self-auto">
+          <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 p-2.5 rounded-xl shrink-0 self-start md:self-auto">
             <div class="text-center px-2.5 border-r border-slate-800">
               <div class="text-[10px] text-slate-400">Contest Rating</div>
-              <div class="text-base md:text-lg font-bold text-white font-mono" id="student-rating">0</div>
+              <div class="text-base md:text-lg font-bold text-slate-900 font-mono" id="student-rating">0</div>
               <div class="text-[9px] text-slate-500">Khởi điểm</div>
             </div>
             <div class="text-center px-2.5">
@@ -370,37 +372,37 @@
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
         
         <!-- 1 TUẦN -->
-        <div class="bg-slate-900 border border-slate-800 hover:border-indigo-500/40 rounded-xl p-3.5 space-y-1 transition">
+        <div class="bg-white border border-slate-200 hover:border-blue-400 rounded-xl p-3.5 shadow-xs space-y-1 transition">
           <div class="flex items-center justify-between text-xs text-slate-400">
             <span>⚡ 1 Tuần Qua</span>
             <span class="text-indigo-400 font-bold text-[11px]">7 ngày</span>
           </div>
-          <div class="text-xl md:text-2xl font-bold text-white font-mono" id="stat-week">0</div>
+          <div class="text-xl md:text-2xl font-bold text-slate-900 font-mono" id="stat-week">0</div>
           <div class="text-[11px] text-slate-400">bài tập đã AC</div>
         </div>
 
         <!-- 1 THÁNG -->
-        <div class="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-xl p-3.5 space-y-1 transition">
+        <div class="bg-white border border-slate-200 hover:border-purple-400 rounded-xl p-3.5 shadow-xs space-y-1 transition">
           <div class="flex items-center justify-between text-xs text-slate-400">
             <span>🗓️ 1 Tháng Qua</span>
             <span class="text-purple-400 font-bold text-[11px]">30 ngày</span>
           </div>
-          <div class="text-xl md:text-2xl font-bold text-white font-mono" id="stat-month">0</div>
+          <div class="text-xl md:text-2xl font-bold text-slate-900 font-mono" id="stat-month">0</div>
           <div class="text-[11px] text-slate-400">bài tập đã AC</div>
         </div>
 
         <!-- 1 NĂM -->
-        <div class="bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-3.5 space-y-1 transition">
+        <div class="bg-white border border-slate-200 hover:border-emerald-400 rounded-xl p-3.5 shadow-xs space-y-1 transition">
           <div class="flex items-center justify-between text-xs text-slate-400">
             <span>📈 1 Năm (2026)</span>
             <span class="text-emerald-400 font-bold text-[11px]">365 ngày</span>
           </div>
-          <div class="text-xl md:text-2xl font-bold text-white font-mono" id="stat-year">0</div>
+          <div class="text-xl md:text-2xl font-bold text-slate-900 font-mono" id="stat-year">0</div>
           <div class="text-[11px] text-slate-400">bài tập đã AC</div>
         </div>
 
         <!-- TỔNG CỘNG -->
-        <div class="bg-slate-900 border border-slate-800 hover:border-rose-500/40 rounded-xl p-3.5 space-y-1 transition">
+        <div class="bg-white border border-slate-200 hover:border-rose-400 rounded-xl p-3.5 shadow-xs space-y-1 transition">
           <div class="flex items-center justify-between text-xs text-slate-400">
             <span>🏆 Tổng Số Bài</span>
             <span class="text-rose-400 font-bold text-[11px]">Tất cả</span>
@@ -412,7 +414,7 @@
       </div>
 
       <!-- TUITION STATUS (Theo dõi học phí 4 tháng 9 - 10 - 11 - 12) -->
-      <div id="student-tuition-section" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+      <div id="student-tuition-section" class="bg-white border border-slate-200 rounded-xl p-5 space-y-4 shadow-xs text-slate-800">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div class="flex items-center gap-2.5">
             <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center text-lg">
@@ -438,7 +440,7 @@
       </div>
 
       <!-- HOMEWORK WEEKLY PROGRESS (Đề bài tuần này) -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5">
+      <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5 shadow-xs text-slate-800">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h2 class="text-lg font-bold text-white flex items-center gap-2" id="homework-title">
@@ -463,7 +465,7 @@
       </div>
 
       <!-- ACTIVITY HEATMAP (Biểu đồ nhiệt hoạt động) -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5">
+      <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5 shadow-xs text-slate-800">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <h2 class="text-lg font-bold text-white flex items-center gap-2">
@@ -475,17 +477,14 @@
           <!-- Heatmap Controls & Legend -->
           <div class="flex items-center gap-3 flex-wrap">
             <!-- Year Selector tabs -->
-            <div id="heatmap-year-selector" class="flex items-center gap-1 bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 text-xs">
+            <div id="heatmap-year-selector" class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
               <!-- Rendered via JS -->
             </div>
 
             <!-- Heatmap Legend -->
             <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
               <span>Ít</span>
-              <span class="w-3.5 h-3.5 rounded bg-slate-800 border border-slate-700/60 inline-block"></span>
-              <span class="w-3.5 h-3.5 rounded bg-emerald-950 border border-emerald-800/60 inline-block"></span>
-              <span class="w-3.5 h-3.5 rounded bg-emerald-700 inline-block"></span>
-              <span class="w-3.5 h-3.5 rounded bg-emerald-400 inline-block"></span>
+              <span class="w-3.5 h-3.5 rounded bg-slate-100 border border-slate-200 inline-block"></span> <span class="w-3.5 h-3.5 rounded bg-emerald-200 border border-emerald-300 inline-block"></span> <span class="w-3.5 h-3.5 rounded bg-emerald-400 inline-block"></span> <span class="w-3.5 h-3.5 rounded bg-emerald-600 inline-block"></span>
               <span>Nhiều</span>
             </div>
           </div>
@@ -515,7 +514,7 @@
       </div>
 
       <!-- SOLVED PROBLEMS ARCHIVE (Danh sách các bài đã AC) -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+      <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4 shadow-xs text-slate-800">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h2 class="text-lg font-bold text-white flex items-center gap-2">
@@ -530,7 +529,7 @@
 
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
-            <thead class="bg-slate-800/60 text-slate-400 uppercase font-mono text-[11px] border-b border-slate-700/60">
+            <thead class="bg-slate-50 text-slate-600 uppercase font-mono text-[11px] border-b border-slate-200">
               <tr>
                 <th class="px-4 py-3 text-center w-16">STT</th>
                 <th class="px-4 py-3">Mã Bài</th>
@@ -540,7 +539,7 @@
                 <th class="px-4 py-3 text-center">Thao Tác</th>
               </tr>
             </thead>
-            <tbody id="solved-table-body" class="divide-y divide-slate-800/80 font-mono">
+            <tbody id="solved-table-body" class="divide-y divide-slate-100 font-mono text-slate-700">
               <!-- Populated dynamically -->
             </tbody>
           </table>
@@ -552,7 +551,7 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500 mt-12">
+  <footer class="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-600 mt-12 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div>© 2026 Deruck's Competitive Programming</div>
       <div class="flex items-center gap-4 text-slate-400 flex-wrap justify-center">
@@ -652,7 +651,7 @@
       // Check security auth session from Cookie
       if (!isAuthed) {
         document.getElementById('loading-state').innerHTML = `
-          <div class="p-8 text-center bg-slate-900 border border-slate-800 rounded-2xl space-y-4 max-w-lg mx-auto shadow-2xl">
+          <div class="p-8 text-center bg-white border border-slate-200 rounded-xl shadow-xs space-y-4 max-w-lg mx-auto shadow-2xl">
             <div class="text-4xl">🔒</div>
             <h2 class="text-lg font-bold text-white">Nội Dung Riêng Tư Học Viên</h2>
             <p class="text-xs text-slate-400">Hệ thống bảo vệ quyền riêng tư: mỗi học sinh chỉ xem được tiến độ và thông tin của bản thân. Vui lòng đăng nhập bằng Mã PIN cá nhân.</p>
@@ -845,8 +844,8 @@
 
         const card = document.createElement('div');
         card.className = isPaid 
-          ? "bg-slate-950/80 border border-emerald-500/30 rounded-xl p-3.5 flex flex-col justify-between space-y-2 shadow-sm transition hover:border-emerald-500/60"
-          : "bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 flex flex-col justify-between space-y-2 shadow-sm transition hover:border-slate-700";
+          ? "bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 flex flex-col justify-between text-emerald-900 space-y-2 shadow-sm transition hover:border-emerald-500/60"
+          : "bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex flex-col justify-between text-slate-700 space-y-2 shadow-sm transition hover:border-slate-700";
 
         card.innerHTML = `
           <div class="flex items-center justify-between">
@@ -953,7 +952,7 @@
               <span class="font-mono text-[11px] font-bold text-slate-400">${p.id}</span>
               ${subBadge}
             </div>
-            <div class="text-xs font-bold text-white leading-snug">${p.name}</div>
+            <div class="text-xs font-bold text-slate-900 leading-snug">${p.name}</div>
             ${mySub && mySub.feedback ? `
               <div class="p-2 bg-indigo-950/40 border border-indigo-500/30 rounded-lg text-[11px] text-indigo-300 leading-snug">
                 💬 <strong>Thầy nhận xét:</strong> ${escapeHtml(mySub.feedback)}
@@ -1025,7 +1024,7 @@
         const isAct = String(yr) === String(currentHeatmapYear);
         btn.className = isAct 
           ? "px-3 py-1 rounded-lg font-bold text-xs bg-indigo-600 text-white shadow-sm transition"
-          : "px-3 py-1 rounded-lg font-medium text-xs text-slate-400 hover:text-white hover:bg-slate-700/60 transition";
+          : "px-3 py-1 rounded-lg font-medium text-xs text-slate-500 hover:text-slate-800 hover:bg-slate-700/60 transition";
         btn.textContent = `Năm ${yr}`;
         btn.onclick = () => {
           currentHeatmapYear = String(yr);
@@ -1039,7 +1038,7 @@
       const isRecentAct = currentHeatmapYear === 'recent';
       recentBtn.className = isRecentAct
         ? "px-3 py-1 rounded-lg font-bold text-xs bg-indigo-600 text-white shadow-sm transition"
-        : "px-3 py-1 rounded-lg font-medium text-xs text-slate-400 hover:text-white hover:bg-slate-700/60 transition";
+        : "px-3 py-1 rounded-lg font-medium text-xs text-slate-500 hover:text-slate-800 hover:bg-slate-700/60 transition";
       recentBtn.textContent = '16 tuần qua';
       recentBtn.onclick = () => {
         currentHeatmapYear = 'recent';
@@ -1190,13 +1189,13 @@
 
           const tot = d.act.total;
           const ac = d.act.ac;
-          let colorClass = "bg-slate-800/80 border border-slate-700/40";
+          let colorClass = "bg-slate-100 border border-slate-200";
           if (tot >= 5) {
-            colorClass = "bg-emerald-400 border border-emerald-300";
+            colorClass = "bg-emerald-600 border border-emerald-700";
           } else if (tot >= 3) {
-            colorClass = "bg-emerald-600 border border-emerald-500";
+            colorClass = "bg-emerald-400 border border-emerald-500";
           } else if (tot >= 1) {
-            colorClass = "bg-emerald-900 border border-emerald-700/60";
+            colorClass = "bg-emerald-200 border border-emerald-300";
           }
 
           const tooltip = `${d.date}: ${tot} bài nộp (${ac} bài AC)`;
@@ -1820,11 +1819,11 @@
 
       if (mode === 'short') {
         if (btnShort) btnShort.className = "py-2 rounded-lg font-bold transition flex items-center justify-center gap-1.5 cursor-pointer bg-indigo-600 text-white shadow";
-        if (btnEssay) btnEssay.className = "py-2 rounded-lg font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer text-slate-400 hover:text-white";
+        if (btnEssay) btnEssay.className = "py-2 rounded-lg font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer text-slate-500 hover:text-slate-800";
         if (boxShort) boxShort.classList.remove('hidden');
         if (boxEssay) boxEssay.classList.add('hidden');
       } else {
-        if (btnShort) btnShort.className = "py-2 rounded-lg font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer text-slate-400 hover:text-white";
+        if (btnShort) btnShort.className = "py-2 rounded-lg font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer text-slate-500 hover:text-slate-800";
         if (btnEssay) btnEssay.className = "py-2 rounded-lg font-bold transition flex items-center justify-center gap-1.5 cursor-pointer bg-indigo-600 text-white shadow";
         if (boxShort) boxShort.classList.add('hidden');
         if (boxEssay) boxEssay.classList.remove('hidden');
