@@ -10657,14 +10657,9 @@ OUTPUT:
         if (timeEl) timeEl.textContent = mySub.submitted_at || '--';
         if (scoreEl) scoreEl.textContent = (mySub.score !== undefined && mySub.score !== '') ? `${mySub.score}/10` : 'Chờ chấm';
 
-        // BẢO MẬT: Chỉ Admin / Giáo viên mới có quyền xem mã nguồn bài làm!
-        const isAdminUser = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+        // Hiển thị mã nguồn bài nộp trước đó của học sinh
         if (contentEl) {
-          if (isAdminUser) {
-            contentEl.textContent = mySub.answer || '--';
-          } else {
-            contentEl.textContent = '🔒 Mã nguồn bài nộp đã được bảo mật (Chỉ Admin / Giáo viên có quyền xem code)';
-          }
+          contentEl.textContent = mySub.answer || '--';
         }
 
         if (fbBox && fbText) {
@@ -10676,15 +10671,13 @@ OUTPUT:
           }
         }
 
-        // Chỉ điền sẵn mã nguồn cũ nếu người đang thao tác là Admin/Giáo viên
-        if (isAdminUser) {
-          if (mySub.type === 'short' || mySub.submission_type_display === 'Điền đáp án') {
-            const ansInput = document.getElementById('submit-answer-input');
-            if (ansInput && !ansInput.value) ansInput.value = mySub.answer || '';
-          } else {
-            const essayInput = document.getElementById('submit-essay-input');
-            if (essayInput && !essayInput.value) essayInput.value = mySub.answer || '';
-          }
+        // Tự động điền lại mã nguồn hoặc đáp án cũ vào ô nhập liệu
+        if (mySub.type === 'short' || mySub.submission_type_display === 'Điền đáp án') {
+          const ansInput = document.getElementById('submit-answer-input');
+          if (ansInput && !ansInput.value) ansInput.value = mySub.answer || '';
+        } else {
+          const essayInput = document.getElementById('submit-essay-input');
+          if (essayInput && !essayInput.value) essayInput.value = mySub.answer || '';
         }
       } else {
         prevBox.classList.add('hidden');
@@ -10843,6 +10836,20 @@ OUTPUT:
         const typeDisplay = sub.submission_type_display || (sub.type === 'essay' ? 'Tự luận' : 'Điền đáp án');
         const isEssay = (sub.type === 'essay' || typeDisplay === 'Tự luận' || typeDisplay === 'Code DeruckOJ');
 
+        const isAuthor = Boolean(
+          (currentStudent && (
+            (currentStudent.name && sub.student_name && sub.student_name.toLowerCase().includes(currentStudent.name.toLowerCase())) ||
+            (currentStudent.stt && String(sub.student_stt || sub.student_id) === String(currentStudent.stt)) ||
+            (currentStudent.pin && sub.student_pin === currentStudent.pin)
+          )) ||
+          (currentAuth && (
+            (currentAuth.name && sub.student_name && sub.student_name.toLowerCase().includes(currentAuth.name.toLowerCase())) ||
+            (currentAuth.stt && String(sub.student_stt || sub.student_id) === String(currentAuth.stt)) ||
+            (currentAuth.pin && sub.student_pin === currentAuth.pin)
+          ))
+        );
+        const canView = isAdmin || isAuthor;
+
         card.innerHTML = `
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-2.5">
             <div class="flex items-center gap-2 flex-wrap">
@@ -10867,7 +10874,7 @@ OUTPUT:
               <span>Nội dung bài làm:</span>
               <span class="font-mono text-slate-500 text-[10px]">${sub.submitted_at || ''}</span>
             </div>
-            ${isAdmin ? `
+            ${canView ? `
               <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-lg font-mono text-xs text-slate-200 whitespace-pre-wrap max-h-24 overflow-y-auto leading-relaxed select-text">${escapeHtml(sub.answer || '(Trống)')}</div>
             ` : `
               <div class="p-2.5 bg-slate-950/80 border border-amber-500/30 rounded-lg font-mono text-xs text-amber-400/90 leading-relaxed select-none">
@@ -10931,11 +10938,30 @@ OUTPUT:
       renderGlobalSubmissions();
     }
 
-    // SAO CHÉP MÃ NGUỒN TỪ MODAL XEM BÀI (CHỈ ADMIN)
+    // SAO CHÉP MÃ NGUỒN TỪ MODAL XEM BÀI (ADMIN, GIÁO VIÊN HOẶC CHÍNH TÁC GIẢ)
     function copyGradeAnswerContent() {
       const isAdmin = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
-      if (!isAdmin) {
-        alert("🔒 Không thể sao chép mã nguồn bài làm được bảo mật! Chỉ Quản trị viên (Admin) mới có quyền truy cập.");
+      let isAllowed = isAdmin;
+      if (!isAllowed && currentGradeSubId && appData && appData.submissions) {
+        const sub = appData.submissions.find(s => s.id === currentGradeSubId);
+        if (sub) {
+          const isAuthor = Boolean(
+            (currentStudent && (
+              (currentStudent.name && sub.student_name && sub.student_name.toLowerCase().includes(currentStudent.name.toLowerCase())) ||
+              (currentStudent.stt && String(sub.student_stt || sub.student_id) === String(currentStudent.stt)) ||
+              (currentStudent.pin && sub.student_pin === currentStudent.pin)
+            )) ||
+            (currentAuth && (
+              (currentAuth.name && sub.student_name && sub.student_name.toLowerCase().includes(currentAuth.name.toLowerCase())) ||
+              (currentAuth.stt && String(sub.student_stt || sub.student_id) === String(currentAuth.stt)) ||
+              (currentAuth.pin && sub.student_pin === currentAuth.pin)
+            ))
+          );
+          if (isAuthor) isAllowed = true;
+        }
+      }
+      if (!isAllowed) {
+        alert("🔒 Không thể sao chép mã nguồn bài làm được bảo mật! Chỉ Quản trị viên (Admin), Giáo viên hoặc chính tác giả mới có quyền truy cập.");
         return;
       }
       const el = document.getElementById('grade-sub-answer-content');
@@ -11163,8 +11189,20 @@ OUTPUT:
         const isCpp = (sub.answer && sub.answer.includes('[C++')) || (sub.lang && sub.lang.includes('C++'));
         const langBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold ${isCpp ? 'bg-blue-500/15 text-blue-300 border border-blue-500/25' : 'bg-amber-500/15 text-amber-300 border border-amber-500/25'}">${isCpp ? 'C++20' : 'Python 3'}</span>`;
 
-        // Bảo mật mã nguồn theo yêu cầu: Chỉ duy nhất Admin / Giáo viên được xem code, các bạn còn lại đều không được
-        const canViewCode = isAdmin;
+        // Quyền xem mã nguồn: Admin, Giáo viên hoặc chính tác giả bài nộp
+        const isAuthor = Boolean(
+          (currentStudent && (
+            (currentStudent.name && sub.student_name && sub.student_name.toLowerCase().includes(currentStudent.name.toLowerCase())) ||
+            (currentStudent.stt && String(sub.student_stt || sub.student_id) === String(currentStudent.stt)) ||
+            (currentStudent.pin && sub.student_pin === currentStudent.pin)
+          )) ||
+          (currentAuth && (
+            (currentAuth.name && sub.student_name && sub.student_name.toLowerCase().includes(currentAuth.name.toLowerCase())) ||
+            (currentAuth.stt && String(sub.student_stt || sub.student_id) === String(currentAuth.stt)) ||
+            (currentAuth.pin && sub.student_pin === currentAuth.pin)
+          ))
+        );
+        const canViewCode = isAdmin || isAuthor;
 
         const actionHtml = canViewCode ? `
           <button onclick="viewSubmissionCodeModal('${sub.id}')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 transition cursor-pointer flex items-center gap-1 ml-auto">
@@ -11222,12 +11260,6 @@ OUTPUT:
 
     // XEM MÃ NGUỒN VÀ BẢO MẬT BÀI NỘP (CHỈ ADMIN ĐƯỢC XEM)
     function viewSubmissionCodeModal(subId) {
-      const isAdmin = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
-      if (!isAdmin) {
-        alert("🔒 Mã nguồn bài nộp của học sinh được bảo mật tuyệt đối! Chỉ Quản trị viên (Admin) mới có quyền xem.");
-        return;
-      }
-
       if (!appData || !appData.submissions) return;
       let sub = appData.submissions.find(s => s.id === subId);
 
@@ -11244,6 +11276,25 @@ OUTPUT:
       } catch(e) {}
 
       if (!sub) return;
+
+      const isAdmin = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+      const isAuthor = Boolean(
+        (currentStudent && (
+          (currentStudent.name && sub.student_name && sub.student_name.toLowerCase().includes(currentStudent.name.toLowerCase())) ||
+          (currentStudent.stt && String(sub.student_stt || sub.student_id) === String(currentStudent.stt)) ||
+          (currentStudent.pin && sub.student_pin === currentStudent.pin)
+        )) ||
+        (currentAuth && (
+          (currentAuth.name && sub.student_name && sub.student_name.toLowerCase().includes(currentAuth.name.toLowerCase())) ||
+          (currentAuth.stt && String(sub.student_stt || sub.student_id) === String(currentAuth.stt)) ||
+          (currentAuth.pin && sub.student_pin === currentAuth.pin)
+        ))
+      );
+
+      if (!isAdmin && !isAuthor) {
+        alert("🔒 Mã nguồn bài nộp được bảo mật! Chỉ Quản trị viên (Admin), Giáo viên hoặc chính tác giả bài nộp mới có quyền xem.");
+        return;
+      }
 
       currentGradeSubId = sub.id;
       document.getElementById('grade-sub-id').value = sub.id;

@@ -181,53 +181,46 @@ function isDeruckProblem(probId, probObj) {
 }
 
 /**
- * 3c. Kiểm tra bài nộp có thuộc WEB DeruckOJ hay không (chỉ lưu bài nộp của WEB DeruckOJ)
+ * 3c. Kiểm tra bài nộp hợp lệ (giữ lại toàn bộ bài nộp thật của học sinh, loại bỏ bản ghi giả lập)
  */
 function isDeruckSubmission(sub) {
   if (!sub) return false;
-  // Bài nộp trực tiếp từ trình chấm WEB DeruckOJ
-  if (sub.submission_type_display && sub.submission_type_display.includes('DeruckOJ')) return true;
-  if (sub.feedback && sub.feedback.includes('DeruckOJ')) return true;
-  if (sub.platform && sub.platform === 'DeruckOJ') return true;
-
-  // Thuộc bài tập của WEB DeruckOJ
-  if (isDeruckProblem(sub.problem_id)) return true;
-
-  // Bài nộp thuộc các web khác (MarisaOJ, Codeforces, VJudge, CSES, VNOI...) -> Bỏ qua
-  const pid = String(sub.problem_id || '').toUpperCase().trim();
-  if (pid.startsWith('MARISA-') || pid.startsWith('CF-') || pid.startsWith('VJ-') || pid.startsWith('CSES-') || pid.startsWith('VNOI-')) {
-    return false;
-  }
-
-  // Bài nộp giả lập SUB-AC sinh từ nền tảng ngoài
+  // Bỏ qua các bài nộp giả lập SUB-AC sinh tự động từ crawler ngoài (không có code thật)
   const sid = String(sub.id || '').toUpperCase().trim();
   if (sid.startsWith('SUB-AC-MARISA') || sid.startsWith('SUB-AC-CF') || sid.startsWith('SUB-AC-VJ') || sid.startsWith('SUB-AC-CSES')) {
     return false;
   }
+  if (sub.is_synthetic) return false;
 
-  // Bài nộp hợp lệ của học sinh có code thật
-  if (sid.startsWith('SUB-') && !sid.startsWith('SUB-AC-') && sub.answer && !sub.answer.includes('// Trạng thái: Chấm đạt (AC) 100/100')) {
+  // Bất kỳ bài thi HSG nào từ thư mục TEST/NOPBAI đều giữ lại
+  if (sid.startsWith('SUB-HSG-') || sid.startsWith('SUB-EXAM-')) return true;
+
+  // Mọi bài nộp có mã nguồn thật hoặc được tạo trực tiếp trên web đều giữ lại
+  if (sub.answer && typeof sub.answer === 'string' && sub.answer.trim().length > 0) {
+    if (!sub.answer.includes('// Trạng thái: Chấm đạt (AC) 100/100')) {
+      return true;
+    }
+  }
+
+  // Thuộc DeruckOJ hoặc bài tập trong hệ thống
+  if (sub.submission_type_display && (sub.submission_type_display.includes('DeruckOJ') || sub.submission_type_display.includes('Code') || sub.submission_type_display.includes('Tự luận'))) {
     return true;
   }
+  if (sub.feedback && sub.feedback.includes('DeruckOJ')) return true;
+  if (sub.platform && sub.platform === 'DeruckOJ') return true;
+  if (sid.startsWith('SUB-') && !sid.startsWith('SUB-AC-')) return true;
 
   return false;
 }
 
 /**
- * 3d. Bảo mật mã nguồn: Che giấu toàn bộ code/đáp án bài làm đối với học sinh và khách, chỉ Admin/Giáo viên được xem
+ * 3d. Bảo mật mã nguồn: Giữ nguyên mã nguồn bài nộp thật trong bộ nhớ để không làm mất code.
+ * UI sẽ kiểm tra quyền truy cập (Admin/Giáo viên hoặc chính tác giả) khi hiển thị.
  */
-function sanitizeSubmissionsForRole(submissions, isAdminOrTeacher) {
+function sanitizeSubmissionsForRole(submissions, isAdminOrTeacher, currentStudentObj) {
   if (!submissions || !Array.isArray(submissions)) return [];
-  // Lọc chỉ giữ lại bài nộp của WEB DeruckOJ
-  const deruckOnly = submissions.filter(isDeruckSubmission);
-  if (isAdminOrTeacher) return deruckOnly;
-  return deruckOnly.map(s => {
-    if (!s) return s;
-    return {
-      ...s,
-      answer: '🔒 [Mã nguồn bài nộp đã được bảo mật — Chỉ Quản trị viên / Giáo viên mới có quyền xem]'
-    };
-  });
+  // Giữ lại toàn bộ bài nộp hợp lệ của học sinh
+  return submissions.filter(isDeruckSubmission);
 }
 
 /**
@@ -408,8 +401,9 @@ async function touchFirebaseLastUpdated() {
  */
 async function saveSubmissionToFirebase(subData) {
   if (!isFirebaseConfigured() || !subData) return false;
-  // CHỈ LƯU BÀI NỘP CỦA WEB DERUCKOJ (các web khác không lưu vào submissions)
-  if (typeof isDeruckSubmission === 'function' && !isDeruckSubmission(subData)) {
+  // Bỏ qua nếu là bản ghi giả lập của crawler ngoài
+  const sid = String(subData.id || '').toUpperCase().trim();
+  if (sid.startsWith('SUB-AC-') || subData.is_synthetic) {
     return false;
   }
   const dbUrl = getFirebaseDatabaseUrl();

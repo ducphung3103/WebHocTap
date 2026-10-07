@@ -1955,14 +1955,9 @@
         if (timeEl) timeEl.textContent = mySub.submitted_at || '--';
         if (scoreEl) scoreEl.textContent = (mySub.score !== undefined && mySub.score !== '') ? `${mySub.score}/10` : 'Chờ chấm';
         
-        // BẢO MẬT: Chỉ Admin / Giáo viên mới có quyền xem mã nguồn bài làm!
-        const isAdminUser = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+        // Hiển thị mã nguồn bài nộp trước đó của học sinh
         if (contentEl) {
-          if (isAdminUser) {
-            contentEl.textContent = mySub.answer || '--';
-          } else {
-            contentEl.textContent = '🔒 Mã nguồn bài nộp đã được bảo mật (Chỉ Admin / Giáo viên có quyền xem code)';
-          }
+          contentEl.textContent = mySub.answer || '--';
         }
 
         if (fbBox && fbText) {
@@ -1974,13 +1969,11 @@
           }
         }
 
-        // Chỉ điền sẵn đáp án/code cũ nếu là Admin
-        if (isAdminUser) {
-          if (mySub.type === 'short' || mySub.submission_type_display === 'Điền đáp án') {
-            if (ansInput && !ansInput.value) ansInput.value = mySub.answer || '';
-          } else {
-            if (essayInput && !essayInput.value) essayInput.value = mySub.answer || '';
-          }
+        // Tự động điền lại mã nguồn hoặc đáp án cũ vào ô nhập liệu
+        if (mySub.type === 'short' || mySub.submission_type_display === 'Điền đáp án') {
+          if (ansInput && !ansInput.value) ansInput.value = mySub.answer || '';
+        } else {
+          if (essayInput && !essayInput.value) essayInput.value = mySub.answer || '';
         }
       } else if (prevBox) {
         prevBox.classList.add('hidden');
