@@ -2421,51 +2421,6 @@
   ],
   "contests": [
     {
-      "id": "CONTEST-03",
-      "title": "⚡ Kỳ Thi Trực Tiếp Web #03: Thử Thách C++ & Python Cơ Bản (DeruckOJ)",
-      "platform": "DeruckOJ (Web)",
-      "type": "internal",
-      "status": "UPCOMING",
-      "start_time": "2026-10-12T19:30:00+07:00",
-      "duration_minutes": 120,
-      "format": "Chấm điểm trực tiếp Web (4 bài)",
-      "url": "#problems-view-judge",
-      "editorial_url": "https://docs.google.com",
-      "problems_count": 4,
-      "description": "Kỳ thi thử thách trực tiếp ngay trên Web DeruckOJ. Học sinh giải đề và nộp code trực tiếp để nhận kết quả chấm AC tức thì theo bộ test của giáo viên.",
-      "problems": [
-        {
-          "code": "A",
-          "id": "CPP-EX-01",
-          "name": "Mảng 10 số tự nhiên",
-          "points": 100,
-          "oj": "DeruckOJ"
-        },
-        {
-          "code": "B",
-          "id": "MARISA-1",
-          "name": "Tổng hai số A + B",
-          "points": 100,
-          "oj": "MarisaOJ"
-        },
-        {
-          "code": "C",
-          "id": "CPP-EX-02",
-          "name": "Phần tử chính giữa mảng",
-          "points": 100,
-          "oj": "DeruckOJ"
-        },
-        {
-          "code": "D",
-          "id": "MARISA-2",
-          "name": "Chu vi và diện tích hình chữ nhật",
-          "points": 100,
-          "oj": "MarisaOJ"
-        }
-      ],
-      "standings": []
-    },
-    {
       "id": "CONTEST-02",
       "title": "⚔️ Contest Định Kỳ #02: Quy Hoạch Động & Mảng Cộng Dồn",
       "platform": "VJudge / Codeforces",
@@ -2549,6 +2504,51 @@
         {
           "code": "D",
           "name": "Tổng hai số A + B",
+          "points": 100,
+          "oj": "MarisaOJ"
+        }
+      ],
+      "standings": []
+    },
+    {
+      "id": "CONTEST-03",
+      "title": "⚡ Kỳ Thi Trực Tiếp Web #03: Thử Thách C++ & Python Cơ Bản (DeruckOJ)",
+      "platform": "DeruckOJ (Web)",
+      "type": "internal",
+      "status": "UPCOMING",
+      "start_time": "2026-10-12T19:30:00+07:00",
+      "duration_minutes": 120,
+      "format": "Chấm điểm trực tiếp Web (4 bài)",
+      "url": "#problems-view-judge",
+      "editorial_url": "https://docs.google.com",
+      "problems_count": 4,
+      "description": "Kỳ thi thử thách trực tiếp ngay trên Web DeruckOJ. Học sinh giải đề và nộp code trực tiếp để nhận kết quả chấm AC tức thì theo bộ test của giáo viên.",
+      "problems": [
+        {
+          "code": "A",
+          "id": "CPP-EX-01",
+          "name": "Mảng 10 số tự nhiên",
+          "points": 100,
+          "oj": "DeruckOJ"
+        },
+        {
+          "code": "B",
+          "id": "MARISA-1",
+          "name": "Tổng hai số A + B",
+          "points": 100,
+          "oj": "MarisaOJ"
+        },
+        {
+          "code": "C",
+          "id": "CPP-EX-02",
+          "name": "Phần tử chính giữa mảng",
+          "points": 100,
+          "oj": "DeruckOJ"
+        },
+        {
+          "code": "D",
+          "id": "MARISA-2",
+          "name": "Chu vi và diện tích hình chữ nhật",
           "points": 100,
           "oj": "MarisaOJ"
         }
@@ -2645,8 +2645,775 @@
     "Tháng 11",
     "Tháng 12"
   ],
-  "last_updated": "2026-10-07T02:48:36Z",
+  "last_updated": "2026-10-07T04:53:45Z",
   "grader_problems": [
+    {
+      "id": "MARISA-1",
+      "name": "A + B",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/1",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "C++ cơ bản",
+        "Python cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "3 5\n",
+          "output": "8\n",
+          "sample": true
+        },
+        {
+          "input": "-10 25\n",
+          "output": "15\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho hai số nguyên $A$ và $B$. Nhiệm vụ của bạn là tính tổng của hai số này.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-2",
+      "name": "Chu vi và diện tích hình chữ nhật",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/2",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "C++ cơ bản",
+        "Python cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "3 4\n",
+          "output": "14 12\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho chiều dài $a$ và chiều rộng $b$ của hình chữ nhật. Hãy tính chu vi và diện tích của hình chữ nhật đó.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-3",
+      "name": "Phép chia",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/3",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "C++ cơ bản",
+        "Python cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "17 5\n",
+          "output": "3 2\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho hai số nguyên dương $a$ và $b$. Hãy in ra thương nguyên và số dư của phép chia $a$ cho $b$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-4",
+      "name": "Ba cạnh tam giác",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/4",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "C++ cơ bản",
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "3 4 5\n",
+          "output": "YES\n",
+          "sample": true
+        },
+        {
+          "input": "1 2 3\n",
+          "output": "NO\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho 3 số nguyên dương $a, b, c$. Kiểm tra xem ba số này có thể tạo thành ba cạnh của một tam giác hay không.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-6",
+      "name": "Chia kẹo",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/6",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "23 4\n",
+          "output": "5 3\n",
+          "sample": true
+        }
+      ],
+      "description": "Có $N$ viên kẹo chia đều cho $K$ em bé. Hãy tính xem mỗi em bé nhận được nhiều nhất bao nhiêu viên kẹo và còn thừa lại bao nhiêu viên kẹo.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-7",
+      "name": "Đổi tiền",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/7",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "578\n",
+          "output": "6\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho số tiền $N$ đồng. Cần đổi số tiền này ra các tờ tiền mệnh giá 500, 200, 100, 50, 20, 10, 5, 2, 1 sao cho tổng số tờ tiền là ít nhất.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-8",
+      "name": "Biểu thức a * b % c",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/8",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "1000000 2000000 998244353\n",
+          "output": "3511294\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho ba số nguyên dương $a, b, c$. Hãy tính giá trị biểu thức: $(a \\times b) \\pmod c$. Lưu ý tránh tràn số khi nhân.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-10",
+      "name": "Tổng các chữ số",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/10",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "12345\n",
+          "output": "15\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho số nguyên dương $N$. Hãy tính tổng tất cả các chữ số của $N$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-11",
+      "name": "Số đảo ngược",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/11",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "12340\n",
+          "output": "4321\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho số nguyên dương $N$. Hãy in ra số nhận được khi đảo ngược các chữ số của $N$ (bỏ các chữ số 0 ở đầu).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-13",
+      "name": "Đổi ký tự hoa thường",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/13",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "C++ cơ bản",
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "a\n",
+          "output": "A\n",
+          "sample": true
+        },
+        {
+          "input": "B\n",
+          "output": "b\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho một ký tự chữ cái $c$. Nếu $c$ là chữ thường, hãy đổi thành chữ hoa; nếu $c$ là chữ hoa, hãy đổi thành chữ thường.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-14",
+      "name": "Tìm kiếm ký tự",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/14",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "laptrinhthidau\na\n",
+          "output": "2\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho xâu ký tự $S$ và một ký tự $c$. Hãy đếm số lần ký tự $c$ xuất hiện trong xâu $S$ (phân biệt hoa thường).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-15",
+      "name": "In xâu ký tự",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/15",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "C++ cơ bản",
+        "Python cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "Hello Competitive Programming!\n",
+          "output": "Hello Competitive Programming!\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho xâu ký tự $S$. In xâu ký tự $S$ ra màn hình chuẩn.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-16",
+      "name": "Gấp giấy",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/16",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "0.001\n",
+          "output": "4\n",
+          "sample": true
+        }
+      ],
+      "description": "Một tờ giấy có độ dày $0.1$ mm ($0.0001$ mét). Mỗi lần gấp đôi, độ dày tờ giấy tăng gấp 2 lần. Cần gấp ít nhất bao nhiêu lần để độ dày tờ giấy đạt hoặc vượt quá độ cao $H$ mét?",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-20",
+      "name": "Đếm số chẵn",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/20",
+      "badge_color": "purple",
+      "category": "Mảng",
+      "difficulty": "Level 1 • Mảng",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "5\n1 2 3 4 6\n",
+          "output": "3\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho mảng gồm $N$ số nguyên. Hãy đếm xem trong mảng có bao nhiêu số chẵn.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-42",
+      "name": "Mảng số nguyên chẵn lẻ",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/42",
+      "badge_color": "purple",
+      "category": "Mảng",
+      "difficulty": "Level 1 • Mảng",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "6\n1 4 3 6 8 5\n",
+          "output": "4 6 8 1 3 5\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho mảng gồm $N$ số nguyên. Hãy in toàn bộ các số chẵn trước theo thứ tự xuất hiện, sau đó in toàn bộ các số lẻ theo thứ tự xuất hiện.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-314",
+      "name": "Chữ số lớn nhất",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/314",
+      "badge_color": "purple",
+      "category": "Vòng lặp",
+      "difficulty": "Level 1 • Vòng lặp",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "52941\n",
+          "output": "9\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho số nguyên dương $N$. Hãy tìm chữ số có giá trị lớn nhất trong các chữ số của $N$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-396",
+      "name": "Độ độc cây nấm",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/396",
+      "badge_color": "purple",
+      "category": "Rẽ nhánh",
+      "difficulty": "Level 1 • Rẽ nhánh",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "4.5 3.2\n",
+          "output": "A\n",
+          "sample": true
+        }
+      ],
+      "description": "Cây nấm A có độ độc $x$, cây nấm B có độ độc $y$. Nếu $x > y$ in \"A\", nếu $y > x$ in \"B\", nếu bằng nhau in \"EQUAL\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-397",
+      "name": "Nghiệm phương trình ax + b = 0",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/397",
+      "badge_color": "purple",
+      "category": "Toán học",
+      "difficulty": "Level 1 • Toán học",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "2 -4\n",
+          "output": "2.00\n",
+          "sample": true
+        },
+        {
+          "input": "0 5\n",
+          "output": "VO NGHIEM\n",
+          "sample": true
+        }
+      ],
+      "description": "Giải và biện luận phương trình bậc nhất $ax + b = 0$. In \"VO SO NGHIEM\" nếu vô số nghiệm, \"VO NGHIEM\" nếu vô nghiệm, hoặc nghiệm $x$ làm tròn 2 chữ số thập phân.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-401",
+      "name": "Ăn nấm",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/401",
+      "badge_color": "purple",
+      "category": "Cơ bản",
+      "difficulty": "Level 1 • Cơ bản",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "4\n5 -2 8 1\n",
+          "output": "12\n",
+          "sample": true
+        }
+      ],
+      "description": "Mario đi qua $N$ cây nấm, cây nấm thứ $i$ cho $A_i$ điểm sức mạnh. Nếu ăn nấm có $A_i < 0$ thì sức mạnh bị trừ. Tính tổng sức mạnh sau khi ăn hết $N$ cây nấm.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-402",
+      "name": "Gấp giấy nâng cao",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/402",
+      "badge_color": "purple",
+      "category": "Vòng lặp",
+      "difficulty": "Level 1 • Vòng lặp",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "16 8 2\n",
+          "output": "4 8\n",
+          "sample": true
+        }
+      ],
+      "description": "Một tấm bản đồ ban đầu có kích thước $W \\times H$. Mỗi lần gấp đôi theo cạnh lớn hơn (nếu bằng nhau thì gấp theo $W$). Tính kích thước sau $K$ lần gấp.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-405",
+      "name": "Mảng số nguyên",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/405",
+      "badge_color": "purple",
+      "category": "Mảng",
+      "difficulty": "Level 1 • Mảng",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "4\n2 5 1 4\n",
+          "output": "5 1 3.00\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho mảng gồm $N$ số nguyên. Hãy tìm giá trị lớn nhất, nhỏ nhất và tính giá trị trung bình cộng của các phần tử trong mảng (làm tròn 2 chữ số thập phân).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-416",
+      "name": "Kiểm tra điều kiện số học",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/416",
+      "badge_color": "purple",
+      "category": "Rẽ nhánh",
+      "difficulty": "Level 1 • Rẽ nhánh",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "15\n",
+          "output": "YES\n",
+          "sample": true
+        },
+        {
+          "input": "30\n",
+          "output": "NO\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho số nguyên dương $N$. Kiểm tra xem $N$ có đồng thời chia hết cho cả 3 và 5 nhưng KHÔNG chia hết cho 2 hay không. In \"YES\" hoặc \"NO\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-419",
+      "name": "Điểm thuộc đoạn thẳng",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/419",
+      "badge_color": "purple",
+      "category": "Hình học",
+      "difficulty": "Level 1 • Hình học",
+      "classes": [
+        "Python 1-1"
+      ],
+      "testcases": [
+        {
+          "input": "2 2 0 0 4 4\n",
+          "output": "YES\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho tọa độ điểm $M(x, y)$ và đoạn thẳng nối hai điểm $A(x_1, y_1), B(x_2, y_2)$. Kiểm tra xem điểm $M$ có nằm trên đoạn thẳng $AB$ hay không.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-499",
+      "name": "Tổng ước số",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/499",
+      "badge_color": "purple",
+      "category": "Số học",
+      "difficulty": "Level 1 • Số học",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "12\n",
+          "output": "28\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho số nguyên dương $N$. Hãy tính tổng tất cả các ước nguyên dương của $N$. Lưu ý dùng thuật toán duyệt tới $\\sqrt{N}$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-535",
+      "name": "Máy tính đơn giản",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/535",
+      "badge_color": "purple",
+      "category": "Rẽ nhánh",
+      "difficulty": "Level 1 • Rẽ nhánh",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "10 / 4\n",
+          "output": "2.50\n",
+          "sample": true
+        }
+      ],
+      "description": "Lập trình máy tính đơn giản thực hiện 4 phép toán cơ bản: +, -, *, /. Cho biểu thức dạng \"$A \\text{ op } B$\". Hãy in kết quả (với phép chia làm tròn 2 chữ số thập phân).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-536",
+      "name": "Số đối xứng",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/536",
+      "badge_color": "purple",
+      "category": "Số học",
+      "difficulty": "Level 1 • Số học",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "12321\n",
+          "output": "YES\n",
+          "sample": true
+        },
+        {
+          "input": "12345\n",
+          "output": "NO\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho số nguyên dương $N$. Một số được gọi là số đối xứng (palindrome) nếu đọc từ trái sang phải hay từ phải sang trái đều giống nhau. Kiểm tra xem $N$ có đối xứng không.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-537",
+      "name": "Dãy số",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/537",
+      "badge_color": "purple",
+      "category": "Dãy số",
+      "difficulty": "Level 1 • Dãy số",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "3\n",
+          "output": "7\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho dãy số $u_1 = 1$, $u_n = 2u_{n-1} + 1$ với mọi $n \\ge 2$. Cho số nguyên $N$. Hãy tính số hạng thứ $N$ của dãy theo modulo $10^9 + 7$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-541",
+      "name": "Số chính phương & Căn bậc hai",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/541",
+      "badge_color": "purple",
+      "category": "Số học",
+      "difficulty": "Level 1 • Số học",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "25\n",
+          "output": "YES\n",
+          "sample": true
+        },
+        {
+          "input": "26\n",
+          "output": "NO\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho số nguyên dương $N$. Kiểm tra xem $N$ có phải là số chính phương (bình phương của một số nguyên) hay không. In \"YES\" hoặc \"NO\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "MARISA-587",
+      "name": "Hệ thập phân & Đổi cơ số",
+      "platform": "MarisaOJ",
+      "url": "https://marisaoj.com/problem/587",
+      "badge_color": "purple",
+      "category": "Cơ số",
+      "difficulty": "Level 1 • Cơ số",
+      "classes": [
+        "C++ cơ bản"
+      ],
+      "testcases": [
+        {
+          "input": "13\n",
+          "output": "1101\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho số nguyên không âm $N$ ở hệ thập phân. Hãy chuyển đổi và in ra biểu diễn nhị phân (cơ số 2) của $N$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "CF-486C",
+      "name": "Palindromic Transformation",
+      "platform": "Codeforces",
+      "url": "https://codeforces.com/problemset/problem/486/C",
+      "badge_color": "blue",
+      "category": "Tham lam",
+      "difficulty": "Level 3 • Tham lam",
+      "classes": [
+        "C++ nâng cao"
+      ],
+      "testcases": [
+        {
+          "input": "8 3\naeabcaez\n",
+          "output": "6\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho xâu $S$ gồm $N$ chữ cái in thường và vị trí con trỏ ban đầu $p$. Bạn có thể di chuyển con trỏ sang trái/phải hoặc thay đổi ký tự tại vị trí con trỏ theo vòng tròn chữ cái ('a' <-> 'z'). Hãy tìm số thao tác tối thiểu để biến $S$ thành xâu đối xứng.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "CF-214B",
+      "name": "Hometask",
+      "platform": "Codeforces",
+      "url": "https://codeforces.com/problemset/problem/214/B",
+      "badge_color": "blue",
+      "category": "Số học",
+      "difficulty": "Level 3 • Số học",
+      "classes": [
+        "C++ nâng cao"
+      ],
+      "testcases": [
+        {
+          "input": "4\n0 1 2 3\n",
+          "output": "210\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho tập hợp gồm $N$ chữ số. Hãy tìm số nguyên lớn nhất có thể tạo thành từ một số hoặc tất cả các chữ số đã cho sao cho số đó chia hết cho 2, 3 và 5 (tức chia hết cho 30). Nếu không thể tạo thành, in -1.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "CF-231C",
+      "name": "To Add or Not to Add",
+      "platform": "Codeforces",
+      "url": "https://codeforces.com/problemset/problem/231/C",
+      "badge_color": "blue",
+      "category": "Hai con trỏ",
+      "difficulty": "Level 4 • Hai con trỏ",
+      "classes": [
+        "C++ nâng cao"
+      ],
+      "testcases": [
+        {
+          "input": "3 2\n3 1 4\n",
+          "output": "2 3\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho mảng $N$ số nguyên và số $k$. Bạn có thể tăng giá trị bất kỳ phần tử nào lên 1 tối đa $k$ lần. Hãy tìm giá trị có thể đạt được tần số xuất hiện nhiều nhất và số lần xuất hiện đó.",
+      "time_limit": "2.0s",
+      "memory_limit": "256M"
+    },
+    {
+      "id": "CSES-1628",
+      "name": "Meet in the Middle",
+      "platform": "CSES",
+      "url": "https://cses.fi/problemset/task/1628",
+      "badge_color": "violet",
+      "category": "Tìm kiếm",
+      "difficulty": "Level 4 • Tìm kiếm",
+      "classes": [
+        "C++ nâng cao"
+      ],
+      "testcases": [
+        {
+          "input": "4 5\n1 2 3 2\n",
+          "output": "3\n",
+          "sample": true
+        }
+      ],
+      "description": "Cho mảng gồm $N$ số nguyên dương và số $x$. Hãy đếm số lượng tập con có tổng các phần tử bằng đúng $x$. Kỹ thuật chia mảng làm 2 nửa ($N/2 \\le 20$) rồi sinh tập con.",
+      "time_limit": "1.0s",
+      "memory_limit": "512M"
+    },
     {
       "id": "CPP-EX-01",
       "name": "Mảng 10 số tự nhiên",
@@ -2665,9 +3432,9 @@
           "sample": true
         },
         {
-          "input": "10 9 8 7 6 5 4 3 2 1\n",
-          "output": "10 9 8 7 6 5 4 3 2 1\n",
-          "sample": true
+          "input": "10 20 30 40 50 60 70 80 90 100\n",
+          "output": "10 20 30 40 50 60 70 80 90 100\n",
+          "sample": false
         },
         {
           "input": "0 0 0 0 0 0 0 0 0 0\n",
@@ -2675,27 +3442,14 @@
           "sample": false
         },
         {
-          "input": "5 15 25 35 45 55 65 75 85 95\n",
-          "output": "5 15 25 35 45 55 65 75 85 95\n",
-          "sample": false
-        },
-        {
-          "input": "100 200 300 400 500 600 700 800 900 1000\n",
-          "output": "100 200 300 400 500 600 700 800 900 1000\n",
-          "sample": false
-        },
-        {
-          "input": "42 17 99 8 23 54 61 72 3 88\n",
-          "output": "42 17 99 8 23 54 61 72 3 88\n",
+          "input": "9 8 7 6 5 4 3 2 1 0\n",
+          "output": "9 8 7 6 5 4 3 2 1 0\n",
           "sample": false
         }
       ],
-      "description": "Khai báo mảng có độ dài là 10. Nhập vào 10 số tự nhiên bất kỳ cách nhau bởi dấu cách. In ra 10 số tự nhiên đó trên cùng một dòng, cách nhau bởi dấu cách.",
-      "input_format": "Một dòng duy nhất gồm 10 số tự nhiên cách nhau bởi dấu cách.",
-      "output_format": "In ra 10 số đó trên cùng một dòng, cách nhau bởi dấu cách.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Viết chương trình nhập vào một mảng gồm đúng 10 số tự nhiên. In lại 10 số đó ra màn hình trên một dòng duy nhất, mỗi số cách nhau bởi đúng một dấu cách.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CPP-EX-02",
@@ -2710,42 +3464,24 @@
       ],
       "testcases": [
         {
-          "input": "5\n10 20 30 40 50\n",
-          "output": "30\n",
+          "input": "5\n10 20 99 40 50\n",
+          "output": "99\n",
           "sample": true
         },
         {
-          "input": "3\n7 9 2\n",
-          "output": "9\n",
-          "sample": true
-        },
-        {
-          "input": "1\n999\n",
-          "output": "999\n",
+          "input": "3\n1 7 3\n",
+          "output": "7\n",
           "sample": false
         },
         {
-          "input": "7\n1 2 3 100 4 5 6\n",
-          "output": "100\n",
-          "sample": false
-        },
-        {
-          "input": "5\n-10 -5 0 5 10\n",
-          "output": "0\n",
-          "sample": false
-        },
-        {
-          "input": "9\n8 7 6 5 4 3 2 1 0\n",
-          "output": "4\n",
+          "input": "1\n42\n",
+          "output": "42\n",
           "sample": false
         }
       ],
-      "description": "Cho số nguyên dương lẻ n (1 <= n <= 99). Nhập vào n số nguyên của mảng. Hãy in ra giá trị của phần tử đứng ở vị trí thứ (n + 1) / 2 (chỉ số tính từ 1).",
-      "input_format": "Dòng 1 chứa số nguyên lẻ n. Dòng 2 chứa n số nguyên cách nhau bởi dấu cách.",
-      "output_format": "In ra một số nguyên duy nhất là giá trị của phần tử chính giữa.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Cho số nguyên dương lẻ $N$ và mảng gồm $N$ số nguyên. Hãy in ra phần tử nằm ở chính giữa mảng (vị trí có chỉ số $(N - 1) / 2$ khi đánh chỉ số từ 0).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CPP-EX-03",
@@ -2775,27 +3511,14 @@
           "sample": false
         },
         {
-          "input": "a\n",
-          "output": "THUONG\n",
-          "sample": false
-        },
-        {
-          "input": "M\n",
-          "output": "HOA\n",
-          "sample": false
-        },
-        {
-          "input": "z\n",
+          "input": "y\n",
           "output": "THUONG\n",
           "sample": false
         }
       ],
-      "description": "Cho một ký tự c là chữ cái tiếng Anh. Hãy kiểm tra xem c là chữ cái hoa hay chữ cái thường. Nếu c là chữ cái hoa, in ra 'HOA'. Nếu c là chữ cái thường, in ra 'THUONG'.",
-      "input_format": "Một ký tự duy nhất c ('A'..'Z' hoặc 'a'..'z').",
-      "output_format": "In ra 'HOA' hoặc 'THUONG'.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Cho một ký tự chữ cái $c$. Hãy kiểm tra: Nếu $c$ là chữ in hoa, in ra \"HOA\". Nếu $c$ là chữ in thường, in ra \"THUONG\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CPP-EX-04",
@@ -2810,42 +3533,29 @@
       ],
       "testcases": [
         {
+          "input": "M\n",
+          "output": "m\n",
+          "sample": true
+        },
+        {
+          "input": "k\n",
+          "output": "K\n",
+          "sample": true
+        },
+        {
           "input": "A\n",
           "output": "a\n",
-          "sample": true
-        },
-        {
-          "input": "x\n",
-          "output": "X\n",
-          "sample": true
-        },
-        {
-          "input": "B\n",
-          "output": "b\n",
           "sample": false
         },
         {
           "input": "z\n",
           "output": "Z\n",
           "sample": false
-        },
-        {
-          "input": "M\n",
-          "output": "m\n",
-          "sample": false
-        },
-        {
-          "input": "c\n",
-          "output": "C\n",
-          "sample": false
         }
       ],
-      "description": "Cho một chữ cái c. Nếu c đang viết hoa thì chuyển về viết thường. Nếu c đang viết thường thì chuyển về viết hoa.",
-      "input_format": "Một ký tự duy nhất c ('A'..'Z' hoặc 'a'..'z').",
-      "output_format": "In ra ký tự sau khi chuyển đổi.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Cho một ký tự chữ cái $c$. Đổi $c$ thành chữ in thường nếu đang là chữ hoa, và đổi thành chữ in hoa nếu đang là chữ thường.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CPP-EX-05",
@@ -2860,42 +3570,24 @@
       ],
       "testcases": [
         {
-          "input": "3210\n",
-          "output": "0123\n",
-          "sample": true
-        },
-        {
           "input": "12345\n",
-          "output": "54321\n",
+          "output": "5 4 3 2 1\n",
           "sample": true
         },
         {
-          "input": "1000\n",
-          "output": "0001\n",
+          "input": "908\n",
+          "output": "8 0 9\n",
           "sample": false
         },
         {
           "input": "7\n",
           "output": "7\n",
           "sample": false
-        },
-        {
-          "input": "102030\n",
-          "output": "030201\n",
-          "sample": false
-        },
-        {
-          "input": "9876543210\n",
-          "output": "0123456789\n",
-          "sample": false
         }
       ],
-      "description": "Cho một số nguyên n (dưới dạng chuỗi hoặc số). Hãy viết chương trình in ra các chữ số của n theo chiều ngược lại (chữ số 0 ở cuối số ban đầu vẫn được in ra khi đảo ngược).",
-      "input_format": "Một số nguyên dương n (1 <= n <= 10^18).",
-      "output_format": "In ra chuỗi chữ số theo chiều ngược lại.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Cho số nguyên dương $N$. Hãy in các chữ số của $N$ theo chiều ngược lại (từ phải sang trái), mỗi chữ số cách nhau bởi một dấu cách.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-01",
@@ -2910,32 +3602,19 @@
       ],
       "testcases": [
         {
-          "input": "Hello\n",
-          "output": "Hello\nHello\nHello\nHello\nHello\n",
+          "input": "Alo 1 2 3\n",
+          "output": "Alo 1 2 3\nAlo 1 2 3\nAlo 1 2 3\n",
           "sample": true
         },
         {
-          "input": "Python\n",
-          "output": "Python\nPython\nPython\nPython\nPython\n",
-          "sample": true
-        },
-        {
-          "input": "Xin chao Thay Duc\n",
-          "output": "Xin chao Thay Duc\nXin chao Thay Duc\nXin chao Thay Duc\nXin chao Thay Duc\nXin chao Thay Duc\n",
-          "sample": false
-        },
-        {
-          "input": "12345\n",
-          "output": "12345\n12345\n12345\n12345\n12345\n",
+          "input": "Thong bao khan\n",
+          "output": "Thong bao khan\nThong bao khan\nThong bao khan\n",
           "sample": false
         }
       ],
-      "description": "Hãy thiết kế 1 loa phát thanh: Nhập vào một câu nói s từ bàn phím. Loa này sẽ in lặp lại câu nói đó 5 lần, mỗi lần trên 1 dòng riêng biệt.",
-      "input_format": "Một dòng chứa câu nói s.",
-      "output_format": "In ra 5 dòng, mỗi dòng là câu nói s.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Một chiếc loa phát thanh cần lặp lại thông điệp 3 lần. Nhập vào một dòng văn bản $S$, hãy in ra dòng đó lặp lại đúng 3 lần, mỗi lần trên một dòng.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-02",
@@ -2950,32 +3629,24 @@
       ],
       "testcases": [
         {
-          "input": "Xin chao\n",
-          "output": "ToiLaChuQuaCungDau\n",
+          "input": "3\n",
+          "output": "QUAC QUAC QUAC\n",
           "sample": true
         },
         {
-          "input": "Ban ten la gi?\n",
-          "output": "ToiLaChuQuaCungDau\n",
-          "sample": true
-        },
-        {
-          "input": "123456\n",
-          "output": "ToiLaChuQuaCungDau\n",
+          "input": "1\n",
+          "output": "QUAC\n",
           "sample": false
         },
         {
-          "input": "Con qua oi\n",
-          "output": "ToiLaChuQuaCungDau\n",
+          "input": "5\n",
+          "output": "QUAC QUAC QUAC QUAC QUAC\n",
           "sample": false
         }
       ],
-      "description": "Hãy tạo ra 1 chú quạ cứng đầu: Kể cả người dùng có nhập vào bất cứ câu gì, chú quạ vẫn chỉ in ra màn hình đúng một câu duy nhất: 'ToiLaChuQuaCungDau'.",
-      "input_format": "Một dòng chứa chuỗi ký tự bất kỳ.",
-      "output_format": "In ra 'ToiLaChuQuaCungDau'.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Chú quạ thông minh kêu $N$ lần. Cho số nguyên dương $N$, hãy in ra $N$ từ \"QUAC\" trên cùng một dòng, cách nhau bởi một khoảng trắng.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-03",
@@ -2990,37 +3661,24 @@
       ],
       "testcases": [
         {
-          "input": "10\n",
-          "output": "16\n",
+          "input": "12\n",
+          "output": "18\n",
           "sample": true
+        },
+        {
+          "input": "8\n",
+          "output": "14\n",
+          "sample": false
         },
         {
           "input": "15\n",
           "output": "21\n",
-          "sample": true
-        },
-        {
-          "input": "1\n",
-          "output": "7\n",
-          "sample": false
-        },
-        {
-          "input": "70\n",
-          "output": "76\n",
-          "sample": false
-        },
-        {
-          "input": "25\n",
-          "output": "31\n",
           "sample": false
         }
       ],
-      "description": "Nhập vào số tuổi hiện tại x của 1 bạn học sinh. Hãy tính và in ra số tuổi của bạn đó sau 6 năm nữa.",
-      "input_format": "Một số nguyên dương x (1 <= x <= 100).",
-      "output_format": "In ra một số nguyên duy nhất là số tuổi sau 6 năm.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Một bạn học sinh hiện tại có số tuổi là $N$. Hãy tính và in ra số tuổi của bạn ấy sau 6 năm nữa.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-04",
@@ -3035,32 +3693,19 @@
       ],
       "testcases": [
         {
-          "input": "1 2 3 4\n",
-          "output": "4 3 2 1\n",
+          "input": "1 5 9 13\n",
+          "output": "13 9 5 1\n",
           "sample": true
         },
         {
-          "input": "10 20 30 40\n",
-          "output": "40 30 20 10\n",
-          "sample": true
-        },
-        {
-          "input": "-5 0 5 10\n",
-          "output": "10 5 0 -5\n",
-          "sample": false
-        },
-        {
-          "input": "7 7 7 7\n",
-          "output": "7 7 7 7\n",
+          "input": "0 0 1 2\n",
+          "output": "2 1 0 0\n",
           "sample": false
         }
       ],
-      "description": "Nhập vào 4 số nguyên a, b, c, d cách nhau bởi dấu cách. In ra 4 số này trên cùng 1 dòng, nhưng theo thứ tự ngược lại (d c b a).",
-      "input_format": "Gồm 4 số nguyên a, b, c, d cách nhau bởi dấu cách.",
-      "output_format": "In ra 4 số theo thứ tự ngược lại, cách nhau bởi dấu cách.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Cho 4 số nguyên $a, b, c, d$ trên cùng một dòng. Hãy in ra 4 số đó theo thứ tự ngược lại: $d, c, b, a$ cách nhau bởi dấu cách.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-05",
@@ -3075,22 +3720,24 @@
       ],
       "testcases": [
         {
-          "input": "nam\n",
-          "output": "Toi la nam\n",
+          "input": "1\n",
+          "output": "Nam\n",
           "sample": true
         },
         {
-          "input": "nu\n",
-          "output": "Toi la nu\n",
+          "input": "0\n",
+          "output": "Nu\n",
           "sample": true
+        },
+        {
+          "input": "2\n",
+          "output": "Khong hop le\n",
+          "sample": false
         }
       ],
-      "description": "Nhập vào một từ s. Nếu s là 'nam', in ra 'Toi la nam'. Nếu s là 'nu', in ra 'Toi la nu'.",
-      "input_format": "Một chuỗi ký tự s ('nam' hoặc 'nu').",
-      "output_format": "In ra câu thông báo tương ứng.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Nhập vào một số nguyên $g$: Nếu $g = 1$, in ra \"Nam\". Nếu $g = 0$, in ra \"Nu\". Nếu khác 0 và 1, in ra \"Khong hop le\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY11-EX-01",
@@ -3105,37 +3752,24 @@
       ],
       "testcases": [
         {
-          "input": "39 10\n",
-          "output": "3 9\n",
+          "input": "25 4\n",
+          "output": "6 1\n",
           "sample": true
         },
         {
-          "input": "50 8\n",
-          "output": "6 2\n",
-          "sample": true
-        },
-        {
-          "input": "30 5\n",
-          "output": "6 0\n",
+          "input": "20 5\n",
+          "output": "4 0\n",
           "sample": false
         },
         {
-          "input": "7 10\n",
-          "output": "0 7\n",
-          "sample": false
-        },
-        {
-          "input": "100 7\n",
-          "output": "14 2\n",
+          "input": "3 5\n",
+          "output": "0 3\n",
           "sample": false
         }
       ],
-      "description": "Một lớp học có a bạn học sinh, được chia đều thành các nhóm, mỗi nhóm có b bạn. Hãy viết chương trình in ra số nhóm chia được và số bạn bị dư (trên cùng 1 dòng cách nhau bởi dấu cách).",
-      "input_format": "Hai số nguyên dương a và b cách nhau bởi dấu cách.",
-      "output_format": "In ra 2 số nguyên là số nhóm và số bạn dư cách nhau bởi dấu cách.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Lớp học có $N$ bạn học sinh. Thầy giáo chia lớp thành các nhóm học tập, mỗi nhóm có đúng $K$ bạn. Hãy tính số nhóm chia được và số bạn học sinh bị dư ra.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY11-EX-02",
@@ -3150,42 +3784,24 @@
       ],
       "testcases": [
         {
-          "input": "40\n",
-          "output": "5 5\n",
+          "input": "17\n",
+          "output": "2 3\n",
           "sample": true
         },
         {
           "input": "14\n",
           "output": "2 0\n",
-          "sample": true
-        },
-        {
-          "input": "7\n",
-          "output": "1 0\n",
           "sample": false
         },
         {
-          "input": "3\n",
-          "output": "0 3\n",
-          "sample": false
-        },
-        {
-          "input": "365\n",
-          "output": "52 1\n",
-          "sample": false
-        },
-        {
-          "input": "0\n",
-          "output": "0 0\n",
+          "input": "5\n",
+          "output": "0 5\n",
           "sample": false
         }
       ],
-      "description": "Cho d ngày. Hãy viết chương trình tính xem d ngày quy đổi được bao nhiêu tuần và bao nhiêu ngày dư (1 tuần = 7 ngày).",
-      "input_format": "Một số nguyên không âm d (0 <= d <= 10^9).",
-      "output_format": "In ra hai số nguyên cách nhau bởi dấu cách: số tuần và số ngày dư.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Cho số ngày $N$. Hãy quy đổi $N$ ngày thành số tuần và số ngày lẻ (1 tuần có 7 ngày).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY11-EX-03",
@@ -3201,46 +3817,23 @@
       "testcases": [
         {
           "input": "27\n",
-          "output": "3\n",
+          "output": "3.00\n",
           "sample": true
         },
         {
-          "input": "-8\n",
-          "output": "-2\n",
+          "input": "10\n",
+          "output": "2.15\n",
           "sample": true
         },
         {
-          "input": "0\n",
-          "output": "0\n",
-          "sample": false
-        },
-        {
-          "input": "1\n",
-          "output": "1\n",
-          "sample": false
-        },
-        {
-          "input": "-1\n",
-          "output": "-1\n",
-          "sample": false
-        },
-        {
-          "input": "1000000000\n",
-          "output": "1000\n",
-          "sample": false
-        },
-        {
-          "input": "-125\n",
-          "output": "-5\n",
+          "input": "8\n",
+          "output": "2.00\n",
           "sample": false
         }
       ],
-      "description": "Cho biết x ^ 3 = a. Hãy viết chương trình tìm số nguyên x từ số nguyên a (đảm bảo a là số lập phương của một số nguyên).",
-      "input_format": "Một số nguyên a (-10^9 <= a <= 10^9).",
-      "output_format": "In ra số nguyên x thỏa mãn x^3 = a.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Cho số thực dương $N$. Hãy tính căn bậc 3 của $N$ và in ra kết quả làm tròn đúng 2 chữ số thập phân.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "26TI-A",
@@ -3255,42 +3848,24 @@
       ],
       "testcases": [
         {
-          "input": "5\n1 2 3 4 5\n",
-          "output": "2\n",
+          "input": "4\n1 2 3 4\n",
+          "output": "10\n",
           "sample": true
         },
         {
-          "input": "4\n2 4 6 8\n",
-          "output": "4\n",
-          "sample": true
-        },
-        {
-          "input": "3\n1 3 5\n",
-          "output": "0\n",
+          "input": "3\n-5 10 20\n",
+          "output": "25\n",
           "sample": false
         },
         {
-          "input": "6\n-2 -4 0 1 3 5\n",
-          "output": "3\n",
-          "sample": false
-        },
-        {
-          "input": "1\n0\n",
-          "output": "1\n",
-          "sample": false
-        },
-        {
-          "input": "7\n1000000000 999999999 4 8 12 15 17\n",
-          "output": "4\n",
+          "input": "1\n100\n",
+          "output": "100\n",
           "sample": false
         }
       ],
-      "description": "Cho số nguyên dương n và một dãy gồm n số nguyên a_1, a_2, ..., a_n. Hãy đếm xem có bao nhiêu số chẵn trong dãy đã cho.",
-      "input_format": "Dòng 1 chứa số nguyên n (1 <= n <= 10^5). Dòng 2 chứa n số nguyên a_i (-10^9 <= a_i <= 10^9) cách nhau bởi dấu cách.",
-      "output_format": "In ra một số nguyên duy nhất là số lượng số chẵn trong mảng.",
-      "starter_cpp": "",
-      "starter_py": "",
-      "time_limit": 1
+      "description": "Bài mở màn kỳ thi Contest 26TI: Cho mảng gồm $N$ số nguyên. Hãy tính tổng tất cả các phần tử trong mảng.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     }
   ],
   "submissions": [],
