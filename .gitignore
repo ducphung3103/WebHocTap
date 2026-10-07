@@ -64,3 +64,5 @@ data/mock/
 *.xls
 ~$*
 marisa_*.json
+crawled_marisaoj_all_full.json
+TEST/

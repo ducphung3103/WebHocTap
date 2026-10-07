@@ -805,10 +805,13 @@
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
-          <!-- View Mode Switcher: Danh Sách vs DeruckOJ -->
+          <!-- View Mode Switcher: Danh Sách vs BT Theo Tuần vs DeruckOJ -->
           <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold shadow-inner">
             <button onclick="toggleProblemViewMode('list')" id="btn-prob-view-list" class="px-3.5 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer flex items-center gap-1.5 shadow">
-              <span>📚</span> Danh Sách Bài Tập
+              <span>📚</span> Danh Sách
+            </button>
+            <button onclick="toggleProblemViewMode('weekly')" id="btn-prob-view-weekly" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-purple-300 hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5">
+              <span>📅</span> BT Theo Tuần
             </button>
             <button onclick="toggleProblemViewMode('judge')" id="btn-prob-view-judge" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5">
               <span>⚡</span> DeruckOJ
@@ -819,10 +822,13 @@
           <button onclick="triggerAddProblem()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition flex items-center gap-1.5 cursor-pointer">
             <span>➕</span> Thêm Bài
           </button>
+          <button onclick="triggerAddWeeklyHomework()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/20 transition flex items-center gap-1.5 cursor-pointer">
+            <span>➕</span> Thêm BT Tuần
+          </button>
           <button onclick="openTestcaseManagerModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 transition flex items-center gap-1.5 cursor-pointer">
             <span>⚙️</span> Quản Lý Bộ Test
           </button>
-          <button onclick="openSubmissionsManagerModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/20 transition flex items-center gap-1.5 cursor-pointer">
+          <button onclick="openSubmissionsManagerModal()" class="admin-only-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer">
             <span>📥</span> Quản Lý Bài Nộp
           </button>
         </div>
@@ -906,6 +912,46 @@
         </div>
         <div id="problems-loadmore-container" class="text-center pt-2"></div>
         <div id="problems-grid" class="hidden"></div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 1.5: WEEKLY HOMEWORK (BÀI TẬP THEO TUẦN)   -->
+      <!-- ============================================== -->
+      <div id="problems-view-weekly" class="space-y-5 hidden">
+        <!-- Weekly Class Filter Bar & Header -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-4 rounded-2xl shadow-lg">
+          <div class="flex items-center gap-2 flex-wrap text-xs" id="weekly-class-filter-container">
+            <span class="text-slate-400 font-bold mr-1 flex items-center gap-1.5">
+              <span>👥</span> Lớp Học:
+            </span>
+            <button onclick="filterWeeklyClass('C++ cơ bản')" id="weekly-filter-cppcb" class="weekly-class-btn px-3 py-1.5 rounded-xl bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer">
+              🔷 C++ cơ bản
+            </button>
+            <button onclick="filterWeeklyClass('C++ nâng cao')" id="weekly-filter-cppnc" class="weekly-class-btn px-3 py-1.5 rounded-xl text-slate-400 hover:text-blue-300 hover:bg-slate-800 transition cursor-pointer">
+              🟦 C++ nâng cao
+            </button>
+            <button onclick="filterWeeklyClass('Python cơ bản')" id="weekly-filter-pythoncb" class="weekly-class-btn px-3 py-1.5 rounded-xl text-slate-400 hover:text-emerald-300 hover:bg-slate-800 transition cursor-pointer">
+              🟩 Python cơ bản
+            </button>
+            <button onclick="filterWeeklyClass('Python 1-1')" id="weekly-filter-python11" class="weekly-class-btn px-3 py-1.5 rounded-xl text-slate-400 hover:text-purple-300 hover:bg-slate-800 transition cursor-pointer">
+              🟪 Python 1-1
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="triggerAddWeeklyHomework()" class="admin-only-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/20 transition flex items-center gap-1.5 cursor-pointer">
+              <span>➕</span> Thêm Tuần Mới
+            </button>
+          </div>
+        </div>
+
+        <!-- Student Progress Banner in Weekly View -->
+        <div id="weekly-student-progress-banner" class="hidden"></div>
+
+        <!-- Weekly Homework Cards List -->
+        <div id="weekly-homework-list" class="space-y-5">
+          <!-- Dynamically populated by renderWeeklyHomework() -->
+        </div>
       </div>
 
       <!-- ============================================== -->
@@ -1364,11 +1410,16 @@
           <p class="text-xs text-slate-400">Tập dượt áp lực phòng thi, rèn luyện kỹ năng phân bổ thời gian và chiến thuật làm bài</p>
         </div>
 
-        <!-- Filter buttons -->
-        <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
-          <button onclick="filterContests('all')" id="contest-filter-all" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition">Tất cả</button>
-          <button onclick="filterContests('UPCOMING')" id="contest-filter-UPCOMING" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🟡 Sắp tới</button>
-          <button onclick="filterContests('ENDED')" id="contest-filter-ENDED" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">⚪ Đã thi</button>
+        <!-- Filter buttons & Admin Action -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
+            <button onclick="filterContests('all')" id="contest-filter-all" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition">Tất cả</button>
+            <button onclick="filterContests('UPCOMING')" id="contest-filter-UPCOMING" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🟡 Sắp tới</button>
+            <button onclick="filterContests('ENDED')" id="contest-filter-ENDED" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">⚪ Đã thi</button>
+          </div>
+          <button onclick="triggerAddContest()" class="admin-only-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/20 transition flex items-center gap-1.5 cursor-pointer">
+            <span>➕</span> Thêm Contest Mới
+          </button>
         </div>
       </div>
 
@@ -1687,6 +1738,223 @@
           <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
             <button type="button" onclick="closeProblemModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition">Hủy</button>
             <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow">Lưu Bài Tập</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL 3.5: ADD / EDIT CONTEST MODAL            -->
+    <!-- ============================================== -->
+    <div id="modal-contest" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+      <div class="relative w-full max-w-2xl max-h-[90vh] bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 flex flex-col space-y-4 overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">⚔️</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-white" id="modal-contest-title">Thêm Kỳ Thi / Contest Mới</h3>
+              <p class="text-xs text-slate-400">Tổ chức kỳ thi trên web hoặc tích hợp phòng thi từ VJudge</p>
+            </div>
+          </div>
+          <button onclick="closeContestModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+        </div>
+
+        <form id="form-contest" onsubmit="handleSaveContest(event)" class="space-y-4 overflow-y-auto pr-1 flex-1">
+          <input type="hidden" id="form-contest-id-orig" value="">
+
+          <!-- Contest Type Selector -->
+          <div class="p-3 bg-slate-950/80 border border-purple-500/30 rounded-xl space-y-2">
+            <label class="text-xs font-bold text-purple-300">Hình Thức Tổ Chức Kỳ Thi (*):</label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-purple-500/40 bg-purple-950/30 cursor-pointer transition" id="label-contest-type-vjudge">
+                <input type="radio" name="contest_type_radio" id="radio-contest-type-vjudge" value="vjudge" onchange="toggleContestTypeFields('vjudge')" checked class="text-purple-600 focus:ring-0">
+                <div>
+                  <div class="font-bold text-white flex items-center gap-1.5">
+                    <span>🌐</span> Phòng Thi VJudge
+                  </div>
+                  <div class="text-[11px] text-slate-400">Gắn link cuộc thi VJudge đã tạo</div>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 cursor-pointer transition" id="label-contest-type-internal">
+                <input type="radio" name="contest_type_radio" id="radio-contest-type-internal" value="internal" onchange="toggleContestTypeFields('internal')" class="text-purple-600 focus:ring-0">
+                <div>
+                  <div class="font-bold text-white flex items-center gap-1.5">
+                    <span>⚡</span> Trực Tiếp Trên Web
+                  </div>
+                  <div class="text-[11px] text-slate-400">Chọn đề từ kho bài & chấm DeruckOJ</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Mã Contest (*):</label>
+              <input type="text" id="form-contest-id" required placeholder="CONTEST-03" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+            </div>
+            <div class="sm:col-span-2 space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Tiêu đề kỳ thi (*):</label>
+              <input type="text" id="form-contest-title" required placeholder="Ví dụ: Contest Định Kỳ #03: C++ & Mảng" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <!-- Fields specific to VJudge -->
+          <div id="contest-vjudge-fields" class="space-y-1 p-3 bg-slate-950/60 border border-slate-800 rounded-xl">
+            <label class="text-xs font-semibold text-emerald-300 flex items-center gap-1">
+              <span>🌐</span> Link Contest VJudge / ID Contest (*):
+            </label>
+            <input type="text" id="form-contest-vjudge-url" placeholder="https://vjudge.net/contest/654321 hoặc 654321" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+            <p class="text-[11px] text-slate-500">Hệ thống tự động nhận diện nếu bạn nhập mã số ID hoặc link đầy đủ.</p>
+          </div>
+
+          <!-- Fields specific to Internal Web Contest -->
+          <div id="contest-internal-fields" class="space-y-3 p-3 bg-slate-950/60 border border-indigo-500/30 rounded-xl hidden">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold text-indigo-300 flex items-center gap-1">
+                <span>⚡</span> Chọn Danh Sách Bài Thi (DeruckOJ):
+              </label>
+              <span id="contest-selected-count" class="text-[11px] font-mono text-purple-400 font-bold">Đã chọn: 0 bài</span>
+            </div>
+
+            <!-- Problem Search Filter inside Modal -->
+            <input type="text" id="contest-prob-filter-input" onkeyup="filterContestProblemPicker()" placeholder="Tìm nhanh bài tập theo tên hoặc mã bài..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+
+            <!-- Problem Selection List -->
+            <div id="contest-available-problems-list" class="max-h-40 overflow-y-auto space-y-1 p-2 bg-slate-900/80 border border-slate-800 rounded-xl text-xs divide-y divide-slate-800/50">
+              <!-- Checkboxes dynamically populated -->
+            </div>
+
+            <!-- Selected problems pills -->
+            <div id="contest-selected-pills" class="flex items-center gap-1.5 flex-wrap pt-1 min-h-[28px]">
+              <!-- Problem pills with code A, B, C... -->
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Thời gian bắt đầu (*):</label>
+              <input type="datetime-local" id="form-contest-start" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Thời lượng (phút) (*):</label>
+              <input type="number" id="form-contest-duration" min="15" max="600" value="120" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Trạng thái (*):</label>
+              <select id="form-contest-status" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                <option value="UPCOMING">🟡 Sắp tới</option>
+                <option value="LIVE">🔴 Đang thi</option>
+                <option value="ENDED">⚪ Đã kết thúc</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Mô tả kỳ thi:</label>
+            <textarea id="form-contest-desc" rows="2" placeholder="Ghi chú về nội dung, thể thức hoặc căn dặn học sinh..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Thể thức thi:</label>
+              <input type="text" id="form-contest-format" value="ICPC Rules" placeholder="ICPC Rules" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Link lời giải (Editorial - nếu có):</label>
+              <input type="url" id="form-contest-editorial" placeholder="https://docs.google.com/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800 shrink-0">
+            <button type="button" onclick="closeContestModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition">Hủy</button>
+            <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 transition shadow">Lưu Kỳ Thi</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL 3.6: ADD / EDIT WEEKLY HOMEWORK MODAL    -->
+    <!-- ============================================== -->
+    <div id="modal-weekly-homework" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+      <div class="relative w-full max-w-2xl max-h-[90vh] bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 flex flex-col space-y-4 overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">📅</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-white" id="modal-weekly-title">Thêm Bài Tập Theo Tuần Học</h3>
+              <p class="text-xs text-slate-400">Giao bài tập định kỳ theo từng tuần cho từng lớp học</p>
+            </div>
+          </div>
+          <button onclick="closeWeeklyHomeworkModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+        </div>
+
+        <form id="form-weekly" onsubmit="handleSaveWeeklyHomework(event)" class="space-y-4 overflow-y-auto pr-1 flex-1">
+          <input type="hidden" id="form-weekly-orig-week" value="">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Lớp học (*):</label>
+              <select id="form-weekly-class" required onchange="onWeeklyClassChange(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                <option value="C++ cơ bản">🔷 C++ cơ bản</option>
+                <option value="C++ nâng cao">🟦 C++ nâng cao</option>
+                <option value="Python cơ bản">🟩 Python cơ bản</option>
+                <option value="Python 1-1">🟪 Python 1-1</option>
+              </select>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Tuần số (*):</label>
+              <input type="number" id="form-weekly-num" min="1" max="52" required placeholder="Ví dụ: 1" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Chủ đề / Tiêu đề tuần (*):</label>
+            <input type="text" id="form-weekly-week-title" required placeholder="Ví dụ: Tuần 1: Nhập xuất dữ liệu & Cấu trúc rẽ nhánh" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Hạn nộp bài (Deadline):</label>
+              <input type="datetime-local" id="form-weekly-deadline" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-slate-300">Mã định danh tuần:</label>
+              <input type="text" id="form-weekly-id" placeholder="Tự động sinh (VD: WEEK-CPP-01)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-300">Mô tả / Hướng dẫn làm bài:</label>
+            <textarea id="form-weekly-desc" rows="2" placeholder="Tóm tắt yêu cầu, lưu ý hoặc nhắc nhở làm bài..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"></textarea>
+          </div>
+
+          <!-- Problem Picker for Week -->
+          <div class="space-y-2 p-3 bg-slate-950/70 border border-slate-800 rounded-xl">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-semibold text-slate-300">Danh sách bài tập của tuần (*):</label>
+              <span id="weekly-selected-count" class="text-[11px] font-mono text-purple-400 font-bold">Đã chọn: 0 bài</span>
+            </div>
+
+            <!-- Quick search in problem picker -->
+            <input type="text" id="weekly-prob-filter-input" onkeyup="filterWeeklyProblemPicker()" placeholder="Tìm nhanh bài tập từ kho..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+
+            <!-- Checkbox list of problems -->
+            <div id="weekly-available-problems-list" class="max-h-44 overflow-y-auto space-y-1 p-2 bg-slate-900/80 border border-slate-800 rounded-xl text-xs divide-y divide-slate-800/50">
+              <!-- Populated dynamically -->
+            </div>
+
+            <!-- Selected pills display -->
+            <div id="weekly-selected-pills" class="flex items-center gap-1.5 flex-wrap pt-1 min-h-[28px]">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800 shrink-0">
+            <button type="button" onclick="closeWeeklyHomeworkModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition">Hủy</button>
+            <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow">Lưu Bài Tập Tuần</button>
           </div>
         </form>
       </div>
@@ -2747,6 +3015,25 @@
                 localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions));
               } catch(e) {}
             }
+            // 1c. Tải Contests từ Firebase Realtime Database
+            if (typeof fetchContestsFromFirebase === 'function') {
+              try {
+                const fbContests = await fetchContestsFromFirebase();
+                if (fbContests && fbContests.length > 0) {
+                  appData.contests = fbContests;
+                }
+              } catch(e) {}
+            }
+
+            // 1d. Tải Weekly Homework từ Firebase Realtime Database
+            if (typeof fetchWeeklyHomeworkFromFirebase === 'function') {
+              try {
+                const fbWeekly = await fetchWeeklyHomeworkFromFirebase();
+                if (fbWeekly && typeof fbWeekly === 'object' && Object.keys(fbWeekly).length > 0) {
+                  appData.weekly_homework = fbWeekly;
+                }
+              } catch(e) {}
+            }
           } catch(fbErr) {
             console.warn("Could not fetch students from Firebase:", fbErr);
           }
@@ -3136,6 +3423,8 @@
       if (tabName === 'problems') {
         if (currentProblemViewMode === 'judge') {
           renderJudgeWorkspace();
+        } else if (currentProblemViewMode === 'weekly') {
+          renderWeeklyHomework();
         } else {
           renderProblems();
         }
@@ -3143,29 +3432,42 @@
         renderGlobalSubmissions();
       } else if (tabName === 'leaderboard') {
         renderMatrix();
+      } else if (tabName === 'contests') {
+        renderContests();
       }
     }
 
-    // TOGGLE PROBLEM VIEW MODE: 'list' (Catalog) vs 'judge' (Online Judge Workspace)
-    let currentProblemViewMode = 'list'; // 'list' | 'judge'
+    // TOGGLE PROBLEM VIEW MODE: 'list' (Catalog) vs 'weekly' (Bài Tập Theo Tuần) vs 'judge' (Online Judge Workspace)
+    let currentProblemViewMode = 'list'; // 'list' | 'weekly' | 'judge'
     function toggleProblemViewMode(mode) {
       currentProblemViewMode = mode;
       const listEl = document.getElementById('problems-view-list');
+      const weeklyEl = document.getElementById('problems-view-weekly');
       const judgeEl = document.getElementById('problems-view-judge');
       const btnList = document.getElementById('btn-prob-view-list');
+      const btnWeekly = document.getElementById('btn-prob-view-weekly');
       const btnJudge = document.getElementById('btn-prob-view-judge');
 
+      const inactiveBtn = "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5";
+      if (btnList) btnList.className = inactiveBtn;
+      if (btnWeekly) btnWeekly.className = inactiveBtn;
+      if (btnJudge) btnJudge.className = inactiveBtn;
+
+      if (listEl) listEl.classList.add('hidden');
+      if (weeklyEl) weeklyEl.classList.add('hidden');
+      if (judgeEl) judgeEl.classList.add('hidden');
+
       if (mode === 'judge') {
-        if (listEl) listEl.classList.add('hidden');
         if (judgeEl) judgeEl.classList.remove('hidden');
-        if (btnList) btnList.className = "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5";
         if (btnJudge) btnJudge.className = "px-3.5 py-1.5 rounded-lg bg-emerald-600/30 text-emerald-300 font-bold border border-emerald-500/40 transition cursor-pointer flex items-center gap-1.5 shadow";
         renderJudgeWorkspace();
+      } else if (mode === 'weekly') {
+        if (weeklyEl) weeklyEl.classList.remove('hidden');
+        if (btnWeekly) btnWeekly.className = "px-3.5 py-1.5 rounded-lg bg-purple-600/30 text-purple-300 font-bold border border-purple-500/40 transition cursor-pointer flex items-center gap-1.5 shadow";
+        renderWeeklyHomework();
       } else {
         if (listEl) listEl.classList.remove('hidden');
-        if (judgeEl) judgeEl.classList.add('hidden');
         if (btnList) btnList.className = "px-3.5 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer flex items-center gap-1.5 shadow";
-        if (btnJudge) btnJudge.className = "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5";
         renderProblems();
       }
     }
@@ -4091,7 +4393,7 @@
       });
     }
 
-    // TRIGGER QUICK ADD PROBLEM & CURRICULUM
+    // TRIGGER QUICK ADD PROBLEM, CONTEST, WEEKLY HOMEWORK & CURRICULUM
     function triggerAddProblem() {
       if (!currentAuth || (currentAuth.role !== 'admin' && currentAuth.role !== 'teacher')) {
         alert('Chỉ tài khoản Giảng viên hoặc Quản trị viên mới có quyền tạo bài tập mới! Vui lòng đăng nhập.');
@@ -4108,6 +4410,24 @@
         return;
       }
       openAddCurriculumModal();
+    }
+
+    function triggerAddContest() {
+      if (!currentAuth || (currentAuth.role !== 'admin' && currentAuth.role !== 'teacher')) {
+        alert('Chỉ tài khoản Giảng viên hoặc Quản trị viên mới có quyền tạo kỳ thi / contest mới! Vui lòng đăng nhập.');
+        showAuthModal();
+        return;
+      }
+      openAddContestModal();
+    }
+
+    function triggerAddWeeklyHomework(preselectedClass) {
+      if (!currentAuth || (currentAuth.role !== 'admin' && currentAuth.role !== 'teacher')) {
+        alert('Chỉ tài khoản Giảng viên hoặc Quản trị viên mới có quyền tạo bài tập theo tuần! Vui lòng đăng nhập.');
+        showAuthModal();
+        return;
+      }
+      openAddWeeklyHomeworkModal(preselectedClass);
     }
 
     // MODAL QUICK PERMISSION HELPERS
@@ -4173,8 +4493,361 @@
       if (elPy11) elPy11.checked = (cls === 'Python 1-1');
     }
 
-    // 5. RENDER CONTESTS WITH WHO AC-ED WHAT
+    // ============================================================
+    // 5. CONTEST MANAGEMENT & STANDINGS ENGINE
+    // ============================================================
     let currentContestFilter = 'all';
+    let selectedContestProblems = [];
+
+    function toggleContestTypeFields(type) {
+      const vFields = document.getElementById('contest-vjudge-fields');
+      const iFields = document.getElementById('contest-internal-fields');
+      const lblV = document.getElementById('label-contest-type-vjudge');
+      const lblI = document.getElementById('label-contest-type-internal');
+
+      if (type === 'internal') {
+        if (vFields) vFields.classList.add('hidden');
+        if (iFields) iFields.classList.remove('hidden');
+        if (lblV) lblV.className = "flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 cursor-pointer transition";
+        if (lblI) lblI.className = "flex items-center gap-2.5 p-2.5 rounded-xl border border-purple-500/40 bg-purple-950/30 cursor-pointer transition";
+        renderContestProblemPickerList();
+      } else {
+        if (vFields) vFields.classList.remove('hidden');
+        if (iFields) iFields.classList.add('hidden');
+        if (lblV) lblV.className = "flex items-center gap-2.5 p-2.5 rounded-xl border border-purple-500/40 bg-purple-950/30 cursor-pointer transition";
+        if (lblI) lblI.className = "flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 cursor-pointer transition";
+      }
+    }
+
+    function renderContestProblemPickerList(filterText = '') {
+      const listEl = document.getElementById('contest-available-problems-list');
+      if (!listEl || !appData || !appData.problems) return;
+      listEl.innerHTML = '';
+
+      const query = (filterText || '').toLowerCase().trim();
+      const probs = appData.problems.filter(p => {
+        if (!query) return true;
+        const name = (p.name || '').toLowerCase();
+        const id = (p.id || '').toLowerCase();
+        const cat = (p.category || '').toLowerCase();
+        return name.includes(query) || id.includes(query) || cat.includes(query);
+      });
+
+      if (probs.length === 0) {
+        listEl.innerHTML = `<div class="p-3 text-center text-slate-500 text-xs">Không tìm thấy bài tập phù hợp</div>`;
+        return;
+      }
+
+      probs.slice(0, 50).forEach(p => {
+        const isSelected = selectedContestProblems.some(sp => sp.id === p.id);
+        const item = document.createElement('label');
+        item.className = "flex items-center justify-between p-2 rounded-lg hover:bg-slate-800/60 cursor-pointer transition";
+        item.innerHTML = `
+          <div class="flex items-center gap-2">
+            <input type="checkbox" onchange="toggleContestProblemSelection('${p.id}')" ${isSelected ? 'checked' : ''} class="rounded bg-slate-950 border-slate-700 text-purple-600 focus:ring-0">
+            <div>
+              <span class="font-mono text-[11px] font-bold text-indigo-400">${p.id}</span>
+              <span class="text-white text-xs font-medium ml-1.5">${p.name}</span>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-400 border border-slate-700">${p.platform || 'DeruckOJ'}</span>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    function filterContestProblemPicker() {
+      const q = document.getElementById('contest-prob-filter-input')?.value || '';
+      renderContestProblemPickerList(q);
+    }
+
+    function toggleContestProblemSelection(probId) {
+      const idx = selectedContestProblems.findIndex(p => p.id === probId);
+      if (idx !== -1) {
+        selectedContestProblems.splice(idx, 1);
+      } else {
+        const prob = appData.problems.find(p => p.id === probId);
+        if (prob) {
+          const letter = String.fromCharCode(65 + selectedContestProblems.length);
+          selectedContestProblems.push({
+            code: letter,
+            id: prob.id,
+            name: prob.name,
+            points: 100,
+            oj: prob.platform || 'DeruckOJ'
+          });
+        }
+      }
+      selectedContestProblems.forEach((p, i) => {
+        p.code = String.fromCharCode(65 + i);
+      });
+      updateContestSelectedPillsDisplay();
+      filterContestProblemPicker();
+    }
+
+    function updateContestSelectedPillsDisplay() {
+      const countEl = document.getElementById('contest-selected-count');
+      const pillsEl = document.getElementById('contest-selected-pills');
+      if (countEl) countEl.textContent = `Đã chọn: ${selectedContestProblems.length} bài`;
+      if (!pillsEl) return;
+      pillsEl.innerHTML = '';
+
+      if (selectedContestProblems.length === 0) {
+        pillsEl.innerHTML = `<span class="text-xs text-slate-500 italic">Chưa chọn bài thi nào. Tick chọn danh sách phía trên.</span>`;
+        return;
+      }
+
+      selectedContestProblems.forEach(p => {
+        const pill = document.createElement('span');
+        pill.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-purple-950/60 text-purple-300 border border-purple-500/30";
+        pill.innerHTML = `
+          <strong class="text-white">${p.code}.</strong>
+          <span>${p.id}</span>
+          <button type="button" onclick="toggleContestProblemSelection('${p.id}')" class="text-purple-400 hover:text-white font-bold ml-1">✕</button>
+        `;
+        pillsEl.appendChild(pill);
+      });
+    }
+
+    function openAddContestModal() {
+      document.getElementById('modal-contest-title').textContent = 'Thêm Kỳ Thi / Contest Mới';
+      document.getElementById('form-contest-id-orig').value = '';
+      const nextNum = (appData.contests ? appData.contests.length : 0) + 1;
+      document.getElementById('form-contest-id').value = `CONTEST-${String(nextNum).padStart(2, '0')}`;
+      document.getElementById('form-contest-title').value = '';
+      document.getElementById('form-contest-duration').value = '120';
+      document.getElementById('form-contest-format').value = 'ICPC Rules (4 bài)';
+      document.getElementById('form-contest-status').value = 'UPCOMING';
+      document.getElementById('form-contest-desc').value = '';
+      document.getElementById('form-contest-editorial').value = '';
+      document.getElementById('form-contest-vjudge-url').value = '';
+
+      const now = new Date();
+      now.setDate(now.getDate() + 3);
+      now.setHours(19, 30, 0, 0);
+      const isoLocal = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+      document.getElementById('form-contest-start').value = isoLocal;
+
+      document.getElementById('radio-contest-type-vjudge').checked = true;
+      toggleContestTypeFields('vjudge');
+      selectedContestProblems = [];
+      updateContestSelectedPillsDisplay();
+
+      document.getElementById('modal-contest').classList.remove('hidden');
+    }
+
+    function openEditContestModal(contestId) {
+      if (!appData || !appData.contests) return;
+      const c = appData.contests.find(item => item.id === contestId);
+      if (!c) return;
+
+      document.getElementById('modal-contest-title').textContent = `Sửa Kỳ Thi: ${c.title}`;
+      document.getElementById('form-contest-id-orig').value = c.id;
+      document.getElementById('form-contest-id').value = c.id;
+      document.getElementById('form-contest-title').value = c.title;
+      document.getElementById('form-contest-duration').value = c.duration_minutes || 120;
+      document.getElementById('form-contest-format').value = c.format || 'ICPC Rules';
+      document.getElementById('form-contest-status').value = c.status || 'UPCOMING';
+      document.getElementById('form-contest-desc').value = c.description || '';
+      document.getElementById('form-contest-editorial').value = c.editorial_url || '';
+
+      if (c.start_time) {
+        try {
+          const d = new Date(c.start_time);
+          const isoLocal = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+          document.getElementById('form-contest-start').value = isoLocal;
+        } catch(e) {}
+      }
+
+      const isInternal = c.type === 'internal' || (c.platform && c.platform.includes('DeruckOJ'));
+      if (isInternal) {
+        document.getElementById('radio-contest-type-internal').checked = true;
+        toggleContestTypeFields('internal');
+        selectedContestProblems = Array.isArray(c.problems) ? JSON.parse(JSON.stringify(c.problems)) : [];
+        updateContestSelectedPillsDisplay();
+      } else {
+        document.getElementById('radio-contest-type-vjudge').checked = true;
+        toggleContestTypeFields('vjudge');
+        document.getElementById('form-contest-vjudge-url').value = c.url || '';
+        selectedContestProblems = Array.isArray(c.problems) ? JSON.parse(JSON.stringify(c.problems)) : [];
+      }
+
+      document.getElementById('modal-contest').classList.remove('hidden');
+    }
+
+    function closeContestModal() {
+      document.getElementById('modal-contest').classList.add('hidden');
+    }
+
+    async function handleSaveContest(e) {
+      e.preventDefault();
+      const origId = document.getElementById('form-contest-id-orig').value.trim();
+      const id = document.getElementById('form-contest-id').value.trim();
+      const title = document.getElementById('form-contest-title').value.trim();
+      const startTimeVal = document.getElementById('form-contest-start').value;
+      const duration = parseInt(document.getElementById('form-contest-duration').value, 10) || 120;
+      const status = document.getElementById('form-contest-status').value;
+      const format = document.getElementById('form-contest-format').value.trim() || 'ICPC Rules';
+      const desc = document.getElementById('form-contest-desc').value.trim();
+      const editorialUrl = document.getElementById('form-contest-editorial').value.trim();
+      const isInternal = document.getElementById('radio-contest-type-internal').checked;
+
+      let url = '';
+      let platform = 'VJudge';
+      let problems = [];
+
+      if (isInternal) {
+        platform = 'DeruckOJ (Web)';
+        url = '#problems-view-judge';
+        problems = selectedContestProblems;
+      } else {
+        platform = 'VJudge';
+        const rawUrl = document.getElementById('form-contest-vjudge-url').value.trim();
+        if (/^\d+$/.test(rawUrl)) {
+          url = `https://vjudge.net/contest/${rawUrl}`;
+        } else if (rawUrl.startsWith('http')) {
+          url = rawUrl;
+        } else if (rawUrl) {
+          url = `https://vjudge.net/contest/${rawUrl}`;
+        } else {
+          url = 'https://vjudge.net/contest';
+        }
+        problems = selectedContestProblems.length > 0 ? selectedContestProblems : [
+          { code: "A", name: "Bài A", points: 100, oj: "VJudge" },
+          { code: "B", name: "Bài B", points: 100, oj: "VJudge" }
+        ];
+      }
+
+      if (!id || !title) {
+        alert("Vui lòng điền mã và tiêu đề contest!");
+        return;
+      }
+
+      const startTimeIso = startTimeVal ? new Date(startTimeVal).toISOString() : new Date().toISOString();
+
+      if (!appData.contests) appData.contests = [];
+
+      const contestObj = {
+        id,
+        title,
+        platform,
+        type: isInternal ? 'internal' : 'vjudge',
+        status,
+        start_time: startTimeIso,
+        duration_minutes: duration,
+        format: `${format} (${problems.length} bài)`,
+        url,
+        editorial_url: editorialUrl,
+        problems_count: problems.length,
+        description: desc,
+        problems,
+        standings: []
+      };
+
+      if (origId) {
+        const idx = appData.contests.findIndex(c => c.id === origId);
+        if (idx !== -1) {
+          contestObj.standings = appData.contests[idx].standings || [];
+          appData.contests[idx] = contestObj;
+        } else {
+          appData.contests.unshift(contestObj);
+        }
+      } else {
+        appData.contests.unshift(contestObj);
+      }
+
+      saveAppDataLocally();
+      if (typeof saveContestsToFirebase === 'function') {
+        saveContestsToFirebase(appData.contests);
+      }
+      closeContestModal();
+      renderContests();
+      startCountdown();
+      showLiveToast(`✅ Đã lưu kỳ thi "${title}" thành công!`, "success");
+    }
+
+    async function deleteContest(contestId) {
+      if (!confirm(`Bạn có chắc chắn muốn xóa kỳ thi "${contestId}" không?`)) return;
+      if (!appData || !appData.contests) return;
+      appData.contests = appData.contests.filter(c => c.id !== contestId);
+      saveAppDataLocally();
+      if (typeof saveContestsToFirebase === 'function') {
+        saveContestsToFirebase(appData.contests);
+      }
+      renderContests();
+      startCountdown();
+      showLiveToast(`🗑️ Đã xóa kỳ thi "${contestId}"`, "info");
+    }
+
+    function enterInternalContest(contestId) {
+      const c = appData && appData.contests ? appData.contests.find(item => item.id === contestId) : null;
+      if (!c) return;
+
+      if (c.problems && c.problems.length > 0) {
+        const firstProb = c.problems[0];
+        const pid = firstProb.id || firstProb.code;
+        openProblemInJudge(pid);
+        showLiveToast(`⚔️ Đang vào phòng thi trực tiếp DeruckOJ: ${c.title}!`, "info");
+      } else {
+        switchTab('problems');
+      }
+    }
+
+    function computeInternalContestStandings(contest) {
+      if (!contest || !contest.problems || !appData || !appData.students) return [];
+      const students = appData.students;
+      const submissions = appData.submissions || [];
+      const standings = [];
+
+      students.forEach(st => {
+        const solvedList = (st.solved || []).map(s => String(s).toUpperCase());
+        let solvedCount = 0;
+        let penalty = 0;
+        const probMap = {};
+
+        contest.problems.forEach((p, pIdx) => {
+          const pid = (p.id || '').toUpperCase();
+          const isSolved = solvedList.includes(pid);
+          if (isSolved) {
+            solvedCount++;
+            const sub = submissions.find(s => s && String(s.problem_id).toUpperCase() === pid && (s.student_name === st.name || s.student_stt === st.stt));
+            let timeStr = `${String(15 + pIdx * 20).padStart(2, '0')}:${String(10 + pIdx * 5).padStart(2, '0')}`;
+            let minutes = 15 + pIdx * 20;
+            if (sub && sub.created_at) {
+              try {
+                const subDate = new Date(sub.created_at);
+                timeStr = subDate.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+              } catch(e) {}
+            }
+            penalty += minutes;
+            probMap[p.code] = { status: 'AC', time: timeStr };
+          } else {
+            probMap[p.code] = null;
+          }
+        });
+
+        if (solvedCount > 0) {
+          standings.push({
+            name: st.name,
+            handle: st.vjudge_handle || st.cf_handle || `stt_${st.stt}`,
+            solved: solvedCount,
+            penalty: penalty,
+            problems: probMap
+          });
+        }
+      });
+
+      standings.sort((a, b) => {
+        if (b.solved !== a.solved) return b.solved - a.solved;
+        return a.penalty - b.penalty;
+      });
+
+      standings.forEach((row, i) => {
+        row.rank = i + 1;
+      });
+
+      return standings;
+    }
 
     function filterContests(filter) {
       currentContestFilter = filter;
@@ -4206,7 +4879,7 @@
 
     function renderContests(filter = currentContestFilter) {
       const grid = document.getElementById('contests-grid');
-      if (!grid || !appData.contests) return;
+      if (!grid || !appData || !appData.contests) return;
 
       if (!currentAuth) {
         grid.innerHTML = `
@@ -4225,11 +4898,21 @@
       }
       grid.innerHTML = '';
 
+      const isAdminOrTeacher = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
       const list = appData.contests.filter(c => filter === 'all' || c.status === filter);
+
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full p-8 text-center bg-slate-900/40 border border-slate-800 rounded-2xl text-slate-400 text-xs">
+            Không có kỳ thi nào trong danh mục này.
+          </div>
+        `;
+        return;
+      }
 
       list.forEach(c => {
         const card = document.createElement('div');
-        card.className = "bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-xl p-5 space-y-4 flex flex-col justify-between transition group";
+        card.className = "bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-5 space-y-4 flex flex-col justify-between transition group shadow-lg";
 
         let statusBadge = "";
         if (c.status === "UPCOMING") {
@@ -4246,30 +4929,40 @@
           </span>`;
         }
 
-        // Problems list
+        const isInternal = c.type === 'internal' || (c.platform && c.platform.includes('DeruckOJ'));
+        let typeBadge = isInternal
+          ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30">⚡ DeruckOJ (Web)</span>`
+          : `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">🌐 VJudge</span>`;
+
+        // Problems list pills
         let problemsPills = "";
-        if (c.problems) {
+        if (c.problems && c.problems.length > 0) {
           problemsPills = `<div class="flex items-center gap-1.5 flex-wrap pt-1">`;
           c.problems.forEach(p => {
             problemsPills += `
               <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800/80 text-slate-300 border border-slate-700">
-                <strong class="text-purple-400">${p.code}.</strong> ${p.name}
+                <strong class="text-purple-400">${p.code}.</strong> ${p.name || p.id}
               </span>
             `;
           });
           problemsPills += `</div>`;
         }
 
-        // Contest Standings Table (Who solved which problem)
+        // Contest Standings (compute if internal and empty)
+        let standingsList = (c.standings && c.standings.length > 0) ? c.standings : [];
+        if (standingsList.length === 0 && isInternal) {
+          standingsList = computeInternalContestStandings(c);
+        }
+
         let standingsSection = '';
-        if (c.standings && c.standings.length > 0) {
+        if (standingsList && standingsList.length > 0 && c.problems) {
           let problemHeaders = '';
           c.problems.forEach(p => {
             problemHeaders += `<th class="px-2.5 py-2 text-center text-xs font-mono text-purple-300">Bài ${p.code}</th>`;
           });
 
           let standingsRows = '';
-          c.standings.forEach(row => {
+          standingsList.forEach(row => {
             let rowCells = '';
             c.problems.forEach(p => {
               const res = row.problems ? row.problems[p.code] : null;
@@ -4317,7 +5010,7 @@
                     ${problemHeaders}
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-slate-800/50">
                   ${standingsRows}
                 </tbody>
               </table>
@@ -4327,41 +5020,72 @@
 
         // Action buttons
         let actions = ``;
-        if (c.status === 'UPCOMING' || c.status === 'LIVE') {
+        if (isInternal) {
           actions = `
-            <a href="${c.url}" target="_blank" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 flex items-center gap-1.5 transition">
-              <span>⚔️</span> Vào Phòng Thi Ngay ↗
-            </a>
-            ${c.standings ? `
-              <button onclick="toggleStandings('${c.id}')" id="btn-standings-${c.id}" class="px-3 py-2 rounded-lg text-xs font-semibold bg-purple-600/20 text-purple-300 hover:bg-purple-600/30 border border-purple-500/30 transition flex items-center gap-1">
+            <button onclick="enterInternalContest('${c.id}')" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 flex items-center gap-1.5 transition cursor-pointer">
+              <span>⚡</span> Vào Thi Trên Web (DeruckOJ) →
+            </button>
+            ${standingsSection ? `
+              <button onclick="toggleStandings('${c.id}')" id="btn-standings-${c.id}" class="px-3 py-2 rounded-lg text-xs font-semibold bg-purple-600/20 text-purple-300 hover:bg-purple-600/30 border border-purple-500/30 transition flex items-center gap-1 cursor-pointer">
                 <span>📊</span> Xem Bảng Điểm ▼
               </button>
             ` : ''}
           `;
         } else {
-          actions = `
-            ${c.standings ? `
-              <button onclick="toggleStandings('${c.id}')" id="btn-standings-${c.id}" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-indigo-600/30 text-indigo-300 hover:bg-indigo-600/40 border border-indigo-500/40 transition flex items-center gap-1.5">
-                <span>📊</span> Xem Bảng Điểm ▼
-              </button>
-            ` : ''}
-            <a href="${c.url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
-              Làm lại (Upsolve) ↗
-            </a>
-            ${c.editorial_url ? `
-              <a href="${c.editorial_url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
-                Lời giải 📄
+          if (c.status === 'UPCOMING' || c.status === 'LIVE') {
+            actions = `
+              <a href="${c.url}" target="_blank" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 flex items-center gap-1.5 transition">
+                <span>⚔️</span> Vào Phòng Thi VJudge ↗
               </a>
-            ` : ''}
+              ${standingsSection ? `
+                <button onclick="toggleStandings('${c.id}')" id="btn-standings-${c.id}" class="px-3 py-2 rounded-lg text-xs font-semibold bg-purple-600/20 text-purple-300 hover:bg-purple-600/30 border border-purple-500/30 transition flex items-center gap-1 cursor-pointer">
+                  <span>📊</span> Xem Bảng Điểm ▼
+                </button>
+              ` : ''}
+            `;
+          } else {
+            actions = `
+              ${standingsSection ? `
+                <button onclick="toggleStandings('${c.id}')" id="btn-standings-${c.id}" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-indigo-600/30 text-indigo-300 hover:bg-indigo-600/40 border border-indigo-500/40 transition flex items-center gap-1.5 cursor-pointer">
+                  <span>📊</span> Xem Bảng Điểm ▼
+                </button>
+              ` : ''}
+              <a href="${c.url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                Làm lại (Upsolve) ↗
+              </a>
+              ${c.editorial_url ? `
+                <a href="${c.editorial_url}" target="_blank" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                  Lời giải 📄
+                </a>
+              ` : ''}
+            `;
+          }
+        }
+
+        // Admin Edit & Delete buttons
+        let adminButtons = '';
+        if (isAdminOrTeacher) {
+          adminButtons = `
+            <div class="flex items-center gap-1.5">
+              <button onclick="openEditContestModal('${c.id}')" class="px-2 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition cursor-pointer">✏️ Sửa</button>
+              <button onclick="deleteContest('${c.id}')" class="px-2 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer">🗑️ Xóa</button>
+            </div>
           `;
         }
 
         card.innerHTML = `
           <div class="space-y-3">
             <div class="flex items-center justify-between">
-              <span class="font-mono text-xs text-purple-400 font-bold">${c.id}</span>
-              ${statusBadge}
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs text-purple-400 font-bold">${c.id}</span>
+                ${typeBadge}
+              </div>
+              <div class="flex items-center gap-2">
+                ${statusBadge}
+                ${adminButtons}
+              </div>
             </div>
+
             <div>
               <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition">${c.title}</h3>
               <p class="text-xs text-slate-400 mt-1 leading-relaxed">${c.description || ''}</p>
@@ -4374,10 +5098,12 @@
               <div>Số lượng: <strong class="text-slate-200">${c.problems ? c.problems.length : c.problems_count} bài</strong></div>
             </div>
 
-            <div>
-              <div class="text-[11px] uppercase font-semibold text-slate-500 mb-1.5">Danh sách bài thi:</div>
-              ${problemsPills}
-            </div>
+            ${problemsPills ? `
+              <div>
+                <div class="text-[11px] uppercase font-semibold text-slate-500 mb-1.5">Danh sách bài thi:</div>
+                ${problemsPills}
+              </div>
+            ` : ''}
 
             ${c.winner ? `
               <div class="text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
@@ -4396,6 +5122,494 @@
         grid.appendChild(card);
       });
     }
+
+    // ============================================================
+    // 6. WEEKLY HOMEWORK ENGINE (BÀI TẬP THEO TUẦN HỌC)
+    // ============================================================
+    let currentWeeklyClass = 'C++ cơ bản';
+    let selectedWeeklyProblems = [];
+
+    function filterWeeklyClass(className) {
+      currentWeeklyClass = className;
+      ['C++ cơ bản', 'C++ nâng cao', 'Python cơ bản', 'Python 1-1'].forEach(cls => {
+        const btnId = cls === 'C++ cơ bản' ? 'weekly-filter-cppcb' :
+                      cls === 'C++ nâng cao' ? 'weekly-filter-cppnc' :
+                      cls === 'Python cơ bản' ? 'weekly-filter-pythoncb' : 'weekly-filter-python11';
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          if (cls === className) {
+            btn.className = "weekly-class-btn px-3 py-1.5 rounded-xl bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer";
+          } else {
+            btn.className = "weekly-class-btn px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer";
+          }
+        }
+      });
+      renderWeeklyHomework();
+    }
+
+    function renderWeeklyHomework() {
+      const container = document.getElementById('weekly-homework-list');
+      const banner = document.getElementById('weekly-student-progress-banner');
+      if (!container) return;
+
+      const weeks = (appData && appData.weekly_homework && appData.weekly_homework[currentWeeklyClass]) || [];
+
+      // Find current student if logged in
+      const currentStudent = (currentAuth && currentAuth.role === 'student' && appData && appData.students)
+        ? appData.students.find(s => s.name === currentAuth.name || s.stt === currentAuth.stt)
+        : null;
+      const studentSolvedSet = new Set((currentStudent && currentStudent.solved) || []);
+
+      // Render student progress banner
+      if (banner) {
+        if (currentStudent && currentAuth.class === currentWeeklyClass) {
+          let totalClassProbs = 0;
+          let solvedClassProbs = 0;
+          let fullyCompletedWeeks = 0;
+
+          weeks.forEach(w => {
+            const pids = w.problem_ids || [];
+            totalClassProbs += pids.length;
+            const sCount = pids.filter(id => studentSolvedSet.has(id)).length;
+            solvedClassProbs += sCount;
+            if (pids.length > 0 && sCount === pids.length) fullyCompletedWeeks++;
+          });
+
+          const pct = totalClassProbs > 0 ? Math.round((solvedClassProbs / totalClassProbs) * 100) : 0;
+
+          banner.className = "p-5 rounded-2xl bg-gradient-to-r from-purple-950/80 via-slate-900 to-indigo-950/70 border border-purple-500/30 shadow-xl space-y-3";
+          banner.innerHTML = `
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="space-y-1">
+                <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                  <span>🎯</span> Tiến Độ Theo Tuần Của Bạn
+                </div>
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                  <span>👤</span> ${currentStudent.name} • Lớp ${currentWeeklyClass}
+                </h3>
+              </div>
+              <div class="flex items-center gap-3 text-xs font-mono">
+                <div class="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-center">
+                  <div class="font-bold text-emerald-400">${fullyCompletedWeeks} / ${weeks.length}</div>
+                  <div class="text-[10px] text-slate-500 uppercase">Tuần Đạt 100%</div>
+                </div>
+                <div class="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-center">
+                  <div class="font-bold text-indigo-300">${solvedClassProbs} / ${totalClassProbs}</div>
+                  <div class="text-[10px] text-slate-500 uppercase">Bài Đã AC</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-300">Tổng quan hoàn thành: <strong class="text-emerald-400">${pct}%</strong></span>
+                <span class="text-slate-400 text-[11px]">${solvedClassProbs}/${totalClassProbs} bài tập</span>
+              </div>
+              <div class="w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden">
+                <div class="h-2.5 rounded-full ${pct === 100 ? 'bg-emerald-400' : 'bg-gradient-to-r from-purple-500 to-indigo-500'} transition-all duration-500" style="width: ${pct}%"></div>
+              </div>
+            </div>
+          `;
+          banner.classList.remove('hidden');
+        } else {
+          banner.classList.add('hidden');
+        }
+      }
+
+      container.innerHTML = '';
+
+      if (weeks.length === 0) {
+        container.innerHTML = `
+          <div class="p-12 text-center bg-slate-900/60 border border-slate-800 rounded-2xl space-y-4">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-2xl">📅</div>
+            <div class="space-y-1">
+              <h3 class="font-bold text-white text-base">Chưa có bài tập theo tuần cho lớp ${currentWeeklyClass}</h3>
+              <p class="text-xs text-slate-400">Giảng viên có thể bấm nút "Thêm Tuần Mới" bên trên để giao bài tập theo tuần.</p>
+            </div>
+            <button onclick="triggerAddWeeklyHomework('${currentWeeklyClass}')" class="admin-only-btn px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 transition shadow">
+              ➕ Thêm Tuần Đầu Tiên →
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const isAdminOrTeacher = Boolean(currentAuth && (currentAuth.role === 'admin' || currentAuth.role === 'teacher'));
+      const probMap = {};
+      if (appData.problems) {
+        appData.problems.forEach(p => { probMap[p.id] = p; });
+      }
+
+      weeks.forEach((w) => {
+        const pids = w.problem_ids || [];
+        const solvedCount = pids.filter(id => studentSolvedSet.has(id)).length;
+        const totalCount = pids.length;
+        const pct = totalCount > 0 ? Math.round((solvedCount / totalCount) * 100) : 0;
+
+        let deadlineBadge = '';
+        if (w.deadline) {
+          const d = new Date(w.deadline);
+          const isPast = d.getTime() < Date.now();
+          const dStr = d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+          if (isPast) {
+            deadlineBadge = `<span class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-rose-500/10 text-rose-300 border border-rose-500/20">⏰ Hạn: ${dStr} (Đã hết hạn)</span>`;
+          } else {
+            deadlineBadge = `<span class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">⏰ Hạn: ${dStr}</span>`;
+          }
+        }
+
+        let probRows = '';
+        pids.forEach((pid, idx) => {
+          const p = probMap[pid] || { id: pid, name: pid, platform: 'DeruckOJ', points: 100 };
+          const isAC = studentSolvedSet.has(pid);
+          const isDeruck = isDeruckProblem(pid, p);
+
+          let solveAction = '';
+          if (isDeruck) {
+            solveAction = `
+              <button onclick="openProblemInJudge('${pid}')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600/25 hover:bg-emerald-600/40 text-emerald-300 border border-emerald-500/40 transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                <span>⚡</span> Chấm trên Web
+              </button>
+            `;
+          } else {
+            solveAction = `
+              <div class="flex items-center gap-1.5 justify-end">
+                <a href="${p.url || '#'}" target="_blank" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+                  ↗ Đề bài
+                </a>
+                <button onclick="openSubmitModal('${pid}')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 border border-indigo-500/40 transition">
+                  ⚡ Nộp bài
+                </button>
+              </div>
+            `;
+          }
+
+          probRows += `
+            <tr class="border-b border-slate-800/60 hover:bg-slate-800/30 transition">
+              <td class="px-3 py-2.5 text-center text-xs font-mono text-slate-500">${idx + 1}</td>
+              <td class="px-3 py-2.5 text-center">
+                ${isAC ? `
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    <span>✓</span> AC
+                  </span>
+                ` : `
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono text-slate-500 bg-slate-800/80 border border-slate-700">
+                    <span>⏳</span> Chưa
+                  </span>
+                `}
+              </td>
+              <td class="px-3 py-2.5 font-mono text-xs font-bold text-indigo-400">
+                ${isDeruck ? `<a href="javascript:void(0)" onclick="openProblemInJudge('${pid}')" class="hover:underline">${pid}</a>` : pid}
+              </td>
+              <td class="px-3 py-2.5 font-medium text-xs text-white">
+                <div>${p.name || pid}</div>
+                <div class="text-[10px] text-slate-500 font-normal">${p.category || p.difficulty || ''}</div>
+              </td>
+              <td class="px-3 py-2.5 text-center text-xs font-mono text-purple-300">${p.platform || 'DeruckOJ'}</td>
+              <td class="px-3 py-2.5 text-right">${solveAction}</td>
+            </tr>
+          `;
+        });
+
+        let adminControls = '';
+        if (isAdminOrTeacher) {
+          adminControls = `
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button onclick="openEditWeeklyHomeworkModal('${currentWeeklyClass}', ${w.week})" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition cursor-pointer">
+                ✏️ Sửa tuần
+              </button>
+              <button onclick="deleteWeeklyHomework('${currentWeeklyClass}', ${w.week})" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition cursor-pointer">
+                🗑️ Xóa
+              </button>
+            </div>
+          `;
+        }
+
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 hover:border-purple-500/30 rounded-2xl p-5 space-y-4 transition shadow-lg";
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+            <div class="space-y-1.5">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-mono font-extrabold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                  Tuần ${w.week}
+                </span>
+                ${deadlineBadge}
+                ${currentStudent ? `
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold ${pct === 100 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'}">
+                    ${solvedCount}/${totalCount} bài (${pct}%)
+                  </span>
+                ` : ''}
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-white tracking-tight">${w.title}</h3>
+              ${w.description ? `<p class="text-xs text-slate-400 leading-relaxed">${w.description}</p>` : ''}
+            </div>
+            ${adminControls}
+          </div>
+
+          <!-- Problem Table for this week -->
+          <div class="overflow-x-auto rounded-xl border border-slate-800/80 bg-slate-950/60 shadow-inner">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-800/80 text-[11px] uppercase font-semibold text-slate-400 border-b border-slate-700">
+                <tr>
+                  <th class="px-3 py-2 text-center w-10">TT</th>
+                  <th class="px-3 py-2 text-center w-16">Kết quả</th>
+                  <th class="px-3 py-2 w-28">Mã bài</th>
+                  <th class="px-3 py-2">Tên bài tập</th>
+                  <th class="px-3 py-2 text-center w-24">Nền tảng</th>
+                  <th class="px-3 py-2 text-right w-36">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60">
+                ${probRows}
+              </tbody>
+            </table>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function openAddWeeklyHomeworkModal(preselectedClass) {
+      document.getElementById('modal-weekly-title').textContent = 'Thêm Bài Tập Theo Tuần Học';
+      document.getElementById('form-weekly-orig-week').value = '';
+
+      const targetClass = preselectedClass || currentWeeklyClass || 'C++ cơ bản';
+      document.getElementById('form-weekly-class').value = targetClass;
+
+      const existingWeeks = (appData && appData.weekly_homework && appData.weekly_homework[targetClass]) || [];
+      const nextWeekNum = existingWeeks.length + 1;
+      document.getElementById('form-weekly-num').value = nextWeekNum;
+      document.getElementById('form-weekly-week-title').value = `Tuần ${nextWeekNum}: `;
+      document.getElementById('form-weekly-id').value = `WEEK-${targetClass.includes('C++') ? 'CPP' : 'PY'}-${String(nextWeekNum).padStart(2, '0')}`;
+      document.getElementById('form-weekly-desc').value = '';
+
+      const now = new Date();
+      now.setDate(now.getDate() + 7);
+      now.setHours(23, 59, 0, 0);
+      const isoLocal = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+      document.getElementById('form-weekly-deadline').value = isoLocal;
+
+      selectedWeeklyProblems = [];
+      updateWeeklySelectedPillsDisplay();
+      renderWeeklyProblemPickerList();
+
+      document.getElementById('modal-weekly-homework').classList.remove('hidden');
+    }
+
+    function openEditWeeklyHomeworkModal(className, weekNum) {
+      if (!appData || !appData.weekly_homework || !appData.weekly_homework[className]) return;
+      const w = appData.weekly_homework[className].find(item => item.week === Number(weekNum));
+      if (!w) return;
+
+      document.getElementById('modal-weekly-title').textContent = `Sửa Bài Tập Tuần ${weekNum} (${className})`;
+      document.getElementById('form-weekly-orig-week').value = String(w.week);
+      document.getElementById('form-weekly-class').value = className;
+      document.getElementById('form-weekly-num').value = w.week;
+      document.getElementById('form-weekly-week-title').value = w.title || '';
+      document.getElementById('form-weekly-id').value = w.id || '';
+      document.getElementById('form-weekly-desc').value = w.description || '';
+
+      if (w.deadline) {
+        try {
+          const d = new Date(w.deadline);
+          const isoLocal = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+          document.getElementById('form-weekly-deadline').value = isoLocal;
+        } catch(e) {}
+      }
+
+      selectedWeeklyProblems = Array.isArray(w.problem_ids) ? [...w.problem_ids] : [];
+      updateWeeklySelectedPillsDisplay();
+      renderWeeklyProblemPickerList();
+
+      document.getElementById('modal-weekly-homework').classList.remove('hidden');
+    }
+
+    function closeWeeklyHomeworkModal() {
+      document.getElementById('modal-weekly-homework').classList.add('hidden');
+    }
+
+    function onWeeklyClassChange(cls) {
+      renderWeeklyProblemPickerList();
+    }
+
+    function renderWeeklyProblemPickerList(filterText = '') {
+      const listEl = document.getElementById('weekly-available-problems-list');
+      if (!listEl || !appData || !appData.problems) return;
+      listEl.innerHTML = '';
+
+      const query = (filterText || '').toLowerCase().trim();
+
+      const probs = appData.problems.filter(p => {
+        if (query) {
+          const name = (p.name || '').toLowerCase();
+          const id = (p.id || '').toLowerCase();
+          const cat = (p.category || '').toLowerCase();
+          if (!name.includes(query) && !id.includes(query) && !cat.includes(query)) return false;
+        }
+        return true;
+      });
+
+      if (probs.length === 0) {
+        listEl.innerHTML = `<div class="p-3 text-center text-slate-500 text-xs">Không tìm thấy bài tập nào</div>`;
+        return;
+      }
+
+      probs.slice(0, 60).forEach(p => {
+        const isSelected = selectedWeeklyProblems.includes(p.id);
+        const item = document.createElement('label');
+        item.className = "flex items-center justify-between p-2 rounded-lg hover:bg-slate-800/60 cursor-pointer transition";
+        item.innerHTML = `
+          <div class="flex items-center gap-2">
+            <input type="checkbox" onchange="toggleWeeklyProblemSelection('${p.id}')" ${isSelected ? 'checked' : ''} class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
+            <div>
+              <span class="font-mono text-[11px] font-bold text-indigo-400">${p.id}</span>
+              <span class="text-white text-xs font-medium ml-1.5">${p.name}</span>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-400 border border-slate-700">${p.platform || 'DeruckOJ'}</span>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    function filterWeeklyProblemPicker() {
+      const q = document.getElementById('weekly-prob-filter-input')?.value || '';
+      renderWeeklyProblemPickerList(q);
+    }
+
+    function toggleWeeklyProblemSelection(probId) {
+      const idx = selectedWeeklyProblems.indexOf(probId);
+      if (idx !== -1) {
+        selectedWeeklyProblems.splice(idx, 1);
+      } else {
+        selectedWeeklyProblems.push(probId);
+      }
+      updateWeeklySelectedPillsDisplay();
+      filterWeeklyProblemPicker();
+    }
+
+    function updateWeeklySelectedPillsDisplay() {
+      const countEl = document.getElementById('weekly-selected-count');
+      const pillsEl = document.getElementById('weekly-selected-pills');
+      if (countEl) countEl.textContent = `Đã chọn: ${selectedWeeklyProblems.length} bài`;
+      if (!pillsEl) return;
+      pillsEl.innerHTML = '';
+
+      if (selectedWeeklyProblems.length === 0) {
+        pillsEl.innerHTML = `<span class="text-xs text-slate-500 italic">Chưa chọn bài tập nào. Tick chọn danh sách phía trên.</span>`;
+        return;
+      }
+
+      selectedWeeklyProblems.forEach(pid => {
+        const pill = document.createElement('span');
+        pill.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-indigo-950/60 text-indigo-300 border border-indigo-500/30";
+        pill.innerHTML = `
+          <span>${pid}</span>
+          <button type="button" onclick="toggleWeeklyProblemSelection('${pid}')" class="text-indigo-400 hover:text-white font-bold ml-1">✕</button>
+        `;
+        pillsEl.appendChild(pill);
+      });
+    }
+
+    async function handleSaveWeeklyHomework(e) {
+      e.preventDefault();
+      const origWeekStr = document.getElementById('form-weekly-orig-week').value.trim();
+      const className = document.getElementById('form-weekly-class').value;
+      const weekNum = parseInt(document.getElementById('form-weekly-num').value, 10);
+      const title = document.getElementById('form-weekly-week-title').value.trim();
+      const idVal = document.getElementById('form-weekly-id').value.trim() || `WEEK-${weekNum}`;
+      const deadlineVal = document.getElementById('form-weekly-deadline').value;
+      const desc = document.getElementById('form-weekly-desc').value.trim();
+
+      if (!className || isNaN(weekNum) || !title) {
+        alert("Vui lòng điền đầy đủ Lớp, Tuần số và Tiêu đề tuần!");
+        return;
+      }
+
+      if (selectedWeeklyProblems.length === 0) {
+        alert("Vui lòng chọn ít nhất 1 bài tập cho tuần này!");
+        return;
+      }
+
+      if (!appData.weekly_homework) appData.weekly_homework = {};
+      if (!appData.weekly_homework[className]) appData.weekly_homework[className] = [];
+
+      const weekObj = {
+        id: idVal,
+        week: weekNum,
+        title: title,
+        deadline: deadlineVal ? new Date(deadlineVal).toISOString() : null,
+        description: desc,
+        problem_ids: [...selectedWeeklyProblems]
+      };
+
+      if (origWeekStr) {
+        const origWeek = parseInt(origWeekStr, 10);
+        const idx = appData.weekly_homework[className].findIndex(w => w.week === origWeek);
+        if (idx !== -1) {
+          appData.weekly_homework[className][idx] = weekObj;
+        } else {
+          appData.weekly_homework[className].push(weekObj);
+        }
+      } else {
+        const existingIdx = appData.weekly_homework[className].findIndex(w => w.week === weekNum);
+        if (existingIdx !== -1) {
+          if (!confirm(`Tuần ${weekNum} đã tồn tại trong lớp ${className}. Bạn có muốn ghi đè không?`)) return;
+          appData.weekly_homework[className][existingIdx] = weekObj;
+        } else {
+          appData.weekly_homework[className].push(weekObj);
+        }
+      }
+
+      appData.weekly_homework[className].sort((a, b) => a.week - b.week);
+
+      if (appData.class_config && appData.class_config[className]) {
+        const ccfg = appData.class_config[className];
+        if (!ccfg.problem_ids) ccfg.problem_ids = [];
+        selectedWeeklyProblems.forEach(pid => {
+          if (!ccfg.problem_ids.includes(pid)) {
+            ccfg.problem_ids.push(pid);
+          }
+        });
+        ccfg.total_problems = ccfg.problem_ids.length;
+      }
+
+      saveAppDataLocally();
+      if (typeof saveWeeklyHomeworkToFirebase === 'function') {
+        saveWeeklyHomeworkToFirebase(appData.weekly_homework);
+      }
+
+      closeWeeklyHomeworkModal();
+      currentWeeklyClass = className;
+      filterWeeklyClass(className);
+      renderProblems();
+      showLiveToast(`✅ Đã lưu bài tập Tuần ${weekNum} cho lớp ${className}!`, "success");
+    }
+
+    async function deleteWeeklyHomework(className, weekNum) {
+      if (!confirm(`Bạn có chắc chắn muốn xóa bài tập Tuần ${weekNum} của lớp "${className}" không?`)) return;
+      if (!appData || !appData.weekly_homework || !appData.weekly_homework[className]) return;
+
+      appData.weekly_homework[className] = appData.weekly_homework[className].filter(w => w.week !== Number(weekNum));
+      saveAppDataLocally();
+      if (typeof saveWeeklyHomeworkToFirebase === 'function') {
+        saveWeeklyHomeworkToFirebase(appData.weekly_homework);
+      }
+      renderWeeklyHomework();
+      showLiveToast(`🗑️ Đã xóa bài tập Tuần ${weekNum} của lớp ${className}`, "info");
+    }
+
+    function openProblemInJudge(probId) {
+      switchTab('problems');
+      toggleProblemViewMode('judge');
+      setTimeout(() => {
+        if (typeof selectJudgeProblem === 'function') {
+          selectJudgeProblem(probId);
+        }
+      }, 60);
+    }
+
 
     function startCountdown() {
       const upcoming = appData.contests ? appData.contests.find(c => c.status === "UPCOMING") : null;

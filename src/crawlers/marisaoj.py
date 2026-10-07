@@ -96,43 +96,113 @@ class MarisaOJCrawler:
         activity: Dict[str, Dict[str, int]] = {}
         now = datetime.now()
 
+    def _pass_turnstile(self, driver, max_wait: int = 35) -> bool:
+        if "Just a moment" not in driver.title and driver.title:
+            return True
         try:
-            url = f"https://marisaoj.com/user/{handle}/submissions"
-            self.logger.info(f"[MarisaOJ] Crawling submissions for '{handle}' at {url}...")
-            driver.get(url)
-            time.sleep(self.delay_seconds)
+            from PIL import Image
+            import tempfile
+            temp_ss = os.path.join(tempfile.gettempdir(), "marisa_cf_ss.png")
+            for sec in range(max_wait):
+                time.sleep(1)
+                if "Just a moment" not in driver.title and driver.title:
+                    return True
+                driver.save_screenshot(temp_ss)
+                im = Image.open(temp_ss)
+                orange = []
+                for y in range(int(im.height * 0.35), int(im.height * 0.55)):
+                    for x in range(int(im.width * 0.2), int(im.width * 0.4)):
+                        r, g, b = im.getpixel((x, y))[:3]
+                        if r > 200 and 100 <= g <= 170 and b < 60:
+                            orange.append((x, y))
+                if len(orange) >= 50:
+                    avg_y = sum(p[1] for p in orange) // len(orange)
+                    target_x = 112
+                    target_y = avg_y + 14
+                    self.logger.info(f"[MarisaOJ] Turnstile detected at ({target_x}, {target_y}), clicking...")
+                    driver.execute_cdp_cmd("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": target_x, "y": target_y})
+                    time.sleep(0.15)
+                    driver.execute_cdp_cmd("Input.dispatchMouseEvent", {"type": "mousePressed", "x": target_x, "y": target_y, "button": "left", "clickCount": 1})
+                    time.sleep(0.1)
+                    driver.execute_cdp_cmd("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": target_x, "y": target_y, "button": "left", "clickCount": 1})
+                    for _ in range(12):
+                        time.sleep(1)
+                        if "Just a moment" not in driver.title and driver.title:
+                            return True
+                    break
+        except Exception as e:
+            self.logger.warning(f"Turnstile bypass attempt: {e}")
+        return "Just a moment" not in driver.title and driver.title
 
-            if "Just a moment" in driver.title:
-                self.logger.info("[MarisaOJ] Cloudflare challenge detected, waiting 4s...")
-                time.sleep(4)
+    def crawl_user(self, handle: str, driver=None) -> Tuple[Set[str], Dict[str, Dict[str, int]]]:
+        """
+        Crawls all submissions pages for a handle and returns:
+        (solved_problems_set, activity_map)
+        where solved_problems_set contains IDs like 'MARISA-1'.
+        """
+        handle = handle.strip()
+        if not handle:
+            return set(), {}
 
-            html = driver.page_source
-            tr_blocks = re.findall(r'<tr>(.*?)</tr>', html, re.DOTALL)
+        own_driver = False
+        if driver is None:
+            driver = self._create_driver()
+            own_driver = True
 
-            for tr in tr_blocks:
-                prob_m = re.search(r'href=["\']/problem/(\d+)["\']', tr)
-                if not prob_m:
-                    continue
-                prob_id = f"MARISA-{prob_m.group(1)}"
+        solved_problems: Set[str] = set()
+        activity: Dict[str, Dict[str, int]] = {}
+        now = datetime.now()
 
-                date_m = re.search(r'(\d{2})/(\d{2})/(\d{4})', tr)
-                if date_m:
-                    day, month, year = date_m.group(1), date_m.group(2), date_m.group(3)
-                    iso_date = f"{year}-{month}-{day}"
-                else:
-                    iso_date = now.strftime("%Y-%m-%d")
+        try:
+            page = 1
+            while page <= 50:
+                page_url = f"https://marisaoj.com/user/{handle}/submissions/{page}" if page > 1 else f"https://marisaoj.com/user/{handle}/submissions"
+                self.logger.info(f"[MarisaOJ] Crawling submissions for '{handle}' (Page {page}) at {page_url}...")
+                driver.get(page_url)
+                time.sleep(self.delay_seconds)
 
-                is_ac = ('class="AC"' in tr or "class='AC'" in tr or 'class="ac"' in tr.lower())
+                if "Just a moment" in driver.title:
+                    self.logger.info("[MarisaOJ] Cloudflare challenge detected, passing...")
+                    self._pass_turnstile(driver)
 
-                if iso_date not in activity:
-                    activity[iso_date] = {"total": 0, "ac": 0}
-                activity[iso_date]["total"] += 1
+                html = driver.page_source
+                tr_blocks = re.findall(r'<tr>(.*?)</tr>', html, re.DOTALL)
+                subs_on_page = 0
 
-                if is_ac:
-                    activity[iso_date]["ac"] += 1
-                    solved_problems.add(prob_id)
+                for tr in tr_blocks:
+                    prob_m = re.search(r'href=["\']/problem/(\d+)["\']', tr)
+                    if not prob_m:
+                        continue
+                    subs_on_page += 1
+                    prob_id = f"MARISA-{prob_m.group(1)}"
 
-            self.logger.info(f"[MarisaOJ] Found {len(solved_problems)} AC problems for '{handle}'.")
+                    date_m = re.search(r'(\d{2})/(\d{2})/(\d{4})', tr)
+                    if date_m:
+                        day, month, year = date_m.group(1), date_m.group(2), date_m.group(3)
+                        iso_date = f"{year}-{month}-{day}"
+                    else:
+                        iso_date = now.strftime("%Y-%m-%d")
+
+                    is_ac = ('class="AC"' in tr or "class='AC'" in tr or 'class="ac"' in tr.lower() or 'score_100' in tr.lower())
+
+                    if iso_date not in activity:
+                        activity[iso_date] = {"total": 0, "ac": 0}
+                    activity[iso_date]["total"] += 1
+
+                    if is_ac:
+                        activity[iso_date]["ac"] += 1
+                        solved_problems.add(prob_id)
+
+                if subs_on_page == 0:
+                    break
+
+                next_button = f'/user/{handle}/submissions/{page + 1}'
+                if next_button not in html:
+                    break
+
+                page += 1
+
+            self.logger.info(f"[MarisaOJ] Found {len(solved_problems)} AC problems across {page} pages for '{handle}'.")
 
         except Exception as exc:
             self.logger.error(f"[MarisaOJ] Error crawling handle '{handle}': {exc}")

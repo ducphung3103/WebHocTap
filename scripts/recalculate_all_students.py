@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from typing import Set, Dict, Tuple
 
 os.environ.pop('SSLKEYLOGFILE', None)
-sys.stdout.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding='utf-8', line_buffering=True)
 
 _PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _PROJECT_ROOT not in sys.path:
@@ -93,11 +93,11 @@ def fetch_clue_all(handle: str) -> Tuple[Set[str], Dict[str, Dict[str, int]]]:
     if not handle:
         return set(), {}
     solved = set()
-    for page in range(1, 20):
+    for page in range(1, 8):
         url = f"https://oj.clue.edu.vn/submissions?user={urllib.parse.quote(handle)}&status=AC&page={page}"
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
         try:
-            with urllib.request.urlopen(req, timeout=8) as resp:
+            with urllib.request.urlopen(req, timeout=4) as resp:
                 html = resp.read().decode("utf-8")
                 probs = set(re.findall(r'href="/problem/([^/"]+)"', html))
                 if not probs:
@@ -119,6 +119,7 @@ def run_recalc():
 
     # Load Marisa cached datasets
     marisa_data = {}
+    marisa_activity = {}
     m1_path = os.path.join(_PROJECT_ROOT, "marisa_parsed_ac.json")
     if os.path.exists(m1_path):
         with open(m1_path, "r", encoding="utf-8") as f:
@@ -135,6 +136,26 @@ def run_recalc():
                 if h not in marisa_data:
                     marisa_data[h] = set()
                 marisa_data[h] |= set(p_list)
+
+    dp_path = os.path.join(_PROJECT_ROOT, "marisa_full_dphatdzvl.json")
+    if os.path.exists(dp_path):
+        with open(dp_path, "r", encoding="utf-8") as f:
+            raw_dp = json.load(f)
+            if "dphatdzvl" not in marisa_data:
+                marisa_data["dphatdzvl"] = set()
+            marisa_data["dphatdzvl"] |= set(raw_dp.get("solved", []))
+            marisa_activity["dphatdzvl"] = raw_dp.get("activity", {})
+
+    all_full_path = os.path.join(_PROJECT_ROOT, "crawled_marisaoj_all_full.json")
+    if os.path.exists(all_full_path):
+        with open(all_full_path, "r", encoding="utf-8") as f:
+            raw_af = json.load(f)
+            for h, info in raw_af.items():
+                if h not in marisa_data:
+                    marisa_data[h] = set()
+                marisa_data[h] |= set(info.get("solved", []))
+                if info.get("activity"):
+                    marisa_activity[h] = info.get("activity", {})
 
     students = data.get("students", [])
     now = datetime.now()
@@ -161,6 +182,14 @@ def run_recalc():
             m_set = marisa_data[m_handle]
             fresh_solved |= m_set
             print(f"  • MarisaOJ ({m_handle}): {len(m_set)} bài")
+
+        if m_handle and m_handle in marisa_activity:
+            for d_str, v in marisa_activity[m_handle].items():
+                if d_str not in act_map:
+                    act_map[d_str] = dict(v)
+                else:
+                    act_map[d_str]["total"] = max(act_map[d_str].get("total", 0), v.get("total", 0))
+                    act_map[d_str]["ac"] = max(act_map[d_str].get("ac", 0), v.get("ac", 0))
 
         # 2. Codeforces
         cf_handle = s.get("cf_handle", "").strip()

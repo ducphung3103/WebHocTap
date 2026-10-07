@@ -462,7 +462,10 @@
           <div id="target-progress-bar" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-400 h-3 rounded-full transition-all duration-700" style="width: 0%"></div>
         </div>
 
-        <!-- Checklist grid of 8 problems -->
+        <!-- Weekly Filter Pills -->
+        <div id="student-weekly-pills" class="flex items-center gap-2 flex-wrap pt-1 hidden"></div>
+
+        <!-- Checklist grid of problems or weekly cards container -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-2" id="homework-grid">
           <!-- Populated dynamically -->
         </div>
@@ -577,8 +580,26 @@
 
   <!-- SCRIPT LOGIC -->
   <script>
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     let appData = null;
     let currentStudent = null;
+    let currentStudentWeekFilter = 'all';
+
+    function setStudentWeekFilter(weekVal) {
+      currentStudentWeekFilter = weekVal;
+      if (currentStudent) {
+        renderHomeworkChecklist(currentStudent);
+      }
+    }
 
     async function initStudentPage() {
       // Kiểm tra trạng thái xác thực người dùng trước tiên
@@ -593,7 +614,7 @@
         console.error("Could not fetch data.json", e);
       }
 
-      // 1. Tải dữ liệu học sinh & bài nộp trực tiếp từ Firebase Realtime Database (Bảo mật tuyệt đối)
+      // 1. Tải dữ liệu học sinh, bài nộp & bài tập theo tuần trực tiếp từ Firebase Realtime Database
       if (typeof fetchStudentsFromFirebase === 'function' && isFirebaseConfigured()) {
         try {
           const fbStudents = await fetchStudentsFromFirebase();
@@ -611,6 +632,18 @@
             try {
               localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions));
             } catch(e) {}
+          }
+          if (typeof fetchWeeklyHomeworkFromFirebase === 'function') {
+            try {
+              const fbWeekly = await fetchWeeklyHomeworkFromFirebase();
+              if (fbWeekly && typeof fbWeekly === 'object' && Object.keys(fbWeekly).length > 0) {
+                if (!appData) appData = {};
+                appData.weekly_homework = fbWeekly;
+                try { localStorage.setItem('cp_cached_weekly_homework', JSON.stringify(fbWeekly)); } catch(e) {}
+              }
+            } catch(wErr) {
+              console.warn("Could not fetch weekly homework from Firebase:", wErr);
+            }
           }
         } catch(fbErr) {
           console.warn("Could not fetch students from Firebase:", fbErr);
@@ -645,6 +678,16 @@
               if (!appData) appData = {};
               appData.students = list;
             }
+          } catch(e) {}
+        }
+      }
+
+      // 2b. Dự phòng: Tải weekly_homework từ cache
+      if (appData && !appData.weekly_homework) {
+        const cachedWeekly = localStorage.getItem('cp_cached_weekly_homework');
+        if (cachedWeekly) {
+          try {
+            appData.weekly_homework = JSON.parse(cachedWeekly);
           } catch(e) {}
         }
       }
@@ -723,6 +766,7 @@
       if (!student) return;
 
       currentStudent = student;
+      currentStudentWeekFilter = 'all';
 
       document.getElementById('loading-state').classList.add('hidden');
       document.getElementById('profile-container').classList.remove('hidden');
@@ -883,15 +927,207 @@
       }
     }
 
+    function isProblemSolvedByStudent(pid, student, submissions) {
+      if (!student) return false;
+      const solvedList = student.solved || [];
+      const targetSolved = student.target_solved || [];
+      if (solvedList.includes(pid) || targetSolved.includes(pid)) return true;
+      const sub = (typeof findStudentSubmission === 'function')
+        ? findStudentSubmission(submissions || [], pid, student)
+        : (submissions || []).find(s => s.problem_id === pid && (s.student_name === student.name || (s.student_id && s.student_id == student.stt)));
+      if (sub && (sub.status === 'Chấm đạt' || sub.status === 'Hoàn thành' || (typeof sub.score === 'number' && sub.score >= 8))) {
+        return true;
+      }
+      return false;
+    }
+
+    function createProblemCardHtml(p, student, submissions) {
+      const isSolved = isProblemSolvedByStudent(p.id, student, submissions);
+      const mySub = (typeof findStudentSubmission === 'function')
+        ? findStudentSubmission(submissions || [], p.id, student)
+        : (submissions || []).find(s => s.problem_id === p.id && (s.student_name === student.name || (s.student_id && s.student_id == student.stt)));
+
+      let subBadge = '';
+      if (isSolved) {
+        subBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">ĐÃ AC ✅</span>';
+      } else if (mySub) {
+        if (mySub.status === 'Chấm đạt' || mySub.status === 'Hoàn thành') {
+          subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">✅ ${mySub.score ? `${mySub.score}/10 ` : ''}(Chấm đạt)</span>`;
+        } else if (mySub.score !== undefined && mySub.score !== '') {
+          subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">💯 ${mySub.score}/10 (${escapeHtml(mySub.status)})</span>`;
+        } else if (mySub.status === 'Cần sửa') {
+          subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">⚠️ Cần sửa</span>`;
+        } else {
+          subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">📨 ${escapeHtml(mySub.status || 'Đã nộp')}</span>`;
+        }
+      } else {
+        subBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-400 border border-slate-700">Chưa nộp ⏳</span>';
+      }
+
+      const hasDeruckOJ = (p.platform === 'DeruckOJ' || (p.testcases && p.testcases.length > 0) || (p.url && p.url.startsWith('#judge')));
+
+      return `
+        <div class="${(isSolved || (mySub && (mySub.status === 'Chấm đạt' || mySub.status === 'Hoàn thành')))
+          ? "bg-slate-900/90 border border-emerald-500/40 rounded-xl p-3.5 space-y-2 flex flex-col justify-between" 
+          : "bg-slate-900/60 border border-slate-800 rounded-xl p-3.5 space-y-2 flex flex-col justify-between opacity-95"}">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] font-bold text-slate-400">${escapeHtml(p.id)}</span>
+              ${subBadge}
+            </div>
+            <div class="text-xs font-bold text-white leading-snug">${escapeHtml(p.name)}</div>
+            ${mySub && mySub.feedback ? `
+              <div class="p-2 bg-indigo-950/40 border border-indigo-500/30 rounded-lg text-[11px] text-indigo-300 leading-snug">
+                💬 <strong>Thầy nhận xét:</strong> ${escapeHtml(mySub.feedback)}
+              </div>
+            ` : ''}
+          </div>
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between flex-wrap gap-1.5">
+            <span class="text-[10px] text-slate-400 font-mono">${escapeHtml(p.difficulty || 'Level 1')}</span>
+            <div class="flex items-center gap-1.5">
+              ${hasDeruckOJ ? `
+                <a href="index.html#judge-${escapeHtml(p.id)}" class="px-2 py-1 rounded-md text-[11px] font-semibold bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30 border border-emerald-500/30 transition flex items-center gap-1">
+                  <span>⚡</span> DeruckOJ
+                </a>
+              ` : `
+                <a href="${escapeHtml(p.url || '#')}" target="_blank" class="text-[11px] font-semibold text-slate-400 hover:text-slate-200 transition">
+                  Đề bài ↗
+                </a>
+              `}
+              <button onclick="openStudentSubmitModal('${escapeHtml(p.id)}')" class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1 shadow cursor-pointer">
+                <span>📝</span> ${mySub ? 'Nộp lại' : 'Nộp bài'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     function renderHomeworkChecklist(student) {
       const container = document.getElementById('homework-grid');
       const badge = document.getElementById('target-stat-badge');
       const bar = document.getElementById('target-progress-bar');
-      if (!container || !appData.problems) return;
+      const pillsContainer = document.getElementById('student-weekly-pills');
+      const titleEl = document.getElementById('homework-title');
+      const descEl = document.getElementById('homework-desc');
+      if (!container || !appData) return;
 
       container.innerHTML = '';
-      
       const sClass = student.class || 'C++ nâng cao';
+      const submissions = appData.submissions || [];
+      const weeklyList = (appData.weekly_homework && Array.isArray(appData.weekly_homework[sClass]))
+        ? appData.weekly_homework[sClass]
+        : [];
+
+      // TH1: Lớp này có lộ trình Bài tập theo tuần (Weekly Homework)
+      if (weeklyList.length > 0) {
+        const sortedWeeks = [...weeklyList].sort((a, b) => (a.week || 0) - (b.week || 0));
+        const allAssignedIds = [...new Set(sortedWeeks.flatMap(w => w.problem_ids || []))];
+        const totalOverall = allAssignedIds.length;
+        const solvedOverall = allAssignedIds.filter(pid => isProblemSolvedByStudent(pid, student, submissions)).length;
+        const percentOverall = totalOverall > 0 ? Math.round((solvedOverall / totalOverall) * 100) : 0;
+
+        if (titleEl) titleEl.innerHTML = `<span>🎯</span> Lộ Trình Bài Tập Theo Tuần • <span class="text-indigo-400">Lớp ${escapeHtml(sClass)}</span>`;
+        if (descEl) descEl.textContent = `Lộ trình bài tập hàng tuần kèm thời hạn nộp bài và trạng thái nộp bài cá nhân (${sortedWeeks.length} tuần học).`;
+        if (badge) badge.textContent = `${solvedOverall} / ${totalOverall} bài (${percentOverall}%)`;
+        if (bar) bar.style.width = `${percentOverall}%`;
+
+        // Render filter pills
+        if (pillsContainer) {
+          pillsContainer.classList.remove('hidden');
+          let pillsHtml = `
+            <button onclick="setStudentWeekFilter('all')" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${currentStudentWeekFilter === 'all' ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700'}">
+              Tất cả (${sortedWeeks.length} tuần)
+            </button>
+          `;
+          sortedWeeks.forEach(w => {
+            const pids = w.problem_ids || [];
+            const wSolved = pids.filter(pid => isProblemSolvedByStudent(pid, student, submissions)).length;
+            const isAct = String(currentStudentWeekFilter) === String(w.week);
+            pillsHtml += `
+              <button onclick="setStudentWeekFilter('${w.week}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 ${isAct ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700'}">
+                <span>Tuần ${w.week}</span>
+                <span class="text-[10px] px-1.5 py-0.2 rounded-full ${wSolved === pids.length && pids.length > 0 ? 'bg-emerald-500/20 text-emerald-300 font-bold' : 'bg-slate-900/80 text-slate-300'}">${wSolved}/${pids.length}</span>
+              </button>
+            `;
+          });
+          pillsContainer.innerHTML = pillsHtml;
+        }
+
+        const displayWeeks = (currentStudentWeekFilter === 'all')
+          ? sortedWeeks
+          : sortedWeeks.filter(w => String(w.week) === String(currentStudentWeekFilter));
+
+        container.className = "space-y-6 pt-2";
+        let weeksHtml = '';
+
+        displayWeeks.forEach(w => {
+          const pids = w.problem_ids || [];
+          const wSolved = pids.filter(pid => isProblemSolvedByStudent(pid, student, submissions)).length;
+          const wPct = pids.length > 0 ? Math.round((wSolved / pids.length) * 100) : 0;
+
+          let deadlineBadge = '';
+          if (w.deadline) {
+            const d = new Date(w.deadline);
+            const isPast = d.getTime() < Date.now();
+            const dStr = d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            if (isPast) {
+              deadlineBadge = `<span class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-rose-500/10 text-rose-300 border border-rose-500/20">⏳ Hạn: ${dStr} (Đã hết hạn)</span>`;
+            } else {
+              deadlineBadge = `<span class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">⏳ Hạn: ${dStr}</span>`;
+            }
+          }
+
+          let probCardsHtml = '';
+          if (pids.length === 0) {
+            probCardsHtml = `<div class="col-span-full py-4 text-center text-xs text-slate-500 italic">Chưa có bài tập nào được gán cho tuần này.</div>`;
+          } else {
+            pids.forEach(pid => {
+              const p = (appData.problems || []).find(x => x.id === pid) || {
+                id: pid,
+                name: pid,
+                difficulty: 'Level 1',
+                category: 'Cơ bản',
+                platform: 'DeruckOJ'
+              };
+              probCardsHtml += createProblemCardHtml(p, student, submissions);
+            });
+          }
+
+          weeksHtml += `
+            <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3.5">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2 border-b border-slate-800/80">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-mono font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Tuần ${w.week}</span>
+                  <h3 class="text-sm sm:text-base font-bold text-white">${escapeHtml(w.title)}</h3>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  ${deadlineBadge}
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold ${wPct === 100 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'}">
+                    ${wSolved}/${pids.length} AC (${wPct}%)
+                  </span>
+                </div>
+              </div>
+              ${w.description ? `
+                <div class="text-xs text-slate-400 italic bg-slate-900/40 p-2.5 rounded-xl border border-slate-800/50">
+                  📌 ${escapeHtml(w.description)}
+                </div>
+              ` : ''}
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+                ${probCardsHtml}
+              </div>
+            </div>
+          `;
+        });
+
+        container.innerHTML = weeksHtml;
+        return;
+      }
+
+      // TH2: Dự phòng danh sách phẳng khi lớp chưa tạo lộ trình tuần
+      if (pillsContainer) pillsContainer.classList.add('hidden');
+      container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-2";
+
       const classProblems = (appData.problems || []).filter(p => {
         const pClasses = p.classes || [];
         return pClasses.includes(sClass) || pClasses.includes('Tất cả');
@@ -901,7 +1137,7 @@
         container.innerHTML = `
           <div class="col-span-full p-8 text-center bg-slate-900/60 border border-slate-800 rounded-xl space-y-2">
             <span class="text-3xl">📭</span>
-            <div class="text-sm font-bold text-slate-300">Chưa có bài tập nào được giao cho lớp ${sClass}</div>
+            <div class="text-sm font-bold text-slate-300">Chưa có bài tập nào được giao cho lớp ${escapeHtml(sClass)}</div>
             <p class="text-xs text-slate-400">Các bài tập mới sẽ tự động hiển thị tại đây khi Thầy giao bài.</p>
           </div>
         `;
@@ -911,86 +1147,19 @@
       }
 
       const totalProblems = classProblems.length;
-      const solvedList = student.solved || [];
       let count = 0;
 
-      // Update section header
-      const titleEl = document.getElementById('homework-title');
-      const descEl = document.getElementById('homework-desc');
-      if (titleEl) titleEl.innerHTML = `<span>🎯</span> Tiến Độ Bài Tập Giao Tuần Này • <span class="text-indigo-400">Lớp ${sClass}</span>`;
+      if (titleEl) titleEl.innerHTML = `<span>🎯</span> Tiến Độ Bài Tập Giao Tuần Này • <span class="text-indigo-400">Lớp ${escapeHtml(sClass)}</span>`;
       if (descEl) descEl.textContent = `Mức độ hoàn thành đối với ${totalProblems} bài tập giao riêng cho lớp ${sClass}`;
 
       classProblems.forEach(p => {
-        const isSolved = solvedList.includes(p.id) || (student.target_solved && student.target_solved.includes(p.id));
-        if (isSolved) count++;
-
-        // Find submission by this student
-        const submissions = appData.submissions || [];
-        const mySub = (typeof findStudentSubmission === 'function')
-          ? findStudentSubmission(submissions, p.id, student)
-          : submissions.find(s => s.problem_id === p.id && (s.student_name === student.name || (s.student_id && s.student_id == student.stt)));
-
-        let subBadge = '';
-        if (isSolved) {
-          subBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">ĐÃ AC ✅</span>';
-        } else if (mySub) {
-          if (mySub.status === 'Chấm đạt' || mySub.status === 'Hoàn thành') {
-            subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">✅ ${mySub.score ? `${mySub.score}/10 ` : ''}(Chấm đạt)</span>`;
-          } else if (mySub.score !== undefined && mySub.score !== '') {
-            subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">💯 ${mySub.score}/10 (${mySub.status})</span>`;
-          } else if (mySub.status === 'Cần sửa') {
-            subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">⚠️ Cần sửa</span>`;
-          } else {
-            subBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">📨 ${mySub.status || 'Đã nộp'}</span>`;
-          }
-        } else {
-          subBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-400 border border-slate-700">Chưa nộp ⏳</span>';
-        }
-
-        const hasDeruckOJ = (p.platform === 'DeruckOJ' || (p.testcases && p.testcases.length > 0) || (p.url && p.url.startsWith('#judge')));
-
-        const item = document.createElement('div');
-        item.className = (isSolved || (mySub && (mySub.status === 'Chấm đạt' || mySub.status === 'Hoàn thành')))
-          ? "bg-slate-900/90 border border-emerald-500/40 rounded-xl p-3.5 space-y-2 flex flex-col justify-between" 
-          : "bg-slate-900/60 border border-slate-800 rounded-xl p-3.5 space-y-2 flex flex-col justify-between opacity-95";
-
-        item.innerHTML = `
-          <div class="space-y-1.5">
-            <div class="flex items-center justify-between">
-              <span class="font-mono text-[11px] font-bold text-slate-400">${p.id}</span>
-              ${subBadge}
-            </div>
-            <div class="text-xs font-bold text-white leading-snug">${p.name}</div>
-            ${mySub && mySub.feedback ? `
-              <div class="p-2 bg-indigo-950/40 border border-indigo-500/30 rounded-lg text-[11px] text-indigo-300 leading-snug">
-                💬 <strong>Thầy nhận xét:</strong> ${escapeHtml(mySub.feedback)}
-              </div>
-            ` : ''}
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between flex-wrap gap-1.5">
-            <span class="text-[10px] text-slate-400 font-mono">${p.difficulty || 'Level 1'}</span>
-            <div class="flex items-center gap-1.5">
-              ${hasDeruckOJ ? `
-                <a href="index.html#judge-${p.id}" class="px-2 py-1 rounded-md text-[11px] font-semibold bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30 border border-emerald-500/30 transition flex items-center gap-1">
-                  <span>⚡</span> DeruckOJ
-                </a>
-              ` : `
-                <a href="${p.url}" target="_blank" class="text-[11px] font-semibold text-slate-400 hover:text-slate-200 transition">
-                  Đề bài ↗
-                </a>
-              `}
-              <button onclick="openStudentSubmitModal('${p.id}')" class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1 shadow cursor-pointer">
-                <span>📝</span> ${mySub ? 'Nộp lại' : 'Nộp bài'}
-              </button>
-            </div>
-          </div>
-        `;
-        container.appendChild(item);
+        if (isProblemSolvedByStudent(p.id, student, submissions)) count++;
+        container.innerHTML += createProblemCardHtml(p, student, submissions);
       });
 
       const percent = totalProblems > 0 ? Math.round((count / totalProblems) * 100) : 0;
-      badge.textContent = `${count} / ${totalProblems} bài (${percent}%)`;
-      bar.style.width = `${percent}%`;
+      if (badge) badge.textContent = `${count} / ${totalProblems} bài (${percent}%)`;
+      if (bar) bar.style.width = `${percent}%`;
     }
 
     function formatDateKey(d) {
@@ -1728,7 +1897,12 @@
       }
       const sClass = currentStudent.class;
       const pClasses = prob.classes || [];
-      if (sClass && !pClasses.includes(sClass) && !pClasses.includes('Tất cả')) {
+      const isAssignedInWeekly = Boolean(
+        appData.weekly_homework &&
+        Array.isArray(appData.weekly_homework[sClass]) &&
+        appData.weekly_homework[sClass].some(w => (w.problem_ids || []).includes(prob.id))
+      );
+      if (sClass && !pClasses.includes(sClass) && !pClasses.includes('Tất cả') && !isAssignedInWeekly) {
         alert("Bài tập này không thuộc lớp của bạn!");
         return;
       }

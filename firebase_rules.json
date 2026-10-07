@@ -24,6 +24,16 @@
     "metadata": {
       ".read": true,
       ".write": true
+    },
+    "contests": {
+      /* Cho phép đọc và cập nhật danh sách kỳ thi */
+      ".read": true,
+      ".write": true
+    },
+    "weekly_homework": {
+      /* Cho phép đọc và cập nhật bài tập theo tuần học */
+      ".read": true,
+      ".write": true
     }
   }
 }

@@ -516,3 +516,124 @@ async function pushFullDatabaseToFirebaseClient(fullData) {
     return false;
   }
 }
+
+/**
+ * 9. Tải danh sách Contest từ Firebase Realtime Database
+ */
+async function fetchContestsFromFirebase() {
+  if (!isFirebaseConfigured()) return null;
+  const dbUrl = getFirebaseDatabaseUrl();
+  try {
+    // 1. Thử tải từ /metadata/contests.json (nhánh metadata luôn mở quyền)
+    let resp = await fetch(`${dbUrl}/metadata/contests.json`, {
+      headers: { 'Accept': 'application/json' },
+      signal: AbortSignal.timeout(6000)
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data) {
+        return Array.isArray(data) ? data.filter(Boolean) : Object.values(data);
+      }
+    }
+    // 2. Dự phòng tải từ root /contests.json
+    resp = await fetch(`${dbUrl}/contests.json`, {
+      headers: { 'Accept': 'application/json' },
+      signal: AbortSignal.timeout(6000)
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data) {
+        return Array.isArray(data) ? data.filter(Boolean) : Object.values(data);
+      }
+    }
+    return null;
+  } catch(err) {
+    console.warn("Could not fetch contests from Firebase:", err);
+    return null;
+  }
+}
+
+/**
+ * 9b. Lưu danh sách Contest lên Firebase Realtime Database
+ */
+async function saveContestsToFirebase(contests) {
+  if (!isFirebaseConfigured() || !contests) return false;
+  const dbUrl = getFirebaseDatabaseUrl();
+  try {
+    const respMeta = await fetch(`${dbUrl}/metadata/contests.json`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(contests)
+    });
+    try {
+      await fetch(`${dbUrl}/contests.json`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contests)
+      });
+    } catch(e) {}
+    touchFirebaseLastUpdated().catch(() => {});
+    return respMeta.ok;
+  } catch(err) {
+    console.warn("Could not save contests to Firebase:", err);
+    return false;
+  }
+}
+
+/**
+ * 10. Tải danh sách Bài tập theo tuần (Weekly Homework) từ Firebase Realtime Database
+ */
+async function fetchWeeklyHomeworkFromFirebase() {
+  if (!isFirebaseConfigured()) return null;
+  const dbUrl = getFirebaseDatabaseUrl();
+  try {
+    let resp = await fetch(`${dbUrl}/metadata/weekly_homework.json`, {
+      headers: { 'Accept': 'application/json' },
+      signal: AbortSignal.timeout(6000)
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data && typeof data === 'object') return data;
+    }
+    resp = await fetch(`${dbUrl}/weekly_homework.json`, {
+      headers: { 'Accept': 'application/json' },
+      signal: AbortSignal.timeout(6000)
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data && typeof data === 'object') return data;
+    }
+    return null;
+  } catch(err) {
+    console.warn("Could not fetch weekly homework from Firebase:", err);
+    return null;
+  }
+}
+
+/**
+ * 10b. Lưu danh sách Bài tập theo tuần (Weekly Homework) lên Firebase Realtime Database
+ */
+async function saveWeeklyHomeworkToFirebase(weeklyHomework) {
+  if (!isFirebaseConfigured() || !weeklyHomework) return false;
+  const dbUrl = getFirebaseDatabaseUrl();
+  try {
+    const respMeta = await fetch(`${dbUrl}/metadata/weekly_homework.json`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(weeklyHomework)
+    });
+    try {
+      await fetch(`${dbUrl}/weekly_homework.json`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(weeklyHomework)
+      });
+    } catch(e) {}
+    touchFirebaseLastUpdated().catch(() => {});
+    return respMeta.ok;
+  } catch(err) {
+    console.warn("Could not save weekly homework to Firebase:", err);
+    return false;
+  }
+}
+

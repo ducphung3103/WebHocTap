@@ -2421,11 +2421,57 @@
   ],
   "contests": [
     {
+      "id": "CONTEST-03",
+      "title": "⚡ Kỳ Thi Trực Tiếp Web #03: Thử Thách C++ & Python Cơ Bản (DeruckOJ)",
+      "platform": "DeruckOJ (Web)",
+      "type": "internal",
+      "status": "UPCOMING",
+      "start_time": "2026-10-12T19:30:00+07:00",
+      "duration_minutes": 120,
+      "format": "Chấm điểm trực tiếp Web (4 bài)",
+      "url": "#problems-view-judge",
+      "editorial_url": "https://docs.google.com",
+      "problems_count": 4,
+      "description": "Kỳ thi thử thách trực tiếp ngay trên Web DeruckOJ. Học sinh giải đề và nộp code trực tiếp để nhận kết quả chấm AC tức thì theo bộ test của giáo viên.",
+      "problems": [
+        {
+          "code": "A",
+          "id": "CPP-EX-01",
+          "name": "Mảng 10 số tự nhiên",
+          "points": 100,
+          "oj": "DeruckOJ"
+        },
+        {
+          "code": "B",
+          "id": "MARISA-1",
+          "name": "Tổng hai số A + B",
+          "points": 100,
+          "oj": "MarisaOJ"
+        },
+        {
+          "code": "C",
+          "id": "CPP-EX-02",
+          "name": "Phần tử chính giữa mảng",
+          "points": 100,
+          "oj": "DeruckOJ"
+        },
+        {
+          "code": "D",
+          "id": "MARISA-2",
+          "name": "Chu vi và diện tích hình chữ nhật",
+          "points": 100,
+          "oj": "MarisaOJ"
+        }
+      ],
+      "standings": []
+    },
+    {
       "id": "CONTEST-02",
       "title": "⚔️ Contest Định Kỳ #02: Quy Hoạch Động & Mảng Cộng Dồn",
       "platform": "VJudge / Codeforces",
+      "type": "vjudge",
       "status": "UPCOMING",
-      "start_time": "2026-10-06T19:30:00+07:00",
+      "start_time": "2026-10-15T19:30:00+07:00",
       "duration_minutes": 150,
       "format": "ICPC Rules (5 bài)",
       "url": "https://vjudge.net/contest",
@@ -2463,12 +2509,14 @@
           "points": 100,
           "oj": "CSES"
         }
-      ]
+      ],
+      "standings": []
     },
     {
       "id": "CONTEST-01",
       "title": "🏆 Contest Khởi Động #01: C++ STL & Fast I/O",
       "platform": "VJudge",
+      "type": "vjudge",
       "status": "ENDED",
       "start_time": "2026-09-26T19:30:00+07:00",
       "duration_minutes": 120,
@@ -2597,7 +2645,7 @@
     "Tháng 11",
     "Tháng 12"
   ],
-  "last_updated": "2026-10-06T15:16:23Z",
+  "last_updated": "2026-10-07T02:48:36Z",
   "grader_problems": [
     {
       "id": "CPP-EX-01",
@@ -3247,5 +3295,166 @@
   ],
   "submissions": [],
   "data_source": "firebase",
-  "security_status": "Dữ liệu học sinh, điểm danh và học phí đã được chuyển sang Firebase Realtime Database để bảo mật tuyệt đối, không lưu trong data.json"
+  "security_status": "Dữ liệu học sinh, điểm danh và học phí đã được chuyển sang Firebase Realtime Database để bảo mật tuyệt đối, không lưu trong data.json",
+  "weekly_homework": {
+    "C++ cơ bản": [
+      {
+        "id": "WEEK-CPPCB-01",
+        "week": 1,
+        "title": "Tuần 1: Nhập xuất dữ liệu & Phép toán cơ bản",
+        "deadline": "2026-10-18T23:59:00",
+        "description": "Làm quen với cin/cout, kiểu dữ liệu int, long long, phép chia lấy dư và mảng cơ bản.",
+        "problem_ids": [
+          "MARISA-1",
+          "MARISA-2",
+          "MARISA-3",
+          "CPP-EX-01",
+          "CPP-EX-02"
+        ]
+      },
+      {
+        "id": "WEEK-CPPCB-02",
+        "week": 2,
+        "title": "Tuần 2: Cấu trúc rẽ nhánh if-else & Biểu thức logic",
+        "deadline": "2026-10-25T23:59:00",
+        "description": "Thành thạo cấu trúc rẽ nhánh, so sánh điều kiện số học và phương trình bậc 1.",
+        "problem_ids": [
+          "MARISA-4",
+          "MARISA-8",
+          "MARISA-13",
+          "MARISA-397",
+          "CPP-EX-03"
+        ]
+      },
+      {
+        "id": "WEEK-CPPCB-03",
+        "week": 3,
+        "title": "Tuần 3: Vòng lặp For, While & Xử lý số học",
+        "deadline": "2026-11-01T23:59:00",
+        "description": "Tách chữ số, kiểm tra số đối xứng, tính tổng ước và số chính phương.",
+        "problem_ids": [
+          "MARISA-15",
+          "MARISA-314",
+          "MARISA-499",
+          "MARISA-535",
+          "MARISA-536",
+          "CPP-EX-04"
+        ]
+      },
+      {
+        "id": "WEEK-CPPCB-04",
+        "week": 4,
+        "title": "Tuần 4: Mảng 1 chiều & Kỹ thuật đếm mảng",
+        "deadline": "2026-11-08T23:59:00",
+        "description": "Duyệt mảng số nguyên, đếm chẵn lẻ, biến đổi dãy số và đảo ngược mảng.",
+        "problem_ids": [
+          "MARISA-20",
+          "MARISA-42",
+          "MARISA-405",
+          "MARISA-537",
+          "MARISA-541",
+          "MARISA-587",
+          "CPP-EX-05"
+        ]
+      }
+    ],
+    "C++ nâng cao": [
+      {
+        "id": "WEEK-CPPBNC-01",
+        "week": 1,
+        "title": "Tuần 1: Kỹ thuật Hai con trỏ, Biến đổi xâu & Thuật toán Tham lam",
+        "deadline": "2026-10-18T23:59:00",
+        "description": "Tối ưu hóa thao tác xâu đối xứng và bài toán chọn số chia hết lớn nhất.",
+        "problem_ids": [
+          "CF-486C",
+          "CF-214B"
+        ]
+      },
+      {
+        "id": "WEEK-CPPBNC-02",
+        "week": 2,
+        "title": "Tuần 2: Chặt nhị phân, Meet in the middle & Giải thuật nâng cao",
+        "deadline": "2026-10-25T23:59:00",
+        "description": "Áp dụng kỹ thuật Meet-in-the-middle giảm độ phức tạp O(2^N) và chặt nhị phân kết quả.",
+        "problem_ids": [
+          "CF-231C",
+          "CSES-1628",
+          "26TI-A"
+        ]
+      }
+    ],
+    "Python cơ bản": [
+      {
+        "id": "WEEK-PYCB-01",
+        "week": 1,
+        "title": "Tuần 1: Nhập xuất dữ liệu, Toán tử & Xử lý xâu",
+        "deadline": "2026-10-18T23:59:00",
+        "description": "Cú pháp Python căn bản: hàm input, print, các phép toán số học và in lặp xâu.",
+        "problem_ids": [
+          "MARISA-1",
+          "MARISA-2",
+          "PY-EX-01",
+          "PY-EX-02"
+        ]
+      },
+      {
+        "id": "WEEK-PYCB-02",
+        "week": 2,
+        "title": "Tuần 2: Cấu trúc rẽ nhánh & Bài toán thực tế",
+        "deadline": "2026-10-25T23:59:00",
+        "description": "Câu lệnh if/elif/else, xử lý số tuổi và điều kiện logic trong Python.",
+        "problem_ids": [
+          "MARISA-3",
+          "MARISA-15",
+          "PY-EX-03",
+          "PY-EX-04",
+          "PY-EX-05"
+        ]
+      }
+    ],
+    "Python 1-1": [
+      {
+        "id": "WEEK-PY11-01",
+        "week": 1,
+        "title": "Tuần 1: Phép chia có dư & Đổi tiền",
+        "deadline": "2026-10-18T23:59:00",
+        "description": "Toán tử // và %, bài toán đổi tờ tiền mệnh giá và chia kẹo.",
+        "problem_ids": [
+          "MARISA-4",
+          "MARISA-6",
+          "MARISA-7",
+          "PY11-EX-01",
+          "PY11-EX-02"
+        ]
+      },
+      {
+        "id": "WEEK-PY11-02",
+        "week": 2,
+        "title": "Tuần 2: Xử lý chữ số, Đảo ngược & Chuỗi ký tự",
+        "deadline": "2026-10-25T23:59:00",
+        "description": "Kỹ thuật tách chữ số của số nguyên, đổi hoa thường và hàm toán học.",
+        "problem_ids": [
+          "MARISA-10",
+          "MARISA-11",
+          "MARISA-13",
+          "MARISA-14",
+          "PY11-EX-03"
+        ]
+      },
+      {
+        "id": "WEEK-PY11-03",
+        "week": 3,
+        "title": "Tuần 3: Thuật toán mô phỏng & Hình học toạ độ",
+        "deadline": "2026-11-01T23:59:00",
+        "description": "Bài toán gấp giấy lũy thừa, ăn nấm và kiểm tra điểm nằm trên đoạn thẳng.",
+        "problem_ids": [
+          "MARISA-16",
+          "MARISA-401",
+          "MARISA-402",
+          "MARISA-416",
+          "MARISA-419"
+        ]
+      }
+    ]
+  }
 }
