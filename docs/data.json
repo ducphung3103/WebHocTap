@@ -21,31 +21,6 @@
         "C++ cơ bản",
         "Python cơ bản"
       ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Cơ bản",
-        "Nhập xuất",
-        "Toán học"
-      ],
-      "description": "Cho hai số nguyên $A$ và $B$. Nhiệm vụ của bạn là tính tổng của hai số này.",
-      "input_specification": "Một dòng duy nhất chứa hai số nguyên $A$ và $B$ cách nhau bởi dấu cách.",
-      "output_specification": "In ra một số nguyên duy nhất là tổng $A + B$.",
-      "constraints": "$-10^9 \\le A, B \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "3 5\n",
-          "output": "8\n",
-          "explanation": "Tổng của 3 và 5 là 8."
-        },
-        {
-          "input": "-10 25\n",
-          "output": "15\n",
-          "explanation": "Tổng của -10 và 25 là 15."
-        }
-      ],
       "testcases": [
         {
           "input": "3 5\n",
@@ -57,7 +32,10 @@
           "output": "15\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho hai số nguyên $A$ và $B$. Nhiệm vụ của bạn là tính tổng của hai số này.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-2",
@@ -71,33 +49,16 @@
         "C++ cơ bản",
         "Python cơ bản"
       ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Cơ bản",
-        "Hình học",
-        "Toán học"
-      ],
-      "description": "Cho chiều dài $a$ và chiều rộng $b$ của hình chữ nhật. Hãy tính chu vi và diện tích của hình chữ nhật đó.",
-      "input_specification": "Một dòng chứa hai số nguyên dương $a$ và $b$ cách nhau bởi dấu cách.",
-      "output_specification": "In ra hai số nguyên lần lượt là chu vi và diện tích trên cùng một dòng, cách nhau bởi dấu cách.",
-      "constraints": "$1 \\le a, b \\le 10^4$",
-      "sample_cases": [
-        {
-          "input": "3 4\n",
-          "output": "14 12\n",
-          "explanation": "Chu vi: (3+4)*2 = 14. Diện tích: 3*4 = 12."
-        }
-      ],
       "testcases": [
         {
           "input": "3 4\n",
           "output": "14 12\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho chiều dài $a$ và chiều rộng $b$ của hình chữ nhật. Hãy tính chu vi và diện tích của hình chữ nhật đó.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-3",
@@ -111,33 +72,16 @@
         "C++ cơ bản",
         "Python cơ bản"
       ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Cơ bản",
-        "Toán học",
-        "Số học"
-      ],
-      "description": "Cho hai số nguyên dương $a$ và $b$. Hãy in ra thương nguyên và số dư của phép chia $a$ cho $b$.",
-      "input_specification": "Dòng duy nhất chứa hai số nguyên dương $a$ và $b$ ($b > 0$).",
-      "output_specification": "In ra hai số nguyên là thương nguyên $a / b$ và phần dư $a \\% b$ cách nhau bởi dấu cách.",
-      "constraints": "$1 \\le a, b \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "17 5\n",
-          "output": "3 2\n",
-          "explanation": "17 chia 5 được 3 dư 2."
-        }
-      ],
       "testcases": [
         {
           "input": "17 5\n",
           "output": "3 2\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho hai số nguyên dương $a$ và $b$. Hãy in ra thương nguyên và số dư của phép chia $a$ cho $b$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-4",
@@ -151,31 +95,6 @@
         "C++ cơ bản",
         "Python 1-1"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Rẽ nhánh",
-        "Hình học",
-        "Cơ bản"
-      ],
-      "description": "Cho 3 số nguyên dương $a, b, c$. Kiểm tra xem ba số này có thể tạo thành ba cạnh của một tam giác hay không.",
-      "input_specification": "Một dòng chứa 3 số nguyên dương $a, b, c$ cách nhau bởi dấu cách.",
-      "output_specification": "In ra \"YES\" nếu tạo thành tam giác, ngược lại in ra \"NO\".",
-      "constraints": "$1 \\le a, b, c \\le 10^6$",
-      "sample_cases": [
-        {
-          "input": "3 4 5\n",
-          "output": "YES\n",
-          "explanation": "3, 4, 5 thỏa mãn bất đẳng thức tam giác."
-        },
-        {
-          "input": "1 2 3\n",
-          "output": "NO\n",
-          "explanation": "1 + 2 = 3 không thỏa mãn tổng 2 cạnh lớn hơn cạnh còn lại."
-        }
-      ],
       "testcases": [
         {
           "input": "3 4 5\n",
@@ -187,7 +106,10 @@
           "output": "NO\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho 3 số nguyên dương $a, b, c$. Kiểm tra xem ba số này có thể tạo thành ba cạnh của một tam giác hay không.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-6",
@@ -200,32 +122,16 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Cơ bản",
-        "Toán học"
-      ],
-      "description": "Có $N$ viên kẹo chia đều cho $K$ em bé. Hãy tính xem mỗi em bé nhận được nhiều nhất bao nhiêu viên kẹo và còn thừa lại bao nhiêu viên kẹo.",
-      "input_specification": "Một dòng gồm hai số nguyên dương $N$ và $K$ ($K > 0$).",
-      "output_specification": "In ra hai số nguyên: số kẹo mỗi em nhận được và số kẹo còn dư.",
-      "constraints": "$1 \\le N, K \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "23 4\n",
-          "output": "5 3\n",
-          "explanation": "Mỗi em 5 cái kẹo, dư 3 cái kẹo."
-        }
-      ],
       "testcases": [
         {
           "input": "23 4\n",
           "output": "5 3\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Có $N$ viên kẹo chia đều cho $K$ em bé. Hãy tính xem mỗi em bé nhận được nhiều nhất bao nhiêu viên kẹo và còn thừa lại bao nhiêu viên kẹo.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-7",
@@ -238,33 +144,16 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Tham lam",
-        "Toán học",
-        "Cơ bản"
-      ],
-      "description": "Cho số tiền $N$ đồng. Cần đổi số tiền này ra các tờ tiền mệnh giá 500, 200, 100, 50, 20, 10, 5, 2, 1 sao cho tổng số tờ tiền là ít nhất.",
-      "input_specification": "Một dòng chứa số nguyên dương $N$.",
-      "output_specification": "In ra số lượng tờ tiền tối thiểu cần dùng.",
-      "constraints": "$1 \\le N \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "578\n",
-          "output": "6\n",
-          "explanation": "1 tờ 500 + 1 tờ 50 + 1 tờ 20 + 1 tờ 5 + 1 tờ 2 + 1 tờ 1 = 6 tờ."
-        }
-      ],
       "testcases": [
         {
           "input": "578\n",
           "output": "6\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho số tiền $N$ đồng. Cần đổi số tiền này ra các tờ tiền mệnh giá 500, 200, 100, 50, 20, 10, 5, 2, 1 sao cho tổng số tờ tiền là ít nhất.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-8",
@@ -277,33 +166,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Số học",
-        "Toán học",
-        "Cơ bản"
-      ],
-      "description": "Cho ba số nguyên dương $a, b, c$. Hãy tính giá trị biểu thức: $(a \\times b) \\pmod c$. Lưu ý tránh tràn số khi nhân.",
-      "input_specification": "Một dòng chứa 3 số nguyên $a, b, c$ ($c > 0$).",
-      "output_specification": "In ra kết quả của $(a \\times b) \\pmod c$.",
-      "constraints": "$1 \\le a, b, c \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "1000000 2000000 998244353\n",
-          "output": "3511294\n",
-          "explanation": "Nhân 64-bit rồi chia lấy dư."
-        }
-      ],
       "testcases": [
         {
           "input": "1000000 2000000 998244353\n",
           "output": "3511294\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho ba số nguyên dương $a, b, c$. Hãy tính giá trị biểu thức: $(a \\times b) \\pmod c$. Lưu ý tránh tràn số khi nhân.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-10",
@@ -316,33 +188,16 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Vòng lặp",
-        "Số học",
-        "Cơ bản"
-      ],
-      "description": "Cho số nguyên dương $N$. Hãy tính tổng tất cả các chữ số của $N$.",
-      "input_specification": "Một dòng duy nhất chứa số nguyên dương $N$.",
-      "output_specification": "In ra tổng các chữ số của $N$.",
-      "constraints": "$1 \\le N \\le 10^{18}$",
-      "sample_cases": [
-        {
-          "input": "12345\n",
-          "output": "15\n",
-          "explanation": "1 + 2 + 3 + 4 + 5 = 15."
-        }
-      ],
       "testcases": [
         {
           "input": "12345\n",
           "output": "15\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho số nguyên dương $N$. Hãy tính tổng tất cả các chữ số của $N$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-11",
@@ -355,33 +210,16 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Vòng lặp",
-        "Số học",
-        "Cơ bản"
-      ],
-      "description": "Cho số nguyên dương $N$. Hãy in ra số nhận được khi đảo ngược các chữ số của $N$ (bỏ các chữ số 0 ở đầu).",
-      "input_specification": "Một dòng chứa số nguyên dương $N$.",
-      "output_specification": "In ra số nguyên sau khi đảo ngược.",
-      "constraints": "$1 \\le N \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "12340\n",
-          "output": "4321\n",
-          "explanation": "Đảo ngược 12340 thành 04321, bỏ số 0 ở đầu được 4321."
-        }
-      ],
       "testcases": [
         {
           "input": "12340\n",
           "output": "4321\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho số nguyên dương $N$. Hãy in ra số nhận được khi đảo ngược các chữ số của $N$ (bỏ các chữ số 0 ở đầu).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-13",
@@ -395,30 +233,6 @@
         "C++ cơ bản",
         "Python 1-1"
       ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Xử lý xâu",
-        "Cơ bản"
-      ],
-      "description": "Cho một ký tự chữ cái $c$. Nếu $c$ là chữ thường, hãy đổi thành chữ hoa; nếu $c$ là chữ hoa, hãy đổi thành chữ thường.",
-      "input_specification": "Một ký tự chữ cái duy nhất $c$ thuộc bảng chữ cái tiếng Anh.",
-      "output_specification": "In ra ký tự sau khi chuyển đổi.",
-      "constraints": "$c \\in ['a'..'z', 'A'..'Z']$",
-      "sample_cases": [
-        {
-          "input": "a\n",
-          "output": "A\n",
-          "explanation": "Đổi từ thường sang hoa."
-        },
-        {
-          "input": "B\n",
-          "output": "b\n",
-          "explanation": "Đổi từ hoa sang thường."
-        }
-      ],
       "testcases": [
         {
           "input": "a\n",
@@ -430,7 +244,10 @@
           "output": "b\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho một ký tự chữ cái $c$. Nếu $c$ là chữ thường, hãy đổi thành chữ hoa; nếu $c$ là chữ hoa, hãy đổi thành chữ thường.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-14",
@@ -443,33 +260,16 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Xử lý xâu",
-        "Tìm kiếm",
-        "Cơ bản"
-      ],
-      "description": "Cho xâu ký tự $S$ và một ký tự $c$. Hãy đếm số lần ký tự $c$ xuất hiện trong xâu $S$ (phân biệt hoa thường).",
-      "input_specification": "Dòng 1: xâu ký tự $S$. Dòng 2: ký tự $c$.",
-      "output_specification": "In ra số lần ký tự $c$ xuất hiện trong xâu $S$.",
-      "constraints": "$1 \\le |S| \\le 1000$",
-      "sample_cases": [
-        {
-          "input": "laptrinhthidau\na\n",
-          "output": "2\n",
-          "explanation": "Ký tự a xuất hiện 2 lần."
-        }
-      ],
       "testcases": [
         {
           "input": "laptrinhthidau\na\n",
           "output": "2\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho xâu ký tự $S$ và một ký tự $c$. Hãy đếm số lần ký tự $c$ xuất hiện trong xâu $S$ (phân biệt hoa thường).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-15",
@@ -483,32 +283,16 @@
         "C++ cơ bản",
         "Python cơ bản"
       ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Xử lý xâu",
-        "Cơ bản"
-      ],
-      "description": "Cho xâu ký tự $S$. In xâu ký tự $S$ ra màn hình chuẩn.",
-      "input_specification": "Một dòng chứa xâu ký tự $S$ (có thể chứa khoảng trắng).",
-      "output_specification": "In lại chính xác xâu $S$.",
-      "constraints": "$1 \\le |S| \\le 1000$",
-      "sample_cases": [
-        {
-          "input": "Hello Competitive Programming!\n",
-          "output": "Hello Competitive Programming!\n",
-          "explanation": "In nguyên xâu."
-        }
-      ],
       "testcases": [
         {
           "input": "Hello Competitive Programming!\n",
           "output": "Hello Competitive Programming!\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho xâu ký tự $S$. In xâu ký tự $S$ ra màn hình chuẩn.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-16",
@@ -521,33 +305,16 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Vòng lặp",
-        "Toán học",
-        "Cơ bản"
-      ],
-      "description": "Một tờ giấy có độ dày $0.1$ mm ($0.0001$ mét). Mỗi lần gấp đôi, độ dày tờ giấy tăng gấp 2 lần. Cần gấp ít nhất bao nhiêu lần để độ dày tờ giấy đạt hoặc vượt quá độ cao $H$ mét?",
-      "input_specification": "Một số thực dương $H$ biểu thị độ cao theo đơn vị mét.",
-      "output_specification": "In ra số lần gấp tối thiểu.",
-      "constraints": "$0.001 \\le H \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "0.001\n",
-          "output": "4\n",
-          "explanation": "Độ dày ban đầu 0.0001m. Gấp 4 lần đạt 0.0016m >= 0.001m."
-        }
-      ],
       "testcases": [
         {
           "input": "0.001\n",
           "output": "4\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Một tờ giấy có độ dày $0.1$ mm ($0.0001$ mét). Mỗi lần gấp đôi, độ dày tờ giấy tăng gấp 2 lần. Cần gấp ít nhất bao nhiêu lần để độ dày tờ giấy đạt hoặc vượt quá độ cao $H$ mét?",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-20",
@@ -560,33 +327,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Mảng",
-        "Vòng lặp",
-        "Cơ bản"
-      ],
-      "description": "Cho mảng gồm $N$ số nguyên. Hãy đếm xem trong mảng có bao nhiêu số chẵn.",
-      "input_specification": "Dòng 1: số nguyên $N$. Dòng 2: $N$ số nguyên cách nhau bởi dấu cách.",
-      "output_specification": "In ra số lượng số chẵn trong mảng.",
-      "constraints": "$1 \\le N \\le 10^5, |A_i| \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "5\n1 2 3 4 6\n",
-          "output": "3\n",
-          "explanation": "Có 3 số chẵn là 2, 4, 6."
-        }
-      ],
       "testcases": [
         {
           "input": "5\n1 2 3 4 6\n",
           "output": "3\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho mảng gồm $N$ số nguyên. Hãy đếm xem trong mảng có bao nhiêu số chẵn.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-42",
@@ -599,32 +349,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 15,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Mảng",
-        "Cơ bản"
-      ],
-      "description": "Cho mảng gồm $N$ số nguyên. Hãy in toàn bộ các số chẵn trước theo thứ tự xuất hiện, sau đó in toàn bộ các số lẻ theo thứ tự xuất hiện.",
-      "input_specification": "Dòng 1: số nguyên $N$. Dòng 2: $N$ số nguyên.",
-      "output_specification": "In ra các số theo yêu cầu trên cùng một dòng, cách nhau bởi dấu cách.",
-      "constraints": "$1 \\le N \\le 10^5, |A_i| \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "6\n1 4 3 6 8 5\n",
-          "output": "4 6 8 1 3 5\n",
-          "explanation": "Số chẵn (4, 6, 8) trước, số lẻ (1, 3, 5) sau."
-        }
-      ],
       "testcases": [
         {
           "input": "6\n1 4 3 6 8 5\n",
           "output": "4 6 8 1 3 5\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho mảng gồm $N$ số nguyên. Hãy in toàn bộ các số chẵn trước theo thứ tự xuất hiện, sau đó in toàn bộ các số lẻ theo thứ tự xuất hiện.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-314",
@@ -637,32 +371,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Vòng lặp",
-        "Số học"
-      ],
-      "description": "Cho số nguyên dương $N$. Hãy tìm chữ số có giá trị lớn nhất trong các chữ số của $N$.",
-      "input_specification": "Một số nguyên dương $N$.",
-      "output_specification": "In ra chữ số lớn nhất.",
-      "constraints": "$1 \\le N \\le 10^{18}$",
-      "sample_cases": [
-        {
-          "input": "52941\n",
-          "output": "9\n",
-          "explanation": "Chữ số lớn nhất là 9."
-        }
-      ],
       "testcases": [
         {
           "input": "52941\n",
           "output": "9\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho số nguyên dương $N$. Hãy tìm chữ số có giá trị lớn nhất trong các chữ số của $N$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-396",
@@ -675,32 +393,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Rẽ nhánh",
-        "Toán học"
-      ],
-      "description": "Cây nấm A có độ độc $x$, cây nấm B có độ độc $y$. Nếu $x > y$ in \"A\", nếu $y > x$ in \"B\", nếu bằng nhau in \"EQUAL\".",
-      "input_specification": "Một dòng chứa hai số thực $x$ và $y$.",
-      "output_specification": "In ra \"A\", \"B\" hoặc \"EQUAL\".",
-      "constraints": "$0 \\le x, y \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "4.5 3.2\n",
-          "output": "A\n",
-          "explanation": "4.5 > 3.2 nên in A."
-        }
-      ],
       "testcases": [
         {
           "input": "4.5 3.2\n",
           "output": "A\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cây nấm A có độ độc $x$, cây nấm B có độ độc $y$. Nếu $x > y$ in \"A\", nếu $y > x$ in \"B\", nếu bằng nhau in \"EQUAL\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-397",
@@ -713,30 +415,6 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 15,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Toán học",
-        "Rẽ nhánh"
-      ],
-      "description": "Giải và biện luận phương trình bậc nhất $ax + b = 0$. In \"VO SO NGHIEM\" nếu vô số nghiệm, \"VO NGHIEM\" nếu vô nghiệm, hoặc nghiệm $x$ làm tròn 2 chữ số thập phân.",
-      "input_specification": "Hai số thực $a$ và $b$ cách nhau bởi dấu cách.",
-      "output_specification": "In ra kết quả theo yêu cầu.",
-      "constraints": "$-10^6 \\le a, b \\le 10^6$",
-      "sample_cases": [
-        {
-          "input": "2 -4\n",
-          "output": "2.00\n",
-          "explanation": "2x - 4 = 0 => x = 2.00."
-        },
-        {
-          "input": "0 5\n",
-          "output": "VO NGHIEM\n",
-          "explanation": "0x + 5 = 0 vô nghiệm."
-        }
-      ],
       "testcases": [
         {
           "input": "2 -4\n",
@@ -748,7 +426,10 @@
           "output": "VO NGHIEM\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Giải và biện luận phương trình bậc nhất $ax + b = 0$. In \"VO SO NGHIEM\" nếu vô số nghiệm, \"VO NGHIEM\" nếu vô nghiệm, hoặc nghiệm $x$ làm tròn 2 chữ số thập phân.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-401",
@@ -761,32 +442,16 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Mảng",
-        "Toán học"
-      ],
-      "description": "Mario đi qua $N$ cây nấm, cây nấm thứ $i$ cho $A_i$ điểm sức mạnh. Nếu ăn nấm có $A_i < 0$ thì sức mạnh bị trừ. Tính tổng sức mạnh sau khi ăn hết $N$ cây nấm.",
-      "input_specification": "Dòng 1: số $N$. Dòng 2: $N$ số nguyên $A_i$.",
-      "output_specification": "In ra tổng điểm sức mạnh.",
-      "constraints": "$1 \\le N \\le 10^5, |A_i| \\le 10^4$",
-      "sample_cases": [
-        {
-          "input": "4\n5 -2 8 1\n",
-          "output": "12\n",
-          "explanation": "5 + (-2) + 8 + 1 = 12."
-        }
-      ],
       "testcases": [
         {
           "input": "4\n5 -2 8 1\n",
           "output": "12\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Mario đi qua $N$ cây nấm, cây nấm thứ $i$ cho $A_i$ điểm sức mạnh. Nếu ăn nấm có $A_i < 0$ thì sức mạnh bị trừ. Tính tổng sức mạnh sau khi ăn hết $N$ cây nấm.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-402",
@@ -799,32 +464,16 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 15,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Toán học",
-        "Vòng lặp"
-      ],
-      "description": "Một tấm bản đồ ban đầu có kích thước $W \\times H$. Mỗi lần gấp đôi theo cạnh lớn hơn (nếu bằng nhau thì gấp theo $W$). Tính kích thước sau $K$ lần gấp.",
-      "input_specification": "Ba số nguyên $W, H, K$.",
-      "output_specification": "In ra kích thước $W'$ và $H'$ sau $K$ lần gấp.",
-      "constraints": "$1 \\le W, H \\le 10^9, 1 \\le K \\le 60$",
-      "sample_cases": [
-        {
-          "input": "16 8 2\n",
-          "output": "4 8\n",
-          "explanation": "Lần 1: 16x8 -> 8x8. Lần 2: 8x8 -> 4x8."
-        }
-      ],
       "testcases": [
         {
           "input": "16 8 2\n",
           "output": "4 8\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Một tấm bản đồ ban đầu có kích thước $W \\times H$. Mỗi lần gấp đôi theo cạnh lớn hơn (nếu bằng nhau thì gấp theo $W$). Tính kích thước sau $K$ lần gấp.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-405",
@@ -837,32 +486,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 15,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Mảng",
-        "Thuật toán cơ sở"
-      ],
-      "description": "Cho mảng gồm $N$ số nguyên. Hãy tìm giá trị lớn nhất, nhỏ nhất và tính giá trị trung bình cộng của các phần tử trong mảng (làm tròn 2 chữ số thập phân).",
-      "input_specification": "Dòng 1: số nguyên $N$. Dòng 2: $N$ số nguyên.",
-      "output_specification": "In ra trên 1 dòng gồm 3 giá trị: Max, Min và Trung bình cộng cách nhau bởi dấu cách.",
-      "constraints": "$1 \\le N \\le 10^5, |A_i| \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "4\n2 5 1 4\n",
-          "output": "5 1 3.00\n",
-          "explanation": "Max=5, Min=1, Avg=3.00."
-        }
-      ],
       "testcases": [
         {
           "input": "4\n2 5 1 4\n",
           "output": "5 1 3.00\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho mảng gồm $N$ số nguyên. Hãy tìm giá trị lớn nhất, nhỏ nhất và tính giá trị trung bình cộng của các phần tử trong mảng (làm tròn 2 chữ số thập phân).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-416",
@@ -875,30 +508,6 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Rẽ nhánh",
-        "Số học"
-      ],
-      "description": "Cho số nguyên dương $N$. Kiểm tra xem $N$ có đồng thời chia hết cho cả 3 và 5 nhưng KHÔNG chia hết cho 2 hay không. In \"YES\" hoặc \"NO\".",
-      "input_specification": "Một số nguyên dương $N$.",
-      "output_specification": "In \"YES\" nếu thỏa mãn, ngược lại in \"NO\".",
-      "constraints": "$1 \\le N \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "15\n",
-          "output": "YES\n",
-          "explanation": "15 chia hết cho 3 và 5, không chia hết cho 2."
-        },
-        {
-          "input": "30\n",
-          "output": "NO\n",
-          "explanation": "30 chia hết cho 2 nên không thỏa mãn."
-        }
-      ],
       "testcases": [
         {
           "input": "15\n",
@@ -910,7 +519,10 @@
           "output": "NO\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho số nguyên dương $N$. Kiểm tra xem $N$ có đồng thời chia hết cho cả 3 và 5 nhưng KHÔNG chia hết cho 2 hay không. In \"YES\" hoặc \"NO\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-419",
@@ -923,32 +535,16 @@
       "classes": [
         "Python 1-1"
       ],
-      "points": 15,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Hình học",
-        "Toán học"
-      ],
-      "description": "Cho tọa độ điểm $M(x, y)$ và đoạn thẳng nối hai điểm $A(x_1, y_1), B(x_2, y_2)$. Kiểm tra xem điểm $M$ có nằm trên đoạn thẳng $AB$ hay không.",
-      "input_specification": "Gồm 6 số nguyên: $x, y, x_1, y_1, x_2, y_2$.",
-      "output_specification": "In \"YES\" nếu điểm $M$ thuộc đoạn thẳng $AB$, ngược lại in \"NO\".",
-      "constraints": "$-10^6 \\le x, y, x_1, y_1, x_2, y_2 \\le 10^6$",
-      "sample_cases": [
-        {
-          "input": "2 2 0 0 4 4\n",
-          "output": "YES\n",
-          "explanation": "Điểm (2,2) là trung điểm của đoạn thẳng nối (0,0) và (4,4)."
-        }
-      ],
       "testcases": [
         {
           "input": "2 2 0 0 4 4\n",
           "output": "YES\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho tọa độ điểm $M(x, y)$ và đoạn thẳng nối hai điểm $A(x_1, y_1), B(x_2, y_2)$. Kiểm tra xem điểm $M$ có nằm trên đoạn thẳng $AB$ hay không.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-499",
@@ -961,32 +557,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 15,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Số học",
-        "Vòng lặp"
-      ],
-      "description": "Cho số nguyên dương $N$. Hãy tính tổng tất cả các ước nguyên dương của $N$. Lưu ý dùng thuật toán duyệt tới $\\sqrt{N}$.",
-      "input_specification": "Một số nguyên dương $N$.",
-      "output_specification": "In ra tổng các ước của $N$.",
-      "constraints": "$1 \\le N \\le 10^{12}$",
-      "sample_cases": [
-        {
-          "input": "12\n",
-          "output": "28\n",
-          "explanation": "Các ước là 1, 2, 3, 4, 6, 12. Tổng = 28."
-        }
-      ],
       "testcases": [
         {
           "input": "12\n",
           "output": "28\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho số nguyên dương $N$. Hãy tính tổng tất cả các ước nguyên dương của $N$. Lưu ý dùng thuật toán duyệt tới $\\sqrt{N}$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-535",
@@ -999,32 +579,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Rẽ nhánh",
-        "Toán học"
-      ],
-      "description": "Lập trình máy tính đơn giản thực hiện 4 phép toán cơ bản: +, -, *, /. Cho biểu thức dạng \"$A \\text{ op } B$\". Hãy in kết quả (với phép chia làm tròn 2 chữ số thập phân).",
-      "input_specification": "Gồm 3 phần tử: $A$, toán tử $\\text{op} \\in ['+', '-', '*', '/']$ và $B$.",
-      "output_specification": "In ra kết quả của phép tính.",
-      "constraints": "$-10^6 \\le A, B \\le 10^6, B \\ne 0$ khi chia.",
-      "sample_cases": [
-        {
-          "input": "10 / 4\n",
-          "output": "2.50\n",
-          "explanation": "10 chia 4 được 2.50."
-        }
-      ],
       "testcases": [
         {
           "input": "10 / 4\n",
           "output": "2.50\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Lập trình máy tính đơn giản thực hiện 4 phép toán cơ bản: +, -, *, /. Cho biểu thức dạng \"$A \\text{ op } B$\". Hãy in kết quả (với phép chia làm tròn 2 chữ số thập phân).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-536",
@@ -1037,30 +601,6 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 15,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Số học",
-        "Xử lý xâu"
-      ],
-      "description": "Cho số nguyên dương $N$. Một số được gọi là số đối xứng (palindrome) nếu đọc từ trái sang phải hay từ phải sang trái đều giống nhau. Kiểm tra xem $N$ có đối xứng không.",
-      "input_specification": "Một dòng chứa số nguyên dương $N$.",
-      "output_specification": "In \"YES\" nếu $N$ là số đối xứng, ngược lại in \"NO\".",
-      "constraints": "$1 \\le N \\le 10^{18}$",
-      "sample_cases": [
-        {
-          "input": "12321\n",
-          "output": "YES\n",
-          "explanation": "12321 đọc xuôi ngược như nhau."
-        },
-        {
-          "input": "12345\n",
-          "output": "NO\n",
-          "explanation": "Không đối xứng."
-        }
-      ],
       "testcases": [
         {
           "input": "12321\n",
@@ -1072,7 +612,10 @@
           "output": "NO\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho số nguyên dương $N$. Một số được gọi là số đối xứng (palindrome) nếu đọc từ trái sang phải hay từ phải sang trái đều giống nhau. Kiểm tra xem $N$ có đối xứng không.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-537",
@@ -1085,33 +628,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 15,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Dãy số",
-        "Quy hoạch động",
-        "Toán học"
-      ],
-      "description": "Cho dãy số $u_1 = 1$, $u_n = 2u_{n-1} + 1$ với mọi $n \\ge 2$. Cho số nguyên $N$. Hãy tính số hạng thứ $N$ của dãy theo modulo $10^9 + 7$.",
-      "input_specification": "Một số nguyên dương $N$.",
-      "output_specification": "In ra $u_N \\pmod{10^9 + 7}$.",
-      "constraints": "$1 \\le N \\le 10^{18}$",
-      "sample_cases": [
-        {
-          "input": "3\n",
-          "output": "7\n",
-          "explanation": "u1=1, u2=3, u3=7."
-        }
-      ],
       "testcases": [
         {
           "input": "3\n",
           "output": "7\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho dãy số $u_1 = 1$, $u_n = 2u_{n-1} + 1$ với mọi $n \\ge 2$. Cho số nguyên $N$. Hãy tính số hạng thứ $N$ của dãy theo modulo $10^9 + 7$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-541",
@@ -1124,30 +650,6 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Số học",
-        "Toán học"
-      ],
-      "description": "Cho số nguyên dương $N$. Kiểm tra xem $N$ có phải là số chính phương (bình phương của một số nguyên) hay không. In \"YES\" hoặc \"NO\".",
-      "input_specification": "Một số nguyên dương $N$.",
-      "output_specification": "In \"YES\" hoặc \"NO\".",
-      "constraints": "$1 \\le N \\le 10^{18}$",
-      "sample_cases": [
-        {
-          "input": "25\n",
-          "output": "YES\n",
-          "explanation": "25 = 5^2 là số chính phương."
-        },
-        {
-          "input": "26\n",
-          "output": "NO\n",
-          "explanation": "26 không phải số chính phương."
-        }
-      ],
       "testcases": [
         {
           "input": "25\n",
@@ -1159,7 +661,10 @@
           "output": "NO\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho số nguyên dương $N$. Kiểm tra xem $N$ có phải là số chính phương (bình phương của một số nguyên) hay không. In \"YES\" hoặc \"NO\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "MARISA-587",
@@ -1172,32 +677,16 @@
       "classes": [
         "C++ cơ bản"
       ],
-      "points": 15,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "MarisaOJ / Thầy Phùng Đức",
-      "types": [
-        "Cơ số",
-        "Xử lý xâu"
-      ],
-      "description": "Cho số nguyên không âm $N$ ở hệ thập phân. Hãy chuyển đổi và in ra biểu diễn nhị phân (cơ số 2) của $N$.",
-      "input_specification": "Một số nguyên không âm $N$.",
-      "output_specification": "In ra chuỗi nhị phân của $N$.",
-      "constraints": "$0 \\le N \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "13\n",
-          "output": "1101\n",
-          "explanation": "13 = 8 + 4 + 1 -> 1101_2."
-        }
-      ],
       "testcases": [
         {
           "input": "13\n",
           "output": "1101\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho số nguyên không âm $N$ ở hệ thập phân. Hãy chuyển đổi và in ra biểu diễn nhị phân (cơ số 2) của $N$.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CF-486C",
@@ -1210,33 +699,16 @@
       "classes": [
         "C++ nâng cao"
       ],
-      "points": 30,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Codeforces",
-      "types": [
-        "Tham lam",
-        "Xử lý xâu",
-        "Hai con trỏ"
-      ],
-      "description": "Cho xâu $S$ gồm $N$ chữ cái in thường và vị trí con trỏ ban đầu $p$. Bạn có thể di chuyển con trỏ sang trái/phải hoặc thay đổi ký tự tại vị trí con trỏ theo vòng tròn chữ cái ('a' <-> 'z'). Hãy tìm số thao tác tối thiểu để biến $S$ thành xâu đối xứng.",
-      "input_specification": "Dòng 1: $N, p$. Dòng 2: xâu $S$.",
-      "output_specification": "In ra số thao tác ít nhất.",
-      "constraints": "$1 \\le N \\le 10^5, 1 \\le p \\le N$",
-      "sample_cases": [
-        {
-          "input": "8 3\naeabcaez\n",
-          "output": "6\n",
-          "explanation": "Thay đổi các ký tự đối xứng và di chuyển con trỏ tối ưu."
-        }
-      ],
       "testcases": [
         {
           "input": "8 3\naeabcaez\n",
           "output": "6\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho xâu $S$ gồm $N$ chữ cái in thường và vị trí con trỏ ban đầu $p$. Bạn có thể di chuyển con trỏ sang trái/phải hoặc thay đổi ký tự tại vị trí con trỏ theo vòng tròn chữ cái ('a' <-> 'z'). Hãy tìm số thao tác tối thiểu để biến $S$ thành xâu đối xứng.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CF-214B",
@@ -1249,33 +721,16 @@
       "classes": [
         "C++ nâng cao"
       ],
-      "points": 30,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Codeforces",
-      "types": [
-        "Số học",
-        "Tham lam",
-        "Quy hoạch động"
-      ],
-      "description": "Cho tập hợp gồm $N$ chữ số. Hãy tìm số nguyên lớn nhất có thể tạo thành từ một số hoặc tất cả các chữ số đã cho sao cho số đó chia hết cho 2, 3 và 5 (tức chia hết cho 30). Nếu không thể tạo thành, in -1.",
-      "input_specification": "Dòng 1: số $N$. Dòng 2: $N$ chữ số cách nhau bởi dấu cách.",
-      "output_specification": "In ra số lớn nhất tìm được, hoặc -1.",
-      "constraints": "$1 \\le N \\le 10^5$",
-      "sample_cases": [
-        {
-          "input": "4\n0 1 2 3\n",
-          "output": "210\n",
-          "explanation": "210 chia hết cho 30."
-        }
-      ],
       "testcases": [
         {
           "input": "4\n0 1 2 3\n",
           "output": "210\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho tập hợp gồm $N$ chữ số. Hãy tìm số nguyên lớn nhất có thể tạo thành từ một số hoặc tất cả các chữ số đã cho sao cho số đó chia hết cho 2, 3 và 5 (tức chia hết cho 30). Nếu không thể tạo thành, in -1.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CF-231C",
@@ -1288,33 +743,16 @@
       "classes": [
         "C++ nâng cao"
       ],
-      "points": 40,
-      "time_limit": "2.0s",
-      "memory_limit": "256M",
-      "author": "Codeforces",
-      "types": [
-        "Hai con trỏ",
-        "Chặt nhị phân",
-        "Mảng cộng dồn"
-      ],
-      "description": "Cho mảng $N$ số nguyên và số $k$. Bạn có thể tăng giá trị bất kỳ phần tử nào lên 1 tối đa $k$ lần. Hãy tìm giá trị có thể đạt được tần số xuất hiện nhiều nhất và số lần xuất hiện đó.",
-      "input_specification": "Dòng 1: $N, k$. Dòng 2: $N$ số nguyên.",
-      "output_specification": "In ra số lần xuất hiện tối đa và giá trị nhỏ nhất đạt được tần số đó.",
-      "constraints": "$1 \\le N \\le 10^5, 0 \\le k \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "3 2\n3 1 4\n",
-          "output": "2 3\n",
-          "explanation": "Tăng 1 lên 3 (tốn 2 thao tác), được hai số 3."
-        }
-      ],
       "testcases": [
         {
           "input": "3 2\n3 1 4\n",
           "output": "2 3\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho mảng $N$ số nguyên và số $k$. Bạn có thể tăng giá trị bất kỳ phần tử nào lên 1 tối đa $k$ lần. Hãy tìm giá trị có thể đạt được tần số xuất hiện nhiều nhất và số lần xuất hiện đó.",
+      "time_limit": "2.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CSES-1628",
@@ -1327,33 +765,16 @@
       "classes": [
         "C++ nâng cao"
       ],
-      "points": 50,
-      "time_limit": "1.0s",
-      "memory_limit": "512M",
-      "author": "CSES Problem Set",
-      "types": [
-        "Meet in the Middle",
-        "Chặt nhị phân",
-        "Tìm kiếm"
-      ],
-      "description": "Cho mảng gồm $N$ số nguyên dương và số $x$. Hãy đếm số lượng tập con có tổng các phần tử bằng đúng $x$. Kỹ thuật chia mảng làm 2 nửa ($N/2 \\le 20$) rồi sinh tập con.",
-      "input_specification": "Dòng 1: $N, x$. Dòng 2: $N$ số nguyên dương $A_i$.",
-      "output_specification": "In ra số lượng tập con thỏa mãn.",
-      "constraints": "$1 \\le N \\le 40, 1 \\le x, A_i \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "4 5\n1 2 3 2\n",
-          "output": "3\n",
-          "explanation": "Có 3 cách: {1, 2, 2}, {2, 3}, {3, 2}."
-        }
-      ],
       "testcases": [
         {
           "input": "4 5\n1 2 3 2\n",
           "output": "3\n",
           "sample": true
         }
-      ]
+      ],
+      "description": "Cho mảng gồm $N$ số nguyên dương và số $x$. Hãy đếm số lượng tập con có tổng các phần tử bằng đúng $x$. Kỹ thuật chia mảng làm 2 nửa ($N/2 \\le 20$) rồi sinh tập con.",
+      "time_limit": "1.0s",
+      "memory_limit": "512M"
     },
     {
       "id": "CPP-EX-01",
@@ -1365,26 +786,6 @@
       "difficulty": "Level 1 • Mảng",
       "classes": [
         "C++ cơ bản"
-      ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Mảng",
-        "Nhập xuất",
-        "Cơ bản"
-      ],
-      "description": "Viết chương trình nhập vào một mảng gồm đúng 10 số tự nhiên. In lại 10 số đó ra màn hình trên một dòng duy nhất, mỗi số cách nhau bởi đúng một dấu cách.",
-      "input_specification": "Một dòng chứa 10 số tự nhiên cách nhau bởi dấu cách.",
-      "output_specification": "In ra 10 số tự nhiên đó trên một dòng cách nhau bởi dấu cách.",
-      "constraints": "Các số trong khoảng $[0..10^6]$",
-      "sample_cases": [
-        {
-          "input": "1 2 3 4 5 6 7 8 9 10\n",
-          "output": "1 2 3 4 5 6 7 8 9 10\n",
-          "explanation": "In lại 10 phần tử theo đúng thứ tự."
-        }
       ],
       "testcases": [
         {
@@ -1407,7 +808,10 @@
           "output": "9 8 7 6 5 4 3 2 1 0\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Viết chương trình nhập vào một mảng gồm đúng 10 số tự nhiên. In lại 10 số đó ra màn hình trên một dòng duy nhất, mỗi số cách nhau bởi đúng một dấu cách.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CPP-EX-02",
@@ -1419,26 +823,6 @@
       "difficulty": "Level 1 • Mảng",
       "classes": [
         "C++ cơ bản"
-      ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Mảng",
-        "Chỉ số",
-        "Cơ bản"
-      ],
-      "description": "Cho số nguyên dương lẻ $N$ và mảng gồm $N$ số nguyên. Hãy in ra phần tử nằm ở chính giữa mảng (vị trí có chỉ số $(N - 1) / 2$ khi đánh chỉ số từ 0).",
-      "input_specification": "Dòng 1: số nguyên dương lẻ $N$. Dòng 2: $N$ số nguyên cách nhau bởi dấu cách.",
-      "output_specification": "In ra giá trị của phần tử nằm chính giữa mảng.",
-      "constraints": "$1 \\le N \\le 10^5$ ($N$ lẻ), $|A_i| \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "5\n10 20 99 40 50\n",
-          "output": "99\n",
-          "explanation": "Phần tử ở giữa vị trí thứ 3 là 99."
-        }
       ],
       "testcases": [
         {
@@ -1456,7 +840,10 @@
           "output": "42\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Cho số nguyên dương lẻ $N$ và mảng gồm $N$ số nguyên. Hãy in ra phần tử nằm ở chính giữa mảng (vị trí có chỉ số $(N - 1) / 2$ khi đánh chỉ số từ 0).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CPP-EX-03",
@@ -1468,30 +855,6 @@
       "difficulty": "Level 1 • Rẽ nhánh",
       "classes": [
         "C++ cơ bản"
-      ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Rẽ nhánh",
-        "Xử lý ký tự"
-      ],
-      "description": "Cho một ký tự chữ cái $c$. Hãy kiểm tra: Nếu $c$ là chữ in hoa, in ra \"HOA\". Nếu $c$ là chữ in thường, in ra \"THUONG\".",
-      "input_specification": "Một ký tự chữ cái duy nhất $c$.",
-      "output_specification": "In ra \"HOA\" hoặc \"THUONG\".",
-      "constraints": "$c \\in ['A'..'Z', 'a'..'z']$",
-      "sample_cases": [
-        {
-          "input": "A\n",
-          "output": "HOA\n",
-          "explanation": "A là chữ hoa."
-        },
-        {
-          "input": "b\n",
-          "output": "THUONG\n",
-          "explanation": "b là chữ thường."
-        }
       ],
       "testcases": [
         {
@@ -1514,7 +877,10 @@
           "output": "THUONG\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Cho một ký tự chữ cái $c$. Hãy kiểm tra: Nếu $c$ là chữ in hoa, in ra \"HOA\". Nếu $c$ là chữ in thường, in ra \"THUONG\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CPP-EX-04",
@@ -1526,30 +892,6 @@
       "difficulty": "Level 1 • Xử lý xâu",
       "classes": [
         "C++ cơ bản"
-      ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Xử lý xâu",
-        "Bảng mã ASCII"
-      ],
-      "description": "Cho một ký tự chữ cái $c$. Đổi $c$ thành chữ in thường nếu đang là chữ hoa, và đổi thành chữ in hoa nếu đang là chữ thường.",
-      "input_specification": "Một ký tự $c$.",
-      "output_specification": "In ra ký tự sau khi đổi.",
-      "constraints": "$c \\in ['A'..'Z', 'a'..'z']$",
-      "sample_cases": [
-        {
-          "input": "M\n",
-          "output": "m\n",
-          "explanation": "M đổi thành m."
-        },
-        {
-          "input": "k\n",
-          "output": "K\n",
-          "explanation": "k đổi thành K."
-        }
       ],
       "testcases": [
         {
@@ -1572,7 +914,10 @@
           "output": "Z\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Cho một ký tự chữ cái $c$. Đổi $c$ thành chữ in thường nếu đang là chữ hoa, và đổi thành chữ in hoa nếu đang là chữ thường.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "CPP-EX-05",
@@ -1584,25 +929,6 @@
       "difficulty": "Level 1 • Vòng lặp",
       "classes": [
         "C++ cơ bản"
-      ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Vòng lặp",
-        "Số học"
-      ],
-      "description": "Cho số nguyên dương $N$. Hãy in các chữ số của $N$ theo chiều ngược lại (từ phải sang trái), mỗi chữ số cách nhau bởi một dấu cách.",
-      "input_specification": "Một số nguyên dương $N$.",
-      "output_specification": "In ra các chữ số theo chiều ngược lại cách nhau bởi dấu cách.",
-      "constraints": "$1 \\le N \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "12345\n",
-          "output": "5 4 3 2 1\n",
-          "explanation": "In ngược 5 4 3 2 1."
-        }
       ],
       "testcases": [
         {
@@ -1620,7 +946,10 @@
           "output": "7\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Cho số nguyên dương $N$. Hãy in các chữ số của $N$ theo chiều ngược lại (từ phải sang trái), mỗi chữ số cách nhau bởi một dấu cách.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-01",
@@ -1633,26 +962,6 @@
       "classes": [
         "Python cơ bản"
       ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Nhập xuất",
-        "Xử lý xâu",
-        "Cơ bản"
-      ],
-      "description": "Một chiếc loa phát thanh cần lặp lại thông điệp 3 lần. Nhập vào một dòng văn bản $S$, hãy in ra dòng đó lặp lại đúng 3 lần, mỗi lần trên một dòng.",
-      "input_specification": "Một dòng chứa chuỗi ký tự $S$.",
-      "output_specification": "In ra 3 dòng, mỗi dòng chứa chuỗi $S$.",
-      "constraints": "$1 \\le |S| \\le 200$",
-      "sample_cases": [
-        {
-          "input": "Alo 1 2 3\n",
-          "output": "Alo 1 2 3\nAlo 1 2 3\nAlo 1 2 3\n",
-          "explanation": "Lặp lại 3 lần."
-        }
-      ],
       "testcases": [
         {
           "input": "Alo 1 2 3\n",
@@ -1664,7 +973,10 @@
           "output": "Thong bao khan\nThong bao khan\nThong bao khan\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Một chiếc loa phát thanh cần lặp lại thông điệp 3 lần. Nhập vào một dòng văn bản $S$, hãy in ra dòng đó lặp lại đúng 3 lần, mỗi lần trên một dòng.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-02",
@@ -1676,25 +988,6 @@
       "difficulty": "Level 1 • Cơ bản",
       "classes": [
         "Python cơ bản"
-      ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Vòng lặp",
-        "Nhập xuất"
-      ],
-      "description": "Chú quạ thông minh kêu $N$ lần. Cho số nguyên dương $N$, hãy in ra $N$ từ \"QUAC\" trên cùng một dòng, cách nhau bởi một khoảng trắng.",
-      "input_specification": "Một số nguyên dương $N$.",
-      "output_specification": "In ra $N$ từ \"QUAC\" cách nhau bởi dấu cách.",
-      "constraints": "$1 \\le N \\le 100$",
-      "sample_cases": [
-        {
-          "input": "3\n",
-          "output": "QUAC QUAC QUAC\n",
-          "explanation": "Kêu 3 lần."
-        }
       ],
       "testcases": [
         {
@@ -1712,7 +1005,10 @@
           "output": "QUAC QUAC QUAC QUAC QUAC\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Chú quạ thông minh kêu $N$ lần. Cho số nguyên dương $N$, hãy in ra $N$ từ \"QUAC\" trên cùng một dòng, cách nhau bởi một khoảng trắng.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-03",
@@ -1724,25 +1020,6 @@
       "difficulty": "Level 1 • Toán học",
       "classes": [
         "Python cơ bản"
-      ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Toán học",
-        "Cơ bản"
-      ],
-      "description": "Một bạn học sinh hiện tại có số tuổi là $N$. Hãy tính và in ra số tuổi của bạn ấy sau 6 năm nữa.",
-      "input_specification": "Một số nguyên dương $N$ là số tuổi hiện tại.",
-      "output_specification": "In ra số tuổi sau 6 năm nữa.",
-      "constraints": "$1 \\le N \\le 100$",
-      "sample_cases": [
-        {
-          "input": "12\n",
-          "output": "18\n",
-          "explanation": "12 + 6 = 18."
-        }
       ],
       "testcases": [
         {
@@ -1760,7 +1037,10 @@
           "output": "21\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Một bạn học sinh hiện tại có số tuổi là $N$. Hãy tính và in ra số tuổi của bạn ấy sau 6 năm nữa.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-04",
@@ -1773,25 +1053,6 @@
       "classes": [
         "Python cơ bản"
       ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Nhập xuất",
-        "Cơ bản"
-      ],
-      "description": "Cho 4 số nguyên $a, b, c, d$ trên cùng một dòng. Hãy in ra 4 số đó theo thứ tự ngược lại: $d, c, b, a$ cách nhau bởi dấu cách.",
-      "input_specification": "Bốn số nguyên $a, b, c, d$ cách nhau bởi dấu cách.",
-      "output_specification": "In ra $d, c, b, a$ trên một dòng.",
-      "constraints": "$|a|, |b|, |c|, |d| \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "1 5 9 13\n",
-          "output": "13 9 5 1\n",
-          "explanation": "In theo chiều ngược lại."
-        }
-      ],
       "testcases": [
         {
           "input": "1 5 9 13\n",
@@ -1803,7 +1064,10 @@
           "output": "2 1 0 0\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Cho 4 số nguyên $a, b, c, d$ trên cùng một dòng. Hãy in ra 4 số đó theo thứ tự ngược lại: $d, c, b, a$ cách nhau bởi dấu cách.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY-EX-05",
@@ -1815,30 +1079,6 @@
       "difficulty": "Level 1 • Rẽ nhánh",
       "classes": [
         "Python cơ bản"
-      ],
-      "points": 5,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Rẽ nhánh",
-        "Cơ bản"
-      ],
-      "description": "Nhập vào một số nguyên $g$: Nếu $g = 1$, in ra \"Nam\". Nếu $g = 0$, in ra \"Nu\". Nếu khác 0 và 1, in ra \"Khong hop le\".",
-      "input_specification": "Một số nguyên $g$.",
-      "output_specification": "In ra \"Nam\", \"Nu\" hoặc \"Khong hop le\".",
-      "constraints": "$-10^9 \\le g \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "1\n",
-          "output": "Nam\n",
-          "explanation": "1 là Nam."
-        },
-        {
-          "input": "0\n",
-          "output": "Nu\n",
-          "explanation": "0 là Nu."
-        }
       ],
       "testcases": [
         {
@@ -1856,7 +1096,10 @@
           "output": "Khong hop le\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Nhập vào một số nguyên $g$: Nếu $g = 1$, in ra \"Nam\". Nếu $g = 0$, in ra \"Nu\". Nếu khác 0 và 1, in ra \"Khong hop le\".",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY11-EX-01",
@@ -1868,25 +1111,6 @@
       "difficulty": "Level 1 • Toán học",
       "classes": [
         "Python 1-1"
-      ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Toán học",
-        "Chia nhóm"
-      ],
-      "description": "Lớp học có $N$ bạn học sinh. Thầy giáo chia lớp thành các nhóm học tập, mỗi nhóm có đúng $K$ bạn. Hãy tính số nhóm chia được và số bạn học sinh bị dư ra.",
-      "input_specification": "Hai số nguyên dương $N$ và $K$ ($K > 0$).",
-      "output_specification": "In ra hai số: số nhóm và số học sinh dư, cách nhau bởi dấu cách.",
-      "constraints": "$1 \\le N, K \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "25 4\n",
-          "output": "6 1\n",
-          "explanation": "Chia được 6 nhóm, dư 1 bạn."
-        }
       ],
       "testcases": [
         {
@@ -1904,7 +1128,10 @@
           "output": "0 3\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Lớp học có $N$ bạn học sinh. Thầy giáo chia lớp thành các nhóm học tập, mỗi nhóm có đúng $K$ bạn. Hãy tính số nhóm chia được và số bạn học sinh bị dư ra.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY11-EX-02",
@@ -1916,25 +1143,6 @@
       "difficulty": "Level 1 • Toán học",
       "classes": [
         "Python 1-1"
-      ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Toán học",
-        "Quy đổi"
-      ],
-      "description": "Cho số ngày $N$. Hãy quy đổi $N$ ngày thành số tuần và số ngày lẻ (1 tuần có 7 ngày).",
-      "input_specification": "Một số nguyên dương $N$.",
-      "output_specification": "In ra số tuần và số ngày lẻ cách nhau bởi dấu cách.",
-      "constraints": "$1 \\le N \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "17\n",
-          "output": "2 3\n",
-          "explanation": "17 ngày gồm 2 tuần và 3 ngày."
-        }
       ],
       "testcases": [
         {
@@ -1952,7 +1160,10 @@
           "output": "0 5\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Cho số ngày $N$. Hãy quy đổi $N$ ngày thành số tuần và số ngày lẻ (1 tuần có 7 ngày).",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "PY11-EX-03",
@@ -1964,30 +1175,6 @@
       "difficulty": "Level 1 • Toán học",
       "classes": [
         "Python 1-1"
-      ],
-      "points": 10,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Thầy Phùng Đức",
-      "types": [
-        "Toán học",
-        "Số thực"
-      ],
-      "description": "Cho số thực dương $N$. Hãy tính căn bậc 3 của $N$ và in ra kết quả làm tròn đúng 2 chữ số thập phân.",
-      "input_specification": "Một số thực dương $N$.",
-      "output_specification": "In ra giá trị căn bậc 3 của $N$ làm tròn 2 chữ số thập phân.",
-      "constraints": "$0.001 \\le N \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "27\n",
-          "output": "3.00\n",
-          "explanation": "Căn bậc 3 của 27 là 3.00."
-        },
-        {
-          "input": "10\n",
-          "output": "2.15\n",
-          "explanation": "Căn bậc 3 của 10 xấp xỉ 2.1544 -> 2.15."
-        }
       ],
       "testcases": [
         {
@@ -2005,7 +1192,10 @@
           "output": "2.00\n",
           "sample": false
         }
-      ]
+      ],
+      "description": "Cho số thực dương $N$. Hãy tính căn bậc 3 của $N$ và in ra kết quả làm tròn đúng 2 chữ số thập phân.",
+      "time_limit": "1.0s",
+      "memory_limit": "256M"
     },
     {
       "id": "26TI-A",
@@ -2017,25 +1207,6 @@
       "difficulty": "Level 2 • Mảng",
       "classes": [
         "C++ nâng cao"
-      ],
-      "points": 20,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Contest 26TI / Thầy Phùng Đức",
-      "types": [
-        "Mảng",
-        "Khởi động Contest"
-      ],
-      "description": "Bài mở màn kỳ thi Contest 26TI: Cho mảng gồm $N$ số nguyên. Hãy tính tổng tất cả các phần tử trong mảng.",
-      "input_specification": "Dòng 1: số nguyên $N$. Dòng 2: $N$ số nguyên cách nhau bởi dấu cách.",
-      "output_specification": "In ra một số nguyên duy nhất là tổng các phần tử của mảng.",
-      "constraints": "$1 \\le N \\le 10^5, |A_i| \\le 10^9$",
-      "sample_cases": [
-        {
-          "input": "4\n1 2 3 4\n",
-          "output": "10\n",
-          "explanation": "1 + 2 + 3 + 4 = 10."
-        }
       ],
       "testcases": [
         {
@@ -2053,463 +1224,10 @@
           "output": "100\n",
           "sample": false
         }
-      ]
-    },
-    {
-      "id": "HSG-NUMBER",
-      "name": "Biến đổi số",
-      "platform": "DeruckOJ",
-      "url": "#judge-HSG-NUMBER",
-      "badge_color": "emerald",
-      "category": "Hệ đếm & Toán",
-      "difficulty": "Level 2 • Cơ bản",
-      "classes": [
-        "C++ cơ bản",
-        "C++ nâng cao",
-        "Python cơ bản",
-        "Python 1-1",
-        "Tất cả"
       ],
-      "points": 2.0,
+      "description": "Bài mở màn kỳ thi Contest 26TI: Cho mảng gồm $N$ số nguyên. Hãy tính tổng tất cả các phần tử trong mảng.",
       "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Đề chọn Đội tuyển HSG 2026 - 2027 • THCS Nguyễn Bỉnh Khiêm",
-      "types": [
-        "Hệ đếm",
-        "Toán học",
-        "Xử lý số"
-      ],
-      "description": "Cho hai số nguyên dương $n$ và $k$. Tùy thuộc vào giá trị của chỉ số $k$, bạn cần thực hiện phép biến đổi số $n$ theo một trong các quy tắc sau:\n\n• Nếu $k = 0$: Đổi số $n$ từ hệ thập phân (cơ số 10) sang hệ nhị phân (cơ số 2).\n• Nếu $k = 1$: Đổi số $n$ từ hệ thập phân (cơ số 10) sang hệ thập lục phân (cơ số 16), các chữ cái được viết bằng chữ hoa (A, B, C, D, E, F).\n• Nếu $k = 2$: Tính tổng các chữ số của số nguyên $n$.",
-      "input_specification": "Gồm một dòng duy nhất chứa hai số nguyên $n$ và $k$ ($1 \\le n \\le 10^{18}, 0 \\le k \\le 2$), các số được cách nhau bởi khoảng trắng.",
-      "output_specification": "In ra một dòng duy nhất chứa kết quả của phép biến đổi tương ứng.",
-      "constraints": "• $1 \\le n \\le 10^{18}$\n• $0 \\le k \\le 2$\n\n**Subtasks:**\n- Subtask 1 (20% điểm): $k = 2$.\n- Subtask 2 (40% điểm): $k = 1$.\n- Subtask 3 (40% điểm): $k = 0$.",
-      "sample_cases": [
-        {
-          "input": "10 0\n",
-          "output": "1010\n",
-          "explanation": "Đổi 10 sang hệ nhị phân (cơ số 2) thu được 1010."
-        },
-        {
-          "input": "10 1\n",
-          "output": "A\n",
-          "explanation": "Đổi 10 sang hệ thập lục phân (cơ số 16) thu được A."
-        },
-        {
-          "input": "1234 2\n",
-          "output": "10\n",
-          "explanation": "Tổng các chữ số: 1 + 2 + 3 + 4 = 10."
-        }
-      ],
-      "starter_cpp": "#include <iostream>\n#include <string>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    // Tối ưu I/O\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n;\n    int k;\n    if (cin >> n >> k) {\n        if (k == 0) {\n            if (n == 0) { cout << 0 << \"\\n\"; return 0; }\n            string res = \"\";\n            while (n > 0) {\n                res += to_string(n % 2);\n                n /= 2;\n            }\n            reverse(res.begin(), res.end());\n            cout << res << \"\\n\";\n        } else if (k == 1) {\n            if (n == 0) { cout << 0 << \"\\n\"; return 0; }\n            string res = \"\";\n            char hex_chars[] = \"0123456789ABCDEF\";\n            while (n > 0) {\n                res += hex_chars[n % 16];\n                n /= 16;\n            }\n            reverse(res.begin(), res.end());\n            cout << res << \"\\n\";\n        } else if (k == 2) {\n            long long sum = 0;\n            while (n > 0) {\n                sum += n % 10;\n                n /= 10;\n            }\n            cout << sum << \"\\n\";\n        }\n    }\n    return 0;\n}\n",
-      "starter_py": "import sys\n\ndef solve():\n    input_data = sys.stdin.read().split()\n    if not input_data:\n        return\n    n = int(input_data[0])\n    k = int(input_data[1])\n    \n    if k == 0:\n        print(bin(n)[2:]) # bin() trả về chuỗi có tiền tố '0b' nên cần cắt bỏ\n    elif k == 1:\n        print(hex(n)[2:].upper()) # hex() trả về '0x' và chữ thường, cần cắt và in hoa\n    elif k == 2:\n        print(sum(int(digit) for digit in str(n)))\n\nif __name__ == '__main__':\n    solve()",
-      "testcases": [
-        {
-          "name": "Test 01",
-          "input": "1 2\n",
-          "output": "1\n",
-          "sample": true
-        },
-        {
-          "name": "Test 02",
-          "input": "1234 2\n",
-          "output": "10\n",
-          "sample": false
-        },
-        {
-          "name": "Test 03",
-          "input": "9007199254740993 2\n",
-          "output": "78\n",
-          "sample": false
-        },
-        {
-          "name": "Test 04",
-          "input": "999999999999999999 2\n",
-          "output": "162\n",
-          "sample": false
-        },
-        {
-          "name": "Test 05",
-          "input": "1 1\n",
-          "output": "1\n",
-          "sample": false
-        },
-        {
-          "name": "Test 06",
-          "input": "10 1\n",
-          "output": "A\n",
-          "sample": false
-        },
-        {
-          "name": "Test 07",
-          "input": "15 1\n",
-          "output": "F\n",
-          "sample": false
-        },
-        {
-          "name": "Test 08",
-          "input": "16 1\n",
-          "output": "10\n",
-          "sample": false
-        },
-        {
-          "name": "Test 09",
-          "input": "255 1\n",
-          "output": "FF\n",
-          "sample": false
-        },
-        {
-          "name": "Test 10",
-          "input": "11259375 1\n",
-          "output": "ABCDEF\n",
-          "sample": false
-        },
-        {
-          "name": "Test 11",
-          "input": "9007199254740991 1\n",
-          "output": "1FFFFFFFFFFFFF\n",
-          "sample": false
-        },
-        {
-          "name": "Test 12",
-          "input": "1000000000000000000 1\n",
-          "output": "DE0B6B3A7640000\n",
-          "sample": false
-        },
-        {
-          "name": "Test 13",
-          "input": "1 0\n",
-          "output": "1\n",
-          "sample": false
-        },
-        {
-          "name": "Test 14",
-          "input": "10 0\n",
-          "output": "1010\n",
-          "sample": false
-        },
-        {
-          "name": "Test 15",
-          "input": "2147483648 0\n",
-          "output": "10000000000000000000000000000000\n",
-          "sample": false
-        },
-        {
-          "name": "Test 16",
-          "input": "4294967295 0\n",
-          "output": "11111111111111111111111111111111\n",
-          "sample": false
-        },
-        {
-          "name": "Test 17",
-          "input": "2863311530 0\n",
-          "output": "10101010101010101010101010101010\n",
-          "sample": false
-        },
-        {
-          "name": "Test 18",
-          "input": "9007199254740993 0\n",
-          "output": "100000000000000000000000000000000000000000000000000001\n",
-          "sample": false
-        },
-        {
-          "name": "Test 19",
-          "input": "576460752303423487 0\n",
-          "output": "11111111111111111111111111111111111111111111111111111111111\n",
-          "sample": false
-        },
-        {
-          "name": "Test 20",
-          "input": "1000000000000000000 0\n",
-          "output": "110111100000101101101011001110100111011001000000000000000000\n",
-          "sample": false
-        }
-      ]
-    },
-    {
-      "id": "HSG-FACTORIAL",
-      "name": "Giai thừa",
-      "platform": "DeruckOJ",
-      "url": "#judge-HSG-FACTORIAL",
-      "badge_color": "emerald",
-      "category": "Số học & Toán",
-      "difficulty": "Level 2 • Trung bình",
-      "classes": [
-        "C++ cơ bản",
-        "C++ nâng cao",
-        "Python cơ bản",
-        "Python 1-1",
-        "Tất cả"
-      ],
-      "points": 2.0,
-      "time_limit": "1.5s",
-      "memory_limit": "256M",
-      "author": "Đề chọn Đội tuyển HSG 2026 - 2027 • THCS Nguyễn Bỉnh Khiêm",
-      "types": [
-        "Số học",
-        "Công thức Legendre",
-        "Toán học"
-      ],
-      "description": "Cho $n$ số nguyên dương. Với mỗi số nguyên dương $x$, hãy đếm số lượng chữ số 0 nằm ở tận cùng của giá trị $x!$.\n\n*Nhắc lại*: $x! = 1 \\times 2 \\times 3 \\times \\dots \\times x$ (tích từ 1 đến $x$).",
-      "input_specification": "• Dòng đầu tiên chứa số nguyên dương $n$ ($1 \\le n \\le 10^6$).\n• $n$ dòng tiếp theo, mỗi dòng chứa một số nguyên dương $x$ ($1 \\le x \\le 10^{18}$).",
-      "output_specification": "In ra một dòng chứa $n$ số nguyên, mỗi số cách nhau một khoảng trắng là đáp án của từng số nguyên trong dãy.",
-      "constraints": "• $1 \\le n \\le 10^6$\n• $1 \\le x \\le 10^{18}$\n\n**Subtasks:**\n- Subtask 1 (20% điểm): $1 \\le x \\le 20$.\n- Subtask 2 (30% điểm): $1 \\le x \\le 10^9$.\n- Subtask 3 (50% điểm): $1 \\le x \\le 10^{18}$.",
-      "sample_cases": [
-        {
-          "input": "2\n5\n10\n",
-          "output": "1 2\n",
-          "explanation": "5! = 120 có 1 chữ số 0 tận cùng.\n10! = 3628800 có 2 chữ số 0 tận cùng."
-        }
-      ],
-      "starter_cpp": "#include <iostream>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (cin >> n) {\n        while (n--) {\n            long long x;\n            cin >> x;\n            long long count = 0;\n            // Đếm số lượng thừa số 5\n            for (long long i = 5; x / i >= 1; i *= 5) {\n                count += x / i;\n            }\n            cout << count << (n > 0 ? \" \" : \"\");\n        }\n        cout << \"\\n\";\n    }\n    return 0;\n}\n",
-      "starter_py": "import sys\n\ndef solve():\n    input_data = sys.stdin.read().split()\n    if not input_data:\n        return\n    \n    n = int(input_data[0])\n    ans = []\n    \n    for i in range(1, n + 1):\n        x = int(input_data[i])\n        count = 0\n        power = 5\n        while x >= power:\n            count += x // power\n            power *= 5\n        ans.append(str(count))\n        \n    print(\" \".join(ans))\n\nif __name__ == '__main__':\n    solve()",
-      "testcases": [
-        {
-          "name": "Test 01",
-          "input": "2\n5\n10\n",
-          "output": "1 2\n",
-          "sample": true
-        },
-        {
-          "name": "Test 02",
-          "input": "4\n1\n2\n3\n4\n",
-          "output": "0 0 0 0\n",
-          "sample": false
-        },
-        {
-          "name": "Test 03",
-          "input": "8\n4\n5\n9\n10\n14\n15\n19\n20\n",
-          "output": "0 1 1 2 2 3 3 4\n",
-          "sample": false
-        },
-        {
-          "name": "Test 04",
-          "input": "20\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n",
-          "output": "0 0 0 0 1 1 1 1 1 2 2 2 2 2 3 3 3 3 3 4\n",
-          "sample": false
-        },
-        {
-          "name": "Test 05",
-          "input": "13\n5\n25\n125\n625\n3125\n15625\n78125\n390625\n1953125\n9765625\n48828125\n244140625\n1000000000\n",
-          "output": "1 6 31 156 781 3906 19531 97656 488281 2441406 12207031 61035156 249999998\n",
-          "sample": false
-        },
-        {
-          "name": "Test 06",
-          "input": "62\n24\n124\n624\n3124\n15624\n78124\n390624\n1953124\n9765624\n48828124\n244140624\n999999999\n496913041\n435386449\n677033710\n783538419\n238719703\n724585972\n330309602\n687027284\n538967448\n765422285\n772251970\n691353370\n449446725\n882494688\n23812483\n53519998\n608364926\n759505425\n805455271\n297220707\n501370267\n988117393\n931986110\n812906317\n627353739\n461487744\n28785749\n872588207\n42817901\n534016182\n930091315\n90758862\n190439835\n658531943\n572252730\n374951382\n82313779\n992226387\n403419007\n724280758\n345969879\n847884063\n904833949\n69343447\n840373912\n946567508\n432921449\n963712323\n49341195\n260985154\n",
-          "output": "4 28 152 776 3900 19524 97648 488272 2441396 12207020 61035144 249999989 124228255 108846603 169258421 195884599 59679920 181146484 82577394 171756813 134741854 191355566 193062986 172838335 112361675 220623665 5953113 13379994 152091226 189876350 201363811 74305172 125342561 247029341 232996521 203226575 156838428 115371930 7196430 218147045 10704470 133504040 232522824 22689709 47609952 164632980 143063175 93737839 20578440 248056592 100854746 181070182 86492465 211971008 226208479 17335855 210093472 236641871 108230354 240928072 12335294 65246284\n",
-          "sample": false
-        },
-        {
-          "name": "Test 07",
-          "input": "1000\n23\n24\n25\n26\n27\n123\n124\n125\n126\n127\n623\n624\n625\n626\n627\n3123\n3124\n3125\n3126\n3127\n15623\n15624\n15625\n15626\n15627\n78123\n78124\n78125\n78126\n78127\n390623\n390624\n390625\n390626\n390627\n1953123\n1953124\n1953125\n1953126\n1953127\n9765623\n9765624\n9765625\n9765626\n9765627\n48828123\n48828124\n48828125\n48828126\n48828127\n244140623\n244140624\n244140625\n244140626\n244140627\n992091263\n7360978\n542992601\n299097943\n477512232\n933048861\n549682494\n854080968\n585065115\n107960859\n217558206\n798823450\n829883749\n664503504\n571360826\n799022332\n176616271\n957536122\n288750129\n807192480\n375212467\n826891997\n596188279\n447020971\n567232161\n297384350\n156802198\n799604402\n193487751\n997463709\n36971587\n922936878\n423499133\n43157298\n529651607\n707187436\n692736017\n615310169\n572084182\n284713561\n285173556\n752934127\n13335802\n568510878\n351364916\n940642830\n788233779\n205191729\n368253417\n699543716\n283760807\n365946502\n200266052\n71679287\n146591732\n389714138\n916394163\n663199250\n271023124\n467813346\n900093408\n495170525\n877789864\n293904712\n343446425\n513798323\n681439350\n49471752\n940888568\n591851821\n903389795\n319080194\n280419364\n740645237\n786608510\n944155702\n837214876\n97108817\n42681143\n308715181\n178834128\n936110702\n293070695\n820654293\n420702507\n442927209\n748010754\n37742618\n47527664\n867735342\n990266493\n967882551\n294619799\n79232149\n650608484\n353817922\n390485640\n14084117\n48165701\n803412077\n230712053\n551288210\n43650088\n715307157\n89446503\n415549206\n412164873\n405008069\n619322854\n440767974\n142858147\n909445425\n318473020\n359595790\n715573794\n800581427\n758716431\n886640082\n623180324\n995397068\n756811113\n56151851\n867472555\n636684105\n672100147\n395053207\n759882493\n901944336\n396471808\n372908736\n807942290\n24851890\n704467042\n122582206\n277527952\n68638999\n949041641\n867112061\n505164670\n640006384\n574935642\n183031869\n393120938\n587147950\n665225063\n565981265\n205871232\n425661080\n814584305\n856406634\n922097909\n936458346\n118155940\n79794460\n924301249\n129768593\n984783345\n281185219\n557520779\n822937888\n702230064\n630608644\n832060806\n973116849\n101206053\n443932267\n522254729\n700347917\n930256811\n185780822\n390207751\n610472858\n64762934\n894783027\n972356647\n422010824\n884595324\n756597043\n88123054\n525364375\n960469163\n35674875\n174166546\n359327259\n57301580\n95107012\n375570737\n822140640\n610906882\n70687018\n547771358\n249970630\n16298365\n877730397\n228036018\n600346566\n38805627\n569297891\n355165811\n183837628\n469258083\n849427938\n448361581\n594009990\n872420056\n777920884\n854210999\n356182718\n251839855\n440409225\n871963200\n462062905\n664912892\n684189601\n893717143\n624615190\n788841440\n667218327\n614231602\n623764164\n962878075\n255154097\n197336867\n125105708\n486263632\n777767221\n625706699\n657323394\n659668518\n568947987\n565239720\n26043425\n493059182\n455380082\n572549593\n187670099\n613569592\n708117349\n157193802\n942942448\n716732780\n129201294\n705569376\n831324188\n919738875\n71379842\n517250454\n3530782\n519293350\n402469982\n882532947\n376115281\n173060588\n425816803\n568212318\n931599469\n484308695\n996292405\n954161024\n216244603\n556413311\n81720894\n626677519\n437476050\n444719647\n537228235\n937253604\n980634089\n462046684\n66191859\n543572285\n859934849\n863526873\n384639451\n732126145\n988396567\n895585159\n953660384\n414733515\n170035150\n242547260\n622211271\n825634799\n167336884\n65053107\n512062545\n59290327\n652654851\n446222692\n981937001\n501025266\n617470232\n557493429\n174974192\n388926203\n670598059\n771821067\n123261697\n991192842\n143470830\n610642210\n146940586\n543172929\n816821973\n394151647\n541623504\n426664621\n712921980\n673152422\n992831924\n934047509\n751590732\n663743660\n804203593\n866163322\n291611380\n156780353\n246474613\n123610797\n684993141\n821738657\n540757257\n242328629\n359009611\n449390125\n341591527\n260469145\n367311089\n701469\n404003796\n934444696\n454057895\n105277583\n334910070\n193738524\n802562496\n999247597\n440113056\n958693080\n210072472\n273906027\n138257859\n530555521\n855986829\n620853793\n507940278\n796070757\n765212894\n987830463\n229036980\n562037179\n650951308\n769980428\n101816175\n343664279\n852256968\n121928505\n110617830\n655751704\n440331909\n580426854\n459204415\n22167717\n817047096\n374415142\n343435684\n686972398\n737776593\n923295165\n962766159\n555335470\n651277027\n957176269\n498008619\n826183283\n544643072\n884678155\n379592110\n999510769\n562136226\n120542079\n652828567\n800413308\n811125492\n845538465\n606786019\n221671579\n586059241\n181170651\n695264800\n858597708\n218150598\n155097362\n82455054\n119252367\n438110302\n106479687\n595830968\n245421918\n430965122\n448281422\n205284875\n655660920\n676539977\n60434238\n192476050\n799983447\n129090388\n110253835\n383573999\n805524446\n921254762\n778193276\n708684846\n332660880\n435767785\n324492561\n961725282\n635991438\n429684985\n236827038\n876865451\n275107549\n730288235\n852137376\n523324524\n549552521\n898338962\n219879849\n586277888\n634457810\n989344708\n17537925\n347716421\n183221589\n439730300\n928279573\n250237728\n256704714\n228492563\n534480919\n520031799\n807792799\n948257374\n509198042\n381392153\n115961618\n949073146\n666934378\n663159142\n861905727\n476626140\n847556175\n201382026\n10706925\n651582528\n772301353\n913608902\n890169353\n645538539\n64655865\n135161490\n656365757\n210374078\n282696641\n801483496\n826495726\n185302764\n933212286\n923370476\n984064540\n623061057\n693220244\n694105100\n675824272\n106123599\n572688997\n644972106\n393791462\n632331163\n895920560\n311941045\n818056711\n550635603\n92922489\n210211904\n855104281\n348711570\n568393359\n306532970\n140301935\n327297027\n937066468\n7699550\n744798516\n182740037\n738062532\n642311199\n974369343\n446139370\n518818280\n319079964\n603062428\n606465154\n582925551\n71001258\n761677235\n535355618\n784103330\n113861220\n186755099\n605825052\n474194424\n210802729\n732572617\n119777062\n645656698\n598432742\n921002389\n67936370\n949794955\n273995699\n956482015\n73220367\n991731945\n101617846\n331025117\n478504022\n450988843\n748982636\n613659235\n78774110\n91999549\n617770399\n180269712\n741820405\n865840989\n49251772\n631209039\n604569073\n586600112\n719749762\n795372372\n759504770\n730804005\n486652654\n58219078\n147331294\n927478705\n666641523\n628123948\n663147937\n977535192\n507207924\n14795739\n635311223\n861324249\n53772421\n105401169\n264065387\n146254737\n656041500\n536262906\n674271389\n952842840\n537225300\n817186559\n354118940\n750366971\n693974409\n590114395\n81232562\n37056276\n530693490\n798005905\n53129081\n862235190\n30793904\n759381367\n823919652\n939928189\n748318533\n494371893\n754982715\n572188410\n148785575\n549431825\n504835193\n271944502\n550369138\n267514225\n680053236\n75655966\n261711958\n128104172\n807866380\n342591057\n346974473\n423432821\n342243867\n782717213\n668247932\n411242600\n298807286\n873194639\n115514446\n934576401\n707348242\n747993698\n692197925\n891163523\n67251742\n725557178\n897954963\n847213738\n94413707\n723893860\n535525335\n29205205\n169672370\n270090292\n108045068\n673426545\n975496294\n641362791\n816593186\n188876370\n830719967\n549106020\n572473382\n629863926\n74117833\n668250943\n405341639\n666734795\n100578723\n443707251\n733162929\n472475911\n913102989\n882642872\n457414787\n623777938\n239978445\n766549164\n272435933\n145098319\n613077537\n253235482\n339952894\n81367611\n585914403\n932659700\n764954383\n763270846\n841535137\n457308192\n535774590\n784314552\n694990459\n114737115\n248040785\n610801568\n556562848\n884508568\n75439774\n451990605\n807062619\n103800049\n73030342\n727474290\n793535207\n366172948\n341087499\n315934074\n160714572\n864867428\n748445286\n151911604\n36766460\n394874603\n734063507\n297836322\n788544454\n612457779\n277975480\n608006619\n806487338\n405937755\n671261507\n609991193\n599772330\n481758704\n207102643\n208112788\n468060244\n152822227\n861997189\n789855415\n182287595\n633277486\n423050662\n824878419\n7588157\n693287345\n865938096\n796226520\n828780747\n307178841\n574899430\n118318271\n765232946\n338648743\n448948670\n815965095\n792788797\n446194376\n547402527\n856731998\n594559235\n526416368\n290310060\n921985814\n416879454\n685528518\n476685154\n875595123\n546985697\n475786993\n711489313\n242975646\n809652951\n436686122\n646982119\n789701427\n686736987\n487974263\n998151011\n744312434\n803430402\n83590103\n242408140\n386635623\n800182343\n661769294\n105269315\n298308929\n232032575\n178154928\n190249328\n450087504\n733087508\n442998880\n668669534\n137353930\n567265571\n175022728\n321178580\n841056877\n708655652\n558800677\n343719360\n215296889\n455882684\n674183088\n625184574\n998461693\n728088926\n972269344\n645484593\n808001862\n454094985\n388576060\n629920289\n669750267\n140328932\n668582103\n408707415\n280560641\n267885198\n797151212\n436856345\n76727173\n938392295\n926530992\n65402671\n704760898\n706061809\n766637977\n767150277\n148311570\n816293996\n687875858\n250650962\n53513464\n108343604\n379638647\n809621533\n647218600\n288240011\n976740409\n626226959\n327431167\n659605929\n979062484\n781232028\n897236621\n161548258\n883869395\n482629002\n500793864\n709512649\n306851951\n86871291\n681872216\n450295581\n214558126\n306968703\n922089163\n942752845\n347886454\n208552456\n79961204\n225803431\n488636810\n766232383\n433996601\n410832373\n386642119\n9173552\n604131240\n995576668\n449555404\n230454693\n538042391\n330102715\n55002552\n945552845\n102295171\n243601009\n191674318\n444827034\n810606088\n317918502\n288621235\n321663218\n259624755\n537924170\n157787109\n911588665\n956606482\n503497128\n262573838\n889590004\n414297240\n310242405\n630631412\n66110502\n741196377\n707991848\n172881545\n886427192\n397802609\n579677305\n710057380\n541305912\n990135028\n219647936\n384103194\n815501964\n453617829\n124103193\n172460393\n602873851\n703881794\n642021409\n318401429\n414706832\n559738424\n991937352\n304668182\n222317201\n791353687\n519348100\n320636800\n446290982\n233916628\n73540161\n414050054\n706881421\n539017731\n883691429\n41414088\n717962592\n829737316\n47680277\n360346667\n102849558\n124876426\n191749302\n546653895\n415731593\n209708760\n804448509\n494522828\n319216370\n258320387\n240337377\n83183561\n598865278\n733661894\n605256555\n530486154\n969219856\n227566956\n807946532\n925099567\n125956320\n226900706\n982023953\n696797378\n479057339\n250720356\n435054056\n318803731\n896601011\n508302734\n438417667\n73714665\n123759875\n258534141\n766072080\n656524136\n130836317\n555257309\n4046491\n605637226\n883331718\n622225462\n72916200\n458489921\n541106781\n838808653\n588412035\n779717459\n",
-          "output": "4 4 6 6 6 28 28 31 31 31 152 152 156 156 156 776 776 781 781 781 3900 3900 3906 3906 3906 19524 19524 19531 19531 19531 97648 97648 97656 97656 97656 488272 488272 488281 488281 488281 2441396 2441396 2441406 2441406 2441406 12207020 12207020 12207031 12207031 12207031 61035144 61035144 61035156 61035156 61035156 248022809 1840239 135748146 74774480 119378050 233262209 137420616 213520235 146266271 26990209 54389545 199705855 207470927 166125871 142840201 199755577 44154063 239384023 72187528 201798114 93803109 206722992 149047066 111755235 141808035 74346082 39200544 199901094 48371933 249365920 9242890 230734212 105874776 10789319 132412895 176796851 173183998 153827536 143021038 71178384 71293385 188233526 3333946 142127714 87841222 235160702 197058438 51297927 92063348 174885921 70940197 91486620 50066508 17919816 36647928 97428527 229098533 165799805 67755773 116953330 225023345 123792626 219447457 73476172 85861602 128449575 170359830 12367934 235222134 147962949 225847441 79770042 70104833 185161304 196652121 236038919 209303713 24277196 10670279 77178790 44708526 234027670 73267670 205163566 105175620 110731795 187002682 9435648 11881909 216933829 247566618 241970631 73654944 19808031 162652113 88454474 97621404 3521024 12041420 200853013 57678007 137822048 10912516 178826783 22361619 103887295 103041211 101252010 154830707 110191986 35714530 227361350 79618250 89898942 178893441 200145351 189679102 221660012 155795073 248849261 189202771 14037956 216868133 159171019 168025030 98763297 189970616 225486076 99117944 93227177 201985566 6212968 176116754 30645546 69381982 17159743 237260403 216778008 126291162 160001591 143733904 45757959 98280228 146786983 166306259 141495310 51467802 106415263 203646070 214101653 230524470 234114579 29538979 19948610 231075304 32442142 246195831 70296297 139380190 205734466 175557508 157652152 208015197 243279203 25301508 110983061 130563675 175086972 232564197 46445198 97551931 152618208 16190727 223695751 243089154 105502699 221148823 189149255 22030757 131341088 240117284 8918714 43541630 89831807 14325390 23776747 93892678 205535155 152726715 17671748 136942834 62492653 4074586 219432590 57008997 150086635 9701401 142324468 88791448 45959402 117314514 212356976 112090389 148502491 218105007 194480214 213552741 89045673 62959957 110102301 217990795 115515721 166228217 171047395 223429278 156153791 197210354 166804575 153557894 155941033 240719510 63788518 49334210 31276421 121565900 194441799 156426668 164330841 164917121 142236990 141309924 6510851 123264790 113845014 143137391 46917518 153392391 177029328 39298447 235735603 179183188 32300317 176392340 207831040 229934713 17844954 129312607 882691 129823331 100617490 220633230 94028814 43265140 106454195 142053072 232899859 121077165 249073096 238540248 54061144 139103322 20430218 156669373 109369005 111179906 134307055 234313393 245158516 115511663 16547958 135893066 214983705 215881710 96159856 183031529 247099136 223896283 238415089 103683372 42508784 60636809 155552811 206408692 41834215 16263270 128015632 14822576 163163705 111555667 245484244 125256312 154367552 139373351 43743540 97231544 167649507 192955260 30815417 247798204 35867702 152660547 36735141 135793227 204205487 98537906 135405870 106666148 178230491 168288097 248207975 233511872 187897677 165935907 201050891 216540823 72902840 39195082 61618647 30902694 171248279 205434658 135189309 60582151 89752397 112347527 85397875 65117282 91827765 175361 101000944 233611167 113514467 26319389 83727512 48434623 200640615 249811893 110028259 239673263 52518110 68476501 34564457 132638874 213996700 155213441 126985065 199017683 191303216 246957609 57259239 140509288 162737821 192495100 25454040 85916063 213064235 30482122 27654452 163937919 110082973 145106706 114801099 5541923 204261768 93603779 85858915 171743093 184444141 230823784 240691532 138833861 162819251 239294061 124502146 206545815 136160761 221169533 94898020 249877685 140534050 30135513 163207136 200103321 202781367 211384609 151696498 55417887 146514804 45292656 173816193 214649421 54537642 38774335 20613759 29813086 109527569 26619915 148957736 61355476 107741273 112070350 51321215 163915224 169134986 15108552 48119006 199995853 32272591 27563455 95893491 201381105 230313684 194548313 177171204 83165216 108941940 81123135 240431315 158997854 107421237 59206753 219216354 68776881 182572051 213034338 130831123 137388125 224584732 54969954 146569466 158614446 247336171 4384476 86929100 45805390 109932570 232069886 62559428 64176173 57123133 133620222 130007944 201948191 237064335 127299504 95348033 28990397 237268280 166733589 165789778 215476425 119156529 211889036 50345502 2676729 162895627 193075333 228402218 222542331 161384628 16163960 33790367 164091435 52593512 70674153 200370866 206623925 46325683 233303065 230842611 246016130 155765258 173305053 173526269 168956061 26530892 143172243 161243022 98447860 158082782 223980132 77985255 204514171 137658894 23230615 52552970 213776064 87177886 142098334 76633236 35075478 81824252 234266609 1924882 186199624 45685003 184515629 160577791 243592326 111534835 129704565 79769984 150765599 151616282 145731382 17750310 190419301 133838896 196025828 28465299 46688768 151456258 118548598 52700675 183143149 29944260 161414168 149608178 230250589 16984085 237448732 68498919 239120496 18305086 247932980 25404456 82756273 119625997 112747204 187245653 153414801 19693522 22999880 154442593 45067422 185455096 216460239 12312939 157802252 151142261 146650023 179937432 198843086 189876186 182700995 121663156 14554765 36832819 231869668 166660375 157030978 165786977 244383793 126801974 3698928 158827798 215331052 13443100 26350285 66016343 36563677 164010370 134065720 168567841 238210702 134306322 204296631 88529730 187591736 173493596 147528594 20308134 9264064 132673365 199501470 13282267 215558792 7698471 189845336 205979907 234982042 187079627 123592968 188745672 143047097 37196389 137357951 126208792 67986121 137592278 66878550 170013302 18913984 65427982 32026036 201966590 85647760 86743612 105858197 85560962 195679296 167061976 102810644 74701815 218298653 28878605 233644094 176837054 186998416 173049476 222790874 16812929 181389288 224488732 211803426 23603420 180973459 133881327 7301295 42418086 67522567 27011261 168356628 243874065 160340692 204148290 47219086 207679986 137276499 143118340 157465976 18529451 167062729 101335403 166683693 25144675 110926808 183290727 118118971 228275738 220660710 114353689 155944476 59994604 191637284 68108977 36274573 153269377 63308865 84988216 20341897 146478593 233164920 191238591 190817704 210383779 114327041 133943640 196078633 173747607 28684272 62010191 152700385 139140705 221127134 18859937 112997645 201765649 25950007 18257578 181868565 198383797 91543231 85271865 78983510 40178637 216216850 187111317 37977894 9191610 98718644 183515873 74459075 197136107 153114438 69493865 152001648 201621827 101484435 167815370 152497791 149943078 120439668 51775655 52028191 117015053 38205552 215499290 197463848 45571893 158319363 105762661 206219598 1897035 173321828 216484517 199056624 207195178 76794705 143724851 29579562 191308228 84662177 112237160 203991266 198197193 111548590 136850627 214182992 148639802 131604085 72577509 230496447 104219858 171382122 119171282 218898773 136746420 118946741 177872321 60743906 202413230 109171521 161745523 197425351 171684241 121993558 249537748 186078102 200857594 20897518 60602029 96658896 200045578 165442316 26317323 74577226 58008139 44538726 47562325 112521872 183271873 110749715 167167376 34338478 141816385 43755676 80294640 210264215 177163906 139700165 85929834 53824218 113970665 168545764 156296137 249615417 182022224 243067328 161371143 202000458 113523740 97144007 157480064 167437560 35082228 167145519 102176848 70140155 66971293 199287796 109214079 19181787 234598068 231632738 16350662 176190217 176515444 191659487 191787563 37077886 204073491 171968958 62662735 13378359 27085894 94909654 202405376 161804643 72059997 244185097 156556733 81857785 164901474 244765613 195307999 224309147 40387059 220967343 120657245 125198461 177378155 76712983 21717816 170468046 112573888 53639526 76742169 230522283 235688204 86971607 52138107 19990294 56450853 122159197 191558089 108499144 102708086 96660522 2293383 151032802 248894159 112388845 57613665 134510592 82525673 13750634 236388204 25573787 60900245 47918572 111206751 202651515 79479619 72155301 80415798 64906183 134481038 39446770 227897159 239151612 125874276 65643453 222397495 103574305 77560596 157657847 16527621 185299089 176997954 43220380 221606791 99450645 144919319 177514338 135326472 247533751 54911978 96025792 203875484 113404451 31025792 43115092 150718456 175970441 160505345 79600352 103676702 139934599 247984330 76167039 55579294 197838416 129837019 80159194 111572739 58479150 18385035 103512507 176720349 134754427 220922852 10353517 179490640 207434321 11920064 90086660 25712384 31219101 47937318 136663468 103932891 52427185 201112120 123630701 79804086 64580092 60084338 20795883 149716314 183415468 151314133 132621533 242304958 56891733 201986626 231274884 31489075 56725171 245505981 174199339 119764327 62680084 108763507 79700927 224150247 127075678 109604409 18428660 30939964 64633530 191518015 164131028 32709072 138814321 1011617 151409301 220832923 155556358 18229045 114622472 135276691 209702156 147103004 194929357\n",
-          "sample": false
-        },
-        {
-          "name": "Test 11",
-          "input": "20\n9765624\n48828124\n244140624\n1220703124\n6103515624\n30517578124\n152587890624\n762939453124\n3814697265624\n19073486328124\n95367431640624\n476837158203124\n2384185791015624\n11920928955078124\n59604644775390624\n298023223876953124\n298023223876953123\n298023223876953125\n999999999999999999\n1000000000000000000\n",
-          "output": "2441396 12207020 61035144 305175768 1525878892 7629394516 38146972640 190734863264 953674316388 4768371582012 23841857910136 119209289550760 596046447753884 2980232238769508 14901161193847632 74505805969238256 74505805969238256 74505805969238281 249999999999999977 249999999999999995\n",
-          "sample": false
-        },
-        {
-          "name": "Test 12",
-          "input": "26\n5\n25\n125\n625\n3125\n15625\n78125\n390625\n1953125\n9765625\n48828125\n244140625\n1220703125\n6103515625\n30517578125\n152587890625\n762939453125\n3814697265625\n19073486328125\n95367431640625\n476837158203125\n2384185791015625\n11920928955078125\n59604644775390625\n298023223876953125\n1000000000000000000\n",
-          "output": "1 6 31 156 781 3906 19531 97656 488281 2441406 12207031 61035156 305175781 1525878906 7629394531 38146972656 190734863281 953674316406 4768371582031 23841857910156 119209289550781 596046447753906 2980232238769531 14901161193847656 74505805969238281 249999999999999995\n",
-          "sample": false
-        },
-        {
-          "name": "Test 13",
-          "input": "100\n1000000000000000000\n999999999999999999\n999999999999999998\n999999999999999997\n999999999999999996\n999999999999999995\n999999999999999994\n999999999999999993\n999999999999999992\n999999999999999991\n999999999999999990\n999999999999999989\n999999999999999988\n999999999999999987\n999999999999999986\n999999999999999985\n999999999999999984\n999999999999999983\n999999999999999982\n999999999999999981\n999999999999999980\n999999999999999979\n999999999999999978\n999999999999999977\n999999999999999976\n999999999999999975\n999999999999999974\n999999999999999973\n999999999999999972\n999999999999999971\n999999999999999970\n999999999999999969\n999999999999999968\n999999999999999967\n999999999999999966\n999999999999999965\n999999999999999964\n999999999999999963\n999999999999999962\n999999999999999961\n999999999999999960\n999999999999999959\n999999999999999958\n999999999999999957\n999999999999999956\n999999999999999955\n999999999999999954\n999999999999999953\n999999999999999952\n999999999999999951\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n1000000000000000000\n",
-          "output": "249999999999999995 249999999999999977 249999999999999977 249999999999999977 249999999999999977 249999999999999977 249999999999999976 249999999999999976 249999999999999976 249999999999999976 249999999999999976 249999999999999975 249999999999999975 249999999999999975 249999999999999975 249999999999999975 249999999999999974 249999999999999974 249999999999999974 249999999999999974 249999999999999974 249999999999999973 249999999999999973 249999999999999973 249999999999999973 249999999999999973 249999999999999971 249999999999999971 249999999999999971 249999999999999971 249999999999999971 249999999999999970 249999999999999970 249999999999999970 249999999999999970 249999999999999970 249999999999999969 249999999999999969 249999999999999969 249999999999999969 249999999999999969 249999999999999968 249999999999999968 249999999999999968 249999999999999968 249999999999999968 249999999999999967 249999999999999967 249999999999999967 249999999999999967 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995 249999999999999995\n",
-          "sample": false
-        },
-        {
-          "name": "Test 14",
-          "input": "500\n80075615528434775\n53177566897954872\n76554184248147575\n75602766762208946\n89292548633043458\n35858839488151201\n19774018624941576\n60694865866397305\n65037986736466516\n32391235932314593\n29359763634853592\n58665396305897013\n43172026870085542\n59328922673450200\n91582139034565291\n32291841723605337\n14730327104270786\n64906674542677004\n64783180945631162\n35447106402388144\n38193845300385622\n56667671992002582\n10554379692208409\n45330832095414750\n75199672002035356\n63421330954478584\n68080518230200668\n66509240960478633\n65616911138034389\n73179353229069227\n83151073550792497\n53240874167702330\n45869966809869587\n32162085134963851\n20694205239323874\n93437911042146213\n77522997422577714\n31554737933763964\n26922961653379769\n44359239523883416\n82540591158749846\n82887918513751430\n87202399761934843\n44552797968620980\n97322763415206467\n25617226689412972\n33192135087515214\n28693125949399234\n55867662724155036\n81790986007345185\n55092645079373232\n50118682792831312\n34363430497089416\n37690528929766058\n30361517063188746\n59904466987229169\n70694901044307764\n24291665042059430\n89248208178874210\n50024149006776005\n15492191592069819\n24563299146302674\n54550984699263161\n44189055712786570\n56716542777846957\n81284541635792634\n94232473349352633\n76847848987536266\n41920784652630046\n97418164273041290\n48360334103548572\n82055028851504471\n44508106285625905\n49052223949590629\n50984223020978668\n60956770950976405\n31653534651533396\n92892861373987691\n10543226282303869\n74022782114569669\n46284884128599337\n95629698935310017\n86354265996609733\n71045332666909006\n27001722135825429\n52931136549184198\n16547000421397703\n98198134160912062\n90436080010427381\n34826203782608129\n40368740084553107\n51217568471991794\n10510895296258034\n51016385076162387\n42731760354120090\n85433629682681906\n95119890403582278\n43736100214848594\n95690542152700033\n90417475432537539\n97696994300824349\n67894562678537021\n59638483895670212\n94679900161318649\n73234208209075588\n12658683828521640\n41653131711322608\n41630882050686747\n47512754699888889\n99808162095839717\n96661770879483631\n15904278344506542\n32552715741281346\n45300878888926133\n52199423293180655\n31397681868586591\n63508123498940673\n34609074909405201\n88070608911350580\n85578125465021493\n33586717682245428\n97350275806784094\n49328885205915071\n94841401980686528\n15915995116611481\n24155318354681744\n64764525387420287\n49030198671828216\n92730434391087170\n35300725891924291\n62564503635173142\n43101740544467955\n77180899693950143\n29317362966146620\n47241177867959147\n92041429130601066\n68340078931385160\n95638871091496614\n51491212811567874\n89983754839261278\n16432783012019885\n89080047639963027\n67369553194548777\n57025874132737953\n23215054909836898\n86722666868772917\n44957050424009157\n73314646452453061\n31371433973156194\n39009727900078017\n40620409044658197\n79713716414555719\n96157482684319136\n26908455001751328\n38180889517005706\n61359924246834379\n69816568632628376\n96487342589164380\n97349035287192961\n90225214930097091\n42196724685882086\n45853275772337021\n39376388421415110\n88095190350790979\n17631146588867824\n43570712039579401\n48124039500201197\n19203157461546327\n72071360629421346\n46327334596613525\n92670786726742353\n11524651161844057\n27182798331070962\n33600348549655377\n63736606331961727\n93689678866322062\n24992295317624101\n51862597715627048\n13228318868288464\n63214203292389750\n40962403371666219\n73960079196832440\n25319092732706967\n14219886258787165\n35745442107664340\n24580259851486649\n26832223664840389\n43670545782962344\n98555898096027652\n35700008863870082\n38369160358048232\n13855941993184172\n85260749141971627\n33875217909056519\n78987527277911085\n40321593744430040\n88904972650142034\n64971540840492037\n65766085835199360\n39858582606037381\n91550601564001669\n57520595886238243\n57191641317926411\n16036794003170777\n99058486136674124\n54108427324772653\n31713654256123928\n13387595566912649\n26237632880378114\n74828238311988961\n87583504457937873\n93586337861919937\n11377676005218134\n73159936762124184\n40540874537378682\n76675447835793141\n75374155467609828\n94603038730532299\n33492917841219243\n31806159338035163\n81241437488164333\n19729688011661629\n28813195148599207\n36874229909300799\n41525782498790143\n82802085671105164\n62255216521967616\n56746591484916248\n12944715812181725\n71478456446995534\n13622436809142003\n82124036761073437\n14595104087759594\n23117872728093764\n19230512710813392\n51363738564014616\n98611287022792439\n29241216622447442\n40598883599632386\n40925982786975974\n19937072978113214\n21882885952684148\n96269345453391293\n14275142460470684\n62085949557580335\n75101068608920063\n19519159085580799\n55800202521647073\n68973938458615685\n33606405167923886\n17800656375385875\n58224030087048767\n61126148638554135\n41346989386674885\n23193460633809729\n65967860092261372\n43924589112126366\n45821023692857908\n50499531147857979\n98795095889010360\n10015221040967595\n35319928458144329\n46390163806156897\n10782763293629107\n19596886101104496\n56620700670213375\n58157573444361769\n32641643128671616\n48861435090139172\n99077067099713070\n19237876034536019\n46918469796912509\n12662733586785104\n77947014450308520\n68939666489387887\n40551959624175309\n46654583617801295\n37935616272693371\n75321543069961153\n45711038739091475\n21309772906853417\n43950189127054164\n19092472120620669\n65757636154108730\n75042479046647115\n81818075447114369\n77132641873227683\n56925181957727066\n57790247308807980\n99482081889725361\n30208295845173000\n73668040310267846\n75413091679612647\n79100504380291510\n15435961179135916\n17450682745809008\n68130412767985966\n38224429375265048\n94743195193897912\n96961540979388804\n38203738148145810\n62142740778595436\n10886205011305740\n14671796270155241\n53979270654083736\n36802786057073393\n73612385122259450\n19048937883660847\n23202453058476498\n76388012938217654\n70558794807827093\n64478038811821362\n14101583901970088\n86702607644315749\n94237161953777238\n52429008751377867\n76184260066853958\n84890306146544018\n57928323253799210\n41043544218737789\n23714040564370481\n31662672490311090\n11350430128150653\n74999176581067048\n20580199936682173\n32602905041673444\n49492343613380520\n93997716395934225\n36835319926773011\n17409235502355031\n98999384310514780\n78247098127583643\n94687362560638024\n49680162849164902\n77394157297122932\n80839675790366394\n42267164374269684\n88214737306876587\n36406508091736121\n53574303297064498\n15594677419843071\n69245867095665860\n24225892026244935\n17497685380692428\n37972988159779277\n27445371979018174\n67258177308857342\n64003402605403576\n74812772725159702\n66186141278334892\n23324371156297692\n66079066481056236\n79829686575936604\n88275915733159353\n42637216140207845\n28332556055696136\n63640352166604237\n25818367844448848\n92468861527380957\n76720695215435015\n61141637260959003\n38855474950625418\n39174014946929464\n90288899608984727\n41592136026090297\n47552464650512049\n11110852849187420\n56965390669348497\n36587930298206994\n42164309432514268\n71779367090071789\n80243733860735534\n48096437525971860\n63088317340094186\n98888064918436381\n92211551851546377\n69197184177227060\n24664679626798662\n16729366740386811\n15415869714889927\n92666062827112247\n56304911832047976\n20877386082575385\n33693494063875410\n20808888089076267\n51802976821976967\n43681055251362977\n81585487548242430\n74316021899676173\n70592385343613686\n32005162278224017\n57751731476317162\n46777171521590524\n33499122637910362\n54645677119986197\n55415758659122691\n46709900346686766\n97229217175088987\n70444644671066337\n86706261567022758\n95100845875581868\n22708035559657161\n15403324860563431\n19219215026638659\n63783921379837674\n18085031962426578\n99722954305548223\n15359170829439457\n37703552558511833\n78188009120495702\n13991291787609596\n45491492370376852\n88962005426258285\n22871587207659712\n89237026491987438\n64724685925001883\n46234749237533201\n74403358051809724\n69600384108099654\n27995945342445408\n81608740399538777\n22176071646777571\n14066578571184726\n33148177119015870\n76568488611726460\n75138521193248463\n83520996056232895\n38351535428113228\n98495071555792525\n97174423963821537\n81185117294174775\n35068833403732702\n19082826129127802\n47367286805735553\n33669837469871031\n27507763451097440\n13334953710065524\n76782924345487454\n22292122352777040\n14083267982165304\n46906647250104974\n33094339976888979\n14614286655420842\n93706236523483460\n52988452794460059\n34714956572671600\n94118505938032843\n78511287455813663\n22331675818810820\n76189767992153359\n76476970421546489\n22096993543591428\n68423684350021800\n82364526042628495\n53882452066002867\n36658716430667654\n75890657870989553\n52011896124485627\n72325796154376121\n94301930385614670\n96266329003225582\n13353405619537568\n47074870668442341\n40028576216741442\n63661662256017763\n40116888985682970\n25438464788796384\n75897883596548582\n20289808753107972\n28916773779007022\n71917763975293457\n77094669484425005\n90878518945761203\n16921761418460604\n69510990825690134\n79816578670899284\n25485687090495699\n34677928349054122\n23382868085942632\n95085439406448958\n91973212220074824\n46681422112066581\n52950834735039692\n61284914642764897\n35011306369600782\n90973713253341377\n48218250524236618\n50512897951926759\n25061256305133158\n46311750322832853\n52210480120150918\n34000122858383669\n76632764806017561\n52105844063350241\n19383643229711246\n27030321306074223\n22780316149394694\n95823504446956395\n66025036351546962\n28541985386503290\n",
-          "output": "20018903882108682 13294391724488705 19138546062036885 18900691690552225 22323137158260853 8964709872037790 4943504656235385 15173716466599314 16259496684116616 8097808983078636 7339940908713387 14666349076474241 10793006717521374 14832230668362539 22895534758641311 8072960430901322 3682581776067685 16226668635669239 16195795236407779 8861776600597024 9548461325096392 14166917998000633 2638594923052091 11332708023853678 18799918000508829 15855332738619635 17020129557550154 16627310240119644 16404227784508587 18294838307267297 20787768387698110 13310218541925568 11467491702467385 8040521283740953 5173551309830953 23359477760536538 19380749355644414 7888684483440979 6730740413344931 11089809880970843 20635147789687448 20721979628437847 21800599940483697 11138199492155233 24330690853801603 6404306672353231 8298033771878790 7173281487349796 13966915681038746 20447746501836287 13773161269843296 12529670698207815 8590857624272342 9422632232441506 7590379265797173 14976116746807279 17673725261076929 6072916260514848 22312052044718540 12506037251693989 3873047898017443 6140824786575656 13637746174815781 11047263928196627 14179135694461727 20321135408948147 23558118337338145 19211962246884058 10480196163157499 24354541068260310 12090083525887133 20513757212876106 11127026571406466 12263055987397645 12746055755244656 15239192737744091 7913383662883336 23223215343496912 2635806570575955 18505695528642406 11571221032149822 23907424733827490 21588566499152423 17761333166727240 6750430533956345 13232784137296037 4136750105349413 24549533540228004 22609020002606833 8706550945652022 10092185021138263 12804392117997937 2627723824064499 12754096269040581 10682940088530011 21358407420670465 23779972600895558 10934025053712137 23922635538174997 22604368858134372 24424248575206074 16973640669634244 14909620973917542 23669975040329646 18308552052268884 3164670957130398 10413282927830639 10407720512671671 11878188674972209 24952040523959915 24165442719870895 3976069586126624 8138178935320324 11325219722231522 13049855823295152 7849420467146634 15877030874735157 8652268727351288 22017652227837633 21394531366255360 8396679420561344 24337568951696008 12332221301478756 23710350495171619 3978998779152858 6038829588670422 16191131346855058 12257549667957040 23182608597771779 8825181472981060 15641125908793277 10775435136116975 19295224923487524 7329340741536642 11810294466989770 23010357282650253 17085019732846277 23909717772874139 12872803202891954 22495938709815306 4108195753004960 22270011909990748 16842388298637185 14256468533184474 5803763727459210 21680666717193217 11239262606002278 18328661613113250 7842858493289033 9752431975019491 10155102261164537 19928429103638918 24039370671079773 6727113750437822 9545222379251415 15339981061708583 17454142158157083 24121835647291086 24337258821798228 22556303732524261 10549181171470510 11463318943084244 9844097105353765 22023797587697731 4407786647216943 10892678009894841 12031009875050286 4800789365386569 18017840157355325 11581833649153370 23167696681685576 2881162790461002 6795699582767729 8400087137413834 15934151582990419 23422419716580502 6248073829406014 12965649428906752 3307079717072104 15803550823097428 10240600842916544 18490019799208097 6329773183176732 3554971564696780 8936360526916072 6145064962871648 6708055916210084 10917636445740571 24638974524006902 8925002215967507 9592290089512049 3463985498296032 21315187285492896 8468804477264118 19746881819477761 10080398436107497 22226243162535496 16242885210123000 16441521458799827 9964645651509333 22887650391000405 14380148971559546 14297910329481589 4009198500792682 24764621534168516 13527106831193151 7928413564030970 3346898891728152 6559408220094515 18707059577997228 21895876114484456 23396584465479972 2844419001304519 18289984190531034 10135218634344660 19168861958948276 18843538866902446 23650759682633062 8373229460304797 7951539834508779 20310359372041068 4932422002915397 7203298787149792 9218557477325187 10381445624697524 20700521417776278 15563804130491891 14186647871229048 3236178953045420 17869614111748871 3405609202285494 20531009190268347 3648776021939888 5779468182023431 4807628177703339 12840934641003638 24652821755698097 7310304155611850 10149720899908087 10231495696743981 4984268244528291 5470721488171024 24067336363347811 3568785615117658 15521487389395074 18775267152230005 4879789771395188 13950050630411758 17243484614653912 8401601291980959 4450164093846457 14556007521762182 15281537159638522 10336747346668708 5798365158452419 16491965023065329 10981147278031581 11455255923214465 12624882786964480 24698773972252577 2503805260241887 8829982114536069 11597540951539211 2695690823407265 4899221525276113 14155175167553330 14539393361090428 8160410782167891 12215358772534780 24769266774928256 4809469008633994 11729617449228116 3165683396696265 19486753612577116 17234916622346957 10137989906043818 11663645904450312 9483904068173329 18830385767490278 11427759684772856 5327443226713342 10987547281763528 4773118030155155 16439409038527169 18760619761661766 20454518861778578 19283160468306909 14231295489431752 14447561827201981 24870520472431328 7552073961293238 18417010077566949 18853272919903150 19775126095072866 3858990294783966 4362670686452238 17032603191996479 9556107343816251 23685798798474466 24240385244847189 9550934537036443 15535685194648850 2721551252826421 3667949067538799 13494817663520920 9200696514268337 18403096280564852 4762234470915197 5800613264619109 19097003234554401 17639698701956759 16119509702955329 3525395975492511 21675651911078925 23559290488444296 13107252187844450 19046065016713478 21222576536635993 14482080813449791 10260886054684434 5928510141092606 7915668122577762 2837607532037654 18749794145266751 5145049984170527 8150726260418348 12373085903345119 23499429098983542 9208829981693242 4352308875588748 24749846077628683 19561774531895899 23671840640159494 12420040712291212 19348539324280722 20209918947591586 10566791093567411 22053684326719134 9101627022934017 13393575824266111 3898669354960753 17311466773916453 6056473006561223 4374421345173093 9493247039944806 6861342994754530 16814544327214324 16000850651350883 18703193181289915 16546535319583711 5831092789074410 16519766620264046 19957421643984138 22068978933289829 10659304035051949 7083139013924023 15910088041651047 6454591961112199 23117215381845227 19180173803858743 15285409315239741 9713868737656344 9793503736732355 22572224902246169 10398034006522562 11888116162627999 2777713212296842 14241347667337110 9146982574551737 10541077358128556 17944841772517936 20060933465183872 12024109381492953 15772079335023536 24722016229609082 23052887962886580 17299296044306753 6166169906699654 4182341685096692 3853967428722471 23166515706778048 14076227958011981 5219346520643833 8423373515968842 5202222022269056 12950744205494228 10920263812840733 20396371887060595 18579005474919032 17648096335903411 8001290569555992 14437932869079278 11694292880397616 8374780659477580 13661419279996537 13853939664780660 11677475086671678 24307304293772233 17611161167766572 21676565391755677 23775211468895453 5677008889914278 3850831215140848 4804803756659653 15945980344959405 4521257990606632 24930738576387043 3839792707359853 9425888139627945 19547002280123912 3497822946902389 11372873092594202 22240501356564560 5717896801914918 22309256622996845 16181171481250460 11558687309383289 18600839512952418 17400096027024901 6998986335611340 20402185099884685 5544017911694380 3516644642796171 8287044279753953 19142122152931604 18784630298312103 20880249014058210 9587883857028296 24623767888948120 24293605990955370 20296279323543683 8767208350933163 4770706532281942 11841821701433876 8417459367467746 6876940862774347 3333738427516366 19195731086371851 5573030588194247 3520816995541314 11726661812526231 8273584994222233 3653571663855199 23426559130870852 13247113198615005 8678739143167889 23529626484508200 19627821863953404 5582918954702692 19047441998038325 19119242605386608 5524248385897844 17105921087505440 20591131510657110 13470613016500700 9164679107666901 18972664467747376 13002974031121397 18081449038594020 23575482596403655 24066582250806384 3338351404884383 11768717667110573 10007144054185347 15915415564004431 10029222246420732 6359616197199083 18974470899137135 5072452188276979 7229193444751744 17979440993823354 19273667371106243 22719629736440289 4230440354615139 17377747706422521 19954144667724808 6371421772623911 8669482087263516 5845717021485648 23771359851612227 22993303055018693 11670355528016632 13237708683759910 15321228660691213 8752826592400186 22743428313335333 12054562631059144 12628224487981679 6265314076283279 11577937580708202 13052620030037717 8500030714595905 19158191201504380 13026461015837549 4845910807427800 6757580326518542 5695079037348659 23955876111739087 16506259087886728 7135496346625811\n",
-          "sample": false
-        }
-      ]
-    },
-    {
-      "id": "HSG-SEGMENT",
-      "name": "Đoạn con",
-      "platform": "DeruckOJ",
-      "url": "#judge-HSG-SEGMENT",
-      "badge_color": "indigo",
-      "category": "Cửa sổ trượt & Deque",
-      "difficulty": "Level 3 • Nâng cao",
-      "classes": [
-        "C++ nâng cao",
-        "Python 1-1",
-        "Tất cả"
-      ],
-      "points": 3.0,
-      "time_limit": "1.5s",
-      "memory_limit": "256M",
-      "author": "Đề chọn Đội tuyển HSG 2026 - 2027 • THCS Nguyễn Bỉnh Khiêm",
-      "types": [
-        "Sliding Window",
-        "Monotonic Deque",
-        "Cấu trúc dữ liệu"
-      ],
-      "description": "Cho mảng $A$ gồm $n$ phần tử nguyên dương $A_1, A_2, \\dots, A_n$ và một số nguyên dương $k$ ($k \\le n$). Đoạn con của mảng là một dãy gồm các phần tử liên tiếp nằm trên mảng.\n\n*Yêu cầu*: Xét tất cả các đoạn con có độ dài chính xác bằng $k$ của mảng $A$ (lần lượt từ trái sang phải). Với mỗi đoạn con, hãy tìm và in ra: **Tổng** các phần tử, phần tử **lớn nhất** và phần tử **nhỏ nhất** trong đoạn con đó.",
-      "input_specification": "• Dòng đầu tiên chứa hai số nguyên dương $n$ và $k$ ($1 \\le k \\le n \\le 10^6$).\n• Dòng thứ hai chứa $n$ số nguyên dương $A_1, A_2, \\dots, A_n$ ($1 \\le A_i \\le 10^9$), các số cách nhau bởi khoảng trắng.",
-      "output_specification": "Gồm $n - k + 1$ dòng. Mỗi dòng chứa 3 số nguyên lần lượt là Tổng, Số lớn nhất, Số bé nhất của đoạn con độ dài $k$ tương ứng (xét từ đoạn con bắt đầu tại phần tử đầu tiên đến đoạn con cuối cùng).",
-      "constraints": "• $1 \\le k \\le n \\le 10^6$\n• $1 \\le A_i \\le 10^9$\n\n**Subtasks:**\n- Subtask 1 (10% điểm): $k = n$.\n- Subtask 2 (20% điểm): $n \\le 300$.\n- Subtask 3 (30% điểm): $n \\le 5000$.\n- Subtask 4 (40% điểm): Không có ràng buộc thêm ($n \\le 10^6$).",
-      "sample_cases": [
-        {
-          "input": "5 3\n1 5 3 2 4\n",
-          "output": "9 5 1\n10 5 2\n9 4 2\n",
-          "explanation": "• Đoạn con 1 {1, 5, 3}: tổng 9, max 5, min 1.\n• Đoạn con 2 {5, 3, 2}: tổng 10, max 5, min 2.\n• Đoạn con 3 {3, 2, 4}: tổng 9, max 4, min 2."
-        }
-      ],
-      "starter_cpp": "#include <iostream>\n#include <vector>\n#include <deque>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, k;\n    if (!(cin >> n >> k)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> a[i];\n    }\n\n    long long current_sum = 0;\n    deque<int> max_dq, min_dq;\n\n    for (int i = 0; i < n; ++i) {\n        current_sum += a[i];\n\n        // Loại bỏ các chỉ số đã trượt ra ngoài cửa sổ k\n        if (!max_dq.empty() && max_dq.front() == i - k) max_dq.pop_front();\n        if (!min_dq.empty() && min_dq.front() == i - k) min_dq.pop_front();\n\n        // Loại bỏ các phần tử không có khả năng làm Max trong tương lai\n        while (!max_dq.empty() && a[max_dq.back()] <= a[i]) max_dq.pop_back();\n        max_dq.push_back(i);\n\n        // Loại bỏ các phần tử không có khả năng làm Min trong tương lai\n        while (!min_dq.empty() && a[min_dq.back()] >= a[i]) min_dq.pop_back();\n        min_dq.push_back(i);\n\n        // Cửa sổ bắt đầu đủ kích thước k\n        if (i >= k - 1) {\n            cout << current_sum << \" \" << a[max_dq.front()] << \" \" << a[min_dq.front()] << \"\\n\";\n            current_sum -= a[i - k + 1]; // Trừ đi phần tử ngoài cùng bên trái để chuẩn bị cho bước lặp sau\n        }\n    }\n    return 0;\n}\n",
-      "starter_py": "import sys\nfrom collections import deque\n\ndef solve():\n    input_data = sys.stdin.read().split()\n    if not input_data:\n        return\n        \n    n = int(input_data[0])\n    k = int(input_data[1])\n    a = [int(x) for x in input_data[2:n+2]]\n    \n    max_dq = deque()\n    min_dq = deque()\n    current_sum = 0\n    res = []\n    \n    for i in range(n):\n        current_sum += a[i]\n        \n        if max_dq and max_dq[0] == i - k:\n            max_dq.popleft()\n        if min_dq and min_dq[0] == i - k:\n            min_dq.popleft()\n            \n        while max_dq and a[max_dq[-1]] <= a[i]:\n            max_dq.pop()\n        max_dq.append(i)\n        \n        while min_dq and a[min_dq[-1]] >= a[i]:\n            min_dq.pop()\n        min_dq.append(i)\n        \n        if i >= k - 1:\n            res.append(f\"{current_sum} {a[max_dq[0]]} {a[min_dq[0]]}\")\n            current_sum -= a[i - k + 1]\n            \n    print('\\n'.join(res))\n\nif __name__ == '__main__':\n    solve()",
-      "testcases": [
-        {
-          "name": "Test 01",
-          "input": "5 5\n1 5 3 2 4\n",
-          "output": "15 5 1\n",
-          "sample": true
-        },
-        {
-          "name": "Test 03",
-          "input": "5 3\n1 5 3 2 4\n",
-          "output": "9 5 1\n10 5 2\n9 4 2\n",
-          "sample": false
-        },
-        {
-          "name": "Test 04",
-          "input": "10 1\n10 20 30 40 50 60 70 80 90 100\n",
-          "output": "10 10 10\n20 20 20\n30 30 30\n40 40 40\n50 50 50\n60 60 60\n70 70 70\n80 80 80\n90 90 90\n100 100 100\n",
-          "sample": false
-        },
-        {
-          "name": "Test 05",
-          "input": "150 50\n777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777 777\n",
-          "output": "38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n38850 777 777\n",
-          "sample": false
-        },
-        {
-          "name": "Test 06",
-          "input": "300 100\n1000000 2000000 3000000 4000000 5000000 6000000 7000000 8000000 9000000 10000000 11000000 12000000 13000000 14000000 15000000 16000000 17000000 18000000 19000000 20000000 21000000 22000000 23000000 24000000 25000000 26000000 27000000 28000000 29000000 30000000 31000000 32000000 33000000 34000000 35000000 36000000 37000000 38000000 39000000 40000000 41000000 42000000 43000000 44000000 45000000 46000000 47000000 48000000 49000000 50000000 51000000 52000000 53000000 54000000 55000000 56000000 57000000 58000000 59000000 60000000 61000000 62000000 63000000 64000000 65000000 66000000 67000000 68000000 69000000 70000000 71000000 72000000 73000000 74000000 75000000 76000000 77000000 78000000 79000000 80000000 81000000 82000000 83000000 84000000 85000000 86000000 87000000 88000000 89000000 90000000 91000000 92000000 93000000 94000000 95000000 96000000 97000000 98000000 99000000 100000000 101000000 102000000 103000000 104000000 105000000 106000000 107000000 108000000 109000000 110000000 111000000 112000000 113000000 114000000 115000000 116000000 117000000 118000000 119000000 120000000 121000000 122000000 123000000 124000000 125000000 126000000 127000000 128000000 129000000 130000000 131000000 132000000 133000000 134000000 135000000 136000000 137000000 138000000 139000000 140000000 141000000 142000000 143000000 144000000 145000000 146000000 147000000 148000000 149000000 150000000 151000000 152000000 153000000 154000000 155000000 156000000 157000000 158000000 159000000 160000000 161000000 162000000 163000000 164000000 165000000 166000000 167000000 168000000 169000000 170000000 171000000 172000000 173000000 174000000 175000000 176000000 177000000 178000000 179000000 180000000 181000000 182000000 183000000 184000000 185000000 186000000 187000000 188000000 189000000 190000000 191000000 192000000 193000000 194000000 195000000 196000000 197000000 198000000 199000000 200000000 201000000 202000000 203000000 204000000 205000000 206000000 207000000 208000000 209000000 210000000 211000000 212000000 213000000 214000000 215000000 216000000 217000000 218000000 219000000 220000000 221000000 222000000 223000000 224000000 225000000 226000000 227000000 228000000 229000000 230000000 231000000 232000000 233000000 234000000 235000000 236000000 237000000 238000000 239000000 240000000 241000000 242000000 243000000 244000000 245000000 246000000 247000000 248000000 249000000 250000000 251000000 252000000 253000000 254000000 255000000 256000000 257000000 258000000 259000000 260000000 261000000 262000000 263000000 264000000 265000000 266000000 267000000 268000000 269000000 270000000 271000000 272000000 273000000 274000000 275000000 276000000 277000000 278000000 279000000 280000000 281000000 282000000 283000000 284000000 285000000 286000000 287000000 288000000 289000000 290000000 291000000 292000000 293000000 294000000 295000000 296000000 297000000 298000000 299000000 300000000\n",
-          "output": "5050000000 100000000 1000000\n5150000000 101000000 2000000\n5250000000 102000000 3000000\n5350000000 103000000 4000000\n5450000000 104000000 5000000\n5550000000 105000000 6000000\n5650000000 106000000 7000000\n5750000000 107000000 8000000\n5850000000 108000000 9000000\n5950000000 109000000 10000000\n6050000000 110000000 11000000\n6150000000 111000000 12000000\n6250000000 112000000 13000000\n6350000000 113000000 14000000\n6450000000 114000000 15000000\n6550000000 115000000 16000000\n6650000000 116000000 17000000\n6750000000 117000000 18000000\n6850000000 118000000 19000000\n6950000000 119000000 20000000\n7050000000 120000000 21000000\n7150000000 121000000 22000000\n7250000000 122000000 23000000\n7350000000 123000000 24000000\n7450000000 124000000 25000000\n7550000000 125000000 26000000\n7650000000 126000000 27000000\n7750000000 127000000 28000000\n7850000000 128000000 29000000\n7950000000 129000000 30000000\n8050000000 130000000 31000000\n8150000000 131000000 32000000\n8250000000 132000000 33000000\n8350000000 133000000 34000000\n8450000000 134000000 35000000\n8550000000 135000000 36000000\n8650000000 136000000 37000000\n8750000000 137000000 38000000\n8850000000 138000000 39000000\n8950000000 139000000 40000000\n9050000000 140000000 41000000\n9150000000 141000000 42000000\n9250000000 142000000 43000000\n9350000000 143000000 44000000\n9450000000 144000000 45000000\n9550000000 145000000 46000000\n9650000000 146000000 47000000\n9750000000 147000000 48000000\n9850000000 148000000 49000000\n9950000000 149000000 50000000\n10050000000 150000000 51000000\n10150000000 151000000 52000000\n10250000000 152000000 53000000\n10350000000 153000000 54000000\n10450000000 154000000 55000000\n10550000000 155000000 56000000\n10650000000 156000000 57000000\n10750000000 157000000 58000000\n10850000000 158000000 59000000\n10950000000 159000000 60000000\n11050000000 160000000 61000000\n11150000000 161000000 62000000\n11250000000 162000000 63000000\n11350000000 163000000 64000000\n11450000000 164000000 65000000\n11550000000 165000000 66000000\n11650000000 166000000 67000000\n11750000000 167000000 68000000\n11850000000 168000000 69000000\n11950000000 169000000 70000000\n12050000000 170000000 71000000\n12150000000 171000000 72000000\n12250000000 172000000 73000000\n12350000000 173000000 74000000\n12450000000 174000000 75000000\n12550000000 175000000 76000000\n12650000000 176000000 77000000\n12750000000 177000000 78000000\n12850000000 178000000 79000000\n12950000000 179000000 80000000\n13050000000 180000000 81000000\n13150000000 181000000 82000000\n13250000000 182000000 83000000\n13350000000 183000000 84000000\n13450000000 184000000 85000000\n13550000000 185000000 86000000\n13650000000 186000000 87000000\n13750000000 187000000 88000000\n13850000000 188000000 89000000\n13950000000 189000000 90000000\n14050000000 190000000 91000000\n14150000000 191000000 92000000\n14250000000 192000000 93000000\n14350000000 193000000 94000000\n14450000000 194000000 95000000\n14550000000 195000000 96000000\n14650000000 196000000 97000000\n14750000000 197000000 98000000\n14850000000 198000000 99000000\n14950000000 199000000 100000000\n15050000000 200000000 101000000\n15150000000 201000000 102000000\n15250000000 202000000 103000000\n15350000000 203000000 104000000\n15450000000 204000000 105000000\n15550000000 205000000 106000000\n15650000000 206000000 107000000\n15750000000 207000000 108000000\n15850000000 208000000 109000000\n15950000000 209000000 110000000\n16050000000 210000000 111000000\n16150000000 211000000 112000000\n16250000000 212000000 113000000\n16350000000 213000000 114000000\n16450000000 214000000 115000000\n16550000000 215000000 116000000\n16650000000 216000000 117000000\n16750000000 217000000 118000000\n16850000000 218000000 119000000\n16950000000 219000000 120000000\n17050000000 220000000 121000000\n17150000000 221000000 122000000\n17250000000 222000000 123000000\n17350000000 223000000 124000000\n17450000000 224000000 125000000\n17550000000 225000000 126000000\n17650000000 226000000 127000000\n17750000000 227000000 128000000\n17850000000 228000000 129000000\n17950000000 229000000 130000000\n18050000000 230000000 131000000\n18150000000 231000000 132000000\n18250000000 232000000 133000000\n18350000000 233000000 134000000\n18450000000 234000000 135000000\n18550000000 235000000 136000000\n18650000000 236000000 137000000\n18750000000 237000000 138000000\n18850000000 238000000 139000000\n18950000000 239000000 140000000\n19050000000 240000000 141000000\n19150000000 241000000 142000000\n19250000000 242000000 143000000\n19350000000 243000000 144000000\n19450000000 244000000 145000000\n19550000000 245000000 146000000\n19650000000 246000000 147000000\n19750000000 247000000 148000000\n19850000000 248000000 149000000\n19950000000 249000000 150000000\n20050000000 250000000 151000000\n20150000000 251000000 152000000\n20250000000 252000000 153000000\n20350000000 253000000 154000000\n20450000000 254000000 155000000\n20550000000 255000000 156000000\n20650000000 256000000 157000000\n20750000000 257000000 158000000\n20850000000 258000000 159000000\n20950000000 259000000 160000000\n21050000000 260000000 161000000\n21150000000 261000000 162000000\n21250000000 262000000 163000000\n21350000000 263000000 164000000\n21450000000 264000000 165000000\n21550000000 265000000 166000000\n21650000000 266000000 167000000\n21750000000 267000000 168000000\n21850000000 268000000 169000000\n21950000000 269000000 170000000\n22050000000 270000000 171000000\n22150000000 271000000 172000000\n22250000000 272000000 173000000\n22350000000 273000000 174000000\n22450000000 274000000 175000000\n22550000000 275000000 176000000\n22650000000 276000000 177000000\n22750000000 277000000 178000000\n22850000000 278000000 179000000\n22950000000 279000000 180000000\n23050000000 280000000 181000000\n23150000000 281000000 182000000\n23250000000 282000000 183000000\n23350000000 283000000 184000000\n23450000000 284000000 185000000\n23550000000 285000000 186000000\n23650000000 286000000 187000000\n23750000000 287000000 188000000\n23850000000 288000000 189000000\n23950000000 289000000 190000000\n24050000000 290000000 191000000\n24150000000 291000000 192000000\n24250000000 292000000 193000000\n24350000000 293000000 194000000\n24450000000 294000000 195000000\n24550000000 295000000 196000000\n24650000000 296000000 197000000\n24750000000 297000000 198000000\n24850000000 298000000 199000000\n24950000000 299000000 200000000\n25050000000 300000000 201000000\n",
-          "sample": false
-        }
-      ]
-    },
-    {
-      "id": "HSG-DIVISOR",
-      "name": "Đếm số ước",
-      "platform": "DeruckOJ",
-      "url": "#judge-HSG-DIVISOR",
-      "badge_color": "amber",
-      "category": "Sàng nguyên tố & Số học",
-      "difficulty": "Level 3 • Nâng cao",
-      "classes": [
-        "C++ cơ bản",
-        "C++ nâng cao",
-        "Python cơ bản",
-        "Python 1-1",
-        "Tất cả"
-      ],
-      "points": 3.0,
-      "time_limit": "1.0s",
-      "memory_limit": "256M",
-      "author": "Đề chọn Đội tuyển HSG 2026 - 2027 • THCS Nguyễn Bỉnh Khiêm",
-      "types": [
-        "Sàng Eratosthenes",
-        "Ước số",
-        "Thừa số nguyên tố"
-      ],
-      "description": "Cho mảng $A$ gồm $n$ phần tử $A_1, A_2, \\dots, A_n$. Với mỗi phần tử $A_i$ trong mảng, nhiệm vụ của bạn là đếm xem số đó có bao nhiêu ước nguyên dương.",
-      "input_specification": "• Dòng đầu tiên chứa số nguyên dương $n$.\n• Dòng thứ hai chứa $n$ số nguyên dương $A_1, A_2, \\dots, A_n$, các số cách nhau bởi một khoảng trắng.",
-      "output_specification": "In ra một dòng chứa $n$ số nguyên, số thứ $i$ tương ứng là số lượng ước nguyên dương của phần tử $A_i$. Các số cách nhau bởi khoảng trắng.",
-      "constraints": "• $1 \\le n \\le 10^6$\n• $1 \\le A_i \\le 10^{12}$\n\n**Subtasks:**\n- Subtask 1 (10% điểm): $n \\le 1000, A_i \\le 1000$.\n- Subtask 2 (20% điểm): $n \\le 1000, A_i \\le 10^9$.\n- Subtask 3 (30% điểm): $n \\le 1000, A_i \\le 10^{12}$.\n- Subtask 4 (40% điểm): $n \\le 10^6, A_i \\le 10^6$.",
-      "sample_cases": [
-        {
-          "input": "5\n15 30 45 60 75\n",
-          "output": "4 8 6 12 6\n",
-          "explanation": "• Số 15 có 4 ước (1, 3, 5, 15).\n• Số 30 có 8 ước (1, 2, 3, 5, 6, 10, 15, 30).\n• Số 45 có 6 ước (1, 3, 5, 9, 15, 45).\n• Số 60 có 12 ước (1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60).\n• Số 75 có 6 ước (1, 3, 5, 15, 25, 75)."
-        }
-      ],
-      "starter_cpp": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nconst int MAX = 1000000;\nint spf[MAX + 1];\nvector<int> primes;\n\n// Sàng Eratosthenes và mảng lưu thừa số nguyên tố nhỏ nhất\nvoid sieve() {\n    for (int i = 1; i <= MAX; i++) spf[i] = i;\n    for (int i = 2; i * i <= MAX; i++) {\n        if (spf[i] == i) {\n            for (int j = i * i; j <= MAX; j += i) {\n                if (spf[j] == j)\n                    spf[j] = i;\n            }\n        }\n    }\n    for (int i = 2; i <= MAX; i++) {\n        if (spf[i] == i) {\n            primes.push_back(i);\n        }\n    }\n}\n\nlong long countDivisors(long long n) {\n    long long divisors = 1;\n    // Tối ưu 1: Dùng mảng spf (O(log n)) cho n <= 10^6\n    if (n <= MAX) {\n        while (n != 1) {\n            int prime = spf[n];\n            int count = 0;\n            while (n % prime == 0) {\n                count++;\n                n /= prime;\n            }\n            divisors *= (count + 1);\n        }\n        return divisors;\n    } else {\n        // Tối ưu 2: Dùng danh sách số nguyên tố cho số lớn\n        for (int p : primes) {\n            if (1LL * p * p > n) break;\n            if (n % p == 0) {\n                int count = 0;\n                while (n % p == 0) {\n                    count++;\n                    n /= p;\n                }\n                divisors *= (count + 1);\n            }\n        }\n        // Nếu n phần dư ra là số nguyên tố\n        if (n > 1) {\n            divisors *= 2;\n        }\n        return divisors;\n    }\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    sieve();\n\n    int n;\n    if (cin >> n) {\n        for (int i = 0; i < n; i++) {\n            long long x;\n            cin >> x;\n            cout << countDivisors(x) << (i == n - 1 ? \"\" : \" \");\n        }\n        cout << \"\\n\";\n    }\n    return 0;\n}\n",
-      "starter_py": "import sys\n\nMAX = 1000000\nspf = list(range(MAX + 1))\nprimes = []\n\ndef sieve():\n    for i in range(2, int(MAX**0.5) + 1):\n        if spf[i] == i:\n            for j in range(i * i, MAX + 1, i):\n                if spf[j] == j:\n                    spf[j] = i\n    for i in range(2, MAX + 1):\n        if spf[i] == i:\n            primes.append(i)\n\ndef count_divisors(n):\n    divisors = 1\n    if n <= MAX:\n        while n != 1:\n            p = spf[n]\n            count = 0\n            while n % p == 0:\n                count += 1\n                n //= p\n            divisors *= (count + 1)\n        return divisors\n    else:\n        for p in primes:\n            if p * p > n:\n                break\n            if n % p == 0:\n                count = 0\n                while n % p == 0:\n                    count += 1\n                    n //= p\n                divisors *= (count + 1)\n        if n > 1:\n            divisors *= 2\n        return divisors\n\ndef solve():\n    input_data = sys.stdin.read().split()\n    if not input_data:\n        return\n        \n    sieve()\n    n = int(input_data[0])\n    res = []\n    \n    for i in range(1, n + 1):\n        res.append(str(count_divisors(int(input_data[i]))))\n        \n    print(\" \".join(res))\n\nif __name__ == '__main__':\n    solve()",
-      "testcases": [
-        {
-          "name": "Test 01",
-          "input": "5\n15 30 45 60 75\n",
-          "output": "4 8 6 12 6\n",
-          "sample": true
-        },
-        {
-          "name": "Test 02",
-          "input": "17\n1 2 3 4 8 9 16 25 49 121 169 289 720 840 961 997 1000\n",
-          "output": "1 2 2 3 4 3 5 3 3 3 3 3 30 32 3 2 16\n",
-          "sample": false
-        },
-        {
-          "name": "Test 03",
-          "input": "8\n999999937 999999929 999999893 999999883 999999797 999999761 999999757 999999751\n",
-          "output": "2 2 2 2 2 2 2 2\n",
-          "sample": false
-        },
-        {
-          "name": "Test 04",
-          "input": "8\n735134400 551350800 367567200 245044800 720720 1081080 1441440 2162160\n",
-          "output": "1344 1200 1152 1008 240 256 288 320\n",
-          "sample": false
-        },
-        {
-          "name": "Test 05",
-          "input": "6\n536870912 387420489 244140625 282475249 214358881 62748517\n",
-          "output": "30 19 13 11 9 8\n",
-          "sample": false
-        },
-        {
-          "name": "Test 06",
-          "input": "1000\n74954921 973602281 355377425 909859605 828999084 220625447 264421266 460752990 668602208 864237870 160669559 61299922 534807047 366763517 335716244 118039118 827551473 814849522 828158049 347037458 138625205 7065281 864705330 313693015 357565617 805503869 283146687 856932371 161989679 126864191 814085418 916889890 895547529 198379266 587252920 284819448 881090220 230884173 742610861 433941032 447718333 578149787 175969179 667969838 367785567 886794971 122990483 991632813 102543365 253472978 858977051 723053865 554078652 977449607 963354119 542008214 941019219 964063499 924196107 641133626 325101640 418857924 482000515 433487253 18883978 564123841 501767903 661484417 24583792 868856608 735476486 54516203 845788372 80294991 645355020 46460253 431837182 207616016 51461406 516169362 139237933 66795417 342288534 345581238 3469888 324299875 645163201 236774200 953853373 697476953 851991410 79149725 125225184 537814342 95932094 731057907 57674208 106533246 902675732 149795691 102824591 735036338 216377640 477098193 578768752 122520346 911640091 394573461 23489722 467674056 316150909 707972567 47043207 275157530 294156145 227359482 481248929 624949195 99760057 701910209 159003746 804648349 36950515 481200120 314729344 848127779 254303190 166992401 958041327 269533978 853423080 412275697 727706709 890907736 614917632 762842312 446372094 187747306 268057375 635513598 322582050 679335670 87107985 886198765 537191633 481874118 566730450 467925470 204110626 453922328 768028652 411201781 310722984 310956544 953509208 513688332 113201453 185114223 606205688 872035113 413215161 307616075 701074792 316168856 369203232 679225914 17713208 111749571 223735453 637656299 855584291 616311792 360856330 214725955 498057842 990922035 71719558 873900769 798023252 362841943 870554808 313566500 548701091 668767442 475223922 386786623 109981779 480636306 60533080 167367493 42940593 126479628 395304544 569885022 879741338 751046757 252262200 26756057 680926340 377787019 963358725 659264259 359549148 871074917 522883313 984965458 833282602 134325478 81495816 730902757 866307273 837162217 553714398 93166038 519428636 479079840 721653006 209023946 604754764 693297273 39293906 987707928 176967108 837429818 947139029 669280839 288114051 593477056 582462963 149756825 801274148 608755643 963780390 692542982 126542895 530939533 558302752 546522736 51292911 538111607 246389458 147644352 406330632 323169494 778392681 737888280 879466355 477471186 131902601 610069292 469104825 799712359 162144989 775609427 614421952 653523777 558945516 820948308 781744302 39366071 971467226 872844801 505802695 849759645 54470526 123461746 79032975 743355351 644797607 482728045 870552022 494506004 552654750 787468849 691767649 843585540 139434451 511671788 898429495 16808344 191766743 947106973 779348860 638958072 514825271 212572861 198257314 335363457 682341045 944667313 461698990 312403589 978617464 625157104 471404410 136998033 429997769 37101368 59842322 647395286 86852658 489441402 612213791 911953099 163984750 840754500 54587464 517291962 967217647 814531374 914969124 474574243 747141069 629700104 779284351 665853241 659199338 314768581 659607986 521376486 443286017 632724153 928697027 183787686 230392954 763373337 446044036 449669001 32748790 625865404 32907818 336584330 60593100 234183259 194023705 134389324 786498120 833409 387579286 937875740 304783145 681003976 750745051 956016111 230642898 821638862 983358218 436475899 54654242 387812886 941083366 101479777 215047582 197542137 236173261 12810914 938580408 527036016 144899161 638546527 982938654 401095049 888431243 653196344 962539899 826504751 601187149 791903635 931633283 102286654 4260162 51614020 424850925 4420986 118565127 22203543 624008180 394948693 557713962 46192449 866796104 645324781 978781682 417099154 362615885 625866175 133030371 84634817 621490986 575126525 111048317 294759076 315152538 24307950 83234974 976107798 908539579 969752427 872996745 302176239 937283246 802614574 677232058 322917750 675139573 454624446 757764102 460945583 52244614 635158905 397789883 473182342 510578608 940836351 501654509 452783512 519393880 350100118 510890762 477441383 426411702 560405935 51183577 358841114 392559105 350011953 577177806 148923514 924917776 58953529 932480703 59012654 427189818 109897038 11976332 141751776 872163133 372231995 172757506 341370305 764398499 455136992 904926408 596228284 137741820 756551503 510471863 12817391 74775459 509783674 358941373 883905327 20324423 836462875 233774787 717692368 853150620 565593725 2499058 887349422 173711589 184044993 743649632 375315095 855318654 178343324 196877932 469565212 106274556 684594288 660059568 5496987 281022259 362550816 629527269 553783861 711287198 827387497 529552311 2644407 925943990 640717567 90897299 320327826 563458027 991801799 969548180 604354154 734065042 442972858 830877523 443667489 113304593 266451785 48838536 768748987 404454200 218457625 933781596 104365471 600104522 479759447 274806749 710025820 155416137 903348705 865411548 320792461 600736785 522461696 665901145 93452127 963497399 748120572 461984910 179232566 220943664 923396840 610151477 919957066 494279450 664155370 896674140 768777446 98760348 855951596 485343190 278645784 343981068 351644133 853011807 163538418 906695547 37706127 782665974 10952530 224279155 581216053 583513977 642441434 429608507 309912881 364358585 442860185 489459293 196791926 701007967 861032534 648926719 302839431 932019396 948531660 483129746 671040875 913873965 240849364 181542588 647535464 589657431 456403456 361500634 902636219 258832859 199540927 624443838 655221877 689006870 956800067 421000806 179627286 285943325 923986418 316527344 125945827 681073942 386662100 594874693 619933534 325502093 647844231 302549186 542037335 923300080 409273054 476017080 288258647 783973292 722629644 618613501 915019198 349483723 35011431 841839738 807934891 659043395 657358268 745047957 581076009 750100410 102439666 471810756 26453073 151250634 892604192 651752601 499152844 115688910 369866615 265723190 665004430 196595450 946037555 895198866 243043349 283460307 402324974 208524703 688664511 253036336 958584503 377591674 783708183 108505893 173665560 82260858 338574976 252591860 640333514 825302744 494615488 900395714 850629636 906238471 218718284 219639310 449303171 350866250 754951325 937647122 736956210 779361046 465778104 527801566 27811697 636442901 810482525 965996309 816301676 747328402 642103490 363284506 250167350 244225304 368356715 982928031 507206126 713314546 836910797 358219709 238032169 16936865 59418160 206214708 489470055 716097619 993928935 872933752 854985139 941973699 699794736 64623998 639271795 909755419 606891032 72343192 46610259 140643890 579783768 53622173 904091388 159170166 838076879 710238100 902273134 480889254 683231483 975956735 510571402 897187180 383878787 300501859 244619783 42095314 406866339 420714091 774348222 492955440 170494363 384002993 940294473 566456903 45293271 216638416 842086513 555702694 465163303 538455542 948981588 365313955 899002101 336313381 331601709 838310087 745821765 54347709 712463087 226827998 428501588 295642639 625381765 191315687 583637618 858196405 578516878 443940076 326593721 203702347 201627055 994584583 399345874 475603257 304217522 676427760 753836504 775703090 24748135 919235876 256074784 829015889 988029963 648041839 826464547 788634331 10934822 33087012 296151166 380967676 418387287 288307489 156774885 73828187 850810952 836975051 687040745 887553996 278688366 874087227 916977191 259953411 150637416 420942496 612134186 151135403 172747268 850854532 318572297 242614450 473515318 741284549 788486171 694172913 67333847 829957896 233970362 360960041 769149162 625985860 798035125 987885161 689653395 225460483 712353409 843616501 693878738 300672475 167215547 653560361 540061326 625111830 692096952 523626641 743197990 753153251 899173121 618367413 270400453 150749447 985252027 15914147 571254568 659848601 518725744 506320104 979281470 931445216 482349735 280639912 936284670 692493031 842853759 293175680 83357730 500655487 591446275 946526262 266130664 947028139 287639543 139193393 630782965 712925411 133093265 64167905 500938379 132104028 500898980 613900859 138212790 222913580 376702961 733645985 419359393 150679391 356394226 690865465 965146154 593642499 973598883 844943000 159903162 232591002 319146791 389681044 452957695 637229137 140911988 430202855 405638641 8727466 912133325 38038553 832752193 161615692 365180002 783016604 240335031 515174789 148215364 32347613 482744734 231791685 103940055 936864764 421302555 969160961 280351079 163764424 572699129 858087666 116193446 859074689 950031451 566713320 511543771 258465592 381424363 392157545 525630131 389366841 219510692 615067919 75864406 413701427 591958996 625760822 12427530 377293343 708893570 658468760 69689221 511063559 122786376 865022522 555857077 872007027 388664095 772502050 388283541 151225703 185551808 315099255 312773661 569038679 377682904 59845630 354757935 766529989 239497303 427279783 30316295 53035024 517196723 662740558 578147059 702911040 272987519 359973880 80703314 831128927 858850944 16675782 220381487 331866939 949449586 414727743 402891018 105697700 362990974 404812001 415913846 734504163 942668746 244544340 804813318 767257742 459588263 692582927 957256878 50997702 369039189 524386433 688805917 58763297 541466726 715976082 306020125 468545232 510843766 313935507 957840397 754928741 355029385 485796023 676520078 647301277 361616854 526529940 234049537 523694460 119514735 779744257 274131405 865393379 993426049 409784879 578830438 941521596 846828110 610710946 643188151 249960372 241365874 47413128 532860144 597694706 97093778 983127220 809933194 55030940 186576635 275312995 390107110 234276517 140427162 231354784 939000404 408843435 585562723 281516710 301827494 808999291 709536842 260821524 193578439 908793065 388932152 772786986 666409341 363823364 144590885\n",
-          "output": "4 2 54 16 24 8 8 32 24 32 8 16 4 8 48 8 16 4 12 4 4 8 48 4 16 8 6 4 8 2 16 32 16 16 32 64 24 12 4 32 4 8 12 8 6 4 16 4 8 16 8 8 24 8 8 8 12 8 4 8 16 24 8 32 4 2 64 8 10 12 8 4 48 16 96 32 16 20 20 16 2 12 64 16 14 8 2 96 8 8 8 12 96 16 4 16 48 8 24 4 8 8 96 32 10 8 2 16 4 96 2 2 16 16 4 32 32 8 2 16 16 2 16 96 32 4 96 2 16 16 96 2 12 8 80 16 32 8 8 96 72 32 48 8 4 16 144 16 8 8 24 4 192 20 16 48 4 24 32 4 8 12 16 64 96 24 16 16 8 8 8 60 16 8 16 16 8 8 24 4 48 96 2 8 48 2 4 24 32 4 6 72 12 48 16 16 96 4 12 4 24 24 24 8 2 4 4 16 16 4 8 4 48 80 12 48 8 16 6 8 8 32 18 8 2 4 8 28 12 12 12 8 128 8 16 8 24 20 8 16 16 84 48 4 8 64 8 48 2 24 48 8 4 8 28 6 48 24 12 4 16 8 16 32 64 16 72 6 8 4 4 6 64 4 4 144 4 12 8 16 12 4 24 16 2 8 8 16 8 4 16 4 16 40 8 4 4 16 16 16 16 24 12 4 32 48 32 32 16 12 18 16 4 32 2 2 32 4 8 8 4 4 12 12 12 16 6 8 8 24 8 16 108 4 8 6 128 10 4 12 16 16 4 8 8 8 4 8 4 16 4 8 4 16 4 4 48 40 4 4 24 4 8 16 16 4 4 16 8 32 8 12 48 32 10 4 12 4 24 16 8 4 4 8 4 24 16 4 24 6 8 48 16 24 4 24 16 16 16 8 16 16 8 48 4 8 16 8 8 16 2 4 40 48 2 8 64 8 4 8 40 16 2 8 16 24 16 4 40 2 48 16 32 12 6 24 2 8 16 8 2 12 32 48 96 4 8 8 12 8 8 48 8 16 16 40 96 6 8 8 4 48 96 4 24 12 12 24 36 120 60 4 8 120 16 8 8 2 4 10 16 8 2 64 8 2 24 8 8 8 16 4 2 4 48 16 24 8 48 8 8 4 12 48 8 32 12 8 16 80 32 8 4 36 32 16 30 32 8 24 24 16 144 4 36 24 8 32 48 8 8 32 4 16 48 16 4 8 24 16 4 4 8 4 8 8 4 16 8 8 144 96 16 8 16 24 96 16 16 40 8 4 8 4 16 8 16 8 8 32 6 8 40 8 8 72 8 8 16 16 8 8 20 16 128 4 12 24 16 8 4 72 16 8 4 24 8 24 24 8 12 8 24 48 4 12 64 16 8 8 48 4 8 4 8 16 32 20 40 2 16 16 8 32 32 32 24 8 64 14 8 36 4 12 16 4 40 12 16 32 32 128 16 8 8 24 8 12 16 32 8 24 16 8 4 16 16 4 4 4 16 40 48 16 8 16 16 2 4 40 8 32 16 16 16 8 32 32 4 24 24 8 72 32 16 8 16 8 24 4 24 8 4 12 16 32 160 16 4 8 12 8 40 4 8 16 16 12 4 8 4 16 4 48 16 12 4 12 4 8 2 8 32 4 6 4 8 32 16 8 4 16 200 16 32 4 24 72 8 24 8 4 4 4 48 16 24 8 2 8 4 16 8 4 48 96 32 8 8 32 72 16 8 24 24 4 48 16 8 4 32 8 24 8 4 16 12 8 8 24 4 8 8 8 12 4 4 48 160 16 8 16 8 32 4 16 2 4 4 8 4 10 16 32 96 40 32 40 2 16 128 48 8 24 32 8 4 4 4 16 8 8 8 16 48 24 8 16 12 2 8 8 2 8 8 32 16 8 96 24 16 8 6 4 8 48 16 2 8 6 12 16 12 8 12 16 2 12 2 4 32 24 72 24 8 8 8 4 12 4 8 8 64 4 64 4 8 8 8 6 4 16 4 12 4 32 16 32 32 6 2 64 16 4 32 16 12 8 4 28 16 12 12 8 32 16 4 2 8 16 20 2 16 8 224 16 128 4 2 128 32 4 24 8 8 16 36 8 8 8 8 8 48 24 4 2 4 16 32 4 8 4 2 4 12 8 20 16 10 4 48 4 4 32 8 16 24 4 24 24 8 64 4 12 16 4 48 8 4 8 24 16 32 40 16 8 24 8 24 8 8 8 8 16 24 24 128 4 8 4 8 8 48 4 4 16 32 16 6 8\n",
-          "sample": false
-        },
-        {
-          "name": "Test 07",
-          "input": "7\n1000000000000 999999999999 34359738368 549755813888 2147483648 4294967296 500000000000\n",
-          "output": "169 256 36 40 32 33 156\n",
-          "sample": false
-        },
-        {
-          "name": "Test 08",
-          "input": "1000\n999999999989 999999999961 999999999959 999999999937 999999999899 999999999877 999999999863 999999999857 999999999847 999999999767 999999999707 999999999697 999999999673 999999999617 999999999611 999999999599 999999999589 999999999577 999999999571 999999999529 999999999517 999999999497 999999999457 999999999391 999999999359 999999999331 999999999301 999999999293 999999999287 999999999277 999999999269 999999999253 999999999247 999999999161 999999999143 999999999133 999999999101 999999999091 999999998941 999999998939 999999998867 999999998863 999999998821 999999998801 999999998771 999999998761 999999998737 999999998719 999999998713 999999998611 999999998581 999999998567 999999998533 999999998531 999999998527 999999998513 999999998509 999999998497 999999998461 999999998449 999999998441 999999998429 999999998401 999999998399 999999998311 999999998281 999999998237 999999998227 999999998203 999999998191 999999998183 999999998171 999999998159 999999998143 999999998141 999999998069 999999998059 999999998047 999999998021 999999997939 999999997933 999999997907 999999997831 999999997823 999999997819 999999997793 999999997771 999999997757 999999997753 999999997723 999999997721 999999997679 999999997621 999999997603 999999997589 999999997517 999999997459 999999997433 999999997397 999999997391 999999997343 999999997327 999999997277 999999997259 999999997201 999999997163 999999997147 999999997103 999999997013 999999996979 999999996977 999999996901 999999996899 999999996889 999999996881 999999996823 999999996781 999999996769 999999996739 999999996701 999999996659 999999996637 999999996623 999999996601 999999996581 999999996473 999999996467 999999996449 999999996371 999999996323 999999996311 999999996277 999999996223 999999996211 999999996209 999999996197 999999996137 999999996097 999999995993 999999995989 999999995987 999999995983 999999995957 999999995933 999999995899 999999995887 999999995857 999999995773 999999995747 999999995711 999999995653 999999995581 999999995573 999999995537 999999995497 999999995483 999999995461 999999995429 999999995419 999999995413 999999995383 999999995339 999999995327 999999995299 999999995237 999999995207 999999995177 999999995147 999999995131 999999995117 999999995107 999999995101 999999995051 999999995047 999999995017 999999995009 999999994999 999999994979 999999994957 999999994937 999999994909 999999994897 999999994823 999999994817 999999994801 999999994793 999999994781 999999994769 999999994729 999999994687 999999994639 999999994613 999999994607 999999994603 999999994583 999999994579 999999994517 999999994493 999999994471 999999994463 999999994457 999999994439 999999994429 999999994423 999999994403 999999994379 999999994361 999999994319 999999994171 999999994163 999999994127 999999994117 999999994087 999999994009 999999993929 999999993911 999999993907 999999993899 999999993871 999999993859 999999993847 999999993793 999999993779 999999993763 999999993749 999999993653 999999993611 999999993599 999999993589 999999993557 999999993481 999999993467 999999993389 999999993361 999999993287 999999993259 999999993079 999999993073 999999993071 999999993061 999999993029 999999992977 999999992941 999999992843 999999992743 999999992741 999999992737 999999992731 999999992647 999999992639 999999992611 999999992539 999999992531 999999992447 999999992441 999999992437 999999992389 999999992333 999999992297 999999992293 999999992291 999999992261 999999992231 999999992221 999999992183 999999992149 999999992141 999999992113 999999992077 999999992053 999999992009 999999992003 999999991999 999999991993 999999991979 999999991973 999999991867 999999991847 999999991819 999999991789 999999991787 999999991733 999999991643 999999991597 999999991591 999999991553 999999991547 999999991517 999999991513 999999991447 999999991373 999999991369 999999991343 999999991337 999999991327 999999991321 999999991297 999999991279 999999991271 999999991259 999999991217 999999991171 999999991163 999999991141 999999991073 999999991057 999999991043 999999991013 999999991009 999999991007 999999990937 999999990917 999999990889 999999990827 999999990811 999999990779 999999990701 999999990677 999999990641 999999990631 999999990629 999999990599 999999990589 999999990559 999999990547 999999990523 999999990499 999999990463 999999990449 999999990401 999999990307 999999990257 999999990251 999999990193 999999990167 999999990061 999999990047 999999989987 999999989969 999999989941 999999989909 999999989893 999999989851 999999989827 999999989803 999999989777 999999989767 999999989741 999999989717 999999989707 999999989699 999999989693 999999989671 999999989669 999999989663 999999989629 999999989623 999999989539 999999989533 999999989519 999999989503 999999989501 999999989497 999999989441 999999989381 999999989357 999999989297 999999989249 999999989227 999999989179 999999989173 999999989167 999999989081 999999989071 999999989059 999999989033 999999989029 999999989003 999999988997 999999988987 999999988969 999999988879 999999988849 999999988811 999999988777 999999988769 999999988711 999999988703 999999988679 999999988651 999999988621 999999988609 999999988607 999999988577 999999988567 999999988549 999999988501 999999988459 999999988457 999999988423 999999988411 999999988367 999999988363 999999988333 999999988301 999999988261 999999988259 999999988241 999999988187 999999988181 999999988129 999999988103 999999988069 999999988049 999999988037 999999988007 999999987989 999999987977 999999987967 999999987919 999999987893 999999987827 999999987787 999999987761 999999987667 999999987653 999999987629 999999987601 999999987563 999999987533 999999987517 999999987499 999999987463 999999987439 999999987433 999999987409 999999987367 999999987319 999999987289 999999987281 999999987269 999999987247 999999987227 999999987223 999999987221 999999987209 999999987167 999999987139 999999987113 999999987083 999999987023 999999987013 999999987001 999999986987 999999986977 999999986971 999999986891 999999986803 999999986789 999999986747 999999986677 999999986663 999999986653 999999986627 999999986599 999999986551 999999986549 999999986543 999999986521 999999986507 999999986501 999999986497 999999986429 999999986369 999999986357 999999986347 999999986317 999999986287 999999986269 999999986203 999999986179 999999986173 999999986159 999999986119 999999986101 999999986071 999999986057 999999986053 999999986021 999999985993 999999985987 999999985969 999999985937 999999985921 999999985871 999999985811 999999985771 999999985739 999999985723 999999985651 999999985627 999999985609 999999985601 999999985549 999999985529 999999985489 999999985487 999999985459 999999985433 999999985417 999999985381 999999985373 999999985349 999999985339 999999985337 999999985307 999999985279 999999985213 999999985141 999999985139 999999985111 999999985093 999999985073 999999985031 999999984941 999999984889 999999984847 999999984839 999999984811 999999984799 999999984791 999999984751 999999984701 999999984677 999999984637 999999984611 999999984601 999999984583 999999984569 999999984553 999999984547 999999984541 999999984497 999999984481 999999984427 999999984391 999999984253 999999984229 999999984227 999999984199 999999984187 999999984167 999999984161 999999984131 999999984083 999999984073 999999984043 999999984029 999999984013 999999983909 999999983863 999999983861 999999983849 999999983833 999999983813 999999983737 999999983699 999999983681 999999983663 999999983603 999999983491 999999983461 999999983449 999999983443 999999983417 999999983413 999999983407 999999983401 999999983351 999999983317 999999983303 999999983291 999999983267 999999983221 999999983207 999999983179 999999983141 999999983107 999999983051 999999983009 999999982999 999999982991 999999982973 999999982939 999999982901 999999982897 999999982873 999999982867 999999982847 999999982843 999999982819 999999982811 999999982789 999999982753 999999982687 999999982649 999999982621 999999982601 999999982577 999999982567 999999982537 999999982529 999999982517 999999982463 999999982459 999999982453 999999982447 999999982381 999999982351 999999982327 999999982321 999999982259 999999982243 999999982211 999999982183 999999982181 999999982159 999999982151 999999982117 999999982073 999999982031 999999981997 999999981991 999999981961 999999981907 999999981887 999999981859 999999981857 999999981853 999999981847 999999981767 999999981749 999999981713 999999981709 999999981691 999999981689 999999981653 999999981599 999999981523 999999981503 999999981493 999999981473 999999981467 999999981439 999999981413 999999981359 999999981301 999999981283 999999981271 999999981251 999999981223 999999981199 999999981193 999999981187 999999981109 999999981091 999999981089 999999981061 999999981053 999999980939 999999980923 999999980911 999999980899 999999980891 999999980867 999999980827 999999980767 999999980719 999999980701 999999980687 999999980677 999999980627 999999980593 999999980591 999999980587 999999980563 999999980519 999999980509 999999980467 999999980459 999999980443 999999980411 999999980407 999999980401 999999980383 999999980303 999999980293 999999980279 999999980269 999999980227 999999980219 999999980191 999999980159 999999980153 999999980141 999999980047 999999980039 999999980033 999999980011 999999979997 999999979991 999999979981 999999979973 999999979969 999999979919 999999979879 999999979841 999999979819 999999979813 999999979787 999999979717 999999979681 999999979631 999999979613 999999979547 999999979529 999999979493 999999979487 999999979481 999999979469 999999979423 999999979411 999999979403 999999979351 999999979309 999999979267 999999979259 999999979211 999999979117 999999979091 999999979067 999999979061 999999979051 999999979039 999999978883 999999978881 999999978871 999999978863 999999978847 999999978833 999999978793 999999978779 999999978767 999999978749 999999978721 999999978701 999999978667 999999978641 999999978623 999999978617 999999978589 999999978559 999999978553 999999978547 999999978517 999999978511 999999978449 999999978377 999999978359 999999978353 999999978349 999999978323 999999978283 999999978277 999999978269 999999978239 999999978217 999999978199 999999978167 999999978163 999999978151 999999978127 999999978119 999999978037 999999978031 999999977987 999999977929 999999977909 999999977891 999999977881 999999977857 999999977813 999999977797 999999977731 999999977699 999999977689 999999977681 999999977659 999999977629 999999977591 999999977527 999999977489 999999977413 999999977387 999999977351 999999977321 999999977297 999999977257 999999977213 999999977209 999999977201 999999976993 999999976951 999999976897 999999976883 999999976879 999999976873 999999976847 999999976841 999999976831 999999976783 999999976681 999999976667 999999976643 999999976639 999999976637 999999976607 999999976589 999999976583 999999976553 999999976543 999999976523 999999976513 999999976463 999999976453 999999976447 999999976441 999999976429 999999976387 999999976309 999999976277 999999976259 999999976223 999999976127 999999976121 999999976099 999999976093 999999976049 999999976013 999999976009 999999976007 999999975979 999999975943 999999975941 999999975907 999999975853 999999975829 999999975817 999999975811 999999975803 999999975761 999999975703 999999975679 999999975671 999999975647 999999975593 999999975589 999999975497 999999975463 999999975461 999999975451 999999975449 999999975437 999999975427 999999975421 999999975391 999999975367 999999975361 999999975347 999999975323 999999975281 999999975253 999999975151 999999975137 999999975131 999999975089 999999975077 999999975071 999999975043 999999975019 999999975017 999999974999 999999974959 999999974923 999999974863 999999974851 999999974821 999999974803 999999974773 999999974741 999999974737 999999974713 999999974707 999999974693 999999974681 999999974629 999999974621 999999974573 999999974539 999999974513 999999974471 999999974461 999999974443 999999974423 999999974341 999999974291 999999974287 999999974269 999999974251 999999974219 999999974213 999999974189 999999974161 999999974123 999999974119 999999974081 999999974069 999999974063 999999974047 999999974027 999999974003 999999973993 999999973981 999999973969 999999973879 999999973873 999999973853 999999973831 999999973769 999999973717 999999973633 999999973607 999999973579 999999973547 999999973541 999999973481 999999973477 999999973459 999999973421 999999973397 999999973351 999999973309 999999973253 999999973249 999999973207 999999973201 999999973187 999999973121 999999973099 999999973079 999999973043 999999972997 999999972973 999999972971 999999972967 999999972929 999999972913 999999972911 999999972863 999999972859 999999972817 999999972791 999999972781 999999972761 999999972733 999999972731 999999972703 999999972649 999999972637 999999972611 999999972577 999999972563 999999972547 999999972523 999999972509 999999972493 999999972487 999999972469 999999972463 999999972451 999999972427 999999972409 999999972331 999999972281 999999972241 999999972233 999999972211 999999972197 999999972151 999999972149\n",
-          "output": "2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2\n",
-          "sample": false
-        },
-        {
-          "name": "Test 09",
-          "input": "7\n999966000289 999958000441 999922001521 999918001681 999906002209 999862004761 999834006889\n",
-          "output": "3 3 3 3 3 3 3\n",
-          "sample": false
-        },
-        {
-          "name": "Test 10",
-          "input": "5\n999962000357 999944000663 999938000861 999914001833 999890002829\n",
-          "output": "4 4 4 4 4\n",
-          "sample": false
-        },
-        {
-          "name": "Test 11",
-          "input": "4\n963761198400 867385078560 722820898800 674632838880\n",
-          "output": "6720 5376 5760 5760\n",
-          "sample": false
-        },
-        {
-          "name": "Test 12",
-          "input": "1000\n368671971647 291415599502 857760892388 518660672956 20164742092 765445429507 267834404878 712494675503 205817251629 287566835494 413503511871 570671385947 14361075638 46662558957 514361288201 260775016197 610770710802 689724222450 107580254428 555209413616 803720522003 662260746944 900178744810 991479965035 433198594814 844016212153 807803914505 398144812245 985307005107 231157488673 203311875663 260081060785 21052402094 293969401030 273638126678 453840326462 793085466829 769756128030 707925954406 654176123804 430254475059 443993132706 329469027679 211605269635 980485740869 668858495512 32157911270 542769014341 307142587955 650584620912 497496896249 856986860755 53282967780 807307768585 447286318880 943222437557 762180258773 642135726051 890378537169 896799599128 521924865107 682394420462 494109785817 448544948320 793364563538 922527399753 472251705632 914669046399 854943623046 963751982334 770528657293 368851239954 124187799033 471539093745 260386940519 889450530239 189843020716 989269931448 893138582577 75119702854 221478676479 61474414952 267500792529 824076554547 894257567055 356820923973 240665392847 461418462966 573055267862 628962815470 602489813801 746961219718 952573555484 489219454481 122128667129 905255396115 55655981838 121076184813 607497047519 117342848617 292646292475 536273337129 578980808271 186705366371 797360278786 660521841794 233537265943 156198522166 317267343371 94635545416 484269376929 335891546589 68768398830 119557291146 942050606892 669710852916 266792594055 477662674561 65582155588 467234518247 969627261599 221425202518 46191085904 497481650035 595045069005 830639441922 571367940261 531151059311 242246628684 766107631593 298497992464 132407995036 553214094415 989672129379 570402720239 312185150560 975790229979 56366221399 394434021037 707279789961 300150184860 722019459950 704734860164 657793557905 840871531730 796507763302 765825161440 871503165968 403262177103 600523128547 894937126343 70797581061 132979768836 728572099044 138316882741 714291581337 881465619040 306268406013 481814997723 224734179947 822849459883 479380568486 309448190723 910477543798 857776269009 418435086187 836248508527 460262151368 45005267027 782097276228 937160414423 203679394993 888953991790 751642304699 471465412270 721147971837 39342855836 908052659745 565746922679 323159537597 127104877015 598398619703 224861188804 118349997588 391917075929 476684317994 741566106913 768563210539 443882264106 441537113529 211540416077 906515497181 11769969351 660162011220 961634217329 757613789229 429765033499 932197397746 633736612904 62804879322 497380176061 752076920046 473467930978 187741411307 472748456739 149462040546 577893967915 529275206742 522151319748 118400031464 332446139901 130036546457 228379471678 415888227534 660418581772 454588324177 868714498299 373953229721 878027985710 624003973718 105640248851 111898910344 322981420254 825590317914 813286966298 281706997068 829516626107 255914169688 380012285365 714358511919 906917633436 324010433610 71488953113 243195838435 782192034736 704777840406 489423410137 558105000640 587194390384 739927741361 462816908785 660703789519 933943772928 676004261255 939170183125 863258021021 421734441605 717971669474 160043190209 777200970796 983309639482 19541752530 992180968315 431769633394 804500104926 285818280962 543141597933 692967801813 90075815444 50636850732 642956034794 547290751881 152474995092 524672378216 479057093929 403554243352 952093372119 975170677019 727051969218 654556817576 377759333242 978320278940 714088927536 708046997188 624107759461 92095250332 711520420227 382000130994 210515340920 868247472711 600294644499 29329225479 839303504431 486692165527 724106916521 881251983590 300665596103 223518594352 263902365057 168436736046 711709459004 228499323995 969969079291 11617483314 56840973684 127093341641 581994188651 253639078321 743425594122 65415673821 514948359852 16930445035 392263238605 866769794165 997754231434 650193306053 127522896195 644813241327 948862420583 297471370530 289370763565 735701831513 411532381409 832261648750 917389764207 690404797047 210787871349 684792896609 290985518997 426639357835 444241759479 202269514099 455710199283 493241469067 874682805276 628647485413 287899450757 78710965153 629976057030 473520176078 783839062503 48524524457 647748646968 322338457353 818430360476 139581244446 970928374682 147452005513 886332839589 539318399719 821940511364 802267677810 149502203464 168803999255 241498836561 154337179857 206238156295 225806477185 360310688262 639797016928 671955546062 962900953017 390725374373 898278034334 365352289059 677214615625 154358575743 992882191856 926797569155 891017392562 198838079538 221551046286 529898966678 356413756647 419381848831 202468304922 520902478400 709227642424 615483908401 914017188437 959978686556 221925400677 248176525297 56258968482 795195337869 47244465130 763110091928 853493485662 650055086877 264324421164 750118165960 80880523551 769643468895 633799218196 907811601307 848780632926 421662715983 710948300937 252068121839 337616092605 728060174951 127053890585 740023945680 171491828676 473065135212 993570717162 936167757487 878052406240 505900182521 478073095913 653283168497 547610235048 354232462598 47219191201 20396956595 778320973059 678386932192 325713077034 431415800798 928645412688 857083785289 554015000068 563867505547 559979371828 66732006208 879007694196 753340946589 289731783875 479350026466 643052461095 125906307829 241762289739 621626832832 58589379647 772891393185 296293801760 681346203273 669760845659 518180407049 72467488491 291419820134 282480147252 182621524679 946614427610 232741854512 252700980289 487778100381 396005625717 854765693817 486205754934 672948039773 124612614442 440465920298 288541294984 224914005348 248585676980 542468777625 848870863233 43507833675 42541938722 453349217903 303542105685 113300129827 611355128878 243710100787 159578025799 739493055934 470187013179 958464469079 321051173447 830963986786 701447281705 682799816509 903947058434 251066333354 568160523317 286309580675 509041617343 890694012696 115049722606 738122466147 425578451041 373118907657 991519125710 993743802044 870342969142 134032268337 689004997322 28025171936 289783449201 178798411343 480325614719 145619708789 360174110863 983706019209 781243990916 408083443868 783886998392 562895061346 427933626660 517125198290 970510957885 780145897591 766917827547 35103423031 978402804640 802980230310 180774329898 119217651801 458248742404 238933219255 146337884434 95183070269 773889562468 822786860090 249019199527 873894406732 377928700544 589345672075 961651176582 659231623739 121094296482 644858396672 507279562513 320013942508 322709849656 598397964877 63371110698 876870790543 174971259346 814638606767 536204340560 928018634370 91279716001 782879593315 619426339655 267352298740 695274502128 489749148540 699868358456 537168980703 383724899082 514197586502 416111978158 687707593188 39326442366 459693844700 796611132712 814366711754 549533175509 456056562458 127593143294 577208720264 590418018664 355439312142 424218106977 233953355812 931295593042 298537674403 22256293363 888387139586 677815761542 613611497768 180020767777 935845689469 354799829817 107471948068 154361675305 415447890351 844781771153 16532704505 815331548819 980800524979 349129447032 802069324799 327411925807 211863887038 27625521544 573918288281 774975804851 699004770444 177629665612 248947022486 278814917234 678470428790 708431123126 137620227112 694262444768 801876796231 113575866072 363559380207 68880310786 908550405695 785080381492 904604568350 352866348822 266985680452 269497224588 733453911752 864368977517 304114229521 610341155826 964538038870 13488596514 750165717861 94064088519 385068986954 16772554010 866152896934 970818726353 472958101665 520194227963 891488352450 409773620554 207974153073 917217419224 917657197078 624633713634 180172947766 444157379801 626042525821 550799375207 678514767436 567834515571 533900837442 822257797365 699113200778 939758357210 675140686528 353669893468 930380182543 503818707530 891802934884 93408711483 858298967011 589119891037 856732389871 844867914511 95002064861 320939872690 49196270691 781038327698 300965158216 748963917585 216106731430 537861383690 734267790733 152211037929 622921887203 170139186327 130874369475 945571993363 175733035766 111925571375 34531362568 520354919536 531037645647 42821170070 673906703750 795938832413 237408874680 554333442335 56294509800 967678802417 757682037898 145128333868 751863515766 371703831835 685347576730 108250078688 142107090354 451122610936 246572830235 859949465937 356613744369 850847227513 124878616725 500493628209 456725467288 545514564330 134109548363 968902419913 509539326245 852143273191 341226601013 197847430320 633680383691 325881764954 681179621093 709512511990 865031693476 330379021216 654184624189 299519835581 662535853955 920133662953 256706192217 782894974197 137775807413 99342645890 14966682574 36404670173 804341229303 188302443661 40258995913 867145716727 826816777042 135184881944 601209258763 713160601523 101784959052 659222868900 692494798341 888527747883 230440995699 285219780079 52198090276 674345945923 436222289500 853837383948 890264021025 850626803290 952354322311 962457724506 321957396167 875086244749 526821163496 899303359275 462710491315 249264367663 859593657932 172064263163 838804430931 978106542526 663721733970 75592130463 333587428404 216122959072 626021781377 431529918833 611039374882 621881988885 632715719987 947880938437 801783166913 275206885053 854166731325 920203894773 503227894282 265537196222 934342453913 384019273714 45631610240 44761951141 942202160010 830718200156 89693706704 100086383349 174928781867 894338719135 489663302820 933042094969 618480248780 694081231012 28315087167 102733596190 326218115214 500187032215 902738343992 622756437297 684758765694 764407841134 171251772890 572140026058 241800742554 800350793860 643951173764 601274150067 518372714510 888978746881 91831909614 586230572999 935556919241 293727270597 262160846753 345942761484 652919075551 871724286143 178391741893 483739208591 388816294399 354562793270 994120543766 910070791436 700556326336 803490398949 547176213769 693443686581 646209918449 914693978211 653772220268 513752938899 818944621725 409927895576 106454910968 404619879970 629233357817 579089552303 700212533808 842088172925 656135629463 393882523547 318356203553 786852406681 218024635668 583982502996 269461883022 70883414695 478019788582 836530600130 64657388767 344190478759 592011785738 267720383077 238779884190 410742366104 639320932635 43779456421 317154465658 805414714646 926254601398 70002834033 141112671566 994202293682 33562728644 33231056049 448212931402 28023101730 685852503994 814114838529 739617625631 132565682482 484658863328 899099960331 180238429040 734413453128 768827543428 752560322632 283610913058 524987439715 883966220910 360248685492 529763642838 216881383680 476059780810 445063004002 339177664535 503207360719 308667340157 660421479391 705603667548 794550235076 135944098280 503603346955 213354388020 819621650736 909377618037 314903414891 703518225488 397571468568 146847379149 551969974803 71193171393 461120396969 559618320264 564893892123 124814232633 600078533716 684403122701 517830405826 605263269782 626575308882 87998940262 795426473699 24445555771 356767388637 678942173235 382281464667 741326541102 289991334166 355043024205 199673880916 136008439522 457252991320 777301004002 511634682185 567164674013 641986974239 381178867016 96298696463 91832803134 593229072618 174461724703 932292302092 31061884182 194038840491 843585958777 31255463731 759618824640 719030001797 424529329052 968095317218 652228415695 883411625899 505198595398 541328810154 763380041837 60960458849 525966095741 722279714177 35609448778 484513218886 16924100427 287157631199 829448387603 615133166056 654992811276 316919052511 885066139501 215244660622 802465123665 686610823219 34561542106 910363844857 471287367029 607526172207 954239482870 949054222622 451740299263 948637323209 971781372134 341310025304 570914172139 90416214472 329242193034 994367552311 211207909394 165233980483 381913838242 590164191884 888487438381 828809554895 358873544892 725859388978 13140347460 533534534074 512976095126 292316219691 758355110439 949853287112 337475973607 937522519386 570399611274 539116919207 759878555952 918144485089 814981444190 916185871597 590965825513 165549604551 471616597178 418826504197 607040607521 506310427076 332834048054 798657696662 879384951534 378644123248 550542196916 419009995968 319322967797 278406293774 401111516560 413640695643 420315355366 550139474912 189349125221 197903749276 667621008586 482785884545 242947206654 93317879253 724716301970 986280340196 594730860328 983544200386 902819304281 531646660466 213586732466 774472446653 116948742530 977819120587 454503772301 30770356419 54174101905 637676655395 583789532826 488746510364 842986878362 563582353870\n",
-          "output": "16 8 6 24 24 32 8 4 32 8 8 24 16 48 8 4 32 24 48 80 16 28 16 32 8 4 8 8 16 8 32 16 16 8 16 16 16 96 32 96 4 64 16 8 8 16 32 4 8 40 8 8 192 16 48 8 4 16 64 16 8 4 6 192 8 12 96 16 48 16 2 24 12 16 4 2 24 48 16 16 12 16 24 8 24 32 4 16 128 16 2 16 12 4 4 32 48 8 16 4 12 16 24 8 8 8 4 8 8 8 32 4 16 16 96 96 16 4 12 16 4 16 20 8 8 16 32 4 36 12 80 24 48 24 16 48 8 4 32 6 72 48 6 32 16 16 48 10 8 2 8 16 24 48 8 16 48 16 6 2 8 16 4 32 8 8 4 8 8 12 2 2 16 48 8 8 48 128 4 12 4 4 48 48 8 8 2 4 16 16 8 12 16 96 4 16 2 64 32 32 2 8 32 4 16 192 16 16 24 64 12 8 4 96 12 8 32 16 16 8 4 32 8 32 16 48 24 8 8 48 24 96 2 32 40 64 4 112 20 4 64 4 72 8 20 8 8 16 16 24 16 16 4 8 32 8 16 16 12 96 4 8 96 32 8 64 8 32 16 32 16 48 20 12 4 24 8 8 16 8 8 12 4 4 4 32 8 20 16 24 12 8 4 8 96 8 8 8 32 16 48 8 16 16 8 8 16 16 8 32 32 32 4 80 12 16 16 4 6 8 16 4 10 2 288 8 8 16 24 8 40 4 32 24 12 64 8 2 16 8 48 48 8 24 8 8 32 16 96 24 8 8 8 4 16 96 4 10 32 8 32 16 32 16 8 64 84 64 8 16 12 6 8 12 6 8 16 12 16 24 32 6 32 12 8 40 20 16 4 64 8 8 320 192 48 16 4 24 2 8 8 192 8 32 16 12 12 16 8 320 4 12 4 12 56 24 96 64 32 48 8 8 56 4 32 192 24 16 2 8 4 48 12 8 10 4 96 32 24 16 8 4 8 32 12 12 96 8 96 4 4 64 16 48 2 4 32 8 48 4 16 8 4 16 8 8 48 4 64 64 8 8 16 32 36 8 32 8 24 8 4 4 4 16 16 24 48 16 32 192 8 32 4 8 4 96 64 16 8 6 12 64 8 18 32 16 12 64 12 32 16 8 60 8 24 32 8 192 16 64 4 80 32 8 16 8 24 40 36 32 16 48 8 16 72 8 144 16 16 4 16 16 32 16 16 32 48 4 4 4 8 8 16 8 4 12 24 8 16 8 8 8 8 32 4 4 8 16 8 16 60 12 4 8 32 16 16 96 16 16 8 16 16 24 48 32 6 144 32 8 4 8 32 24 24 96 8 8 8 16 48 8 96 8 16 16 16 32 32 2 4 8 24 16 96 32 16 16 56 12 96 32 12 16 16 4 8 2 8 16 24 8 32 64 8 16 2 4 16 32 24 2 32 16 16 10 16 24 80 4 128 8 48 4 4 24 64 16 16 24 36 16 8 16 8 4 192 8 16 24 4 4 8 8 4 40 4 8 8 16 6 12 4 4 8 16 16 48 2 32 32 4 16 12 8 2 4 16 2 4 48 144 16 32 16 4 12 8 48 72 96 32 4 16 32 4 8 48 16 2 24 4 16 8 24 24 48 24 2 8 4 16 8 8 4 8 48 12 8 4 32 16 64 4 48 48 80 8 8 8 96 4 12 24 4 16 48 16 16 32 32 32 32 32 16 12 6 64 48 8 32 16 4 16 8 12 2 4 8 16 16 64 8 12 14 32 2 64 4 8 6 8 24 32 16 16 8 2 160 24 8 4 2 8 48 48 16 8 16 8 2 16 4 4 32 32 64 4 16 4 16 32 32 32 24 6 8 72 16 16 4 4 12 8 40 256 12 32 16 4 24 24 48 288 32 32 16 8 8 4 24 24 32 8 96 180 32 16 20 32 12 32 6 4 32 24 8 48 4 8 32 32 8 16 96 16 16 16 24 8 32 12 16 64 8 8 4 16 8 8 16 64 16 12 64 8 2 8 448 64 24 4 8 8 8 32 8 2 4 8 4 16 12 4 4 16 48 8 16 8 16 4 48 2 8 8 8 16 16 4 8 32 4 16 16 8 8 32 8 6 16 16 48 8 24 8 8 8 4 16 2 32 24 2 80 16 24 4 16 16 16 8 8 24 4 16 16 20 24 28 8 16 20 8 8 12 4 24 16 4 8 8 32 6 32 12 4 8 8 4 8 8 12 12 128 16 16 24 16 64\n",
-          "sample": false
-        }
-      ]
+      "memory_limit": "256M"
     }
   ],
   "students": [],
@@ -3119,7 +1837,7 @@
     "Tháng 11",
     "Tháng 12"
   ],
-  "last_updated": "2026-10-07T11:36:17Z",
+  "last_updated": "2026-10-07T17:49:01Z",
   "grader_problems": [
     {
       "id": "MARISA-1",
