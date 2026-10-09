@@ -8100,13 +8100,14 @@
     }
 
     function safeTimeoutSignal(ms) {
+      const safeMs = (typeof ms === 'number' && isFinite(ms) && ms > 0) ? Math.round(ms) : 15000;
       if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
         try {
-          return AbortSignal.timeout(ms);
+          return AbortSignal.timeout(safeMs);
         } catch(e) {}
       }
       const controller = new AbortController();
-      setTimeout(() => controller.abort(), ms);
+      setTimeout(() => controller.abort(), safeMs);
       return controller.signal;
     }
 
@@ -8115,7 +8116,8 @@
       const srv = JUDGE_SERVERS[serverKey] || JUDGE_SERVERS.judge0;
       const baseUrl = srv.url || 'https://judge.26tinylove.com';
       const language_id = (lang === 'cpp' || lang === 'c++') ? 54 : 71;
-      const effectiveTimeLimit = (lang === 'python') ? Math.max(timeLimit * 2.0, 2.5) : timeLimit;
+      const rawLimit = parseFloat(String(timeLimit || 1.0).replace(/[^\d.]/g, '')) || 1.0;
+      const effectiveTimeLimit = (lang === 'python') ? Math.max(rawLimit * 2.0, 2.5) : rawLimit;
 
       const payload = {
         language_id: language_id,
@@ -8127,11 +8129,12 @@
         payload.compiler_options = '-O2 -std=c++2a';
       }
 
+      const timeoutMs = Math.max(Math.round((effectiveTimeLimit + 8) * 1000), 15000);
       const resp = await fetch(`${baseUrl}/submissions?base64_encoded=true&wait=true`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        signal: safeTimeoutSignal(Math.max((effectiveTimeLimit + 8) * 1000, 15000))
+        signal: safeTimeoutSignal(timeoutMs)
       });
 
       if (!resp.ok) {
@@ -8204,11 +8207,13 @@
 
     // 2. Execute on Wandbox API
     async function executeWandbox(lang, code, stdin, timeLimit) {
-      const effectiveTimeLimit = (lang === 'python') ? Math.max(timeLimit * 2.0, 2.5) : timeLimit;
+      const rawLimit = parseFloat(String(timeLimit || 1.0).replace(/[^\d.]/g, '')) || 1.0;
+      const effectiveTimeLimit = (lang === 'python') ? Math.max(rawLimit * 2.0, 2.5) : rawLimit;
       const isCpp = (lang === 'cpp' || lang === 'c++');
       const compiler = isCpp ? 'gcc-13.2.0' : 'cpython-3.12.7';
       const compilerOptions = isCpp ? 'optimize' : '';
 
+      const timeoutMs = Math.max(Math.round((effectiveTimeLimit + 6) * 1000), 12000);
       const resp = await fetch('https://wandbox.org/api/compile.json', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -8218,7 +8223,7 @@
           stdin,
           options: compilerOptions
         }),
-        signal: safeTimeoutSignal(Math.max((effectiveTimeLimit + 6) * 1000, 12000))
+        signal: safeTimeoutSignal(timeoutMs)
       });
 
       if (!resp.ok) {
@@ -8267,7 +8272,9 @@
 
     // 3. Execute on Local Judge Server
     async function executeLocalJudge(lang, code, stdin, timeLimit) {
-      const effectiveTimeLimit = (lang === 'python') ? Math.max(timeLimit * 2.0, 2.5) : timeLimit;
+      const rawLimit = parseFloat(String(timeLimit || 1.0).replace(/[^\d.]/g, '')) || 1.0;
+      const effectiveTimeLimit = (lang === 'python') ? Math.max(rawLimit * 2.0, 2.5) : rawLimit;
+      const timeoutMs = Math.max(Math.round((effectiveTimeLimit + 8) * 1000), 12000);
       const resp = await fetch('http://127.0.0.1:8080/judge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -8277,7 +8284,7 @@
           stdin,
           time_limit: effectiveTimeLimit
         }),
-        signal: safeTimeoutSignal(Math.max((effectiveTimeLimit + 8) * 1000, 12000))
+        signal: safeTimeoutSignal(timeoutMs)
       });
       if (!resp.ok) {
         throw new Error(`Local Judge HTTP ${resp.status}`);
@@ -8289,7 +8296,7 @@
 
     // Multi-judge dispatcher with Priority & Automatic Failover
     async function executeCode(lang, code, stdin, timeLimit = 1.0) {
-      const baseTime = parseFloat(timeLimit) || 1.0;
+      const baseTime = parseFloat(String(timeLimit || 1.0).replace(/[^\d.]/g, '')) || 1.0;
       const now = Date.now();
 
       // If user manually chose a fixed judge mode

@@ -415,9 +415,13 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
         if ep.get("id") in sheet_pids:
             for p in problems:
                 if p["id"] == ep["id"]:
-                    for field in ["testcases", "sample_tests", "description", "input_format", "output_format", "starter_cpp", "starter_py", "time_limit", "memory_limit"]:
+                    for field in ["testcases", "sample_tests", "description", "input_format", "output_format", "starter_cpp", "starter_py", "time_limit", "memory_limit", "sample_cases", "constraints", "input_specification", "output_specification", "author", "points"]:
                         if field in ep and field not in p:
                             p[field] = ep[field]
+        else:
+            # Preserve special local/exam problems not in Google Sheets tab
+            problems.append(ep)
+            seen_pids.add(ep.get("id"))
 
     # 3. Parse Lectures ("Bài Giảng")
     curriculum = []

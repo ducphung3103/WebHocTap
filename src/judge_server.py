@@ -269,8 +269,11 @@ class JudgeHandler(BaseHTTPRequestHandler):
 
                 lang = req_data.get("language") or req_data.get("lang") or "cpp"
                 code = req_data.get("code", "")
-                stdin_data = req_data.get("stdin", "")
-                time_limit = float(req_data.get("time_limit", 2.0))
+                raw_tl = str(req_data.get("time_limit", 2.0)).replace("s", "").replace("S", "").strip()
+                try:
+                    time_limit = float(raw_tl)
+                except Exception:
+                    time_limit = 2.0
 
                 res = execute_test(lang, code, stdin_data, time_limit)
 
