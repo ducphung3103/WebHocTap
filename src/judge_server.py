@@ -16,6 +16,10 @@ from typing import Dict, Any
 sys.stdout.reconfigure(encoding='utf-8')
 os.environ.pop("SSLKEYLOGFILE", None)
 
+_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _root not in sys.path:
+    sys.path.insert(0, _root)
+
 PORT = 8080
 
 # Detect local compilers
@@ -30,59 +34,74 @@ PYTHON_CMD = sys.executable
 
 
 def execute_judge0_fallback(language: str, code: str, stdin_data: str, time_limit: float = 2.0) -> Dict[str, Any]:
-    """Fallback execution via https://judge.26tinylove.com when local compiler is missing."""
+    """Fallback execution via Judge0 cloud clusters (26TinyLove & Judge0 CE) when local compiler is missing."""
     import urllib.request
     import base64
-    try:
-        lang_id = 54 if language in ["cpp", "c++"] else 71
-        eff_limit = max(time_limit * 2.0, 2.5) if lang_id == 71 else time_limit
-        b64_code = base64.b64encode(code.encode('utf-8')).decode('ascii')
-        b64_stdin = base64.b64encode(stdin_data.encode('utf-8')).decode('ascii')
-        payload = {
-            "language_id": lang_id,
-            "source_code": b64_code,
-            "stdin": b64_stdin,
-            "cpu_time_limit": eff_limit
-        }
-        if lang_id == 54:
-            payload["compiler_options"] = "-O2 -std=c++2a"
+    endpoints = [
+        "https://judge.26tinylove.com",
+        "https://ce.judge0.com"
+    ]
+    lang_id = 54 if language in ["cpp", "c++", "c++20", "c++17", "c++14"] else 71
+    eff_limit = max(time_limit * 2.0, 2.5) if lang_id == 71 else time_limit
+    b64_code = base64.b64encode(code.encode('utf-8')).decode('ascii')
+    b64_stdin = base64.b64encode(stdin_data.encode('utf-8')).decode('ascii')
+    payload = {
+        "language_id": lang_id,
+        "source_code": b64_code,
+        "stdin": b64_stdin,
+        "cpu_time_limit": eff_limit
+    }
+    if lang_id == 54:
+        payload["compiler_options"] = "-O2 -std=c++2a"
 
-        req = urllib.request.Request(
-            "https://judge.26tinylove.com/submissions?base64_encoded=true&wait=true",
-            data=json.dumps(payload).encode("utf-8"),
-            headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"}
-        )
-        resp = urllib.request.urlopen(req, timeout=max(eff_limit + 6, 15))
-        data = json.loads(resp.read().decode("utf-8"))
+    last_err = None
+    for ep in endpoints:
+        try:
+            req = urllib.request.Request(
+                f"{ep}/submissions?base64_encoded=true&wait=true",
+                data=json.dumps(payload).encode("utf-8"),
+                headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"}
+            )
+            resp = urllib.request.urlopen(req, timeout=max(eff_limit + 6, 12))
+            data = json.loads(resp.read().decode("utf-8"))
 
-        status_id = data.get("status", {}).get("id", 0)
-        def d(s):
-            return base64.b64decode(s).decode("utf-8", errors="replace") if s else ""
-        stdout = d(data.get("stdout"))
-        stderr = d(data.get("stderr"))
-        compile_out = d(data.get("compile_output"))
-        dur = float(data.get("time") or 0.01)
+            status_id = data.get("status", {}).get("id", 0)
+            def d(s):
+                return base64.b64decode(s).decode("utf-8", errors="replace") if s else ""
+            stdout = d(data.get("stdout"))
+            stderr = d(data.get("stderr"))
+            compile_out = d(data.get("compile_output"))
+            dur = float(data.get("time") or 0.01)
 
-        if status_id == 6:
-            return {"status": "CE", "error": compile_out or stderr or "Compilation Error", "compile_error": compile_out}
-        if status_id == 5:
-            return {"status": "TLE", "error": f"Quá thời gian cho phép ({eff_limit}s)", "time": eff_limit, "execution_time": eff_limit}
-        if status_id >= 7:
-            return {"status": "RTE", "error": stderr or "Runtime Error", "output": stdout, "stdout": stdout, "time": dur, "execution_time": dur}
-        return {"status": "OK", "output": stdout, "stdout": stdout, "time": dur, "execution_time": dur}
-    except Exception as e:
-        return {"status": "RTE", "error": f"Lỗi kết nối máy chủ chấm 26TinyLove: {e}"}
+            if status_id == 6:
+                return {"status": "CE", "error": compile_out or stderr or "Compilation Error", "compile_error": compile_out}
+            if status_id == 5:
+                return {"status": "TLE", "error": f"Quá thời gian cho phép ({eff_limit}s)", "time": eff_limit, "execution_time": eff_limit}
+            if status_id >= 7:
+                return {"status": "RTE", "error": stderr or "Runtime Error", "output": stdout, "stdout": stdout, "time": dur, "execution_time": dur}
+            return {"status": "OK", "output": stdout, "stdout": stdout, "time": dur, "execution_time": dur}
+        except Exception as e:
+            last_err = e
+            continue
+
+    return {"status": "RTE", "error": f"Lỗi kết nối máy chủ chấm đám mây: {last_err}"}
 
 
 def execute_test(language: str, code: str, stdin_data: str, time_limit: float = 2.0) -> Dict[str, Any]:
     """Compiles and executes code against stdin within time_limit."""
+    try:
+        time_limit = float(time_limit)
+    except (ValueError, TypeError):
+        time_limit = 2.0
     time_limit = max(0.5, min(time_limit, 5.0))
     temp_dir = tempfile.mkdtemp(prefix="judge_")
 
+    lang_norm = str(language or "cpp").lower().strip()
+
     try:
-        if language in ["cpp", "c++"]:
+        if lang_norm in ["cpp", "c++", "c++20", "c++17", "c++14"]:
             if not GPP_CMD:
-                return execute_judge0_fallback(language, code, stdin_data, time_limit)
+                return execute_judge0_fallback(lang_norm, code, stdin_data, time_limit)
 
             src_file = os.path.join(temp_dir, "solution.cpp")
             exe_file = os.path.join(temp_dir, "solution.exe")
@@ -140,7 +159,7 @@ def execute_test(language: str, code: str, stdin_data: str, time_limit: float = 
                     "execution_time": time_limit
                 }
 
-        elif language in ["python", "python3", "py"]:
+        elif lang_norm in ["python", "python3", "py", "py3"]:
             src_file = os.path.join(temp_dir, "solution.py")
             with open(src_file, "w", encoding="utf-8") as f:
                 f.write(code)
@@ -200,7 +219,8 @@ class JudgeHandler(BaseHTTPRequestHandler):
     def _set_cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.send_header("Access-Control-Allow-Headers", "*")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
 
     def do_OPTIONS(self):
         self.send_response(200)
@@ -318,6 +338,21 @@ class JudgeHandler(BaseHTTPRequestHandler):
                         except Exception as j_err:
                             print(f"Warning: could not update local data.json: {j_err}")
                     
+                    # Update local backup files
+                    for fn in ["firebase_database_export.json", "data_firebase_backup.json"]:
+                        fp = os.path.join(_root, fn)
+                        if os.path.exists(fp):
+                            try:
+                                with open(fp, "r", encoding="utf-8") as f:
+                                    fd = json.load(f)
+                                if "submissions" not in fd:
+                                    fd["submissions"] = []
+                                fd["submissions"].insert(0, sub_data)
+                                with open(fp, "w", encoding="utf-8") as f:
+                                    json.dump(fd, f, ensure_ascii=False, indent=2)
+                            except Exception:
+                                pass
+
                     # Push to Google Sheet
                     res = sync_to_gsheet.save_submission_to_sheet(sub_data)
 
@@ -343,6 +378,24 @@ class JudgeHandler(BaseHTTPRequestHandler):
                                 json.dump(d, f, ensure_ascii=False, indent=2)
                         except Exception as j_err:
                             print(f"Warning: could not update local data.json: {j_err}")
+
+                    # Update local backup files
+                    for fn in ["firebase_database_export.json", "data_firebase_backup.json"]:
+                        fp = os.path.join(_root, fn)
+                        if os.path.exists(fp):
+                            try:
+                                with open(fp, "r", encoding="utf-8") as f:
+                                    fd = json.load(f)
+                                for s in fd.get("submissions", []):
+                                    if s.get("id") == sub_id:
+                                        s["status"] = status_val
+                                        s["score"] = score_val
+                                        s["feedback"] = fb_val
+                                        break
+                                with open(fp, "w", encoding="utf-8") as f:
+                                    json.dump(fd, f, ensure_ascii=False, indent=2)
+                            except Exception:
+                                pass
 
                     # Push to Google Sheet
                     res = sync_to_gsheet.grade_submission_in_sheet(sub_id, status_val, score_val, fb_val)

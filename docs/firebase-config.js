@@ -185,31 +185,14 @@ function isDeruckProblem(probId, probObj) {
  */
 function isDeruckSubmission(sub) {
   if (!sub) return false;
-  // Bỏ qua các bài nộp giả lập SUB-AC sinh tự động từ crawler ngoài (không có code thật)
   const sid = String(sub.id || '').toUpperCase().trim();
-  if (sid.startsWith('SUB-AC-MARISA') || sid.startsWith('SUB-AC-CF') || sid.startsWith('SUB-AC-VJ') || sid.startsWith('SUB-AC-CSES')) {
+  // Loại bỏ các bản ghi giả lập sinh tự động từ crawler ngoài (không có mã nguồn thật)
+  if (sid.startsWith('SUB-AC-') || sub.is_synthetic) {
     return false;
   }
-  if (sub.is_synthetic) return false;
-
-  // Bất kỳ bài thi HSG nào từ thư mục TEST/NOPBAI đều giữ lại
-  if (sid.startsWith('SUB-HSG-') || sid.startsWith('SUB-EXAM-')) return true;
-
-  // Mọi bài nộp có mã nguồn thật hoặc được tạo trực tiếp trên web đều giữ lại
-  if (sub.answer && typeof sub.answer === 'string' && sub.answer.trim().length > 0) {
-    if (!sub.answer.includes('// Trạng thái: Chấm đạt (AC) 100/100')) {
-      return true;
-    }
-  }
-
-  // Thuộc DeruckOJ hoặc bài tập trong hệ thống
-  if (sub.submission_type_display && (sub.submission_type_display.includes('DeruckOJ') || sub.submission_type_display.includes('Code') || sub.submission_type_display.includes('Tự luận'))) {
-    return true;
-  }
-  if (sub.feedback && sub.feedback.includes('DeruckOJ')) return true;
-  if (sub.platform && sub.platform === 'DeruckOJ') return true;
-  if (sid.startsWith('SUB-') && !sid.startsWith('SUB-AC-')) return true;
-
+  // Giữ lại tất cả bài nộp thật của học sinh trên web
+  if (sid.startsWith('SUB-')) return true;
+  if (sub.answer && typeof sub.answer === 'string' && sub.answer.trim().length > 0) return true;
   return false;
 }
 

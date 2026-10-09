@@ -967,12 +967,13 @@
           <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
             <span class="text-xs text-slate-400 font-medium hidden sm:inline">Máy chủ chấm:</span>
             <select id="judge-server-select" onchange="handleJudgeServerChange(this.value)" class="bg-slate-950 border border-slate-800 text-slate-300 text-xs rounded-xl px-2.5 py-1.5 font-mono cursor-pointer focus:ring-1 focus:ring-indigo-500 outline-none">
-              <option value="auto">🔄 Luân Phiên (Tự động tải)</option>
+              <option value="auto">🔄 Luân Phiên & Tự Động Dự Phòng</option>
               <option value="judge0">🚀 26TinyLove Judge0</option>
+              <option value="judge0_ce">⚡ Judge0 Official CE</option>
               <option value="wandbox">🌐 Wandbox API</option>
               <option value="local" id="opt-local-judge" class="hidden">⚡ Local Judge (127.0.0.1)</option>
             </select>
-            <div id="judge-engine-pill" title="Hệ thống tự động phân bổ tải luân phiên giữa các máy chủ chấm (26TinyLove, Wandbox, Local)" class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner cursor-help">
+            <div id="judge-engine-pill" title="Hệ thống tự động phân bổ tải luân phiên giữa các máy chủ chấm (26TinyLove, Judge0 CE, Wandbox, Local)" class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner cursor-help">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span id="judge-engine-text">Luân Phiên</span>
             </div>
@@ -1237,13 +1238,13 @@
               </div>
 
               <!-- Compiler Error Message -->
-              <div id="judge-ce-box" class="hidden space-y-1">
+              <div id="judge-ce-container" class="hidden space-y-1">
                 <div class="text-xs text-rose-400 font-bold">Lỗi biên dịch (Compile Error):</div>
                 <pre id="judge-ce-text" class="bg-rose-950/40 border border-rose-500/30 p-3 rounded-xl text-rose-200 whitespace-pre-wrap max-h-48 overflow-y-auto font-mono text-xs"></pre>
               </div>
 
               <!-- Individual Test Case Badges Grid -->
-              <div id="judge-tests-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+              <div id="judge-test-matrix" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
                 <!-- Populated per test -->
               </div>
 
@@ -7502,10 +7503,19 @@
         failCount: 0,
         cooldownUntil: 0
       },
+      judge0_ce: {
+        id: 'judge0_ce',
+        name: 'Judge0 Official',
+        fullName: 'Judge0 CE Cloud (Cloud C++20 / Py3)',
+        url: 'https://ce.judge0.com',
+        available: true,
+        failCount: 0,
+        cooldownUntil: 0
+      },
       wandbox: {
         id: 'wandbox',
         name: 'Wandbox',
-        fullName: 'Wandbox Cloud (GCC 14 / Py 3.12)',
+        fullName: 'Wandbox Cloud (GCC 13 / Py 3.12)',
         url: 'https://wandbox.org',
         available: true,
         failCount: 0,
@@ -7542,6 +7552,11 @@
         engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span> <span>26TinyLove Judge0</span>';
         return;
       }
+      if (judgeMode === 'judge0_ce') {
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-blue-950/80 border border-blue-500/40 text-blue-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span> <span>Judge0 Official CE</span>';
+        return;
+      }
       if (judgeMode === 'wandbox') {
         enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner";
         engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> <span>Wandbox Cloud</span>';
@@ -7556,20 +7571,15 @@
       const activeList = [];
       if (JUDGE_SERVERS.local.available) activeList.push('Local');
       if (JUDGE_SERVERS.judge0.available) activeList.push('26TinyLove');
+      if (JUDGE_SERVERS.judge0_ce.available) activeList.push('Judge0-CE');
       if (JUDGE_SERVERS.wandbox.available) activeList.push('Wandbox');
 
       if (JUDGE_SERVERS.local.available) {
         enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 flex items-center gap-2 shadow-inner";
         engineText.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span>Luân Phiên (${activeList.join(' + ')})</span>`;
-      } else if (JUDGE_SERVERS.judge0.available && JUDGE_SERVERS.wandbox.available) {
-        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 flex items-center gap-2 shadow-inner";
-        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span> <span>Luân Phiên (26TinyLove + Wandbox)</span>';
-      } else if (JUDGE_SERVERS.judge0.available) {
-        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 flex items-center gap-2 shadow-inner";
-        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span> <span>26TinyLove Cloud</span>';
       } else {
-        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-2 shadow-inner";
-        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> <span>Wandbox Cloud</span>';
+        enginePill.className = "px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 flex items-center gap-2 shadow-inner";
+        engineText.innerHTML = '<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span> <span>Luân Phiên Cloud (Judge0 Multi-Cluster)</span>';
       }
     }
 
@@ -7577,7 +7587,7 @@
       judgeMode = val;
       updateJudgeEngineUI();
       if (val === 'auto') {
-        showLiveToast("Đã kích hoạt chế độ Luân Phiên & Tự Động Dự Phòng (Round-Robin)!");
+        showLiveToast("Đã kích hoạt chế độ Luân Phiên & Tự Động Dự Phòng (Round-Robin Multi-Cluster)!");
       } else {
         const srv = JUDGE_SERVERS[val];
         showLiveToast(`Đã cố định máy chấm: ${srv ? srv.name : val}`);
@@ -7587,7 +7597,7 @@
     async function checkJudgeServersHealth() {
       try {
         const resp = await fetch('http://127.0.0.1:8080/health', {
-          signal: AbortSignal.timeout(1200)
+          signal: safeTimeoutSignal(1500)
         });
         if (resp.ok) {
           const data = await resp.json();
@@ -7602,18 +7612,15 @@
         localJudgeAvailable = false;
       }
 
-      try {
-        const j0Resp = await fetch('https://judge.26tinylove.com/about', {
-          signal: AbortSignal.timeout(2500)
-        });
-        if (j0Resp.ok) {
-          JUDGE_SERVERS.judge0.available = true;
-          JUDGE_SERVERS.judge0.failCount = 0;
-        }
-      } catch (e) {
-        if (JUDGE_SERVERS.judge0.failCount > 2) {
-          JUDGE_SERVERS.judge0.available = false;
-        }
+      // Cloud judges are available by default unless consecutive execution errors occur
+      if (JUDGE_SERVERS.judge0.failCount < 3) {
+        JUDGE_SERVERS.judge0.available = true;
+      }
+      if (JUDGE_SERVERS.judge0_ce.failCount < 3) {
+        JUDGE_SERVERS.judge0_ce.available = true;
+      }
+      if (JUDGE_SERVERS.wandbox.failCount < 3) {
+        JUDGE_SERVERS.wandbox.available = true;
       }
 
       updateJudgeEngineUI();
@@ -8092,8 +8099,21 @@
       }
     }
 
-    // 1. Execute on 26TinyLove Judge0 API
-    async function executeJudge0(lang, code, stdin, timeLimit) {
+    function safeTimeoutSignal(ms) {
+      if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
+        try {
+          return AbortSignal.timeout(ms);
+        } catch(e) {}
+      }
+      const controller = new AbortController();
+      setTimeout(() => controller.abort(), ms);
+      return controller.signal;
+    }
+
+    // 1. Execute on Judge0 API (Supports 26TinyLove and Judge0 Official CE)
+    async function executeJudge0(serverKey, lang, code, stdin, timeLimit) {
+      const srv = JUDGE_SERVERS[serverKey] || JUDGE_SERVERS.judge0;
+      const baseUrl = srv.url || 'https://judge.26tinylove.com';
       const language_id = (lang === 'cpp' || lang === 'c++') ? 54 : 71;
       const effectiveTimeLimit = (lang === 'python') ? Math.max(timeLimit * 2.0, 2.5) : timeLimit;
 
@@ -8107,19 +8127,38 @@
         payload.compiler_options = '-O2 -std=c++2a';
       }
 
-      const resp = await fetch('https://judge.26tinylove.com/submissions?base64_encoded=true&wait=true', {
+      const resp = await fetch(`${baseUrl}/submissions?base64_encoded=true&wait=true`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        signal: AbortSignal.timeout(Math.max((effectiveTimeLimit + 6) * 1000, 15000))
+        signal: safeTimeoutSignal(Math.max((effectiveTimeLimit + 8) * 1000, 15000))
       });
 
       if (!resp.ok) {
-        throw new Error(`26TinyLove HTTP ${resp.status}`);
+        throw new Error(`${srv.name} HTTP ${resp.status}`);
       }
 
-      const data = await resp.json();
-      const statusId = data.status ? data.status.id : 0;
+      let data = await resp.json();
+      let statusId = data.status ? data.status.id : 0;
+
+      // Poll if Judge0 is still queued or processing
+      if ((statusId === 1 || statusId === 2) && data.token) {
+        const token = data.token;
+        const pollStart = Date.now();
+        while ((statusId === 1 || statusId === 2) && (Date.now() - pollStart < 12000)) {
+          await new Promise(r => setTimeout(r, 1000));
+          try {
+            const pollResp = await fetch(`${baseUrl}/submissions/${token}?base64_encoded=true`, {
+              signal: safeTimeoutSignal(6000)
+            });
+            if (pollResp.ok) {
+              data = await pollResp.json();
+              statusId = data.status ? data.status.id : 0;
+            }
+          } catch(e) {}
+        }
+      }
+
       const rawStdout = safeBase64ToString(data.stdout);
       const rawStderr = safeBase64ToString(data.stderr);
       const rawCompile = safeBase64ToString(data.compile_output);
@@ -8130,7 +8169,7 @@
           status: 'CE',
           compile_error: rawCompile || rawStderr || data.message || 'Compilation Error',
           execution_time: 0,
-          server: '26TinyLove'
+          server: srv.name
         };
       }
 
@@ -8140,7 +8179,7 @@
           stdout: '',
           stderr: `Quá thời gian cho phép (${effectiveTimeLimit}s)`,
           execution_time: execTime,
-          server: '26TinyLove'
+          server: srv.name
         };
       }
 
@@ -8150,7 +8189,7 @@
           stdout: rawStdout,
           stderr: rawStderr || (data.status ? data.status.description : 'Runtime Error'),
           execution_time: execTime,
-          server: '26TinyLove'
+          server: srv.name
         };
       }
 
@@ -8159,15 +8198,16 @@
         stdout: rawStdout,
         stderr: rawStderr || '',
         execution_time: execTime,
-        server: '26TinyLove'
+        server: srv.name
       };
     }
 
     // 2. Execute on Wandbox API
     async function executeWandbox(lang, code, stdin, timeLimit) {
       const effectiveTimeLimit = (lang === 'python') ? Math.max(timeLimit * 2.0, 2.5) : timeLimit;
-      const compiler = (lang === 'cpp') ? 'gcc-head' : 'cpython-3.12.7';
-      const compilerOptions = (lang === 'cpp') ? 'warning,c++20,optimize' : '';
+      const isCpp = (lang === 'cpp' || lang === 'c++');
+      const compiler = isCpp ? 'gcc-13.2.0' : 'cpython-3.12.7';
+      const compilerOptions = isCpp ? 'optimize' : '';
 
       const resp = await fetch('https://wandbox.org/api/compile.json', {
         method: 'POST',
@@ -8176,9 +8216,9 @@
           compiler,
           code,
           stdin,
-          compiler_options: compilerOptions
+          options: compilerOptions
         }),
-        signal: AbortSignal.timeout(Math.max((effectiveTimeLimit + 6) * 1000, 16000))
+        signal: safeTimeoutSignal(Math.max((effectiveTimeLimit + 6) * 1000, 12000))
       });
 
       if (!resp.ok) {
@@ -8187,7 +8227,7 @@
 
       const data = await resp.json();
 
-      if (data.compiler_error && data.compiler_error.trim().length > 0) {
+      if (data.status && String(data.status) !== '0' && data.compiler_error && data.compiler_error.trim().length > 0) {
         return {
           status: 'CE',
           compile_error: data.compiler_error,
@@ -8237,7 +8277,7 @@
           stdin,
           time_limit: effectiveTimeLimit
         }),
-        signal: AbortSignal.timeout((effectiveTimeLimit + 4) * 1000)
+        signal: safeTimeoutSignal(Math.max((effectiveTimeLimit + 8) * 1000, 12000))
       });
       if (!resp.ok) {
         throw new Error(`Local Judge HTTP ${resp.status}`);
@@ -8247,14 +8287,17 @@
       return data;
     }
 
-    // Multi-judge dispatcher with Round-Robin Load Balancing and Automatic Failover
+    // Multi-judge dispatcher with Priority & Automatic Failover
     async function executeCode(lang, code, stdin, timeLimit = 1.0) {
       const baseTime = parseFloat(timeLimit) || 1.0;
       const now = Date.now();
 
       // If user manually chose a fixed judge mode
       if (judgeMode === 'judge0') {
-        return await executeJudge0(lang, code, stdin, baseTime);
+        return await executeJudge0('judge0', lang, code, stdin, baseTime);
+      }
+      if (judgeMode === 'judge0_ce') {
+        return await executeJudge0('judge0_ce', lang, code, stdin, baseTime);
       }
       if (judgeMode === 'wandbox') {
         return await executeWandbox(lang, code, stdin, baseTime);
@@ -8263,26 +8306,32 @@
         return await executeLocalJudge(lang, code, stdin, baseTime);
       }
 
-      // Mode: auto (Round-robin luân phiên & tự động dự phòng)
-      const pool = [];
+      // Mode: auto (Ưu tiên Local Judge nếu chạy cục bộ, luân phiên siêu tốc giữa 2 cụm Judge0 Cloud, fallback Wandbox)
+      const orderedAttempts = [];
       if (JUDGE_SERVERS.local.available && now >= JUDGE_SERVERS.local.cooldownUntil) {
-        pool.push('local');
-      }
-      if (JUDGE_SERVERS.judge0.available && now >= JUDGE_SERVERS.judge0.cooldownUntil) {
-        pool.push('judge0');
-      }
-      if (JUDGE_SERVERS.wandbox.available && now >= JUDGE_SERVERS.wandbox.cooldownUntil) {
-        pool.push('wandbox');
-      }
-      if (pool.length === 0) {
-        pool.push('judge0', 'wandbox');
+        orderedAttempts.push('local');
       }
 
-      // Round-robin start index
-      const startIndex = (judgeRoundRobinCounter++) % pool.length;
-      const orderedAttempts = [];
-      for (let i = 0; i < pool.length; i++) {
-        orderedAttempts.push(pool[(startIndex + i) % pool.length]);
+      const fastCloudPool = [];
+      if (JUDGE_SERVERS.judge0.available && now >= JUDGE_SERVERS.judge0.cooldownUntil) {
+        fastCloudPool.push('judge0');
+      }
+      if (JUDGE_SERVERS.judge0_ce.available && now >= JUDGE_SERVERS.judge0_ce.cooldownUntil) {
+        fastCloudPool.push('judge0_ce');
+      }
+      if (fastCloudPool.length === 0) {
+        fastCloudPool.push('judge0', 'judge0_ce');
+      }
+
+      // Round-robin load balancing between the fast Judge0 clusters
+      const startIndex = (judgeRoundRobinCounter++) % fastCloudPool.length;
+      for (let i = 0; i < fastCloudPool.length; i++) {
+        orderedAttempts.push(fastCloudPool[(startIndex + i) % fastCloudPool.length]);
+      }
+
+      // Wandbox as ultimate fallback
+      if (JUDGE_SERVERS.wandbox.available && now >= JUDGE_SERVERS.wandbox.cooldownUntil) {
+        orderedAttempts.push('wandbox');
       }
 
       let lastError = null;
@@ -8291,7 +8340,9 @@
         try {
           let res = null;
           if (srvId === 'judge0') {
-            res = await executeJudge0(lang, code, stdin, baseTime);
+            res = await executeJudge0('judge0', lang, code, stdin, baseTime);
+          } else if (srvId === 'judge0_ce') {
+            res = await executeJudge0('judge0_ce', lang, code, stdin, baseTime);
           } else if (srvId === 'wandbox') {
             res = await executeWandbox(lang, code, stdin, baseTime);
           } else if (srvId === 'local') {
@@ -8306,7 +8357,6 @@
           console.warn(`[Máy chấm ${srvId}] Quá tải hoặc gặp sự cố (${err.message}). Đang tự động chuyển tiếp...`);
           lastError = err;
           JUDGE_SERVERS[srvId].failCount = (JUDGE_SERVERS[srvId].failCount || 0) + 1;
-          // After 3 consecutive failures, put on cooldown
           if (JUDGE_SERVERS[srvId].failCount >= 3) {
             JUDGE_SERVERS[srvId].cooldownUntil = Date.now() + 25000;
           }
@@ -8316,7 +8366,7 @@
       return {
         status: 'RTE',
         stdout: '',
-        stderr: 'Lỗi kết nối máy chủ chấm: ' + (lastError ? lastError.message : 'Tất cả các máy chấm đều đang bận hoặc quá tải. Vui lòng thử lại sau giây lát!'),
+        stderr: 'Lỗi kết nối máy chủ chấm: ' + (lastError ? lastError.message : 'Tất cả các máy chấm đều đang bận. Vui lòng thử lại sau giây lát!'),
         execution_time: 0,
         server: 'Error'
       };
@@ -8676,6 +8726,8 @@
         verdictTag.textContent = "Đang chấm...";
       }
 
+      try {
+
       let acCount = 0;
       let firstFailedVerdict = null;
       let isCE = false;
@@ -8896,13 +8948,21 @@
       } catch (subErr) {
         console.warn("Could not save judge submission:", subErr);
       }
-
-      isJudging = false;
-      if (btnSubmit) {
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = '<span>🚀</span> Chấm Bài';
+      } catch (err) {
+        if (progressContainer) progressContainer.classList.add('hidden');
+        alert("Lỗi khi chấm bài:\n" + err.message);
+        if (verdictTag) {
+          verdictTag.className = "text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40";
+          verdictTag.textContent = "LỖI";
+        }
+      } finally {
+        isJudging = false;
+        if (btnSubmit) {
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = '<span>🚀</span> Chấm Bài';
+        }
+        if (btnRun) btnRun.disabled = false;
       }
-      if (btnRun) btnRun.disabled = false;
     }
 
     function showJudgeTestDetail(testNum, input, expected, actual, stderr, verdict, server = '', execTime = '') {
