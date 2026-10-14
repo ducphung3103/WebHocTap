@@ -112,6 +112,12 @@ async function verifyAuthTokenFromFirebase(tokenHash) {
  * 2. Tải danh sách học sinh từ Firebase Realtime Database
  */
 async function fetchStudentsFromFirebase() {
+  const entries = await fetchFirebaseStudentEntries();
+  return entries === null ? null : entries.map(entry => entry.student);
+}
+
+// Preserve the actual Firebase key: arrays can contain holes and objects use arbitrary keys.
+async function fetchFirebaseStudentEntries() {
   if (!isFirebaseConfigured()) return null;
   const dbUrl = getFirebaseDatabaseUrl();
   try {
@@ -121,13 +127,10 @@ async function fetchStudentsFromFirebase() {
     });
     if (!resp.ok) return null;
     const data = await resp.json();
-    if (!data) return null;
-    if (Array.isArray(data)) {
-      return data.filter(Boolean);
-    }
-    if (typeof data === 'object') {
-      return Object.values(data);
-    }
+    if (!data) return [];
+    if (typeof data === 'object') return Object.entries(data)
+      .filter(([, student]) => student && typeof student === 'object')
+      .map(([key, student]) => ({ key, student }));
     return null;
   } catch(err) {
     console.warn("Could not fetch students from Firebase:", err);
@@ -142,9 +145,12 @@ async function fetchSubmissionsFromFirebase() {
   if (!isFirebaseConfigured()) return null;
   const dbUrl = getFirebaseDatabaseUrl();
   try {
+    const timeoutSignal = (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function')
+      ? AbortSignal.timeout(12000)
+      : undefined;
     const resp = await fetch(`${dbUrl}/submissions.json`, {
       headers: { 'Accept': 'application/json' },
-      signal: AbortSignal.timeout(6000)
+      signal: timeoutSignal
     });
     if (!resp.ok) return null;
     const data = await resp.json();
@@ -159,7 +165,30 @@ async function fetchSubmissionsFromFirebase() {
     return list.filter(isDeruckSubmission);
   } catch(err) {
     console.warn("Could not fetch submissions from Firebase:", err);
-    return [];
+    return null;
+  }
+}
+
+/**
+ * 3a-2. Lấy chi tiết 1 bài nộp cụ thể từ Firebase (kèm mã nguồn đầy đủ)
+ */
+async function fetchSingleSubmissionFromFirebase(subId) {
+  if (!isFirebaseConfigured() || !subId) return null;
+  const dbUrl = getFirebaseDatabaseUrl();
+  try {
+    const key = encodeURIComponent(subId);
+    const timeoutSignal = (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function')
+      ? AbortSignal.timeout(8000)
+      : undefined;
+    const resp = await fetch(`${dbUrl}/submissions/${key}.json`, {
+      headers: { 'Accept': 'application/json' },
+      signal: timeoutSignal
+    });
+    if (!resp.ok) return null;
+    return await resp.json();
+  } catch(err) {
+    console.warn("Could not fetch single submission from Firebase:", err);
+    return null;
   }
 }
 
@@ -170,7 +199,7 @@ function isDeruckProblem(probId, probObj) {
   if (!probId && !probObj) return false;
   if (probObj && probObj.platform === 'DeruckOJ') return true;
   const pid = String(probId || (probObj ? probObj.id : '')).toUpperCase().trim();
-  if (pid.startsWith('CPP-') || pid.startsWith('PY-') || pid.startsWith('PY11-') || pid.startsWith('26TI-') || pid.startsWith('DERUCK-')) {
+  if (pid.startsWith('CPP-') || pid.startsWith('PY-') || pid.startsWith('PY11-') || pid.startsWith('26TI-') || pid.startsWith('DERUCK-') || pid.startsWith('HSG-')) {
     return true;
   }
   if (typeof appData !== 'undefined' && appData && Array.isArray(appData.problems)) {
@@ -181,18 +210,34 @@ function isDeruckProblem(probId, probObj) {
 }
 
 /**
- * 3c. Kiểm tra bài nộp hợp lệ (giữ lại toàn bộ bài nộp thật của học sinh, loại bỏ bản ghi giả lập)
+ * 3c. Kiểm tra bài nộp hợp lệ của WEB DeruckOJ (loại bỏ crawler ngoài, chỉ lưu và hiển thị bài nộp trên web DeruckOJ)
  */
 function isDeruckSubmission(sub) {
   if (!sub) return false;
+  if (sub.is_synthetic) return false;
   const sid = String(sub.id || '').toUpperCase().trim();
-  // Loại bỏ các bản ghi giả lập sinh tự động từ crawler ngoài (không có mã nguồn thật)
-  if (sid.startsWith('SUB-AC-') || sub.is_synthetic) {
+  const stype = String(sub.submission_type_display || '');
+
+  // 1. Loại bỏ các bản ghi crawler ngoài
+  if (stype === 'Code Online Judge' || sid.startsWith('SUB-AC-')) {
     return false;
   }
-  // Giữ lại tất cả bài nộp thật của học sinh trên web
-  if (sid.startsWith('SUB-')) return true;
-  if (sub.answer && typeof sub.answer === 'string' && sub.answer.trim().length > 0) return true;
+
+  // 2. Bài nộp trực tiếp từ trình chấm WEB DeruckOJ hoặc kỳ thi trên web
+  if (stype.includes('DeruckOJ') || stype.includes('Code Thi HSG')) return true;
+  if (sub.feedback && sub.feedback.includes('DeruckOJ')) return true;
+  if (sub.platform && sub.platform === 'DeruckOJ') return true;
+
+  // 3. Bài nộp thuộc các bài tập / đề thi của DeruckOJ
+  if (typeof isDeruckProblem === 'function' && isDeruckProblem(sub.problem_id)) return true;
+
+  // 4. Mọi bài nộp hợp lệ khác trên web (SUB-HSG-*, SUB-*, hoặc có bài làm)
+  if (sid.startsWith('SUB-HSG-') || sid.startsWith('SUB-')) {
+    return true;
+  }
+  if (sub.answer && typeof sub.answer === 'string' && sub.answer.trim().length > 0) {
+    return true;
+  }
   return false;
 }
 
@@ -211,29 +256,28 @@ function sanitizeSubmissionsForRole(submissions, isAdminOrTeacher, currentStuden
  */
 function findStudentSubmission(submissions, probId, studentIdentifier) {
   if (!submissions || !Array.isArray(submissions) || !probId || !studentIdentifier) return null;
-  
-  let name = '';
-  let stt = '';
-  let pin = '';
-  
-  if (typeof studentIdentifier === 'object') {
-    name = (studentIdentifier.name || '').trim().toLowerCase();
-    stt = (studentIdentifier.stt !== undefined && studentIdentifier.stt !== null && studentIdentifier.stt !== '') ? String(studentIdentifier.stt) : '';
-    pin = (studentIdentifier.pin || studentIdentifier.student_pin || studentIdentifier.student_id || '').trim();
-  } else if (typeof studentIdentifier === 'number') {
-    stt = String(studentIdentifier);
-  } else {
-    name = String(studentIdentifier).trim().toLowerCase();
-  }
+  return submissions.find(s => s && s.problem_id === probId && submissionBelongsToStudent(s, studentIdentifier)) || null;
+}
 
-  return submissions.find(s => {
-    if (!s || s.problem_id !== probId) return false;
-    const sName = (s.student_name || '').trim().toLowerCase();
-    if (name && sName && (sName === name || sName.includes(name) || name.includes(sName))) return true;
-    if (stt && ((s.student_stt && String(s.student_stt) === stt) || (s.student_id && String(s.student_id) === stt) || (s.stt && String(s.stt) === stt))) return true;
-    if (pin && (s.student_pin === pin || s.student_id === pin)) return true;
-    return false;
-  }) || null;
+function submissionBelongsToStudent(submission, identifier) {
+  if (!submission || identifier === null || identifier === undefined) return false;
+  const student = typeof identifier === 'object' ? identifier
+    : typeof identifier === 'number' ? { stt: identifier } : { name: identifier };
+  const value = v => v === null || v === undefined ? '' : String(v).trim();
+  const stt = value(student.stt);
+  const subStt = value(submission.student_stt ?? submission.stt);
+  // An explicit conflicting ID must never fall back to a matching name.
+  if (stt && subStt) return stt === subStt;
+  const pin = value(student.pin || student.student_pin);
+  const subPin = value(submission.student_pin);
+  if (pin && subPin) return pin === subPin;
+  const legacyId = value(submission.student_id);
+  if (legacyId && (stt || pin)) return legacyId === stt || legacyId === pin;
+  const name = value(student.name).toLocaleLowerCase('vi');
+  const subName = value(submission.student_name).toLocaleLowerCase('vi');
+  const className = value(student.class || student.class_name);
+  const subClass = value(submission.class_name);
+  return Boolean(name && name === subName && (!className || !subClass || className === subClass));
 }
 
 /**
@@ -243,11 +287,12 @@ async function saveStudentSolvedToFirebase(studentIdent, probId) {
   if (!isFirebaseConfigured() || !studentIdent || !probId) return false;
   const dbUrl = getFirebaseDatabaseUrl();
   try {
-    const students = await fetchStudentsFromFirebase();
+    const entries = await fetchFirebaseStudentEntries();
+    const students = entries && entries.map(entry => entry.student);
     if (students && Array.isArray(students)) {
       let idx = -1;
       if (typeof studentIdent === 'number') {
-        idx = students.findIndex(s => s && s.stt === studentIdent);
+        idx = students.findIndex(s => s && String(s.stt) === String(studentIdent));
       } else if (typeof studentIdent === 'string') {
         const sLower = studentIdent.trim().toLowerCase();
         idx = students.findIndex(s => s && (
@@ -255,28 +300,35 @@ async function saveStudentSolvedToFirebase(studentIdent, probId) {
           (s.pin && s.pin === studentIdent)
         ));
       } else if (typeof studentIdent === 'object') {
-        idx = students.findIndex(s => s && (
-          (studentIdent.stt && s.stt === studentIdent.stt) ||
-          (studentIdent.name && s.name && s.name.trim().toLowerCase() === studentIdent.name.trim().toLowerCase())
-        ));
+        idx = students.findIndex(s => studentIdent.stt != null
+          ? String(s.stt) === String(studentIdent.stt)
+          : studentIdent.name && s.name && s.name.trim().toLowerCase() === studentIdent.name.trim().toLowerCase());
       }
 
       if (idx !== -1) {
-        const student = students[idx];
-        if (!student.solved) student.solved = [];
-        if (!student.solved.includes(probId)) {
-          student.solved.push(probId);
-          const resp = await fetch(`${dbUrl}/students/${idx}/solved.json`, {
+        const url = `${dbUrl}/students/${encodeURIComponent(entries[idx].key)}/solved.json`;
+        // Conditional writes prevent concurrent AC submissions from overwriting one another.
+        for (let attempt = 0; attempt < 3; attempt++) {
+          const current = await fetch(url, { headers: { 'X-Firebase-ETag': 'true' } });
+          if (!current.ok) return false;
+          const saved = await current.json();
+          const solved = Array.isArray(saved) ? saved.filter(Boolean) : Object.values(saved || {});
+          if (solved.includes(probId)) return true;
+          const etag = current.headers.get('ETag');
+          if (!etag) return false;
+          solved.push(probId);
+          const resp = await fetch(url, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(student.solved)
+            headers: { 'Content-Type': 'application/json', 'if-match': etag },
+            body: JSON.stringify(solved)
           });
+          if (resp.status === 412) continue;
           if (resp.ok) {
             touchFirebaseLastUpdated().catch(() => {});
           }
           return resp.ok;
         }
-        return true;
+        return false;
       }
     }
   } catch(err) {
@@ -314,11 +366,11 @@ async function saveTuitionToFirebase(stt, month, isPaid) {
   if (!isFirebaseConfigured()) return false;
   const dbUrl = getFirebaseDatabaseUrl();
   try {
-    const students = await fetchStudentsFromFirebase();
-    if (students && Array.isArray(students)) {
-      const idx = students.findIndex(s => s && s.stt === stt);
+    const entries = await fetchFirebaseStudentEntries();
+    if (entries) {
+      const idx = entries.findIndex(({ student }) => String(student.stt) === String(stt));
       if (idx !== -1) {
-        const resp = await fetch(`${dbUrl}/students/${idx}/tuition/${encodeURIComponent(month)}.json`, {
+        const resp = await fetch(`${dbUrl}/students/${encodeURIComponent(entries[idx].key)}/tuition/${encodeURIComponent(month)}.json`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(Boolean(isPaid))
@@ -342,11 +394,11 @@ async function saveStudentStatusToFirebase(stt, newStatus) {
   if (!isFirebaseConfigured()) return false;
   const dbUrl = getFirebaseDatabaseUrl();
   try {
-    const students = await fetchStudentsFromFirebase();
-    if (students && Array.isArray(students)) {
-      const idx = students.findIndex(s => s && s.stt === stt);
+    const entries = await fetchFirebaseStudentEntries();
+    if (entries) {
+      const idx = entries.findIndex(({ student }) => String(student.stt) === String(stt));
       if (idx !== -1) {
-        const resp = await fetch(`${dbUrl}/students/${idx}/status.json`, {
+        const resp = await fetch(`${dbUrl}/students/${encodeURIComponent(entries[idx].key)}/status.json`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newStatus)
@@ -384,11 +436,7 @@ async function touchFirebaseLastUpdated() {
  */
 async function saveSubmissionToFirebase(subData) {
   if (!isFirebaseConfigured() || !subData) return false;
-  // Bỏ qua nếu là bản ghi giả lập của crawler ngoài
-  const sid = String(subData.id || '').toUpperCase().trim();
-  if (sid.startsWith('SUB-AC-') || subData.is_synthetic) {
-    return false;
-  }
+  if (subData.is_synthetic) return false;
   const dbUrl = getFirebaseDatabaseUrl();
   try {
     const subId = subData.id || ('SUB-' + Date.now());
@@ -460,14 +508,20 @@ async function pushFullDatabaseToFirebaseClient(fullData) {
   if (!isFirebaseConfigured()) return false;
   const dbUrl = getFirebaseDatabaseUrl();
   try {
+    const submissions = {};
+    for (const submission of Object.values(fullData.submissions || {})) {
+      if (!submission || !submission.id || /[.#$\[\]/]/.test(String(submission.id))) return false;
+      submissions[submission.id] = submission;
+    }
+    const metadata = {
+      last_updated: new Date().toISOString(),
+      tuition_months: fullData.tuition_months || ['Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+      data_source: 'firebase'
+    };
     const payload = {
       students: fullData.students || [],
-      submissions: fullData.submissions || [],
-      metadata: {
-        last_updated: new Date().toISOString(),
-        tuition_months: fullData.tuition_months || ['Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-        data_source: "firebase"
-      }
+      submissions,
+      ...Object.fromEntries(Object.entries(metadata).map(([key, value]) => [`metadata/${key}`, value]))
     };
     const resp = await fetch(`${dbUrl}/.json`, {
       method: 'PATCH',
@@ -482,12 +536,17 @@ async function pushFullDatabaseToFirebaseClient(fullData) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload.students)
     });
-    await fetch(`${dbUrl}/metadata.json`, {
+    const rSubmissions = await fetch(`${dbUrl}/submissions.json`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload.metadata)
+      body: JSON.stringify(submissions)
     });
-    return rStudents.ok;
+    const rMetadata = await fetch(`${dbUrl}/metadata.json`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(metadata)
+    });
+    return rStudents.ok && rSubmissions.ok && rMetadata.ok;
   } catch(err) {
     console.error("Could not push full data to Firebase:", err);
     return false;

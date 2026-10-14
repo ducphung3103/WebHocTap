@@ -739,6 +739,8 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
     # 2. Sanitize docs/data.json (Zero student / tuition data leak)
     final_data["grader_problems"] = grader_problems
     final_data["students"] = []
+    # Submission metadata also contains student names/identifiers; keep it private.
+    # Complete records have already been saved to the private backups above.
     final_data["submissions"] = []
     final_data["problems"] = problems
     final_data["curriculum"] = curriculum

@@ -66,3 +66,7 @@ data/mock/
 marisa_*.json
 crawled_marisaoj_all_full.json
 TEST/
+
+# Local review snapshots and browser test profiles
+.local/
+data/private/

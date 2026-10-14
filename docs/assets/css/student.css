@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    
+    /* Heatmap square tooltips & Stacking Context */
+    .heatmap-column {
+      position: relative;
+    }
+    .heatmap-column:hover {
+      z-index: 50;
+    }
+    .heatmap-cell {
+      position: relative;
+    }
+    .heatmap-cell:hover {
+      z-index: 100;
+    }

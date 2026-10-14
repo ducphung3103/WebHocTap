@@ -88,18 +88,10 @@ for ep_name, ep_url in [
 print("\n[4] Kiểm tra cú pháp JavaScript của docs/index.html:")
 import subprocess
 try:
-    node_chk = subprocess.run([
-        "node", "-e",
-        """
-        const fs = require('fs');
-        const html = fs.readFileSync('docs/index.html', 'utf8');
-        const scripts = [...html.matchAll(/<script(?![^>]*src=)[^>]*>([\\s\\S]*?)<\\/script>/gi)];
-        scripts.forEach((m, idx) => {
-            new Function(m[1]);
-        });
-        console.log('ALL scripts parsed without errors! Count: ' + scripts.length);
-        """
-    ], capture_output=True, text=True, check=True)
+    node_chk = subprocess.run(
+        ["node", "scripts/check_project.mjs"],
+        cwd=_root, capture_output=True, text=True, encoding="utf-8", check=True,
+    )
     print("  - " + node_chk.stdout.strip())
 except Exception as e:
     print(f"  - Lỗi cú pháp JavaScript: {e}")

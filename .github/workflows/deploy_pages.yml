@@ -27,6 +27,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check public assets and data
+        run: node scripts/check_project.mjs
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

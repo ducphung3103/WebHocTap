@@ -1,0 +1,129 @@
+/*
+ * Cool Breeze theme: a soft sky/mint palette shared by the main and student
+ * pages. It intentionally overrides the legacy dark Tailwind utility colors
+ * without changing component markup or interaction behavior.
+ */
+:root {
+  --cool-bg: #eefbf8;
+  --cool-bg-sky: #edf8ff;
+  --cool-surface: rgba(255, 255, 255, 0.88);
+  --cool-surface-strong: #f8fffd;
+  --cool-surface-muted: #e8f6f5;
+  --cool-border: #b9ddd9;
+  --cool-border-soft: #d3ebe7;
+  --cool-text: #173b4a;
+  --cool-text-soft: #52717d;
+  --cool-blue: #3182a8;
+  --cool-green: #2f8f78;
+}
+
+body.cool-breeze {
+  color: var(--cool-text);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(125, 211, 252, .24), transparent 30rem),
+    radial-gradient(circle at 88% 18%, rgba(110, 231, 183, .22), transparent 32rem),
+    linear-gradient(145deg, var(--cool-bg-sky), var(--cool-bg) 55%, #f7fffb);
+  background-attachment: fixed;
+}
+
+.cool-breeze .bg-slate-950,
+.cool-breeze [class*="bg-slate-950/"] {
+  background-color: var(--cool-surface-strong) !important;
+}
+
+.cool-breeze .bg-slate-900,
+.cool-breeze [class*="bg-slate-900/"] {
+  background-color: var(--cool-surface) !important;
+}
+
+.cool-breeze .bg-slate-800,
+.cool-breeze [class*="bg-slate-800/"] {
+  background-color: var(--cool-surface-muted) !important;
+}
+
+.cool-breeze .bg-slate-700 { background-color: #d9eeee !important; }
+
+.cool-breeze .border-slate-900,
+.cool-breeze .border-slate-800,
+.cool-breeze .border-slate-700,
+.cool-breeze [class*="border-slate-800/"] {
+  border-color: var(--cool-border) !important;
+}
+
+.cool-breeze .text-white,
+.cool-breeze .text-slate-100,
+.cool-breeze .text-slate-200,
+.cool-breeze .text-slate-300 {
+  color: var(--cool-text) !important;
+}
+
+.cool-breeze .text-slate-400,
+.cool-breeze .text-slate-500,
+.cool-breeze .text-slate-600 {
+  color: var(--cool-text-soft) !important;
+}
+
+.cool-breeze .text-indigo-300,
+.cool-breeze .text-indigo-400,
+.cool-breeze .text-blue-300,
+.cool-breeze .text-blue-400,
+.cool-breeze .text-cyan-300,
+.cool-breeze .text-cyan-400,
+.cool-breeze .text-sky-400 {
+  color: var(--cool-blue) !important;
+}
+
+.cool-breeze .text-emerald-300,
+.cool-breeze .text-emerald-400,
+.cool-breeze .text-teal-300,
+.cool-breeze .text-teal-400 {
+  color: var(--cool-green) !important;
+}
+
+.cool-breeze input,
+.cool-breeze textarea,
+.cool-breeze select,
+.cool-breeze pre {
+  color: var(--cool-text);
+  caret-color: var(--cool-blue);
+}
+
+.cool-breeze input::placeholder,
+.cool-breeze textarea::placeholder { color: #7e9ca5 !important; }
+
+.cool-breeze table tbody tr:hover { background-color: rgba(186, 230, 228, .36) !important; }
+
+.cool-breeze button[class*="bg-indigo-"],
+.cool-breeze button[class*="bg-blue-"],
+.cool-breeze button[class*="bg-emerald-"],
+.cool-breeze button[class*="bg-teal-"],
+.cool-breeze button[class*="bg-rose-"],
+.cool-breeze button[class*="bg-gradient"],
+.cool-breeze a[class*="bg-indigo-"],
+.cool-breeze a[class*="bg-emerald-"],
+.cool-breeze a[class*="bg-gradient"] {
+  color: #fff !important;
+}
+
+.cool-breeze header,
+.cool-breeze nav,
+.cool-breeze footer {
+  border-color: var(--cool-border-soft) !important;
+  backdrop-filter: blur(16px);
+}
+
+.cool-breeze .shadow-xl,
+.cool-breeze .shadow-2xl {
+  box-shadow: 0 18px 45px rgba(48, 115, 126, .10) !important;
+}
+
+.cool-breeze ::-webkit-scrollbar-track { background: #e5f5f2; }
+.cool-breeze ::-webkit-scrollbar-thumb { background: #8fc7c2; }
+.cool-breeze ::-webkit-scrollbar-thumb:hover { background: #69aea8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cool-breeze *, .cool-breeze *::before, .cool-breeze *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}

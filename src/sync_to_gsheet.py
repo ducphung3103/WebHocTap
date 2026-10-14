@@ -404,6 +404,18 @@ def sync_all_from_local_json(json_path: str = "docs/data.json") -> Dict[str, Any
         except Exception as e:
             logger.warning(f"Could not read {json_path}: {e}")
 
+    # Recover locally saved submissions without replacing newer cloud records.
+    private_path = os.path.join(_PROJECT_ROOT, "data", "private", "submissions.json")
+    if os.path.exists(private_path):
+        try:
+            with open(private_path, "r", encoding="utf-8") as stream:
+                private_submissions = json.load(stream)
+            known_ids = {s.get("id") for s in submissions if isinstance(s, dict)}
+            submissions.extend(s for s in private_submissions.values()
+                               if s.get("id") not in known_ids and s.get("problem_id"))
+        except (OSError, ValueError, AttributeError) as exc:
+            logger.warning(f"Could not load private submission backup: {exc}")
+
     if not students:
         return {"status": "error", "message": "Không có dữ liệu học sinh nào từ Firebase hoặc file cục bộ để đối soát"}
 

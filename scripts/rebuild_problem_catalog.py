@@ -209,24 +209,23 @@ internal_doc_problems = [
     },
     {
         "id": "PY-EX-02",
-        "name": "Chú quạ cứng đầu",
+        "name": "Chú quạ thông minh",
         "classes": ["Python cơ bản"],
         "difficulty": "Level 1",
         "category": "Cơ bản",
         "platform": "DeruckOJ",
         "url": "#judge",
-        "notes": "Bài tập Python cơ bản: Luôn in ra ToiLaChuQuaCungDau",
-        "description": "Hãy tạo ra 1 chú quạ cứng đầu: Kể cả người dùng có nhập vào bất cứ câu gì, chú quạ vẫn chỉ in ra màn hình đúng một câu duy nhất: 'ToiLaChuQuaCungDau'.",
-        "input_format": "Một dòng chứa chuỗi ký tự bất kỳ.",
-        "output_format": "In ra 'ToiLaChuQuaCungDau'.",
+        "notes": "Bài tập Python cơ bản: Chú quạ thông minh kêu N lần QUAC",
+        "description": "Chú quạ thông minh kêu $N$ lần. Cho số nguyên dương $N$, hãy in ra $N$ từ \"QUAC\" trên cùng một dòng, cách nhau bởi một khoảng trắng.",
+        "input_format": "Một số nguyên dương N.",
+        "output_format": "In ra N từ QUAC cách nhau bởi khoảng trắng.",
         "time_limit": 1.0,
         "starter_cpp": "",
         "starter_py": "",
         "testcases": [
-            {"input": "Xin chao\n", "output": "ToiLaChuQuaCungDau\n", "sample": True},
-            {"input": "Ban ten la gi?\n", "output": "ToiLaChuQuaCungDau\n", "sample": True},
-            {"input": "123456\n", "output": "ToiLaChuQuaCungDau\n", "sample": False},
-            {"input": "Con qua oi\n", "output": "ToiLaChuQuaCungDau\n", "sample": False}
+            {"input": "3\n", "output": "QUAC QUAC QUAC\n", "sample": True},
+            {"input": "1\n", "output": "QUAC\n", "sample": True},
+            {"input": "5\n", "output": "QUAC QUAC QUAC QUAC QUAC\n", "sample": False}
         ]
     },
     {

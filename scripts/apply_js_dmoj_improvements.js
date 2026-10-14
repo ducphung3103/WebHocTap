@@ -1,3 +1,5 @@
+// Historical migration for the former single-file UI; edit docs/assets/ directly now.
+throw new Error('Migration already applied. Edit docs/index.html and docs/assets/js/app.js directly.');
 const fs = require('fs');
 const path = require('path');
 

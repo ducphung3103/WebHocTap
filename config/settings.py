@@ -58,38 +58,20 @@ class Settings:
             if (raw.startswith("'") and raw.endswith("'")) or (raw.startswith("`") and raw.endswith("`")):
                 raw = raw[1:-1].strip()
 
-            # Self-heal missing brackets (e.g. if user missed opening { when copying)
-            if not raw.startswith("{") and "type" in raw:
-                idx = raw.find('"type"')
-                if idx != -1:
-                    raw = "{" + raw[idx:]
-                else:
-                    t_idx = raw.find("type")
-                    raw = '{"' + raw[t_idx:]
-            if not raw.endswith("}"):
-                r_idx = raw.rfind("}")
-                if r_idx != -1:
-                    raw = raw[:r_idx + 1]
-                else:
-                    raw = raw + "}"
-
-            if raw.startswith("{") and raw.endswith("}"):
-                try:
-                    return json.loads(raw)
-                except Exception:
-                    pass
-
-            # Try base64 decoding as fallback
+            # Parse the original input without altering JSON or Base64 credentials.
             try:
-                decoded = base64.b64decode(raw).decode("utf-8")
-                return json.loads(decoded)
-            except Exception:
+                parsed = json.loads(raw)
+                if isinstance(parsed, dict):
+                    return parsed
+            except json.JSONDecodeError:
                 pass
-
-            # Final direct json load attempt
             try:
-                return json.loads(raw)
-            except json.JSONDecodeError as exc:
+                decoded = base64.b64decode(''.join(raw.split()), validate=True).decode("utf-8")
+                parsed = json.loads(decoded)
+                if not isinstance(parsed, dict):
+                    raise ValueError("Credentials must be a JSON object")
+                return parsed
+            except (ValueError, UnicodeDecodeError) as exc:
                 raise ValueError("GCP_SA_KEY / GOOGLE_SERVICE_ACCOUNT_JSON không đúng định dạng JSON chuẩn. Vui lòng kiểm tra lại nội dung khóa trên GitHub Secrets!") from exc
 
         # 2. Try file path

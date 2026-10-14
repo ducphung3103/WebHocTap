@@ -195,7 +195,16 @@ def push_full_database_to_firebase(payload: Dict[str, Any], db_url: Optional[str
     target_url = get_target_url(db_url)
 
     students = payload.get("students", [])
-    submissions = payload.get("submissions", [])
+    raw_submissions = payload.get("submissions", [])
+    submission_list = raw_submissions.values() if isinstance(raw_submissions, dict) else raw_submissions
+    submissions = {}
+    for submission in submission_list:
+        if not isinstance(submission, dict) or not submission.get("id"):
+            return False
+        key = str(submission["id"])
+        if any(char in key for char in '.#$[]/'):
+            return False
+        submissions[key] = submission
     metadata = payload.get("metadata", {})
     if not metadata:
         metadata = {
@@ -205,8 +214,8 @@ def push_full_database_to_firebase(payload: Dict[str, Any], db_url: Optional[str
 
     safe_payload = {
         "students": students,
-        "submissions": submissions,
-        "metadata": metadata
+        **{f"submissions/{key}": value for key, value in submissions.items()},
+        **{f"metadata/{key}": value for key, value in metadata.items()},
     }
 
     db_secret = os.environ.get("FIREBASE_DATABASE_SECRET", "").strip()
@@ -241,6 +250,8 @@ def push_full_database_to_firebase(payload: Dict[str, Any], db_url: Optional[str
     # Step 2: Nếu PATCH root không được (ví dụ do Rules chặn root), ghi trực tiếp từng nhánh
     if not patch_success:
         ok_students = False
+        ok_metadata = False
+        ok_submissions = not submissions
         try:
             ep_stu = f"{target_url}/students.json{auth_param}"
             req_stu = urllib.request.Request(ep_stu, data=json.dumps(students, ensure_ascii=False).encode("utf-8"), headers=headers, method="PUT")
@@ -251,29 +262,29 @@ def push_full_database_to_firebase(payload: Dict[str, Any], db_url: Optional[str
 
         try:
             ep_meta = f"{target_url}/metadata.json{auth_param}"
-            req_meta = urllib.request.Request(ep_meta, data=json.dumps(metadata, ensure_ascii=False).encode("utf-8"), headers=headers, method="PUT")
+            req_meta = urllib.request.Request(ep_meta, data=json.dumps(metadata, ensure_ascii=False).encode("utf-8"), headers=headers, method="PATCH")
             with urllib.request.urlopen(req_meta, timeout=10) as resp:
-                pass
+                ok_metadata = resp.status in (200, 204)
         except Exception:
             pass
 
         if submissions:
             try:
                 ep_sub = f"{target_url}/submissions.json{auth_param}"
-                req_sub = urllib.request.Request(ep_sub, data=json.dumps(submissions, ensure_ascii=False).encode("utf-8"), headers=headers, method="PUT")
+                req_sub = urllib.request.Request(ep_sub, data=json.dumps(submissions, ensure_ascii=False).encode("utf-8"), headers=headers, method="PATCH")
                 with urllib.request.urlopen(req_sub, timeout=15) as resp:
-                    pass
+                    ok_submissions = resp.status in (200, 204)
             except Exception:
                 pass
 
-        if not ok_students:
-            print("❌ Không thể đồng bộ danh sách học sinh lên Firebase. Vui lòng kiểm tra kết nối mạng hoặc Firebase Rules!")
+        if not (ok_students and ok_metadata and ok_submissions):
+            print("❌ Chưa đồng bộ đủ học sinh, metadata và bài nộp lên Firebase.")
             return False
 
     print(f"✅ Đã đồng bộ thành công {len(students)} học sinh và học phí lên Firebase Realtime Database!")
 
     # Step 3: Đồng bộ auth_tokens nếu có
     if payload.get("auth_tokens"):
-        push_tokens_to_firebase(payload["auth_tokens"], target_url)
+        return push_tokens_to_firebase(payload["auth_tokens"], target_url)
 
     return True

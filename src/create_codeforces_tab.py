@@ -25,7 +25,7 @@ from config.settings import get_settings
 
 
 def create_and_populate_codeforces_tab(
-    csv_path: str = "docs/deruck_solved_cf.csv",
+    csv_path: str = os.path.join(_PROJECT_ROOT, "data", "imports", "deruck_solved_cf.csv"),
     new_tab_name: str = "Kho Bài Codeforces"
 ):
     settings = get_settings()

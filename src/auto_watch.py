@@ -272,6 +272,8 @@ def save_and_push_updates(students: List[Dict[str, Any]], changes: List[str]):
             with open(json_path, "r", encoding="utf-8") as f:
                 app_data = json.load(f)
             app_data["students"] = []
+            app_data["submissions"] = []
+            app_data.pop("auth_tokens", None)
             app_data["last_updated"] = now_iso
             with open(json_path, "w", encoding="utf-8") as f:
                 json.dump(app_data, f, ensure_ascii=False, indent=2)
