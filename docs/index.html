@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="assets/js/index-theme.js"></script>
-  <link rel="stylesheet" href="assets/css/index.css?v=20261015-4">
+  <link rel="stylesheet" href="assets/css/index.css?v=20261015-5">
   <link rel="stylesheet" href="assets/css/management.css">
   <link rel="stylesheet" href="assets/css/cool-breeze.css?v=20261015-3">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -106,7 +106,7 @@
   </div>
 
   <!-- NAVIGATION BAR -->
-  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+  <header id="site-header" class="sticky top-0 z-40 bg-white backdrop-blur-md border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         
@@ -120,7 +120,6 @@
           </div>
           <div class="font-extrabold text-white text-xs sm:text-sm leading-tight tracking-tight flex items-center gap-1.5">
             <span>DeruckOJ</span>
-            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Online Judge</span>
           </div>
         </a>
 
@@ -164,7 +163,7 @@
       </div>
 
       <!-- Mobile Tab Bar (DeruckOJ) -->
-      <div class="flex md:hidden overflow-x-auto py-1.5 space-x-1 border-t border-slate-800 text-xs">
+      <div class="site-mobile-tabs flex md:hidden overflow-x-auto py-1.5 space-x-1 border-t border-slate-800 text-xs">
         <button onclick="switchTab('problems')" id="tab-btn-problems-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">📝 Bài tập</button>
         <button onclick="switchTab('submissions')" id="tab-btn-submissions-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">⚡ Bài nộp</button>
         <button onclick="switchTab('leaderboard')" id="tab-btn-leaderboard-mobile" class="tab-btn px-2.5 py-1 rounded-lg whitespace-nowrap text-slate-400">🏆 BXH</button>
@@ -255,37 +254,51 @@
     <!-- ========================================== -->
     <section id="section-home" class="home-page">
       <div class="home-intro">
-        <h1>Deruck's Competitive Programming</h1>
+        <h1>Deruck's <span>Competitive Programming</span></h1>
         <p>Học lập trình, luyện thuật toán và theo dõi tiến độ học tập.</p>
-        <button type="button" class="home-login" onclick="showAuthModal()">Đăng nhập bằng mã PIN</button>
+        <div class="home-actions">
+          <button type="button" class="home-login" onclick="showAuthModal()">Đăng nhập bằng mã PIN <span aria-hidden="true">→</span></button>
+          <a class="home-secondary" href="#courses-section">Xem lớp học</a>
+        </div>
       </div>
 
       <div id="courses-section" class="home-courses">
         <h2>Lớp học</h2>
         <div class="home-course-grid">
           <article class="home-course">
+            <div class="home-course-icon course-cyan" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"/></svg></div>
             <h3>C++ cơ bản</h3>
             <p>Cú pháp, mảng, xâu và thuật toán cơ bản.</p>
+            <button type="button" class="home-course-link" onclick="showAuthModal()" aria-label="Đăng nhập vào lớp C++ cơ bản">Vào lớp <span aria-hidden="true">→</span></button>
           </article>
           <article class="home-course">
+            <div class="home-course-icon course-blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="2" y="16" width="6" height="5" rx="1"/><rect x="16" y="16" width="6" height="5" rx="1"/><path d="M12 8v4H5v4m7-4h7v4"/></svg></div>
             <h3>C++ nâng cao</h3>
             <p>Cấu trúc dữ liệu và thuật toán luyện thi HSG.</p>
+            <button type="button" class="home-course-link" onclick="showAuthModal()" aria-label="Đăng nhập vào lớp C++ nâng cao">Vào lớp <span aria-hidden="true">→</span></button>
           </article>
           <article class="home-course">
+            <div class="home-course-icon course-green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15"/></svg></div>
             <h3>Python cơ bản</h3>
             <p>Lập trình Python và tư duy giải bài toán.</p>
+            <button type="button" class="home-course-link" onclick="showAuthModal()" aria-label="Đăng nhập vào lớp Python cơ bản">Vào lớp <span aria-hidden="true">→</span></button>
           </article>
           <article class="home-course">
+            <div class="home-course-icon course-purple" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></div>
             <h3>Python 1-1</h3>
             <p>Học riêng theo trình độ và mục tiêu cá nhân.</p>
+            <button type="button" class="home-course-link" onclick="showAuthModal()" aria-label="Đăng nhập vào lớp Python 1-1">Vào lớp <span aria-hidden="true">→</span></button>
           </article>
         </div>
       </div>
 
       <div class="home-contact">
-        <h2>Liên hệ Thầy Đức</h2>
+        <div class="home-instructor">
+          <div class="home-avatar" aria-hidden="true">D</div>
+          <div><h2>Thầy Đức</h2><p>Giảng viên phụ trách</p></div>
+        </div>
         <div class="home-contact-links">
-          <a href="https://zalo.me/0396468382" target="_blank" rel="noopener noreferrer">Zalo: 0396468382</a>
+          <a class="home-contact-primary" href="https://zalo.me/0396468382" target="_blank" rel="noopener noreferrer">Liên hệ qua Zalo <span aria-hidden="true">↗</span></a>
           <a href="https://www.facebook.com/deruckphung3103/" target="_blank" rel="noopener noreferrer">Facebook</a>
           <a href="mailto:phungduc3103@gmail.com">phungduc3103@gmail.com</a>
         </div>
