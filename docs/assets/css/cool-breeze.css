@@ -1,6 +1,6 @@
 /*
- * Classic light theme shared by the main and student pages. It overrides the
- * legacy dark Tailwind utility colors without changing component behavior.
+ * Shared surface tokens and legacy utility mappings. themes.css supplies
+ * the selected light, dark or terminal palette without changing behavior.
  */
 :root {
   --cool-bg: #ffffff;
@@ -42,7 +42,7 @@ body.cool-breeze {
   background-color: var(--cool-surface-muted) !important;
 }
 
-.cool-breeze .bg-slate-700 { background-color: #ebebeb !important; }
+.cool-breeze .bg-slate-700 { background-color: var(--cool-surface-muted) !important; }
 
 /* Remove the remaining near-black colour surfaces from the legacy dark UI. */
 .cool-breeze [class*="bg-blue-950"],
@@ -127,18 +127,18 @@ body.cool-breeze {
 .cool-breeze select,
 .cool-breeze pre {
   color: var(--cool-text);
-  caret-color: #000;
+  caret-color: var(--cool-text);
   background-color: var(--cool-surface);
 }
 
 .cool-breeze input::placeholder,
-.cool-breeze textarea::placeholder { color: #666 !important; }
+.cool-breeze textarea::placeholder { color: var(--cool-text-soft) !important; }
 
-.cool-breeze table tbody tr:hover { background-color: #f3f3f3 !important; }
+.cool-breeze table tbody tr:hover { background-color: var(--cool-surface-muted) !important; }
 
 .cool-breeze code,
 .cool-breeze pre {
-  background-color: #f7f7f7 !important;
+  background-color: var(--theme-code) !important;
 }
 
 .cool-breeze button[class*="bg-indigo-"],
@@ -157,7 +157,7 @@ body.cool-breeze {
 .cool-breeze nav,
 .cool-breeze footer {
   border-color: var(--cool-border-soft) !important;
-  background-color: rgba(255, 255, 255, .96) !important;
+  background-color: var(--cool-surface) !important;
   backdrop-filter: blur(12px);
 }
 
@@ -166,9 +166,9 @@ body.cool-breeze {
   box-shadow: 0 12px 30px rgba(0, 0, 0, .09) !important;
 }
 
-.cool-breeze ::-webkit-scrollbar-track { background: #f1f1f1; }
-.cool-breeze ::-webkit-scrollbar-thumb { background: #aaa; }
-.cool-breeze ::-webkit-scrollbar-thumb:hover { background: #777; }
+.cool-breeze ::-webkit-scrollbar-track { background: var(--cool-surface-muted); }
+.cool-breeze ::-webkit-scrollbar-thumb { background: var(--cool-border); }
+.cool-breeze ::-webkit-scrollbar-thumb:hover { background: var(--cool-text-soft); }
 
 @media (prefers-reduced-motion: reduce) {
   .cool-breeze *, .cool-breeze *::before, .cool-breeze *::after {

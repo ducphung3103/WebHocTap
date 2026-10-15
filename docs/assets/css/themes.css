@@ -1,0 +1,119 @@
+:root {
+  --theme-accent: #4338ca;
+  --theme-accent-hover: #3730a3;
+  --theme-on-accent: #fff;
+  --theme-accent-soft: #eef2ff;
+  --theme-accent-border: #c7d2fe;
+  --theme-subtle: #f8fafc;
+  --theme-code: #f7f7f7;
+  --theme-cyan-bg: #ecfeff;
+  --theme-cyan: #0e7490;
+  --theme-blue-bg: #eff6ff;
+  --theme-blue: #2563eb;
+  --theme-green-bg: #ecfdf5;
+  --theme-green: #047857;
+  --theme-purple-bg: #f5f3ff;
+  --theme-purple: #7c3aed;
+}
+
+html[data-theme="dark"] {
+  --cool-bg: #0b1120;
+  --cool-bg-sky: #0b1120;
+  --cool-surface: #111b2e;
+  --cool-surface-strong: #0e1728;
+  --cool-surface-muted: #1e293b;
+  --cool-border: #334155;
+  --cool-border-soft: #273449;
+  --cool-text: #e8eef7;
+  --cool-text-soft: #a8b7cc;
+  --cool-blue: #a5b4fc;
+  --cool-green: #6ee7b7;
+  --cool-info: #192744;
+  --cool-success: #10352b;
+  --cool-warning: #382b16;
+  --cool-danger: #3d1d2b;
+  --theme-accent: #a5b4fc;
+  --theme-accent-hover: #c7d2fe;
+  --theme-on-accent: #111827;
+  --theme-accent-soft: #252d50;
+  --theme-accent-border: #495883;
+  --theme-subtle: #152035;
+  --theme-code: #0d1625;
+  --theme-cyan-bg: #10333d;
+  --theme-cyan: #67e8f9;
+  --theme-blue-bg: #1c2f50;
+  --theme-blue: #93c5fd;
+  --theme-green-bg: #10352b;
+  --theme-green: #6ee7b7;
+  --theme-purple-bg: #2e2349;
+  --theme-purple: #c4b5fd;
+}
+
+html[data-theme="cli"] {
+  --cool-bg: #080e0b;
+  --cool-bg-sky: #080e0b;
+  --cool-surface: #0c1510;
+  --cool-surface-strong: #080e0b;
+  --cool-surface-muted: #17271c;
+  --cool-border: #34583f;
+  --cool-border-soft: #243b2c;
+  --cool-text: #c6f6d5;
+  --cool-text-soft: #9fbea8;
+  --cool-blue: #86efac;
+  --cool-green: #86efac;
+  --cool-info: #142b1d;
+  --cool-success: #12331e;
+  --cool-warning: #302b14;
+  --cool-danger: #351a20;
+  --theme-accent: #86efac;
+  --theme-accent-hover: #bbf7d0;
+  --theme-on-accent: #080e0b;
+  --theme-accent-soft: #193323;
+  --theme-accent-border: #4b7f59;
+  --theme-subtle: #101e15;
+  --theme-code: #080e0b;
+  --theme-cyan-bg: #142b1d;
+  --theme-cyan: #86efac;
+  --theme-blue-bg: #142b1d;
+  --theme-blue: #86efac;
+  --theme-green-bg: #142b1d;
+  --theme-green: #86efac;
+  --theme-purple-bg: #142b1d;
+  --theme-purple: #86efac;
+}
+
+html[data-theme] { background: var(--cool-bg); }
+.theme-toolbar { display: flex; justify-content: flex-end; max-width: 80rem; margin: 0 auto; padding: .4rem 2rem .6rem; }
+.theme-switcher { display: inline-flex; gap: .2rem; padding: .2rem; background: var(--theme-subtle); border: 1px solid var(--cool-border); border-radius: .6rem; }
+.theme-switcher button { min-width: 48px; min-height: 32px; padding: .3rem .6rem; border: 1px solid transparent; border-radius: .4rem; color: var(--cool-text-soft); font-size: .75rem; font-weight: 600; cursor: pointer; }
+.theme-switcher button:hover { background: var(--cool-surface-muted); color: var(--cool-text); }
+.theme-switcher button[aria-pressed="true"] { background: var(--cool-surface); color: var(--theme-accent); border-color: var(--theme-accent-border); }
+.theme-switcher button:focus-visible { outline: 2px solid var(--theme-accent); outline-offset: 2px; }
+
+/* Surfaces from legacy markup, including content inserted after page load. */
+html[data-theme]:not([data-theme="light"]) .cool-breeze .bg-white { background-color: var(--cool-surface) !important; }
+html[data-theme]:not([data-theme="light"]) .cool-breeze :is(.text-slate-900, .text-slate-800, .text-slate-700) { color: var(--cool-text) !important; }
+html[data-theme]:not([data-theme="light"]) .cool-breeze [class*="border-slate-200"] { border-color: var(--cool-border) !important; }
+
+html[data-theme="cli"] body,
+html[data-theme="cli"] :is(button, input, select, textarea, pre, code, .font-mono, .font-sans) {
+  font-family: 'JetBrains Mono', Consolas, monospace !important;
+}
+html[data-theme="cli"] .cool-breeze *,
+html[data-theme="cli"] .cool-breeze *::before,
+html[data-theme="cli"] .cool-breeze *::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  backdrop-filter: none !important;
+}
+html[data-theme="cli"] .cool-breeze [class*="bg-gradient"] { background-image: none !important; background-color: var(--cool-surface-muted) !important; color: var(--cool-text) !important; }
+html[data-theme="cli"] .home-intro { text-align: left; }
+html[data-theme="cli"] .home-intro h1 { margin-left: 0; font-size: clamp(1.5rem, 3vw, 2.5rem); letter-spacing: -.025em; }
+html[data-theme="cli"] .home-intro h1::before { content: "> "; color: var(--theme-accent); }
+html[data-theme="cli"] .home-intro p { margin-left: 0; }
+html[data-theme="cli"] .home-actions { justify-content: flex-start; }
+html[data-theme="cli"] .home-course-icon { border: 1px solid var(--cool-border); }
+html[data-theme="cli"] .home-course-link::before { content: "$"; margin-right: .5rem; }
+html[data-theme="cli"] .home-page h2::before { content: "./ "; color: var(--theme-accent); }
+@media (max-width: 640px) { .theme-toolbar { padding-right: 1rem; padding-left: 1rem; } }

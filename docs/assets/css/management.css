@@ -1,25 +1,25 @@
 .management-header { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-.management-title { font-size:1.5rem; font-weight:800; color:#111827; }
-.management-description { color:#4b5563; font-size:.875rem; margin-top:.4rem; }
+.management-title { font-size:1.5rem; font-weight:800; color:var(--cool-text); }
+.management-description { color:var(--cool-text-soft); font-size:.875rem; margin-top:.4rem; }
 .management-layout { display:grid; grid-template-columns:200px minmax(0,1fr); gap:1.5rem; align-items:start; }
-.management-nav { display:flex; flex-direction:column; gap:.4rem; padding:.6rem; border:1px solid #d4d4d4; border-radius:1rem; background:#fff; }
-.management-nav button { text-align:left; padding:.8rem; border-radius:.65rem; font-size:.85rem; color:#4b5563; cursor:pointer; }
-.management-nav button:hover, .management-nav button.is-active { color:#1e3a8a; background:#eef2ff; }
+.management-nav { display:flex; flex-direction:column; gap:.4rem; padding:.6rem; border:1px solid var(--cool-border); border-radius:1rem; background:var(--cool-surface); }
+.management-nav button { text-align:left; padding:.8rem; border-radius:.65rem; font-size:.85rem; color:var(--cool-text-soft); cursor:pointer; }
+.management-nav button:hover, .management-nav button.is-active { color:var(--theme-accent); background:var(--theme-accent-soft); }
 .management-panel { min-width:0; }
 .management-toolbar { display:flex; gap:.7rem; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-bottom:1rem; }
-.management-toolbar h3 { font-size:1.1rem; font-weight:700; color:#111827; }
-.management-button { display:inline-flex; align-items:center; gap:.4rem; padding:.6rem .85rem; background:#fff; border:1px solid #d4d4d4; border-radius:.65rem; font-size:.8rem; color:#1f2937; cursor:pointer; margin:.15rem; }
-.management-button:hover { background:#f5f5f5; }
-.management-button.primary { background:#4f46e5; border-color:#6366f1; color:white; }
+.management-toolbar h3 { font-size:1.1rem; font-weight:700; color:var(--cool-text); }
+.management-button { display:inline-flex; align-items:center; gap:.4rem; padding:.6rem .85rem; background:var(--cool-surface); border:1px solid var(--cool-border); border-radius:.65rem; font-size:.8rem; color:var(--cool-text); cursor:pointer; margin:.15rem; }
+.management-button:hover { background:var(--cool-surface-muted); }
+.management-button.primary { background:var(--theme-accent); border-color:var(--theme-accent-border); color:var(--theme-on-accent); }
 .management-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.8rem; margin-bottom:1.5rem; }
-.management-card { padding:1.1rem; border:1px solid #d4d4d4; border-radius:1rem; background:#fff; }
-.management-card strong { display:block; font-size:1.8rem; color:#3730a3; }
-.management-card p { font-size:.8rem; color:#4b5563; }
+.management-card { padding:1.1rem; border:1px solid var(--cool-border); border-radius:1rem; background:var(--cool-surface); }
+.management-card strong { display:block; font-size:1.8rem; color:var(--theme-accent); }
+.management-card p { font-size:.8rem; color:var(--cool-text-soft); }
 .management-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
-.management-actions h3 { color:#111827; font-weight:700; margin-bottom:.5rem; }
+.management-actions h3 { color:var(--cool-text); font-weight:700; margin-bottom:.5rem; }
 .management-table { width:100%; font-size:.8rem; text-align:left; }
-.management-table th, .management-table td { padding:.8rem; border-bottom:1px solid #e5e7eb; }
-.management-table th { color:#4b5563; background:#f7f7f7; }
-.management-search { padding:.65rem .8rem; background:#fff; border:1px solid #d4d4d4; border-radius:.6rem; color:#111827; max-width:100%; }
+.management-table th, .management-table td { padding:.8rem; border-bottom:1px solid var(--cool-border-soft); }
+.management-table th { color:var(--cool-text-soft); background:var(--cool-surface-muted); }
+.management-search { padding:.65rem .8rem; background:var(--cool-surface); border:1px solid var(--cool-border); border-radius:.6rem; color:var(--cool-text); max-width:100%; }
 @media(max-width:900px) { .management-layout { grid-template-columns:1fr; } .management-nav { flex-direction:row; overflow:auto; } .management-nav button { white-space:nowrap; } .management-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:540px) { .management-actions { grid-template-columns:1fr; } }

@@ -114,6 +114,28 @@ try {
   assert.deepEqual(errors, []);
   console.log('PASS main page initializes with offline Firebase fixtures');
 
+  // The theme is a shared preference, independent of authentication and page.
+  assert.equal(await evaluate("document.querySelectorAll('[data-theme-choice]').length"), 3);
+  for (const [theme, color] of [['dark', 'rgb(11, 17, 32)'], ['cli', 'rgb(8, 14, 11)'], ['light', 'rgb(255, 255, 255)']]) {
+    await evaluate(`document.querySelector('[data-theme-choice="${theme}"]').click()`);
+    assert.equal(await evaluate("getComputedStyle(document.body).backgroundColor"), color);
+    assert.equal(await evaluate("document.querySelector('[data-theme-choice][aria-pressed=true]').dataset.themeChoice"), theme);
+  }
+  await evaluate("SiteTheme.set('cli')");
+  await send('Page.navigate', { url: origin + '/student.html?id=17' });
+  await until("document.querySelectorAll('[data-theme-choice]').length === 3");
+  assert.equal(await evaluate("SiteTheme.get()"), 'cli');
+  assert.match(await evaluate("getComputedStyle(document.body).fontFamily"), /monospace/);
+  await evaluate("SiteTheme.set('dark')");
+  await send('Page.navigate', { url: origin + '/index.html' });
+  await until("typeof appData !== 'undefined' && appData?.students?.length === 1");
+  assert.equal(await evaluate("SiteTheme.get()"), 'dark');
+  await evaluate("window.dispatchEvent(new StorageEvent('storage', { key: 'deruck-ui-theme', newValue: 'cli' }))");
+  assert.equal(await evaluate("SiteTheme.get()"), 'cli');
+  await evaluate("SiteTheme.set('unknown')");
+  assert.equal(await evaluate("SiteTheme.get()"), 'light');
+  console.log('PASS three themes switch, persist across pages, and synchronize storage changes');
+
   // IndexedDB archive keeps an older submission even when Firebase returns an empty collection.
   await evaluate(`archiveSubmissionsLocally([{ id: 'SUB-1700000000000-ARCHIVE', submitted_at: '14/11/2023 12:00:00', student_name: 'Học Sinh Kiểm Thử', problem_id: 'CPP-ARCHIVE', problem_name: 'Archived problem', answer: '[C++20]\\nint main(){}', lang: 'C++20', status: 'Đã nộp' }], { silent: true })`);
   await send('Page.navigate', { url: origin + '/index.html' });
