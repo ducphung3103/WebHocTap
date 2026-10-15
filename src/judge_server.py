@@ -176,14 +176,13 @@ class JudgeHandler(BaseHTTPRequestHandler):
                     # Push to Google Sheet
                     res = sync_to_gsheet.grade_submission_in_sheet(sub_id, status_val, score_val, fb_val)
 
-                elif api_path == "/api/sync_two_way":
-                    reconcile_res = sync_to_gsheet.sync_all_from_local_json()
+                elif api_path in ("/api/sync_two_way", "/api/sync_from_sheet"):
+                    # Sheets is authoritative. Keep the legacy route read-only too.
                     sync_pull = sync_gsheets(no_push=True)
                     res = {
-                        "status": "success" if sync_pull and reconcile_res.get("status") == "success" else "error",
-                        "reconcile": reconcile_res,
+                        "status": "success" if sync_pull else "error",
                         "pull_success": sync_pull,
-                        "message": "Đã hoàn thành đồng bộ 2 chiều (Web ⇄ Google Sheet)!"
+                        "message": "Đã đồng bộ từ Google Sheet, không ghi đè dữ liệu gốc." if sync_pull else "Không đọc được Google Sheet."
                     }
 
                 self.send_response(200)

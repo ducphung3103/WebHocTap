@@ -206,7 +206,7 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
     try:
         logger.info(f"Authenticating with Google Sheets API for sheet_id: {sheet_id}...")
         scopes = [
-            "https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/spreadsheets.readonly",
             "https://www.googleapis.com/auth/drive.readonly",
         ]
         credentials = Credentials.from_service_account_info(sa_info, scopes=scopes)
@@ -396,7 +396,8 @@ def sync_gsheets(spreadsheet_id: Optional[str] = None, json_path: str = "docs/da
     # 2.1 Tab chính: "Bài Tập" (Curated homework tracked for students)
     ws_prob = get_worksheet_by_title(sh, ["Bài Tập", "Bai Tap", "Theo dõi Bài tập", "Problems"])
     if ws_prob:
-        prob_rows = ws_prob.get_all_values()
+        from src.problem_catalog import read_problem_rows
+        prob_rows = read_problem_rows(ws_prob)
         for r in prob_rows[1:]:
             p_obj = parse_single_problem_row(r)
             if p_obj and p_obj["id"] not in seen_pids:
@@ -772,17 +773,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Sync Google Sheets to Web")
     parser.add_argument("--push", action="store_true", help="Auto push to GitHub")
     parser.add_argument("--no-push", action="store_true", help="Skip push")
-    parser.add_argument("--two-way", action="store_true", help="Perform two-way sync (push local edits to Google Sheet, then pull)")
+    parser.add_argument("--two-way", action="store_true", help="Deprecated: Sheets remains read-only and authoritative")
     parser.add_argument("sheet_id", nargs="?", default=None, help="Google Spreadsheet ID")
     args = parser.parse_args()
 
     if args.two_way:
-        try:
-            from src.sync_to_gsheet import sync_all_from_local_json
-            print("🔄 [2-WAY SYNC] Đang đối soát và cập nhật dữ liệu từ Web lên Google Sheet...")
-            sync_all_from_local_json()
-        except Exception as e:
-            print(f"⚠️ Cảnh báo 2-way sync: {e}")
+        print("ℹ️ Google Sheet là dữ liệu gốc: chỉ đọc, không đẩy dữ liệu web lên Sheet.")
 
     ok = sync_gsheets(args.sheet_id)
     if ok:

@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="assets/css/management.css?v=20261015-2">
   <link rel="stylesheet" href="assets/css/cool-breeze.css?v=20261015-4">
   <link rel="stylesheet" href="assets/css/themes.css?v=20261015-1">
+  <link rel="stylesheet" href="assets/css/ui-system.css?v=20261015-1">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body class="cool-breeze bg-white text-slate-900 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
@@ -203,7 +204,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <!-- Class Filter & Search -->
           <div class="flex items-center gap-2 flex-wrap">
-            <div class="flex items-center gap-1 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
+            <div class="ui-segmented flex items-center gap-1 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
               <button onclick="filterAdminStudents('all')" id="btn-admin-filter-all" class="px-2.5 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-semibold transition">Tất cả</button>
               <button onclick="filterAdminStudents('C++')" id="btn-admin-filter-C++" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Lớp C++</button>
               <button onclick="filterAdminStudents('Python')" id="btn-admin-filter-Python" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">Lớp Python</button>
@@ -403,24 +404,23 @@
     <!-- ========================================== -->
     <section id="section-problems" class="space-y-6 hidden">
       <!-- Header Banner & View Mode Switcher -->
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
+      <div class="ui-section-toolbar flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
         <div class="space-y-1">
           <div class="flex items-center gap-2">
             <span class="text-2xl">📝</span>
-            <h2 class="text-xl font-bold text-white tracking-tight">Trung Tâm Bài Tập & Chấm Điểm</h2>
-            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Hợp nhất 2 trong 1</span>
+            <h2 class="text-xl font-bold text-white tracking-tight">Bài tập</h2>
           </div>
-          <p class="text-xs text-slate-400">Gồm bài tập từ các sàn thi đấu quốc tế (Codeforces, VJudge, MarisaOJ) và các bài tập cơ bản tự động chấm điểm trên web theo bộ test của giáo viên.</p>
+          <p class="text-sm text-slate-400">Luyện tập và nộp bài trên DeruckOJ.</p>
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
           <!-- View Mode Switcher: Danh Sách vs BT Theo Tuần vs DeruckOJ -->
-          <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold shadow-inner">
+          <div class="ui-segmented flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold shadow-inner">
             <button onclick="toggleProblemViewMode('list')" id="btn-prob-view-list" class="px-3.5 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40 transition cursor-pointer flex items-center gap-1.5 shadow">
               <span>📚</span> Danh Sách
             </button>
             <button onclick="toggleProblemViewMode('weekly')" id="btn-prob-view-weekly" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-purple-300 hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5">
-              <span>📅</span> BT Theo Tuần
+              <span>📅</span> Theo tuần
             </button>
             <button onclick="toggleProblemViewMode('judge')" id="btn-prob-view-judge" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-emerald-300 hover:bg-slate-800/60 transition cursor-pointer flex items-center gap-1.5">
               <span>⚡</span> DeruckOJ
@@ -605,7 +605,7 @@
 
         <!-- DeruckOJ TABS NAVIGATION BAR -->
         <div class="flex items-center border-b border-slate-800 pb-3 flex-wrap gap-2">
-          <div class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold shadow-inner">
+          <div class="ui-segmented flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold shadow-inner">
             <button type="button" onclick="switchDmojTab('problem')" id="dmoj-tab-problem" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-bold transition flex items-center gap-1.5 shadow">
               <span>📄</span> Đề bài
             </button>
@@ -1017,7 +1017,7 @@
     <!-- TAB 4: BÀI GIẢNG & LÝ THUYẾT (LMS) -->
     <!-- ========================================== -->
     <section id="section-curriculum" class="space-y-6 hidden">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="ui-section-toolbar flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
             <span>📚</span> Trung Tâm Bài Giảng & Lý Thuyết (LMS)
@@ -1054,7 +1054,7 @@
     <!-- TAB 5: ĐẤU TRƯỜNG & CONTEST ĐỊNH KỲ -->
     <!-- ========================================== -->
     <section id="section-contests" class="space-y-6 hidden">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="ui-section-toolbar flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
             <span>⚔️</span> Đấu Trường & Contest Định Kỳ
@@ -1064,7 +1064,7 @@
 
         <!-- Filter buttons & Admin Action -->
         <div class="flex items-center gap-2 flex-wrap">
-          <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
+          <div class="ui-segmented flex items-center gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
             <button onclick="filterContests('all')" id="contest-filter-all" class="px-3 py-1.5 rounded-lg bg-indigo-600/30 text-indigo-300 font-medium transition">Tất cả</button>
             <button onclick="filterContests('UPCOMING')" id="contest-filter-UPCOMING" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">🟡 Sắp tới</button>
             <button onclick="filterContests('ENDED')" id="contest-filter-ENDED" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition">⚪ Đã thi</button>
@@ -1088,7 +1088,7 @@
           </div>
 
           <!-- Countdown boxes -->
-          <div class="flex items-center gap-2 font-mono">
+          <div class="ui-countdown flex items-center gap-2 font-mono">
             <div class="bg-slate-900/90 border border-purple-500/30 rounded-xl px-3 py-2 text-center min-w-[56px]">
               <div class="text-xl md:text-2xl font-bold text-purple-300" id="timer-days">00</div>
               <div class="text-[10px] text-slate-500 uppercase">Ngày</div>
@@ -2637,7 +2637,7 @@
   <!-- DATA & APP LOGIC -->
   <script src="assets/js/data/submission-store.js?v=20261015-2"></script>
   <script src="assets/js/judge/client.js?v=20261014-1"></script>
-  <script src="assets/js/app.js?v=20261015-2"></script>
+  <script src="assets/js/app.js?v=20261015-3"></script>
   <script src="assets/js/management.js"></script>
 </body>
 </html>

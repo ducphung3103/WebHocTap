@@ -2120,12 +2120,12 @@ let appData = null;
 
         card.innerHTML = `
           <div class="space-y-3">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
+            <div class="flex flex-wrap gap-2 items-center justify-between">
+              <div class="flex flex-wrap items-center gap-2">
                 <span class="font-mono text-xs text-purple-400 font-bold">${c.id}</span>
                 ${typeBadge}
               </div>
-              <div class="flex items-center gap-2">
+              <div class="flex flex-wrap items-center gap-2">
                 ${statusBadge}
                 ${adminButtons}
               </div>
@@ -4202,14 +4202,11 @@ let appData = null;
       if (icon) icon.className = "animate-spin inline-block";
       if (btn) btn.disabled = true;
 
-      showLiveToast("🔄 Đang thực hiện đồng bộ 2 chiều Web ⇄ Google Sheet...", "info");
+      showLiveToast("Đang tải dữ liệu gốc từ Google Sheet...", "info");
 
       try {
-        // 1. Push any pending edits from web to sheet
-        await flushPendingSync();
-
-        // Require an actual server acknowledgement before reporting success.
-        const syncResponse = await fetch('http://127.0.0.1:8080/api/sync_two_way', { method: 'POST' });
+        // Never flush web edits into the authoritative Sheet during reconciliation.
+        const syncResponse = await fetch('http://127.0.0.1:8080/api/sync_from_sheet', { method: 'POST' });
         if (!syncResponse.ok) throw new Error(`Máy chủ đồng bộ trả về HTTP ${syncResponse.status}`);
         const syncResult = await syncResponse.json();
         if (syncResult.status !== 'success' || syncResult.pull_success === false) {
@@ -4239,7 +4236,7 @@ let appData = null;
           renderAdminDashboard();
         }
 
-        showLiveToast("✅ Máy chủ đã hoàn thành đồng bộ 2 chiều.", "success");
+        showLiveToast("Máy chủ đã hoàn thành đồng bộ từ Google Sheet.", "success");
       } catch (err) {
         console.error("Two-way sync error:", err);
         showLiveToast(`⚠️ Lỗi đồng bộ: ${err.message}`, "error");

@@ -210,14 +210,17 @@ try {
   savesSucceed = false;
   console.log('PASS judged submissions persist locally and expose pending/synced delivery state');
 
+  await evaluate("localStorage.setItem('cp_sync_queue', JSON.stringify([{payload:{action:'save_problem',problem:{id:'DO-NOT-PUSH'}},time:1}]))");
   await evaluate('triggerTwoWaySync()');
   assert.match(await evaluate("document.getElementById('live-toast-msg').textContent"), /Lỗi đồng bộ/);
   savesSucceed = true;
   await evaluate('triggerTwoWaySync()');
   assert.equal(await evaluate('appData.students.length'), 1);
   assert.match(await evaluate("document.getElementById('live-toast-msg').textContent"), /hoàn thành đồng bộ/);
+  assert.equal(await evaluate("JSON.parse(localStorage.getItem('cp_sync_queue')).length"), 1);
+  await evaluate("localStorage.removeItem('cp_sync_queue')");
   savesSucceed = false;
-  console.log('PASS two-way sync reports server errors and retains Firebase students');
+  console.log('PASS read-only sync retains students and does not push queued web edits to Sheets');
 
   await evaluate(`localStorage.setItem('cp_auth_session', JSON.stringify({ role: 'admin', name: 'Test admin' }));`);
   await send('Page.navigate', { url: origin + '/student.html?id=17' });

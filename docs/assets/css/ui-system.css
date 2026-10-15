@@ -1,0 +1,98 @@
+/* Shared typography and control geometry; colors remain owned by themes.css. */
+:root {
+  --ui-font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ui-mono: 'JetBrains Mono', Consolas, monospace;
+  --ui-caption: .75rem;
+  --ui-body: .875rem;
+  --ui-heading: 1.25rem;
+  --ui-radius: .625rem;
+  --ui-control-height: 2.5rem;
+}
+html[data-theme="cli"] { --ui-font: var(--ui-mono); --ui-radius: 0; }
+.cool-breeze {
+  font-family: var(--ui-font);
+  font-size: var(--ui-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.cool-breeze :is(button, input, select, textarea) { font-family: inherit; }
+.cool-breeze :is(code, pre, .font-mono) { font-family: var(--ui-mono); }
+.cool-breeze :is(.flex, .grid) > * { min-width: 0; }
+.cool-breeze .management-layout > * { min-width: 0; }
+.cool-breeze :is(main, section, article, form) { min-width: 0; max-width: 100%; }
+.cool-breeze :is(p, h1, h2, h3, td, label) { overflow-wrap: anywhere; }
+.cool-breeze :is(.text-xs, [class~="text-[10px]"], [class~="text-[11px]"]) {
+  font-size: var(--ui-caption);
+  line-height: 1.5;
+}
+.cool-breeze :is(.text-sm, .management-table, .management-description, .management-card p) {
+  font-size: var(--ui-body);
+  line-height: 1.6;
+}
+.cool-breeze :is(button, [role="button"], .home-secondary, .home-contact-primary) {
+  white-space: nowrap;
+  flex-shrink: 0;
+  max-width: 100%;
+}
+.cool-breeze :is(button, [role="button"]) { letter-spacing: normal; }
+.cool-breeze :is(.management-button, .home-login, .home-secondary, .home-contact-primary,
+  button[class*="py-2"], button[class*="py-3"], button[class*="py-1.5"]) {
+  min-height: var(--ui-control-height);
+  border-radius: var(--ui-radius);
+  font-size: var(--ui-body);
+  line-height: 1.4;
+  font-weight: 600;
+}
+.cool-breeze .management-button { justify-content: center; margin: 0; }
+.cool-breeze :is(.management-toolbar, .management-header, .home-actions, .home-contact-links) { gap: .75rem; }
+.cool-breeze :is(.management-toolbar, .management-header) > .flex { flex-wrap: wrap; }
+.cool-breeze :is(.management-title, .management-toolbar h3) { line-height: 1.3; }
+.cool-breeze .management-title { font-size: 1.5rem; font-weight: 700; }
+.cool-breeze .management-toolbar h3 { font-size: var(--ui-heading); }
+.cool-breeze .management-nav button { font-size: var(--ui-body); line-height: 1.4; }
+.cool-breeze :is(.home-course p, .home-instructor p, .home-contact-links a, .home-course-link) { font-size: var(--ui-body); }
+.cool-breeze :is(.home-course, .home-instructor, .home-contact-links) { min-width: 0; }
+.cool-breeze :is(.home-course h3, .home-contact h2) { line-height: 1.4; }
+.cool-breeze :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select) {
+  min-height: var(--ui-control-height);
+  max-width: 100%;
+  font-size: var(--ui-body);
+  line-height: 1.5;
+}
+.cool-breeze select { text-overflow: ellipsis; }
+.cool-breeze :is(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--theme-accent);
+  outline-offset: 3px;
+}
+.cool-breeze :is(button, [role="button"]):disabled { opacity: .55; cursor: not-allowed; }
+.cool-breeze :is(.overflow-x-auto, .overflow-auto) { max-width: 100%; overscroll-behavior-x: contain; }
+.cool-breeze pre { max-width: 100%; overflow-x: auto; overflow-wrap: normal; }
+.cool-breeze table th { white-space: nowrap; }
+.cool-breeze .overflow-x-auto > table { min-width: 42rem; }
+.cool-breeze table :is(td, .font-mono) { overflow-wrap: normal; word-break: normal; }
+.cool-breeze table :is(.font-mono, [class*="rounded-full"]) { white-space: nowrap; }
+.cool-breeze .ui-section-toolbar { flex-wrap: wrap; }
+.cool-breeze .ui-section-toolbar > * { flex: 1 1 20rem; }
+.cool-breeze .ui-segmented { max-width: 100%; overflow-x: auto; flex-shrink: 1; scrollbar-width: thin; }
+.cool-breeze .ui-countdown { width: min(100%, 20rem); gap: .25rem; }
+.cool-breeze .ui-countdown > div { flex: 1; min-width: 0; padding-inline: .4rem; }
+#user-display-name { max-width: 10rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cool-breeze #live-toast { max-width: calc(100vw - 2rem); }
+.cool-breeze #live-toast-msg { min-width: 0; overflow-wrap: anywhere; }
+.cool-breeze #auth-modal { overflow-y: auto; }
+.cool-breeze #auth-modal > div { max-height: calc(100dvh - 2rem); overflow-y: auto; }
+.cool-breeze .theme-switcher button { min-height: 32px; font-size: var(--ui-caption); }
+#site-header .tab-btn:not(.hidden) { flex-shrink: 0; }
+@media (max-width: 1100px) {
+  .home-course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 540px) {
+  .cool-breeze .ui-section-toolbar > * { flex-basis: auto; width: 100%; }
+  #user-display-name { max-width: 6rem; }
+  .home-course-grid { grid-template-columns: minmax(0, 1fr); }
+  .cool-breeze :is(.home-login, .home-secondary, .home-contact-primary) { width: 100%; }
+  .cool-breeze .management-toolbar > .flex { width: 100%; }
+  .cool-breeze :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea) {
+    font-size: 1rem; /* Avoid focus zoom on mobile browsers. */
+  }
+}
