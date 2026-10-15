@@ -14,11 +14,16 @@
   --cool-text-soft: #303030;
   --cool-blue: #111111;
   --cool-green: #111111;
+  --cool-info: #eef6ff;
+  --cool-success: #eefbf4;
+  --cool-warning: #fff8e8;
+  --cool-danger: #fff1f2;
+  color-scheme: light;
 }
 
 body.cool-breeze {
   color: var(--cool-text);
-  background: linear-gradient(180deg, var(--cool-bg), var(--cool-bg));
+  background: var(--cool-bg) !important;
   font-weight: 500;
 }
 
@@ -39,11 +44,52 @@ body.cool-breeze {
 
 .cool-breeze .bg-slate-700 { background-color: #ebebeb !important; }
 
+/* Remove the remaining near-black colour surfaces from the legacy dark UI. */
+.cool-breeze [class*="bg-blue-950"],
+.cool-breeze [class*="bg-sky-950"],
+.cool-breeze [class*="bg-cyan-950"],
+.cool-breeze [class*="bg-indigo-950"],
+.cool-breeze [class*="bg-purple-950"] {
+  background-color: var(--cool-info) !important;
+}
+
+.cool-breeze [class*="bg-emerald-950"],
+.cool-breeze [class*="bg-teal-950"] {
+  background-color: var(--cool-success) !important;
+}
+
+.cool-breeze [class*="bg-amber-950"] {
+  background-color: var(--cool-warning) !important;
+}
+
+.cool-breeze [class*="bg-rose-950"],
+.cool-breeze [class*="bg-red-950"] {
+  background-color: var(--cool-danger) !important;
+}
+
+/* Dark gradient stops otherwise keep panels and notifications almost black. */
+.cool-breeze [class*="from-slate-9"],
+.cool-breeze [class*="from-blue-950"],
+.cool-breeze [class*="from-sky-950"],
+.cool-breeze [class*="from-cyan-950"],
+.cool-breeze [class*="from-emerald-950"],
+.cool-breeze [class*="from-indigo-950"],
+.cool-breeze [class*="from-purple-950"],
+.cool-breeze [class*="to-slate-9"],
+.cool-breeze [class*="to-indigo-950"] {
+  background-image: none !important;
+  background-color: var(--cool-surface) !important;
+}
+
 .cool-breeze .border-slate-900,
 .cool-breeze .border-slate-800,
 .cool-breeze .border-slate-700,
 .cool-breeze [class*="border-slate-800/"] {
   border-color: var(--cool-border) !important;
+}
+
+.cool-breeze .divide-slate-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--cool-border-soft) !important;
 }
 
 .cool-breeze .text-white,
@@ -82,12 +128,18 @@ body.cool-breeze {
 .cool-breeze pre {
   color: var(--cool-text);
   caret-color: #000;
+  background-color: var(--cool-surface);
 }
 
 .cool-breeze input::placeholder,
 .cool-breeze textarea::placeholder { color: #666 !important; }
 
 .cool-breeze table tbody tr:hover { background-color: #f3f3f3 !important; }
+
+.cool-breeze code,
+.cool-breeze pre {
+  background-color: #f7f7f7 !important;
+}
 
 .cool-breeze button[class*="bg-indigo-"],
 .cool-breeze button[class*="bg-blue-"],

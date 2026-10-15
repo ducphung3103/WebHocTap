@@ -110,7 +110,7 @@ try {
   assert.equal(await evaluate("typeof renderJudgeWorkspace"), 'function');
   assert.equal(await evaluate("appData.students[0].stt"), '17');
   assert.equal(await evaluate("document.body.classList.contains('cool-breeze')"), true);
-  assert.match(await evaluate("getComputedStyle(document.body).backgroundImage"), /gradient/);
+  assert.equal(await evaluate("getComputedStyle(document.body).backgroundColor"), 'rgb(255, 255, 255)');
   assert.deepEqual(errors, []);
   console.log('PASS main page initializes with offline Firebase fixtures');
 

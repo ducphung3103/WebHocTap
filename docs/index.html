@@ -13,12 +13,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="assets/js/index-theme.js"></script>
-  <link rel="stylesheet" href="assets/css/index.css">
+  <link rel="stylesheet" href="assets/css/index.css?v=20261015-4">
   <link rel="stylesheet" href="assets/css/management.css">
-  <link rel="stylesheet" href="assets/css/cool-breeze.css?v=20261015-1">
+  <link rel="stylesheet" href="assets/css/cool-breeze.css?v=20261015-3">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
-<body class="cool-breeze bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+<body class="cool-breeze bg-white text-slate-900 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
   <!-- LIVE TOAST NOTIFICATION -->
   <div id="live-toast" class="fixed bottom-5 right-5 z-[99999] hidden bg-gradient-to-r from-emerald-950/90 to-indigo-950/90 border border-emerald-500/50 text-white px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-md text-xs font-semibold flex items-center gap-3 transform transition-all duration-300">
     <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
@@ -253,397 +253,43 @@
     <!-- ========================================== -->
     <!-- SECTION 0: TRANG CHỦ GIỚI THIỆU (PUBLIC LANDING PAGE) -->
     <!-- ========================================== -->
-    <section id="section-home" class="space-y-8">
+    <section id="section-home" class="home-page">
+      <div class="home-intro">
+        <h1>Deruck's Competitive Programming</h1>
+        <p>Học lập trình, luyện thuật toán và theo dõi tiến độ học tập.</p>
+        <button type="button" class="home-login" onclick="showAuthModal()">Đăng nhập bằng mã PIN</button>
+      </div>
 
-      <!-- HERO BANNER -->
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950/90 via-slate-900 to-slate-950 border border-indigo-500/30 p-6 sm:p-8 md:p-10 shadow-2xl">
-        <div class="absolute -right-20 -top-20 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <!-- Left Text & Actions -->
-          <div class="lg:col-span-7 space-y-4">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 shadow-sm">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>CỔNG LUYỆN LẬP TRÌNH THI ĐẤU CHUẨN DERUCKOJ</span>
-            </div>
-
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
-              Deruck's Competitive Programming
-            </h1>
-
-            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl">
-              Hệ thống bồi dưỡng thuật toán, cấu trúc dữ liệu và luyện thi HSG, Chuyên Tin & Olympic. Chấm bài tự động đa máy chủ với chuẩn đặc tả bài tập DeruckOJ.
-            </p>
-
-            <!-- Quick Action: 1 Primary Button -->
-            <div class="flex flex-wrap items-center gap-3 pt-2">
-              <button onclick="showAuthModal()" class="px-6 py-3 rounded-2xl text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 transition shadow-xl shadow-indigo-600/30 flex items-center gap-2.5 cursor-pointer active:scale-95">
-                <span>🔑</span>
-                <span>Vào Học Bằng Mã PIN</span>
-                <span>→</span>
-              </button>
-              <button onclick="document.getElementById('courses-section')?.scrollIntoView({behavior: 'smooth'})" class="px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer">
-                <span>🎯</span>
-                <span>Khám phá 4 Lộ Trình</span>
-              </button>
-            </div>
-
-            <!-- 4 Visual Compact Metrics -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-4">
-              <div class="bg-slate-900/80 border border-indigo-500/20 rounded-xl p-2.5 text-center">
-                <div class="text-base sm:text-lg font-black text-indigo-400">47+</div>
-                <div class="text-[11px] text-slate-400 font-medium">Bài tập DeruckOJ</div>
-              </div>
-              <div class="bg-slate-900/80 border border-emerald-500/20 rounded-xl p-2.5 text-center">
-                <div class="text-base sm:text-lg font-black text-emerald-400">100%</div>
-                <div class="text-[11px] text-slate-400 font-medium">Chấm tự động</div>
-              </div>
-              <div class="bg-slate-900/80 border border-blue-500/20 rounded-xl p-2.5 text-center">
-                <div class="text-base sm:text-lg font-black text-blue-400">4</div>
-                <div class="text-[11px] text-slate-400 font-medium">Lớp trọng điểm</div>
-              </div>
-              <div class="bg-slate-900/80 border border-purple-500/20 rounded-xl p-2.5 text-center">
-                <div class="text-base sm:text-lg font-black text-purple-400">365d</div>
-                <div class="text-[11px] text-slate-400 font-medium">Heatmap theo dõi</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: Visual Competitive Programming Illustration -->
-          <div class="lg:col-span-5 flex justify-center">
-            <div class="relative w-full max-w-sm">
-              <div class="rounded-2xl bg-slate-950/90 border border-indigo-500/30 p-4 shadow-2xl backdrop-blur space-y-3">
-                <!-- Window Header -->
-                <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
-                  </div>
-                  <span class="text-[11px] font-mono text-slate-400 flex items-center gap-1">
-                    <span>⚡</span> deruck_judge.cpp
-                  </span>
-                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    AC 100%
-                  </span>
-                </div>
-
-                <!-- Code Mockup -->
-                <div class="font-mono text-[11px] space-y-1 text-slate-300 bg-slate-900/90 p-3 rounded-xl border border-slate-800">
-                  <div><span class="text-purple-400">#include</span> <span class="text-emerald-300">&lt;bits/stdc++.h&gt;</span></div>
-                  <div><span class="text-blue-400">using namespace</span> std;</div>
-                  <div class="text-slate-500">// DeruckOJ Fast I/O &amp; Segment Tree</div>
-                  <div><span class="text-cyan-400">int</span> <span class="text-amber-300">main</span>() {</div>
-                  <div class="pl-3 text-slate-400">cin.tie(<span class="text-indigo-300">0</span>)-&gt;sync_with_stdio(<span class="text-rose-300">false</span>);</div>
-                  <div class="pl-3 text-emerald-400">cout &lt;&lt; <span class="text-amber-200">"ACCEPTED"</span> &lt;&lt; <span class="text-amber-200">'
-'</span>;</div>
-                  <div>}</div>
-                </div>
-
-                <!-- Live Testcases Visual Bar -->
-                <div class="grid grid-cols-4 gap-1.5 pt-1">
-                  <div class="bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-1.5 text-center">
-                    <div class="text-[10px] text-emerald-400 font-bold">#1 AC</div>
-                    <div class="text-[9px] text-slate-500 font-mono">0.02s</div>
-                  </div>
-                  <div class="bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-1.5 text-center">
-                    <div class="text-[10px] text-emerald-400 font-bold">#2 AC</div>
-                    <div class="text-[9px] text-slate-500 font-mono">0.03s</div>
-                  </div>
-                  <div class="bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-1.5 text-center">
-                    <div class="text-[10px] text-emerald-400 font-bold">#3 AC</div>
-                    <div class="text-[9px] text-slate-500 font-mono">0.05s</div>
-                  </div>
-                  <div class="bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-1.5 text-center">
-                    <div class="text-[10px] text-emerald-400 font-bold">#4 AC</div>
-                    <div class="text-[9px] text-slate-500 font-mono">0.04s</div>
-                  </div>
-                </div>
-
-                <!-- Language Tags -->
-                <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800">
-                  <span class="flex items-center gap-1"><span>🌐</span> Sàn: Codeforces, DeruckOJ, Marisa</span>
-                  <span class="font-bold text-indigo-300">⚡ C++20 • Python 3</span>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div id="courses-section" class="home-courses">
+        <h2>Lớp học</h2>
+        <div class="home-course-grid">
+          <article class="home-course">
+            <h3>C++ cơ bản</h3>
+            <p>Cú pháp, mảng, xâu và thuật toán cơ bản.</p>
+          </article>
+          <article class="home-course">
+            <h3>C++ nâng cao</h3>
+            <p>Cấu trúc dữ liệu và thuật toán luyện thi HSG.</p>
+          </article>
+          <article class="home-course">
+            <h3>Python cơ bản</h3>
+            <p>Lập trình Python và tư duy giải bài toán.</p>
+          </article>
+          <article class="home-course">
+            <h3>Python 1-1</h3>
+            <p>Học riêng theo trình độ và mục tiêu cá nhân.</p>
+          </article>
         </div>
       </div>
 
-      <!-- SECURITY NOTICE CALLOUT -->
-      <div class="rounded-2xl bg-slate-900/90 border border-amber-500/30 p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-lg shrink-0 text-amber-300">
-            🔒
-          </div>
-          <div>
-            <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
-              Khu Vực Nội Bộ Dành Cho Học Viên &amp; Phụ Huynh
-              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase">Bảo mật</span>
-            </h3>
-            <p class="text-[11px] text-slate-400">Bảng xếp hạng, bài tập về nhà và bài giải được bảo vệ an toàn bằng Mã PIN.</p>
-          </div>
-        </div>
-        <button onclick="showAuthModal()" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 transition shrink-0 self-start sm:self-auto cursor-pointer">
-          Đăng Nhập Ngay →
-        </button>
-      </div>
-
-      <!-- COURSES SECTION: VISUAL CARDS & 1 ACTION BUTTON -->
-      <div id="courses-section" class="space-y-4 pt-2">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
-              <span>🎯</span> 4 Chương Trình Đào Tạo Trọng Điểm
-            </h2>
-            <p class="text-xs text-slate-400">Lộ trình bài bản từ nền tảng đến chuyên sâu bám sát đề thi HSG &amp; Olympic</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <!-- Class C++ Nâng Cao -->
-          <div class="group rounded-2xl bg-slate-900 border border-blue-500/30 overflow-hidden hover:border-blue-500/60 transition shadow-lg flex flex-col justify-between">
-            <!-- Visual SVG Banner -->
-            <div class="h-28 bg-gradient-to-br from-blue-950 via-slate-900 to-indigo-950 p-4 relative flex items-center justify-between border-b border-blue-500/20 overflow-hidden">
-              <div class="relative z-10 space-y-1">
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-500/25 text-blue-300 border border-blue-500/40 uppercase">Nâng Cao</span>
-                <div class="text-sm font-black text-white">C++ Nâng Cao</div>
-                <div class="text-[10px] text-blue-300/80">Competitive &amp; HSG</div>
-              </div>
-              <div class="w-14 h-14 rounded-2xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-2xl shadow-inner text-blue-300 group-hover:scale-110 transition">
-                🏆
-              </div>
-            </div>
-            <!-- Body -->
-            <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
-              <p class="text-xs text-slate-300 leading-relaxed">
-                Segment Tree, Fenwick, DP quy hoạch động, Đồ thị (DSU, Dijkstra) &amp; Lý thuyết số chuyên sâu.
-              </p>
-              <div class="flex flex-wrap gap-1">
-                <span class="px-2 py-0.5 rounded text-[10px] bg-blue-500/10 text-blue-300 border border-blue-500/20">Segment Tree</span>
-                <span class="px-2 py-0.5 rounded text-[10px] bg-blue-500/10 text-blue-300 border border-blue-500/20">Graph</span>
-                <span class="px-2 py-0.5 rounded text-[10px] bg-blue-500/10 text-blue-300 border border-blue-500/20">DP</span>
-              </div>
-              <button onclick="showAuthModal()" class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 transition text-center shadow-lg shadow-blue-600/25 cursor-pointer mt-2">
-                Vào Học Lớp C++ Nâng Cao →
-              </button>
-            </div>
-          </div>
-
-          <!-- Class C++ Cơ Bản -->
-          <div class="group rounded-2xl bg-slate-900 border border-cyan-500/30 overflow-hidden hover:border-cyan-500/60 transition shadow-lg flex flex-col justify-between">
-            <!-- Visual SVG Banner -->
-            <div class="h-28 bg-gradient-to-br from-cyan-950 via-slate-900 to-slate-950 p-4 relative flex items-center justify-between border-b border-cyan-500/20 overflow-hidden">
-              <div class="relative z-10 space-y-1">
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 uppercase">Nền Tảng</span>
-                <div class="text-sm font-black text-white">C++ Cơ Bản</div>
-                <div class="text-[10px] text-cyan-300/80">Cú Pháp &amp; STL</div>
-              </div>
-              <div class="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-2xl shadow-inner text-cyan-300 group-hover:scale-110 transition">
-                🚀
-              </div>
-            </div>
-            <!-- Body -->
-            <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
-              <p class="text-xs text-slate-300 leading-relaxed">
-                Cú pháp C++ chuẩn, cấu trúc dữ liệu STL (vector, map, set), kỹ thuật mảng xâu và tìm kiếm nhị phân.
-              </p>
-              <div class="flex flex-wrap gap-1">
-                <span class="px-2 py-0.5 rounded text-[10px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">C++20</span>
-                <span class="px-2 py-0.5 rounded text-[10px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">STL</span>
-                <span class="px-2 py-0.5 rounded text-[10px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">Binary Search</span>
-              </div>
-              <button onclick="showAuthModal()" class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-cyan-600 hover:bg-cyan-500 transition text-center shadow-lg shadow-cyan-600/25 cursor-pointer mt-2">
-                Vào Học Lớp C++ Cơ Bản →
-              </button>
-            </div>
-          </div>
-
-          <!-- Class Python Cơ Bản -->
-          <div class="group rounded-2xl bg-slate-900 border border-emerald-500/30 overflow-hidden hover:border-emerald-500/60 transition shadow-lg flex flex-col justify-between">
-            <!-- Visual SVG Banner -->
-            <div class="h-28 bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950 p-4 relative flex items-center justify-between border-b border-emerald-500/20 overflow-hidden">
-              <div class="relative z-10 space-y-1">
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 uppercase">Thuật Toán</span>
-                <div class="text-sm font-black text-white">Python Cơ Bản</div>
-                <div class="text-[10px] text-emerald-300/80">Tư Duy &amp; Tin Học Trẻ</div>
-              </div>
-              <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-2xl shadow-inner text-emerald-300 group-hover:scale-110 transition">
-                🐍
-              </div>
-            </div>
-            <!-- Body -->
-            <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
-              <p class="text-xs text-slate-300 leading-relaxed">
-                Tư duy thuật toán, đệ quy, vét cạn toàn bộ, thuật toán tham lam (Greedy) và kỹ thuật xử lý mảng/xâu.
-              </p>
-              <div class="flex flex-wrap gap-1">
-                <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Python 3</span>
-                <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Đệ Quy</span>
-                <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Greedy</span>
-              </div>
-              <button onclick="showAuthModal()" class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition text-center shadow-lg shadow-emerald-600/25 cursor-pointer mt-2">
-                Vào Học Lớp Python Cơ Bản →
-              </button>
-            </div>
-          </div>
-
-          <!-- Class Python 1-1 -->
-          <div class="group rounded-2xl bg-slate-900 border border-purple-500/30 overflow-hidden hover:border-purple-500/60 transition shadow-lg flex flex-col justify-between">
-            <!-- Visual SVG Banner -->
-            <div class="h-28 bg-gradient-to-br from-purple-950 via-slate-900 to-slate-950 p-4 relative flex items-center justify-between border-b border-purple-500/20 overflow-hidden">
-              <div class="relative z-10 space-y-1">
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-purple-500/25 text-purple-300 border border-purple-500/40 uppercase">Cá Nhân Hóa</span>
-                <div class="text-sm font-black text-white">Python Kèm 1-1</div>
-                <div class="text-[10px] text-purple-300/80">Lộ Trình Tăng Tốc</div>
-              </div>
-              <div class="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-2xl shadow-inner text-purple-300 group-hover:scale-110 transition">
-                🎯
-              </div>
-            </div>
-            <!-- Body -->
-            <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
-              <p class="text-xs text-slate-300 leading-relaxed">
-                Kèm riêng 1-1 bám sát mục tiêu thi học sinh giỏi, chuyển cấp Chuyên Tin và chuẩn hóa tư duy giải thuật.
-              </p>
-              <div class="flex flex-wrap gap-1">
-                <span class="px-2 py-0.5 rounded text-[10px] bg-purple-500/10 text-purple-300 border border-purple-500/20">Kèm 1-1</span>
-                <span class="px-2 py-0.5 rounded text-[10px] bg-purple-500/10 text-purple-300 border border-purple-500/20">Chuyên Tin</span>
-                <span class="px-2 py-0.5 rounded text-[10px] bg-purple-500/10 text-purple-300 border border-purple-500/20">Sửa Code</span>
-              </div>
-              <button onclick="showAuthModal()" class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 transition text-center shadow-lg shadow-purple-600/25 cursor-pointer mt-2">
-                Vào Học Lớp Kèm 1-1 →
-              </button>
-            </div>
-          </div>
+      <div class="home-contact">
+        <h2>Liên hệ Thầy Đức</h2>
+        <div class="home-contact-links">
+          <a href="https://zalo.me/0396468382" target="_blank" rel="noopener noreferrer">Zalo: 0396468382</a>
+          <a href="https://www.facebook.com/deruckphung3103/" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="mailto:phungduc3103@gmail.com">phungduc3103@gmail.com</a>
         </div>
       </div>
-
-      <!-- FEATURES & ECOSYSTEM (CLEAN & VISUAL) -->
-      <div class="rounded-3xl bg-slate-900/60 border border-slate-800 p-6 sm:p-8 space-y-5">
-        <div>
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span>✨</span> Công Nghệ &amp; Tiện Ích Đào Tạo
-          </h2>
-          <p class="text-xs text-slate-400">Tự động hóa hoàn toàn quy trình luyện tập và chấm điểm</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-indigo-500/40 transition">
-            <div class="w-10 h-10 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-xl text-indigo-400">🔄</div>
-            <h4 class="text-sm font-bold text-white">Auto-Sync Đa Nền Tảng</h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Tự động đồng bộ bài giải từ Codeforces, MarisaOJ, VNOI, VJudge mỗi 5s.
-            </p>
-          </div>
-
-          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-emerald-500/40 transition">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-xl text-emerald-400">📈</div>
-            <h4 class="text-sm font-bold text-white">Heatmap Hoạt Động</h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Biểu đồ trực quan hóa số lượng bài nộp 365 ngày rèn thói quen code bền bỉ.
-            </p>
-          </div>
-
-          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-amber-500/40 transition">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-xl text-amber-400">🛡️</div>
-            <h4 class="text-sm font-bold text-white">Bảo Mật Quyền Riêng Tư</h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Mã PIN bảo mật, giữ trọn vẹn lịch sử nộp bài và chỉ Admin mới xem được code.
-            </p>
-          </div>
-
-          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-purple-500/40 transition">
-            <div class="w-10 h-10 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-xl text-purple-400">⚔️</div>
-            <h4 class="text-sm font-bold text-white">Contest Rating ELO</h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Thi đấu trực tiếp tính điểm Rating thực chiến, rèn bản lĩnh làm bài thi thật.
-            </p>
-          </div>
-        </div>
-      </div>
-      
-      <!-- INSTRUCTOR & CONTACT SECTION -->
-      <div class="rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 p-6 sm:p-8 space-y-6 shadow-xl">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div class="flex items-start sm:items-center gap-4">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 border border-indigo-400/40 flex items-center justify-center text-3xl shadow-xl shadow-indigo-600/30 shrink-0">
-              👨‍🏫
-            </div>
-            <div class="space-y-1">
-              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-wide">
-                <span>⭐</span> Giảng Viên Phụ Trách
-              </div>
-              <h3 class="text-base sm:text-lg font-bold text-white tracking-tight">Thầy Đức (Deruck)</h3>
-              <p class="text-xs text-slate-300 leading-relaxed max-w-xl">
-                Huấn luyện viên Lập trình thi đấu • Kinh nghiệm bồi dưỡng nhiều thế hệ học sinh đạt giải HSG, Olympic Tin học và luyện thi vào các trường Chuyên Tin.
-              </p>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-3 shrink-0">
-            <button onclick="showAuthModal()" class="px-5 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/30 flex items-center gap-2 cursor-pointer active:scale-95">
-              <span>🔑</span>
-              <span>Đăng Nhập Ngay</span>
-              <span>→</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- CONTACT CHANNELS -->
-        <div class="pt-5 border-t border-slate-800/80">
-          <div class="text-xs font-semibold text-slate-300 mb-3 flex items-center gap-2">
-            <span>📞</span> <span>Thông tin liên hệ trực tiếp với Giảng viên:</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <!-- Facebook -->
-            <a href="https://www.facebook.com/deruckphung3103/" target="_blank" rel="noopener noreferrer" 
-               class="group flex items-center gap-3 p-3.5 rounded-2xl bg-slate-950/70 hover:bg-blue-950/40 border border-slate-800 hover:border-blue-500/50 transition shadow-sm cursor-pointer">
-              <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform shrink-0 font-bold text-base">
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </div>
-              <div class="min-w-0 flex-1">
-                <div class="text-[11px] text-slate-400 font-medium">Facebook</div>
-                <div class="text-xs font-bold text-blue-300 group-hover:text-blue-200 truncate">deruckphung3103</div>
-              </div>
-              <span class="text-slate-600 group-hover:text-blue-400 text-xs transition">↗</span>
-            </a>
-
-            <!-- Zalo -->
-            <a href="https://zalo.me/0396468382" target="_blank" rel="noopener noreferrer" 
-               class="group flex items-center gap-3 p-3.5 rounded-2xl bg-slate-950/70 hover:bg-sky-950/40 border border-slate-800 hover:border-sky-500/50 transition shadow-sm cursor-pointer">
-              <div class="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400 group-hover:scale-110 transition-transform shrink-0 font-black text-xs tracking-tighter">
-                ZALO
-              </div>
-              <div class="min-w-0 flex-1">
-                <div class="text-[11px] text-slate-400 font-medium">Zalo / Hotline</div>
-                <div class="text-xs font-bold text-sky-300 group-hover:text-sky-200 font-mono truncate">0396468382</div>
-              </div>
-              <span class="text-slate-600 group-hover:text-sky-400 text-xs transition">↗</span>
-            </a>
-
-            <!-- Gmail -->
-            <a href="mailto:phungduc3103@gmail.com" 
-               class="group flex items-center gap-3 p-3.5 rounded-2xl bg-slate-950/70 hover:bg-rose-950/40 border border-slate-800 hover:border-rose-500/50 transition shadow-sm cursor-pointer">
-              <div class="w-10 h-10 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform shrink-0 text-base">
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                </svg>
-              </div>
-              <div class="min-w-0 flex-1">
-                <div class="text-[11px] text-slate-400 font-medium">Gmail</div>
-                <div class="text-xs font-bold text-rose-300 group-hover:text-rose-200 font-mono truncate">phungduc3103@gmail.com</div>
-              </div>
-              <span class="text-slate-600 group-hover:text-rose-400 text-xs transition">↗</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
     </section>
 
     <!-- ========================================== -->

@@ -6,9 +6,35 @@ html, body {
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     /* Custom scrollbar */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #aaa; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #777; }
     /* Prevent text and table overflow */
     table { border-collapse: separate; border-spacing: 0; }
     .break-anywhere { overflow-wrap: anywhere; word-break: break-word; }
+
+    /* The public landing page uses light surfaces directly. */
+    html, body { background-color: #fff; color-scheme: light; }
+    #section-home { background: #fff; color: #0f172a; }
+    .home-intro { padding: 2.5rem; margin-bottom: 2rem; max-width: 44rem; background: #fff; border: 1px solid #e2e8f0; border-radius: .75rem; box-shadow: 0 1px 2px rgb(15 23 42 / .05); }
+    .home-intro h1 { margin: 0; color: #0f172a; font-size: clamp(1.65rem, 4vw, 2.5rem); font-weight: 800; line-height: 1.25; letter-spacing: -.03em; }
+    .home-intro p { margin: 1rem 0 1.5rem; color: #475569; font-size: 1rem; line-height: 1.7; }
+    .home-login { padding: .8rem 1.25rem; border: 1px solid #4338ca; border-radius: .6rem; background: #4338ca; color: #fff; font-size: .875rem; font-weight: 600; cursor: pointer; }
+    .home-login:hover { background: #3730a3; }
+    .home-page h2 { margin: 0 0 1rem; font-size: 1.1rem; font-weight: 700; }
+    .home-course-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+    .home-course { padding: 1.25rem; background: #fff; border: 1px solid #e2e8f0; border-radius: .75rem; box-shadow: 0 1px 2px rgb(15 23 42 / .05); }
+    .home-course h3 { margin: 0 0 .5rem; color: #0f172a; font-size: .95rem; font-weight: 700; }
+    .home-course p { margin: 0; color: #64748b; font-size: .875rem; line-height: 1.65; }
+    .home-contact { margin-top: 2rem; padding: 1.5rem 0; border-top: 1px solid #e2e8f0; }
+    .home-contact-links { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
+    .home-contact-links a { color: #4338ca; font-size: .875rem; overflow-wrap: anywhere; }
+    .home-contact-links a:hover { text-decoration: underline; }
+    .home-login:focus-visible, .home-contact-links a:focus-visible { outline: 2px solid #4338ca; outline-offset: 4px; }
+    @media (max-width: 900px) { .home-course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 540px) {
+      .home-intro { padding: 1.5rem; }
+      .home-course-grid { grid-template-columns: 1fr; gap: .75rem; }
+      .home-course { padding: 1rem; }
+      .home-contact-links { flex-direction: column; }
+    }

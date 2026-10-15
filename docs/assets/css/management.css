@@ -1,25 +1,25 @@
 .management-header { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-.management-title { font-size:1.5rem; font-weight:800; color:#f8fafc; }
-.management-description { color:#94a3b8; font-size:.875rem; margin-top:.4rem; }
+.management-title { font-size:1.5rem; font-weight:800; color:#111827; }
+.management-description { color:#4b5563; font-size:.875rem; margin-top:.4rem; }
 .management-layout { display:grid; grid-template-columns:200px minmax(0,1fr); gap:1.5rem; align-items:start; }
-.management-nav { display:flex; flex-direction:column; gap:.4rem; padding:.6rem; border:1px solid #1e293b; border-radius:1rem; background:#0f172a; }
-.management-nav button { text-align:left; padding:.8rem; border-radius:.65rem; font-size:.85rem; color:#94a3b8; cursor:pointer; }
-.management-nav button:hover, .management-nav button.is-active { color:#e0e7ff; background:#312e81; }
+.management-nav { display:flex; flex-direction:column; gap:.4rem; padding:.6rem; border:1px solid #d4d4d4; border-radius:1rem; background:#fff; }
+.management-nav button { text-align:left; padding:.8rem; border-radius:.65rem; font-size:.85rem; color:#4b5563; cursor:pointer; }
+.management-nav button:hover, .management-nav button.is-active { color:#1e3a8a; background:#eef2ff; }
 .management-panel { min-width:0; }
 .management-toolbar { display:flex; gap:.7rem; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-bottom:1rem; }
-.management-toolbar h3 { font-size:1.1rem; font-weight:700; color:#f8fafc; }
-.management-button { display:inline-flex; align-items:center; gap:.4rem; padding:.6rem .85rem; background:#1e293b; border:1px solid #334155; border-radius:.65rem; font-size:.8rem; color:#e2e8f0; cursor:pointer; margin:.15rem; }
-.management-button:hover { background:#334155; }
+.management-toolbar h3 { font-size:1.1rem; font-weight:700; color:#111827; }
+.management-button { display:inline-flex; align-items:center; gap:.4rem; padding:.6rem .85rem; background:#fff; border:1px solid #d4d4d4; border-radius:.65rem; font-size:.8rem; color:#1f2937; cursor:pointer; margin:.15rem; }
+.management-button:hover { background:#f5f5f5; }
 .management-button.primary { background:#4f46e5; border-color:#6366f1; color:white; }
 .management-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.8rem; margin-bottom:1.5rem; }
-.management-card { padding:1.1rem; border:1px solid #1e293b; border-radius:1rem; background:#0f172a; }
-.management-card strong { display:block; font-size:1.8rem; color:#c7d2fe; }
-.management-card p { font-size:.8rem; color:#94a3b8; }
+.management-card { padding:1.1rem; border:1px solid #d4d4d4; border-radius:1rem; background:#fff; }
+.management-card strong { display:block; font-size:1.8rem; color:#3730a3; }
+.management-card p { font-size:.8rem; color:#4b5563; }
 .management-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
-.management-actions h3 { color:#f1f5f9; font-weight:700; margin-bottom:.5rem; }
+.management-actions h3 { color:#111827; font-weight:700; margin-bottom:.5rem; }
 .management-table { width:100%; font-size:.8rem; text-align:left; }
-.management-table th, .management-table td { padding:.8rem; border-bottom:1px solid #1e293b; }
-.management-table th { color:#94a3b8; background:#0f172a; }
-.management-search { padding:.65rem .8rem; background:#020617; border:1px solid #334155; border-radius:.6rem; color:#e2e8f0; max-width:100%; }
+.management-table th, .management-table td { padding:.8rem; border-bottom:1px solid #e5e7eb; }
+.management-table th { color:#4b5563; background:#f7f7f7; }
+.management-search { padding:.65rem .8rem; background:#fff; border:1px solid #d4d4d4; border-radius:.6rem; color:#111827; max-width:100%; }
 @media(max-width:900px) { .management-layout { grid-template-columns:1fr; } .management-nav { flex-direction:row; overflow:auto; } .management-nav button { white-space:nowrap; } .management-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:540px) { .management-actions { grid-template-columns:1fr; } }
