@@ -25,6 +25,7 @@
     const records = new Map();
     collections.flat().filter(Boolean).forEach(item => {
       if (!item || typeof item !== 'object') return;
+      if (typeof global.isDeruckSubmission === 'function' && !global.isDeruckSubmission(item)) return;
       const id = String(item.id || '').trim();
       if (!id) return;
       const previous = records.get(id) || {};
@@ -62,8 +63,18 @@
       const db = await openSubmissionArchive();
       if (!db) return [];
       return await new Promise((resolve, reject) => {
-        const request = db.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).getAll();
-        request.onsuccess = () => resolve(mergeSubmissionCollections(request.result || []));
+        const transaction = db.transaction(STORE_NAME, 'readwrite');
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.getAll();
+        let records = [];
+        request.onsuccess = () => {
+          records = request.result || [];
+          records.filter(item => typeof global.isImportedNbkSubmission === 'function' && global.isImportedNbkSubmission(item))
+            .forEach(item => store.delete(item.id));
+        };
+        transaction.oncomplete = () => resolve(mergeSubmissionCollections(records));
+        transaction.onerror = () => reject(transaction.error);
+        transaction.onabort = () => reject(transaction.error);
         request.onerror = () => reject(request.error);
       });
     } catch (error) {

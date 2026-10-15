@@ -124,8 +124,8 @@ let appData = null;
         if (typeof loadArchivedSubmissions === 'function' && typeof mergeSubmissionCollections === 'function') {
           const archivedSubs = await loadArchivedSubmissions();
           appData.submissions = mergeSubmissionCollections(archivedSubs, appData.submissions || []);
+          try { localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions)); } catch(e) {}
           if (appData.submissions.length) {
-            try { localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions)); } catch(e) {}
             if (typeof archiveSubmissionsLocally === 'function') {
               await archiveSubmissionsLocally(appData.submissions, { silent: true });
             }

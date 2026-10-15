@@ -14,6 +14,26 @@ function firebase(fetch) {
 }
 const response = (data, status = 200, headers = {}) => new Response(JSON.stringify(data), { status, headers });
 
+test('only direct web submissions for DeruckOJ problems enter the submission stream', () => {
+  const api = firebase();
+  const direct = { id: 'SUB-1791990000000-TEST', problem_id: 'HSG-NUMBER', answer: 'code' };
+  assert.equal(api.isDeruckSubmission(direct), true);
+  assert.equal(api.isDeruckSubmission({ ...direct, id: 'SUB-HSG-001-NUMBER', submission_type_display: 'Code Thi HSG (C++20)' }), false);
+  assert.equal(api.isDeruckSubmission({ ...direct, submission_type_display: 'Code Thi HSG', feedback: 'DeruckOJ' }), false);
+  assert.equal(api.isDeruckSubmission({ ...direct, problem_id: 'CF-1', submission_type_display: 'Code DeruckOJ' }), false);
+  assert.equal(api.isDeruckSubmission({ ...direct, submission_type_display: 'Code Online Judge' }), false);
+  assert.equal(api.isDeruckSubmission({ id: 'SUB-UNKNOWN', problem_id: 'CPP-1', answer: 'code' }), false);
+  assert.equal(api.isDeruckSubmission({ id: 'legacy', problem_id: '26TI-A', submission_type_display: 'Code DeruckOJ' }), true);
+  assert.equal(api.isDeruckSubmission({ ...direct, is_synthetic: true }), false);
+});
+
+test('removed NBK imports cannot be uploaded again from browser cache', async () => {
+  let writes = 0;
+  const api = firebase(async () => { writes++; return response(true); });
+  assert.equal(await api.saveSubmissionToFirebase({ id: 'SUB-HSG-001-NUMBER', problem_id: 'HSG-NUMBER' }), false);
+  assert.equal(writes, 0);
+});
+
 test('tuition updates preserve sparse array keys and accept string student IDs', async () => {
   const writes = [];
   const api = firebase(async (url, options = {}) => {

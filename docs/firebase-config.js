@@ -212,33 +212,25 @@ function isDeruckProblem(probId, probObj) {
 /**
  * 3c. Kiểm tra bài nộp hợp lệ của WEB DeruckOJ (loại bỏ crawler ngoài, chỉ lưu và hiển thị bài nộp trên web DeruckOJ)
  */
+function isImportedNbkSubmission(sub) {
+  return Boolean(sub && (
+    /^SUB-HSG-/i.test(String(sub.id || '').trim()) ||
+    String(sub.submission_type_display || '').includes('Code Thi HSG')
+  ));
+}
+
 function isDeruckSubmission(sub) {
-  if (!sub) return false;
-  if (sub.is_synthetic) return false;
+  if (!sub || sub.is_synthetic || isImportedNbkSubmission(sub)) return false;
   const sid = String(sub.id || '').toUpperCase().trim();
   const stype = String(sub.submission_type_display || '');
-
-  // 1. Loại bỏ các bản ghi crawler ngoài
-  if (stype === 'Code Online Judge' || sid.startsWith('SUB-AC-')) {
-    return false;
-  }
-
-  // 2. Bài nộp trực tiếp từ trình chấm WEB DeruckOJ hoặc kỳ thi trên web
-  if (stype.includes('DeruckOJ') || stype.includes('Code Thi HSG')) return true;
-  if (sub.feedback && sub.feedback.includes('DeruckOJ')) return true;
-  if (sub.platform && sub.platform === 'DeruckOJ') return true;
-
-  // 3. Bài nộp thuộc các bài tập / đề thi của DeruckOJ
-  if (typeof isDeruckProblem === 'function' && isDeruckProblem(sub.problem_id)) return true;
-
-  // 4. Mọi bài nộp hợp lệ khác trên web (SUB-HSG-*, SUB-*, hoặc có bài làm)
-  if (sid.startsWith('SUB-HSG-') || sid.startsWith('SUB-')) {
-    return true;
-  }
-  if (sub.answer && typeof sub.answer === 'string' && sub.answer.trim().length > 0) {
-    return true;
-  }
-  return false;
+  if (stype === 'Code Online Judge' || sid.startsWith('SUB-AC-')) return false;
+  // Both conditions are required: a website problem AND a direct web submission.
+  // HSG problem statements remain available for students to solve on DeruckOJ.
+  if (!isDeruckProblem(sub.problem_id || sub.probId)) return false;
+  return sub.source === 'deruckoj-web' ||
+    stype.includes('DeruckOJ') ||
+    /^SUB-\d{12,13}(?:-|$)/.test(sid) ||
+    Boolean(sub.probId && sub.code && sub.verdict);
 }
 
 /**
@@ -436,7 +428,7 @@ async function touchFirebaseLastUpdated() {
  */
 async function saveSubmissionToFirebase(subData) {
   if (!isFirebaseConfigured() || !subData) return false;
-  if (subData.is_synthetic) return false;
+  if (subData.is_synthetic || isImportedNbkSubmission(subData)) return false;
   const dbUrl = getFirebaseDatabaseUrl();
   try {
     const subId = subData.id || ('SUB-' + Date.now());
@@ -510,6 +502,7 @@ async function pushFullDatabaseToFirebaseClient(fullData) {
   try {
     const submissions = {};
     for (const submission of Object.values(fullData.submissions || {})) {
+      if (isImportedNbkSubmission(submission)) continue;
       if (!submission || !submission.id || /[.#$\[\]/]/.test(String(submission.id))) return false;
       submissions[submission.id] = submission;
     }

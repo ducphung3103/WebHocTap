@@ -141,8 +141,33 @@ try {
   await send('Page.navigate', { url: origin + '/index.html' });
   await until("typeof appData !== 'undefined' && Array.isArray(appData?.submissions) && appData.submissions.some(s => s.id === 'SUB-1700000000000-ARCHIVE')");
   assert.equal(await evaluate(`appData.submissions.some(s => s.problem_id === 'CPP-ARCHIVE')`), true);
-  await evaluate(`(async () => { await deleteArchivedSubmission('SUB-1700000000000-ARCHIVE'); appData.submissions = appData.submissions.filter(s => s.id !== 'SUB-1700000000000-ARCHIVE'); localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions)); })()`);
   console.log('PASS IndexedDB archive restores older submissions across reloads');
+
+  // Simulate an old browser that cached an NBK file import before cleanup.
+  await evaluate(`new Promise((resolve, reject) => {
+    const request = indexedDB.open('deruckoj-realtime-data', 1);
+    request.onsuccess = () => {
+      const db = request.result;
+      const transaction = db.transaction('submissions', 'readwrite');
+      transaction.objectStore('submissions').put({ id: 'SUB-HSG-001-NUMBER', problem_id: 'HSG-NUMBER', submission_type_display: 'Code Thi HSG', answer: 'old import' });
+      transaction.oncomplete = () => { db.close(); resolve(); };
+      transaction.onerror = () => reject(transaction.error);
+    };
+    request.onerror = () => reject(request.error);
+  })`);
+  await send('Page.navigate', { url: origin + '/index.html' });
+  await until("typeof appData !== 'undefined' && appData?.submissions?.some(s => s.id === 'SUB-1700000000000-ARCHIVE')");
+  assert.equal(await evaluate("appData.submissions.some(s => s.id.startsWith('SUB-HSG-'))"), false);
+  assert.equal(await evaluate(`new Promise(resolve => {
+    const request = indexedDB.open('deruckoj-realtime-data', 1);
+    request.onsuccess = () => {
+      const db = request.result;
+      const read = db.transaction('submissions', 'readonly').objectStore('submissions').get('SUB-HSG-001-NUMBER');
+      read.onsuccess = () => { db.close(); resolve(Boolean(read.result)); };
+    };
+  })`), false);
+  console.log('PASS NBK imports are removed from old browser archives while direct submissions survive');
+  await evaluate(`(async () => { await deleteArchivedSubmission('SUB-1700000000000-ARCHIVE'); appData.submissions = appData.submissions.filter(s => s.id !== 'SUB-1700000000000-ARCHIVE'); localStorage.setItem('cp_cached_submissions', JSON.stringify(appData.submissions)); })()`);
 
   // Judge history is persisted locally and the cached/server copy does not create a duplicate row.
   await evaluate(`(() => {
